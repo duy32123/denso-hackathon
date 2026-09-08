@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "bundle_id": "BUNDLE_F10_corpus_mixing",
+  "source_type": "real",
+  "dataset_split": "dev",
+  "created_at": "2026-09-08T00:00:00Z",
+  "files": [
+    {
+      "path": "sources.jsonl",
+      "sha256": "72714dc010bbd1d679602d076c107a3b26b672655c4ae2f67ed3344213a62e64",
+      "record_count": 2
+    },
+    {
+      "path": "workflows.jsonl",
+      "sha256": "a7c2d8ca319bccb1cf21e21af02b35e7686b828353732c421070b27cf3636bc2",
+      "record_count": 1
+    }
+  ],
+  "producer": {
+    "team": "team_1",
+    "pipeline_version": "fixtures-1.0.0"
+  }
+}

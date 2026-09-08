@@ -1,0 +1,146 @@
+{
+  "$defs": {
+    "DatasetSplit": {
+      "enum": [
+        "dev",
+        "holdout"
+      ],
+      "title": "DatasetSplit",
+      "type": "string"
+    },
+    "QueryContext": {
+      "additionalProperties": false,
+      "description": "Context nguoi dung gui kem cau hoi: khong co metadata_provenance.",
+      "properties": {
+        "manufacturer": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Manufacturer"
+        },
+        "machine_family": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Machine Family"
+        },
+        "machine_model": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Machine Model"
+        },
+        "subsystem": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Subsystem"
+        },
+        "task_type": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TaskType"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "symptoms": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Symptoms",
+          "type": "array"
+        },
+        "alarm_codes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Alarm Codes",
+          "type": "array"
+        },
+        "components": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Components",
+          "type": "array"
+        }
+      },
+      "title": "QueryContext",
+      "type": "object"
+    },
+    "QueryMode": {
+      "enum": [
+        "real",
+        "synthetic"
+      ],
+      "title": "QueryMode",
+      "type": "string"
+    },
+    "TaskType": {
+      "enum": [
+        "troubleshooting",
+        "recovery",
+        "maintenance",
+        "inspection",
+        "other"
+      ],
+      "title": "TaskType",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "question": {
+      "minLength": 1,
+      "title": "Question",
+      "type": "string"
+    },
+    "context": {
+      "$ref": "#/$defs/QueryContext"
+    },
+    "mode": {
+      "$ref": "#/$defs/QueryMode"
+    },
+    "dataset_split": {
+      "$ref": "#/$defs/DatasetSplit"
+    }
+  },
+  "required": [
+    "question",
+    "context",
+    "mode",
+    "dataset_split"
+  ],
+  "title": "QueryRequest",
+  "type": "object",
+  "$id": "https://knowflow.ai/schema/1.0.0/query_request.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

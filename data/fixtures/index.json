@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0.0",
+  "fixtures": [
+    "F01_complete",
+    "F02_rationale_missing",
+    "F03_model_unknown",
+    "F04_model_mismatch",
+    "F05_locator_invalid",
+    "F06_conflict",
+    "F07_repeated_step",
+    "F08_branch_if",
+    "F09_revision_update",
+    "F10_corpus_mixing"
+  ]
+}

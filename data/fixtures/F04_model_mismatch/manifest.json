@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "bundle_id": "BUNDLE_F04_model_mismatch",
+  "source_type": "synthetic",
+  "dataset_split": "dev",
+  "created_at": "2026-09-08T00:00:00Z",
+  "files": [
+    {
+      "path": "sources.jsonl",
+      "sha256": "9a464607ad81c21e2fa41e3c02515803c3485e4ac66d2fb61ec3a20f40e94648",
+      "record_count": 2
+    },
+    {
+      "path": "workflows.jsonl",
+      "sha256": "c49855afb0a4ae40d7748e1b68ed1cd160ebdc7bc86ff7e070c310d500cff72f",
+      "record_count": 2
+    }
+  ],
+  "producer": {
+    "team": "team_2",
+    "pipeline_version": "fixtures-1.0.0"
+  }
+}

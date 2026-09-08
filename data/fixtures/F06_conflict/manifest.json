@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "bundle_id": "BUNDLE_F06_conflict",
+  "source_type": "synthetic",
+  "dataset_split": "dev",
+  "created_at": "2026-09-08T00:00:00Z",
+  "files": [
+    {
+      "path": "sources.jsonl",
+      "sha256": "ab7fb7227bcb320cd81bdce3cd328787dfe1fe521173fae28cc4af8d7ff72741",
+      "record_count": 2
+    },
+    {
+      "path": "workflows.jsonl",
+      "sha256": "07f864e103d54f020f77cfd0398991192d2f351eb46cd8f6d90ea7cec5f67311",
+      "record_count": 1
+    }
+  ],
+  "producer": {
+    "team": "team_2",
+    "pipeline_version": "fixtures-1.0.0"
+  }
+}

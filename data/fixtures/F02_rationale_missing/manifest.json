@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "bundle_id": "BUNDLE_F02_rationale_missing",
+  "source_type": "synthetic",
+  "dataset_split": "dev",
+  "created_at": "2026-09-08T00:00:00Z",
+  "files": [
+    {
+      "path": "sources.jsonl",
+      "sha256": "adb7365b208b736b42add3ac57ddc037c51bd1f8230d54ae974e535e258179d8",
+      "record_count": 1
+    },
+    {
+      "path": "workflows.jsonl",
+      "sha256": "f2d21cafb949e249b5126b7d349ac0b125c28990eb8371888620ad97db71959e",
+      "record_count": 1
+    }
+  ],
+  "producer": {
+    "team": "team_2",
+    "pipeline_version": "fixtures-1.0.0"
+  }
+}

@@ -1,0 +1,200 @@
+{
+  "$defs": {
+    "SourceKind": {
+      "enum": [
+        "official_service_video",
+        "service_document",
+        "expert_answer",
+        "synthetic_fixture"
+      ],
+      "title": "SourceKind",
+      "type": "string"
+    },
+    "SourceType": {
+      "enum": [
+        "real",
+        "synthetic"
+      ],
+      "title": "SourceType",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "source_id": {
+      "minLength": 1,
+      "title": "Source Id",
+      "type": "string"
+    },
+    "source_type": {
+      "$ref": "#/$defs/SourceType"
+    },
+    "source_kind": {
+      "$ref": "#/$defs/SourceKind"
+    },
+    "title": {
+      "minLength": 1,
+      "title": "Title",
+      "type": "string"
+    },
+    "url": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Url"
+    },
+    "asset_uri": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Asset Uri"
+    },
+    "language": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Language"
+    },
+    "duration_ms": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Duration Ms"
+    },
+    "publisher": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Publisher"
+    },
+    "presenter": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Presenter"
+    },
+    "presenter_role": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Presenter Role"
+    },
+    "published_at": {
+      "anyOf": [
+        {
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[+-]\\d{2}:\\d{2})$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Published At"
+    },
+    "retrieved_at": {
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|\\+00:00)$",
+      "title": "Retrieved At",
+      "type": "string"
+    },
+    "raw_text": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Raw Text"
+    },
+    "content_sha256": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Content Sha256"
+    },
+    "related_source_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Related Source Ids",
+      "type": "array"
+    },
+    "access_note": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Access Note"
+    }
+  },
+  "required": [
+    "source_id",
+    "source_type",
+    "source_kind",
+    "title",
+    "url",
+    "asset_uri",
+    "language",
+    "duration_ms",
+    "publisher",
+    "presenter",
+    "presenter_role",
+    "published_at",
+    "retrieved_at",
+    "raw_text",
+    "content_sha256",
+    "related_source_ids",
+    "access_note"
+  ],
+  "title": "Source",
+  "type": "object",
+  "$id": "https://knowflow.ai/schema/1.0.0/source.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

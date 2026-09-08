@@ -1,0 +1,28 @@
+{
+  "fixture_id": "F04_model_mismatch",
+  "title": "Hai may ten gan giong nhau",
+  "purpose": "Metadata khac model da biet phai bi loai truoc khi tra loi.",
+  "validator": {
+    "outcome": "accept",
+    "expected_error_codes": []
+  },
+  "rag": [
+    {
+      "question": "Tren DEMO_TC_B xoay chot chieu nao?",
+      "mode": "synthetic",
+      "expected_status": "answered",
+      "must_cite_claims": [
+        "SYN_WF_0005_CL_001"
+      ],
+      "must_not_cite_claims": [
+        "SYN_WF_0004_CL_001"
+      ]
+    },
+    {
+      "question": "Tren DEMO_TC_C xoay chot chieu nao?",
+      "mode": "synthetic",
+      "expected_status": "insufficient_evidence",
+      "note": "Khong duoc noi long bo loc model khi it ket qua."
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "bundle_id": "BUNDLE_F09_revision_update",
+  "source_type": "synthetic",
+  "dataset_split": "dev",
+  "created_at": "2026-09-08T00:00:00Z",
+  "files": [
+    {
+      "path": "sources.jsonl",
+      "sha256": "35f5255b76dcc5b84dcb4b6a89fcbc57c8100a7492982e3a0604b88302b26eb5",
+      "record_count": 2
+    },
+    {
+      "path": "workflows.jsonl",
+      "sha256": "d70d7c0a553782eaf7e43d6eeb72eeb476d70c503a2db1704ffb1b0c40718bcc",
+      "record_count": 2
+    }
+  ],
+  "producer": {
+    "team": "team_2",
+    "pipeline_version": "fixtures-1.0.0"
+  }
+}

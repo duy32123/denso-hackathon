@@ -1,0 +1,147 @@
+{
+  "$defs": {
+    "AnswerStatus": {
+      "enum": [
+        "answered",
+        "needs_clarification",
+        "insufficient_evidence",
+        "conflicting_sources"
+      ],
+      "title": "AnswerStatus",
+      "type": "string"
+    },
+    "Citation": {
+      "additionalProperties": false,
+      "properties": {
+        "answer_span": {
+          "title": "Answer Span",
+          "type": "string"
+        },
+        "claim_ref": {
+          "$ref": "#/$defs/EntityRef"
+        },
+        "evidence_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "source_review": {
+          "$ref": "#/$defs/SourceReview"
+        },
+        "technical_review": {
+          "$ref": "#/$defs/TechnicalReview"
+        }
+      },
+      "required": [
+        "answer_span",
+        "claim_ref",
+        "evidence_ids",
+        "source_review",
+        "technical_review"
+      ],
+      "title": "Citation",
+      "type": "object"
+    },
+    "EntityRef": {
+      "additionalProperties": false,
+      "properties": {
+        "workflow_id": {
+          "minLength": 1,
+          "title": "Workflow Id",
+          "type": "string"
+        },
+        "revision": {
+          "minimum": 1,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "entity_type": {
+          "minLength": 1,
+          "title": "Entity Type",
+          "type": "string"
+        },
+        "entity_id": {
+          "minLength": 1,
+          "title": "Entity Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workflow_id",
+        "revision",
+        "entity_type",
+        "entity_id"
+      ],
+      "title": "EntityRef",
+      "type": "object"
+    },
+    "SourceReview": {
+      "enum": [
+        "pending",
+        "source_checked",
+        "rejected"
+      ],
+      "title": "SourceReview",
+      "type": "string"
+    },
+    "TechnicalReview": {
+      "enum": [
+        "not_requested",
+        "pending",
+        "expert_validated",
+        "rejected"
+      ],
+      "title": "TechnicalReview",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "status": {
+      "$ref": "#/$defs/AnswerStatus"
+    },
+    "answer": {
+      "title": "Answer",
+      "type": "string"
+    },
+    "citations": {
+      "items": {
+        "$ref": "#/$defs/Citation"
+      },
+      "title": "Citations",
+      "type": "array"
+    },
+    "missing_context": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Missing Context",
+      "type": "array"
+    },
+    "unresolved_claim_refs": {
+      "items": {
+        "$ref": "#/$defs/EntityRef"
+      },
+      "title": "Unresolved Claim Refs",
+      "type": "array"
+    },
+    "index_build_id": {
+      "title": "Index Build Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "status",
+    "answer",
+    "citations",
+    "missing_context",
+    "unresolved_claim_refs",
+    "index_build_id"
+  ],
+  "title": "AnswerResponse",
+  "type": "object",
+  "$id": "https://knowflow.ai/schema/1.0.0/answer_response.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

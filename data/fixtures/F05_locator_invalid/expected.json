@@ -1,0 +1,12 @@
+{
+  "fixture_id": "F05_locator_invalid",
+  "title": "Evidence lech moc thoi gian",
+  "purpose": "Negative test: moc [start, end) nguoc va vuot duration_ms phai bi chan truoc khi index.",
+  "validator": {
+    "outcome": "reject",
+    "expected_error_codes": [
+      "V04"
+    ]
+  },
+  "rag": []
+}

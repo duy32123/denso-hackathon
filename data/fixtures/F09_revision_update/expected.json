@@ -1,0 +1,25 @@
+{
+  "fixture_id": "F09_revision_update",
+  "title": "Vong feedback tao revision moi",
+  "purpose": "Phan hoi tao Source expert_answer + revision moi; cau tra loi doi, lich su van xem duoc.",
+  "validator": {
+    "outcome": "accept",
+    "expected_error_codes": []
+  },
+  "rag": [
+    {
+      "question": "Vi sao phai thao nap che truoc?",
+      "mode": "synthetic",
+      "expected_status": "answered",
+      "must_cite_claims": [
+        "SYN_WF_0010_CL_002"
+      ],
+      "note": "Chi latest revision duoc dung de khang dinh; khong duoc bao 'chuyen gia xac nhan' chi vi co phan hoi (technical_review van not_requested)."
+    }
+  ],
+  "importer": {
+    "reimport_same_content": "no-op",
+    "reimport_same_key_other_content": "error, khong overwrite",
+    "latest_revision": 2
+  }
+}

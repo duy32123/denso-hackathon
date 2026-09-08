@@ -1,0 +1,26 @@
+{
+  "fixture_id": "F03_model_unknown",
+  "title": "Metadata may chua biet (null)",
+  "purpose": "null khong duoc coi la khop; phai hoi lai khi anh huong tinh ap dung.",
+  "validator": {
+    "outcome": "accept",
+    "expected_error_codes": []
+  },
+  "rag": [
+    {
+      "question": "Toi dung DEMO_TC_B, co reset duoc theo cach nay khong?",
+      "mode": "synthetic",
+      "expected_status": "needs_clarification",
+      "note": "machine_model null => khong duoc khang dinh la ap dung duoc."
+    },
+    {
+      "question": "Nguon mo ta thao tac gi?",
+      "mode": "synthetic",
+      "expected_status": "answered",
+      "must_cite_claims": [
+        "SYN_WF_0003_CL_001"
+      ],
+      "note": "Duoc phep mo ta nguon kem gioi han pham vi."
+    }
+  ]
+}

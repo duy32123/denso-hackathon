@@ -1,0 +1,121 @@
+{
+  "$defs": {
+    "DatasetSplit": {
+      "enum": [
+        "dev",
+        "holdout"
+      ],
+      "title": "DatasetSplit",
+      "type": "string"
+    },
+    "FileEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "minLength": 1,
+          "title": "Path",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "record_count": {
+          "minimum": 0,
+          "title": "Record Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "record_count"
+      ],
+      "title": "FileEntry",
+      "type": "object"
+    },
+    "Producer": {
+      "additionalProperties": false,
+      "properties": {
+        "team": {
+          "$ref": "#/$defs/Team"
+        },
+        "pipeline_version": {
+          "minLength": 1,
+          "title": "Pipeline Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "team",
+        "pipeline_version"
+      ],
+      "title": "Producer",
+      "type": "object"
+    },
+    "SourceType": {
+      "enum": [
+        "real",
+        "synthetic"
+      ],
+      "title": "SourceType",
+      "type": "string"
+    },
+    "Team": {
+      "enum": [
+        "team_1",
+        "team_2"
+      ],
+      "title": "Team",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "bundle_id": {
+      "minLength": 1,
+      "title": "Bundle Id",
+      "type": "string"
+    },
+    "source_type": {
+      "$ref": "#/$defs/SourceType"
+    },
+    "dataset_split": {
+      "$ref": "#/$defs/DatasetSplit"
+    },
+    "created_at": {
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|\\+00:00)$",
+      "title": "Created At",
+      "type": "string"
+    },
+    "files": {
+      "items": {
+        "$ref": "#/$defs/FileEntry"
+      },
+      "title": "Files",
+      "type": "array"
+    },
+    "producer": {
+      "$ref": "#/$defs/Producer"
+    }
+  },
+  "required": [
+    "schema_version",
+    "bundle_id",
+    "source_type",
+    "dataset_split",
+    "created_at",
+    "files",
+    "producer"
+  ],
+  "title": "Manifest",
+  "type": "object",
+  "$id": "https://knowflow.ai/schema/1.0.0/manifest.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

@@ -1,0 +1,1145 @@
+{
+  "$defs": {
+    "Attribution": {
+      "additionalProperties": false,
+      "properties": {
+        "actor_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Actor Id"
+        },
+        "label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Label"
+        },
+        "kind": {
+          "$ref": "#/$defs/AttributionKind"
+        }
+      },
+      "required": [
+        "actor_id",
+        "label",
+        "kind"
+      ],
+      "title": "Attribution",
+      "type": "object"
+    },
+    "AttributionKind": {
+      "enum": [
+        "speaker",
+        "observer",
+        "document",
+        "model"
+      ],
+      "title": "AttributionKind",
+      "type": "string"
+    },
+    "ChangeEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "changed_at": {
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|\\+00:00)$",
+          "title": "Changed At",
+          "type": "string"
+        },
+        "actor_id": {
+          "minLength": 1,
+          "title": "Actor Id",
+          "type": "string"
+        },
+        "reason": {
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        },
+        "previous_revision": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Previous Revision"
+        },
+        "id_mapping": {
+          "items": {
+            "$ref": "#/$defs/IdMapping"
+          },
+          "title": "Id Mapping",
+          "type": "array"
+        }
+      },
+      "required": [
+        "changed_at",
+        "actor_id",
+        "reason",
+        "previous_revision",
+        "id_mapping"
+      ],
+      "title": "ChangeEvent",
+      "type": "object"
+    },
+    "Claim": {
+      "additionalProperties": false,
+      "properties": {
+        "claim_id": {
+          "minLength": 1,
+          "title": "Claim Id",
+          "type": "string"
+        },
+        "text": {
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        },
+        "role": {
+          "$ref": "#/$defs/ClaimRole"
+        },
+        "evidence_type": {
+          "$ref": "#/$defs/EvidenceKind"
+        },
+        "attribution": {
+          "$ref": "#/$defs/Attribution"
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "evidence_links": {
+          "items": {
+            "$ref": "#/$defs/EvidenceLink"
+          },
+          "title": "Evidence Links",
+          "type": "array"
+        },
+        "support_status": {
+          "$ref": "#/$defs/SupportStatus"
+        },
+        "source_review": {
+          "$ref": "#/$defs/SourceReview"
+        },
+        "technical_review": {
+          "$ref": "#/$defs/TechnicalReview"
+        },
+        "conflicts_with": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Conflicts With",
+          "type": "array"
+        },
+        "supersedes_claim_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Supersedes Claim Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "claim_id",
+        "text",
+        "role",
+        "evidence_type",
+        "attribution",
+        "scope",
+        "evidence_links",
+        "support_status",
+        "source_review",
+        "technical_review",
+        "conflicts_with",
+        "supersedes_claim_ids"
+      ],
+      "title": "Claim",
+      "type": "object"
+    },
+    "ClaimRole": {
+      "description": "Bay role cua Step + role rieng cho claim duoc Relation tham chieu.",
+      "enum": [
+        "context",
+        "observation",
+        "action",
+        "rationale",
+        "condition",
+        "outcome",
+        "acceptance_criteria",
+        "relation"
+      ],
+      "title": "ClaimRole",
+      "type": "string"
+    },
+    "Context": {
+      "additionalProperties": false,
+      "properties": {
+        "manufacturer": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Manufacturer"
+        },
+        "machine_family": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Machine Family"
+        },
+        "machine_model": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Machine Model"
+        },
+        "subsystem": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Subsystem"
+        },
+        "task_type": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TaskType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "symptoms": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Symptoms",
+          "type": "array"
+        },
+        "alarm_codes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Alarm Codes",
+          "type": "array"
+        },
+        "components": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Components",
+          "type": "array"
+        },
+        "metadata_provenance": {
+          "$ref": "#/$defs/MetadataProvenance"
+        }
+      },
+      "required": [
+        "manufacturer",
+        "machine_family",
+        "machine_model",
+        "subsystem",
+        "task_type",
+        "symptoms",
+        "alarm_codes",
+        "components",
+        "metadata_provenance"
+      ],
+      "title": "Context",
+      "type": "object"
+    },
+    "DatasetSplit": {
+      "enum": [
+        "dev",
+        "holdout"
+      ],
+      "title": "DatasetSplit",
+      "type": "string"
+    },
+    "Evidence": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_id": {
+          "minLength": 1,
+          "title": "Evidence Id",
+          "type": "string"
+        },
+        "source_id": {
+          "minLength": 1,
+          "title": "Source Id",
+          "type": "string"
+        },
+        "modality": {
+          "$ref": "#/$defs/Modality"
+        },
+        "locator": {
+          "$ref": "#/$defs/Locator"
+        },
+        "quote": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Quote"
+        },
+        "observation_note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Observation Note"
+        },
+        "asset_uri": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Asset Uri"
+        },
+        "transcript_origin": {
+          "$ref": "#/$defs/TranscriptOrigin"
+        },
+        "parent_evidence_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Parent Evidence Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "evidence_id",
+        "source_id",
+        "modality",
+        "locator",
+        "quote",
+        "observation_note",
+        "asset_uri",
+        "transcript_origin",
+        "parent_evidence_ids"
+      ],
+      "title": "Evidence",
+      "type": "object"
+    },
+    "EvidenceKind": {
+      "description": "Gia tri cua Claim.evidence_type.",
+      "enum": [
+        "observed",
+        "stated",
+        "inferred"
+      ],
+      "title": "EvidenceKind",
+      "type": "string"
+    },
+    "EvidenceLink": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_id": {
+          "minLength": 1,
+          "title": "Evidence Id",
+          "type": "string"
+        },
+        "support_status": {
+          "$ref": "#/$defs/SupportStatus"
+        },
+        "explanation": {
+          "title": "Explanation",
+          "type": "string"
+        }
+      },
+      "required": [
+        "evidence_id",
+        "support_status",
+        "explanation"
+      ],
+      "title": "EvidenceLink",
+      "type": "object"
+    },
+    "FieldRef": {
+      "additionalProperties": false,
+      "description": "Lop noi giua Step va Claim. Khong sao chep text cua claim.",
+      "properties": {
+        "state": {
+          "$ref": "#/$defs/FieldState"
+        },
+        "claim_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Claim Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "state",
+        "claim_ids"
+      ],
+      "title": "FieldRef",
+      "type": "object"
+    },
+    "FieldState": {
+      "enum": [
+        "present",
+        "missing",
+        "ambiguous",
+        "not_applicable"
+      ],
+      "title": "FieldState",
+      "type": "string"
+    },
+    "IdMapping": {
+      "additionalProperties": false,
+      "properties": {
+        "old_id": {
+          "minLength": 1,
+          "title": "Old Id",
+          "type": "string"
+        },
+        "new_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "New Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "old_id",
+        "new_ids"
+      ],
+      "title": "IdMapping",
+      "type": "object"
+    },
+    "Lifecycle": {
+      "enum": [
+        "active",
+        "withdrawn"
+      ],
+      "title": "Lifecycle",
+      "type": "string"
+    },
+    "Locator": {
+      "additionalProperties": false,
+      "properties": {
+        "start_ms": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Start Ms"
+        },
+        "end_ms": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "End Ms"
+        },
+        "page": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Page"
+        },
+        "text_span": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Text Span"
+        }
+      },
+      "required": [
+        "start_ms",
+        "end_ms",
+        "page",
+        "text_span"
+      ],
+      "title": "Locator",
+      "type": "object"
+    },
+    "MetadataProvenance": {
+      "additionalProperties": false,
+      "properties": {
+        "manufacturer": {
+          "$ref": "#/$defs/ProvenanceEntry"
+        },
+        "machine_family": {
+          "$ref": "#/$defs/ProvenanceEntry"
+        },
+        "machine_model": {
+          "$ref": "#/$defs/ProvenanceEntry"
+        },
+        "subsystem": {
+          "$ref": "#/$defs/ProvenanceEntry"
+        },
+        "task_type": {
+          "$ref": "#/$defs/ProvenanceEntry"
+        },
+        "symptoms": {
+          "$ref": "#/$defs/ProvenanceEntry"
+        },
+        "alarm_codes": {
+          "$ref": "#/$defs/ProvenanceEntry"
+        },
+        "components": {
+          "$ref": "#/$defs/ProvenanceEntry"
+        }
+      },
+      "required": [
+        "manufacturer",
+        "machine_family",
+        "machine_model",
+        "subsystem",
+        "task_type",
+        "symptoms",
+        "alarm_codes",
+        "components"
+      ],
+      "title": "MetadataProvenance",
+      "type": "object"
+    },
+    "Modality": {
+      "enum": [
+        "visual",
+        "speech",
+        "text"
+      ],
+      "title": "Modality",
+      "type": "string"
+    },
+    "ProvenanceBasis": {
+      "enum": [
+        "source",
+        "curated",
+        "unknown"
+      ],
+      "title": "ProvenanceBasis",
+      "type": "string"
+    },
+    "ProvenanceEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "basis": {
+          "$ref": "#/$defs/ProvenanceBasis"
+        },
+        "source_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Ids",
+          "type": "array"
+        },
+        "note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Note"
+        }
+      },
+      "required": [
+        "basis",
+        "source_ids",
+        "note"
+      ],
+      "title": "ProvenanceEntry",
+      "type": "object"
+    },
+    "Question": {
+      "additionalProperties": false,
+      "properties": {
+        "question_id": {
+          "minLength": 1,
+          "title": "Question Id",
+          "type": "string"
+        },
+        "step_id": {
+          "minLength": 1,
+          "title": "Step Id",
+          "type": "string"
+        },
+        "target_field": {
+          "enum": [
+            "context",
+            "observation",
+            "action",
+            "rationale",
+            "condition",
+            "outcome",
+            "acceptance_criteria"
+          ],
+          "title": "Target Field",
+          "type": "string"
+        },
+        "reason": {
+          "$ref": "#/$defs/QuestionReason"
+        },
+        "question": {
+          "minLength": 1,
+          "title": "Question",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/QuestionStatus"
+        },
+        "answer_source_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Answer Source Ids",
+          "type": "array"
+        },
+        "resolution_note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Resolution Note"
+        }
+      },
+      "required": [
+        "question_id",
+        "step_id",
+        "target_field",
+        "reason",
+        "question",
+        "status",
+        "answer_source_ids",
+        "resolution_note"
+      ],
+      "title": "Question",
+      "type": "object"
+    },
+    "QuestionReason": {
+      "enum": [
+        "missing",
+        "ambiguous",
+        "conflict",
+        "identity",
+        "unaligned"
+      ],
+      "title": "QuestionReason",
+      "type": "string"
+    },
+    "QuestionStatus": {
+      "enum": [
+        "open",
+        "answered",
+        "resolved",
+        "dismissed"
+      ],
+      "title": "QuestionStatus",
+      "type": "string"
+    },
+    "Relation": {
+      "additionalProperties": false,
+      "properties": {
+        "relation_id": {
+          "minLength": 1,
+          "title": "Relation Id",
+          "type": "string"
+        },
+        "from_step_id": {
+          "minLength": 1,
+          "title": "From Step Id",
+          "type": "string"
+        },
+        "to_step_id": {
+          "minLength": 1,
+          "title": "To Step Id",
+          "type": "string"
+        },
+        "relation_type": {
+          "$ref": "#/$defs/RelationType"
+        },
+        "claim_ids": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Claim Ids",
+          "type": "array"
+        },
+        "condition_claim_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Condition Claim Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "relation_id",
+        "from_step_id",
+        "to_step_id",
+        "relation_type",
+        "claim_ids",
+        "condition_claim_ids"
+      ],
+      "title": "Relation",
+      "type": "object"
+    },
+    "RelationType": {
+      "enum": [
+        "observed_next",
+        "requires",
+        "branch_if",
+        "repeated_step",
+        "corrects"
+      ],
+      "title": "RelationType",
+      "type": "string"
+    },
+    "ReviewDecision": {
+      "enum": [
+        "source_checked",
+        "expert_validated",
+        "rejected"
+      ],
+      "title": "ReviewDecision",
+      "type": "string"
+    },
+    "ReviewDimension": {
+      "enum": [
+        "source",
+        "technical"
+      ],
+      "title": "ReviewDimension",
+      "type": "string"
+    },
+    "ReviewEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "review_id": {
+          "minLength": 1,
+          "title": "Review Id",
+          "type": "string"
+        },
+        "target_type": {
+          "$ref": "#/$defs/ReviewTargetType"
+        },
+        "target_id": {
+          "minLength": 1,
+          "title": "Target Id",
+          "type": "string"
+        },
+        "dimension": {
+          "$ref": "#/$defs/ReviewDimension"
+        },
+        "decision": {
+          "$ref": "#/$defs/ReviewDecision"
+        },
+        "reviewer_id": {
+          "minLength": 1,
+          "title": "Reviewer Id",
+          "type": "string"
+        },
+        "reviewer_role": {
+          "title": "Reviewer Role",
+          "type": "string"
+        },
+        "reviewed_at": {
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|\\+00:00)$",
+          "title": "Reviewed At",
+          "type": "string"
+        },
+        "note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Note"
+        }
+      },
+      "required": [
+        "review_id",
+        "target_type",
+        "target_id",
+        "dimension",
+        "decision",
+        "reviewer_id",
+        "reviewer_role",
+        "reviewed_at",
+        "note"
+      ],
+      "title": "ReviewEvent",
+      "type": "object"
+    },
+    "ReviewTargetType": {
+      "enum": [
+        "claim",
+        "relation"
+      ],
+      "title": "ReviewTargetType",
+      "type": "string"
+    },
+    "Scope": {
+      "additionalProperties": false,
+      "properties": {
+        "level": {
+          "$ref": "#/$defs/ScopeLevel"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        }
+      },
+      "required": [
+        "level",
+        "description"
+      ],
+      "title": "Scope",
+      "type": "object"
+    },
+    "ScopeLevel": {
+      "enum": [
+        "case",
+        "source_general",
+        "expert_defined"
+      ],
+      "title": "ScopeLevel",
+      "type": "string"
+    },
+    "SourceReview": {
+      "enum": [
+        "pending",
+        "source_checked",
+        "rejected"
+      ],
+      "title": "SourceReview",
+      "type": "string"
+    },
+    "SourceType": {
+      "enum": [
+        "real",
+        "synthetic"
+      ],
+      "title": "SourceType",
+      "type": "string"
+    },
+    "Step": {
+      "additionalProperties": false,
+      "properties": {
+        "step_id": {
+          "minLength": 1,
+          "title": "Step Id",
+          "type": "string"
+        },
+        "display_order": {
+          "minimum": 1,
+          "title": "Display Order",
+          "type": "integer"
+        },
+        "title": {
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "fields": {
+          "$ref": "#/$defs/StepFields"
+        }
+      },
+      "required": [
+        "step_id",
+        "display_order",
+        "title",
+        "fields"
+      ],
+      "title": "Step",
+      "type": "object"
+    },
+    "StepFields": {
+      "additionalProperties": false,
+      "description": "Dung bay khoa, khong hon khong kem.",
+      "properties": {
+        "context": {
+          "$ref": "#/$defs/FieldRef"
+        },
+        "observation": {
+          "$ref": "#/$defs/FieldRef"
+        },
+        "action": {
+          "$ref": "#/$defs/FieldRef"
+        },
+        "rationale": {
+          "$ref": "#/$defs/FieldRef"
+        },
+        "condition": {
+          "$ref": "#/$defs/FieldRef"
+        },
+        "outcome": {
+          "$ref": "#/$defs/FieldRef"
+        },
+        "acceptance_criteria": {
+          "$ref": "#/$defs/FieldRef"
+        }
+      },
+      "required": [
+        "context",
+        "observation",
+        "action",
+        "rationale",
+        "condition",
+        "outcome",
+        "acceptance_criteria"
+      ],
+      "title": "StepFields",
+      "type": "object"
+    },
+    "SupportStatus": {
+      "enum": [
+        "supported",
+        "insufficient",
+        "contradicted",
+        "ambiguous"
+      ],
+      "title": "SupportStatus",
+      "type": "string"
+    },
+    "TaskType": {
+      "enum": [
+        "troubleshooting",
+        "recovery",
+        "maintenance",
+        "inspection",
+        "other"
+      ],
+      "title": "TaskType",
+      "type": "string"
+    },
+    "TechnicalReview": {
+      "enum": [
+        "not_requested",
+        "pending",
+        "expert_validated",
+        "rejected"
+      ],
+      "title": "TechnicalReview",
+      "type": "string"
+    },
+    "TranscriptOrigin": {
+      "enum": [
+        "asr",
+        "official_caption",
+        "human",
+        "none"
+      ],
+      "title": "TranscriptOrigin",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "workflow_id": {
+      "minLength": 1,
+      "title": "Workflow Id",
+      "type": "string"
+    },
+    "revision": {
+      "minimum": 1,
+      "title": "Revision",
+      "type": "integer"
+    },
+    "source_type": {
+      "$ref": "#/$defs/SourceType"
+    },
+    "dataset_split": {
+      "$ref": "#/$defs/DatasetSplit"
+    },
+    "title": {
+      "minLength": 1,
+      "title": "Title",
+      "type": "string"
+    },
+    "language": {
+      "minLength": 1,
+      "title": "Language",
+      "type": "string"
+    },
+    "created_at": {
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|\\+00:00)$",
+      "title": "Created At",
+      "type": "string"
+    },
+    "supersedes_revision": {
+      "anyOf": [
+        {
+          "minimum": 1,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Supersedes Revision"
+    },
+    "lifecycle": {
+      "$ref": "#/$defs/Lifecycle"
+    },
+    "source_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Source Ids",
+      "type": "array"
+    },
+    "context": {
+      "$ref": "#/$defs/Context"
+    },
+    "steps": {
+      "items": {
+        "$ref": "#/$defs/Step"
+      },
+      "title": "Steps",
+      "type": "array"
+    },
+    "claims": {
+      "items": {
+        "$ref": "#/$defs/Claim"
+      },
+      "title": "Claims",
+      "type": "array"
+    },
+    "evidence": {
+      "items": {
+        "$ref": "#/$defs/Evidence"
+      },
+      "title": "Evidence",
+      "type": "array"
+    },
+    "relations": {
+      "items": {
+        "$ref": "#/$defs/Relation"
+      },
+      "title": "Relations",
+      "type": "array"
+    },
+    "questions": {
+      "items": {
+        "$ref": "#/$defs/Question"
+      },
+      "title": "Questions",
+      "type": "array"
+    },
+    "review_events": {
+      "items": {
+        "$ref": "#/$defs/ReviewEvent"
+      },
+      "title": "Review Events",
+      "type": "array"
+    },
+    "change_log": {
+      "items": {
+        "$ref": "#/$defs/ChangeEvent"
+      },
+      "title": "Change Log",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "workflow_id",
+    "revision",
+    "source_type",
+    "dataset_split",
+    "title",
+    "language",
+    "created_at",
+    "supersedes_revision",
+    "lifecycle",
+    "source_ids",
+    "context",
+    "steps",
+    "claims",
+    "evidence",
+    "relations",
+    "questions",
+    "review_events",
+    "change_log"
+  ],
+  "title": "Workflow",
+  "type": "object",
+  "$id": "https://knowflow.ai/schema/1.0.0/workflow.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

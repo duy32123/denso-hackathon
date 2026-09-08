@@ -1,0 +1,12 @@
+{
+  "fixture_id": "F10_corpus_mixing",
+  "title": "Synthetic lot vao corpus real",
+  "purpose": "Negative test: mot bundle chi duoc chua mot source_type. Phai tu choi nguyen goi.",
+  "validator": {
+    "outcome": "reject",
+    "expected_error_codes": [
+      "V02"
+    ]
+  },
+  "rag": []
+}

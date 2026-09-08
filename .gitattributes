@@ -1,0 +1,9 @@
+# Checksum trong manifest.json duoc tinh tren byte cua tep JSONL.
+# Neu Git doi LF -> CRLF khi checkout, sha256 se lech va V02 bao loi sai.
+# Vi vay khoa eol=lf cho toan repo.
+* text=auto eol=lf
+
+*.docx binary
+*.png binary
+*.jpg binary
+*.mp4 binary

@@ -45,4 +45,4 @@ phần còn lại là kỷ luật của người viết code:
 4. **Phiên bản bất biến.** Câu trả lời giữ `workflow_id`, `revision`, `claim_id`, `evidence_id`.
    Cùng khóa khác nội dung là lỗi, không phải overwrite.
 
-Trạng thái hợp đồng và 7 quyết định còn phải chốt: [contracts/CHANGELOG.md](contracts/CHANGELOG.md).
+Trạng thái hợp đồng và bảy quyết định D-01…D-07 (đã chốt 2026-09-09): [contracts/CHANGELOG.md](contracts/CHANGELOG.md).

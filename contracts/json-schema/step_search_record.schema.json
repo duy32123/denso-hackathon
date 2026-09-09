@@ -1,0 +1,398 @@
+{
+  "$defs": {
+    "ClaimReviewFlag": {
+      "additionalProperties": false,
+      "description": "Trang thai cua mot claim, sao chep vao index de loc ma khong phai join.",
+      "properties": {
+        "claim_id": {
+          "minLength": 1,
+          "title": "Claim Id",
+          "type": "string"
+        },
+        "evidence_type": {
+          "$ref": "#/$defs/EvidenceKind"
+        },
+        "support_status": {
+          "$ref": "#/$defs/SupportStatus"
+        },
+        "source_review": {
+          "$ref": "#/$defs/SourceReview"
+        },
+        "technical_review": {
+          "$ref": "#/$defs/TechnicalReview"
+        },
+        "has_unresolved_conflict": {
+          "title": "Has Unresolved Conflict",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "claim_id",
+        "evidence_type",
+        "support_status",
+        "source_review",
+        "technical_review",
+        "has_unresolved_conflict"
+      ],
+      "title": "ClaimReviewFlag",
+      "type": "object"
+    },
+    "DatasetSplit": {
+      "enum": [
+        "dev",
+        "holdout"
+      ],
+      "title": "DatasetSplit",
+      "type": "string"
+    },
+    "EvidenceKind": {
+      "description": "Gia tri cua Claim.evidence_type.",
+      "enum": [
+        "observed",
+        "stated",
+        "inferred"
+      ],
+      "title": "EvidenceKind",
+      "type": "string"
+    },
+    "IndexBuild": {
+      "additionalProperties": false,
+      "description": "Dau vet de tai lap mot lan build index.",
+      "properties": {
+        "index_build_id": {
+          "minLength": 1,
+          "title": "Index Build Id",
+          "type": "string"
+        },
+        "snapshot_hash": {
+          "minLength": 1,
+          "title": "Snapshot Hash",
+          "type": "string"
+        },
+        "embedding_model": {
+          "minLength": 1,
+          "title": "Embedding Model",
+          "type": "string"
+        },
+        "embedding_version": {
+          "minLength": 1,
+          "title": "Embedding Version",
+          "type": "string"
+        },
+        "text_template_version": {
+          "minLength": 1,
+          "title": "Text Template Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "index_build_id",
+        "snapshot_hash",
+        "embedding_model",
+        "embedding_version",
+        "text_template_version"
+      ],
+      "title": "IndexBuild",
+      "type": "object"
+    },
+    "Lifecycle": {
+      "enum": [
+        "active",
+        "withdrawn"
+      ],
+      "title": "Lifecycle",
+      "type": "string"
+    },
+    "SearchMetadata": {
+      "additionalProperties": false,
+      "description": "Metadata dung de LOC truoc khi truy xuat (muc 7).",
+      "properties": {
+        "manufacturer": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Manufacturer"
+        },
+        "machine_family": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Machine Family"
+        },
+        "machine_model": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Machine Model"
+        },
+        "subsystem": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Subsystem"
+        },
+        "task_type": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TaskType"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "symptoms": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Symptoms",
+          "type": "array"
+        },
+        "alarm_codes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Alarm Codes",
+          "type": "array"
+        },
+        "components": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Components",
+          "type": "array"
+        }
+      },
+      "required": [
+        "manufacturer",
+        "machine_family",
+        "machine_model",
+        "subsystem",
+        "task_type",
+        "symptoms",
+        "alarm_codes",
+        "components"
+      ],
+      "title": "SearchMetadata",
+      "type": "object"
+    },
+    "SearchText": {
+      "additionalProperties": false,
+      "description": "Van ban dung de danh chi muc.\n\n`search_text_original` dung ngon ngu cua workflow (Workflow.language).\n`search_text_vi` chi co khi doi 2 dich sang tieng Viet de ho tro truy xuat\ncheo ngon ngu; da dich thi bat buoc ghi lai model va version da dich.",
+      "properties": {
+        "search_text_original": {
+          "minLength": 1,
+          "title": "Search Text Original",
+          "type": "string"
+        },
+        "search_text_vi": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Search Text Vi"
+        },
+        "translation_model": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Translation Model"
+        },
+        "translation_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Translation Version"
+        }
+      },
+      "required": [
+        "search_text_original"
+      ],
+      "title": "SearchText",
+      "type": "object"
+    },
+    "SourceReview": {
+      "enum": [
+        "pending",
+        "source_checked",
+        "rejected"
+      ],
+      "title": "SourceReview",
+      "type": "string"
+    },
+    "SourceType": {
+      "enum": [
+        "real",
+        "synthetic"
+      ],
+      "title": "SourceType",
+      "type": "string"
+    },
+    "SupportStatus": {
+      "enum": [
+        "supported",
+        "insufficient",
+        "contradicted",
+        "ambiguous"
+      ],
+      "title": "SupportStatus",
+      "type": "string"
+    },
+    "TaskType": {
+      "enum": [
+        "troubleshooting",
+        "recovery",
+        "maintenance",
+        "inspection",
+        "other"
+      ],
+      "title": "TaskType",
+      "type": "string"
+    },
+    "TechnicalReview": {
+      "enum": [
+        "not_requested",
+        "pending",
+        "expert_validated",
+        "rejected"
+      ],
+      "title": "TechnicalReview",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Tang 2: tim dung chi tiet trong mot quy trinh.",
+  "properties": {
+    "workflow_id": {
+      "minLength": 1,
+      "title": "Workflow Id",
+      "type": "string"
+    },
+    "revision": {
+      "title": "Revision",
+      "type": "integer"
+    },
+    "source_type": {
+      "$ref": "#/$defs/SourceType"
+    },
+    "dataset_split": {
+      "$ref": "#/$defs/DatasetSplit"
+    },
+    "lifecycle": {
+      "$ref": "#/$defs/Lifecycle"
+    },
+    "language": {
+      "pattern": "^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$",
+      "title": "Language",
+      "type": "string"
+    },
+    "source_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Source Ids",
+      "type": "array"
+    },
+    "metadata": {
+      "$ref": "#/$defs/SearchMetadata"
+    },
+    "text": {
+      "$ref": "#/$defs/SearchText"
+    },
+    "build": {
+      "$ref": "#/$defs/IndexBuild"
+    },
+    "record_type": {
+      "const": "step",
+      "default": "step",
+      "title": "Record Type",
+      "type": "string"
+    },
+    "step_id": {
+      "minLength": 1,
+      "title": "Step Id",
+      "type": "string"
+    },
+    "display_order": {
+      "title": "Display Order",
+      "type": "integer"
+    },
+    "title": {
+      "minLength": 1,
+      "title": "Title",
+      "type": "string"
+    },
+    "claim_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Claim Ids",
+      "type": "array"
+    },
+    "claim_review_flags": {
+      "items": {
+        "$ref": "#/$defs/ClaimReviewFlag"
+      },
+      "title": "Claim Review Flags",
+      "type": "array"
+    }
+  },
+  "required": [
+    "workflow_id",
+    "revision",
+    "source_type",
+    "dataset_split",
+    "lifecycle",
+    "language",
+    "source_ids",
+    "metadata",
+    "text",
+    "build",
+    "step_id",
+    "display_order",
+    "title",
+    "claim_ids",
+    "claim_review_flags"
+  ],
+  "title": "StepSearchRecord",
+  "type": "object",
+  "$id": "https://knowflow.ai/schema/1.0.0/step_search_record.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

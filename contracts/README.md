@@ -8,8 +8,12 @@ không đội nào viết bản validator riêng.
 contracts/
   schema/knowflow_contracts/   # Pydantic models + V01-V10 + chính sách truy xuất
   json-schema/                 # SINH RA từ models, đừng sửa tay
-  CHANGELOG.md                 # phiên bản + 7 quyết định D-01…D-07 cần chốt
+  CHANGELOG.md                 # phiên bản + 7 quyết định D-01…D-07 (đã chốt 2026-09-09)
 ```
+
+Ranh giới sở hữu: `models.py` là **Canonical KB** của đội 1. `search.py` và
+`retrieval_policy.py` là **dữ liệu dẫn xuất** của đội 2 — sinh lại được từ snapshot,
+không bao giờ ghi ngược vào KB, không bao giờ được trích dẫn như bằng chứng.
 
 Ví dụ bundle nằm ở [`data/fixtures/`](../data/fixtures) (10 contract fixture),
 sinh lại bằng `python scripts/build_fixtures.py`.
@@ -43,6 +47,16 @@ blockers = claim_blockers(claim, workflow, mode=QueryMode.REAL, is_latest_indexe
 
 `blockers` rỗng mới được khẳng định. Nếu không rỗng, hiển thị lý do cho người dùng
 thay vì im lặng bỏ claim.
+
+Trước khi dựng evidence package (D-05, D-06):
+
+```python
+from knowflow_contracts import dedup_claim_hits, spans_multiple_workflows
+
+claims = dedup_claim_hits(hits)          # khóa (workflow_id, revision, claim_id), điểm = max
+if spans_multiple_workflows(claims):     # không ghép nhiều quy trình thành một
+    ...
+```
 
 ## Sinh lại JSON Schema
 

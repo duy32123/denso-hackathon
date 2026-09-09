@@ -48,10 +48,13 @@ SCHEMA_VERSION = "1.0.0"
 _RFC3339_UTC = r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|\+00:00)$"
 _RFC3339_ANY = r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2})$"
 _SHA256 = r"^[0-9a-f]{64}$"
+# D-03: ma ngon ngu BCP-47 rut gon, chu thuong o subtag dau ("vi", "en", "en-US").
+_LANGUAGE = r"^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$"
 
 Rfc3339Utc = Annotated[str, StringConstraints(pattern=_RFC3339_UTC)]
 Rfc3339 = Annotated[str, StringConstraints(pattern=_RFC3339_ANY)]
 Sha256 = Annotated[str, StringConstraints(pattern=_SHA256)]
+LanguageCode = Annotated[str, StringConstraints(pattern=_LANGUAGE)]
 NonEmptyStr = Annotated[str, StringConstraints(min_length=1)]
 
 
@@ -95,7 +98,8 @@ class Source(Strict):
     title: NonEmptyStr
     url: str | None
     asset_uri: str | None
-    language: str | None
+    # D-03: ngon ngu THUC TE cua nguon, khong phai ngon ngu hien thi.
+    language: LanguageCode | None
     duration_ms: int | None = Field(ge=0)
     publisher: str | None
     presenter: str | None
@@ -305,7 +309,9 @@ class Workflow(Strict):
     source_type: SourceType
     dataset_split: DatasetSplit
     title: NonEmptyStr
-    language: NonEmptyStr
+    # D-03: ngon ngu dung de viet Claim.text. Video Haas tieng Anh => "en".
+    # Evidence.quote luon giu nguyen van ngon ngu nguon, khong dich.
+    language: LanguageCode
     created_at: Rfc3339Utc
     supersedes_revision: int | None = Field(ge=1)
     lifecycle: Lifecycle

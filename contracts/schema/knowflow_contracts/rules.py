@@ -104,6 +104,36 @@ def _v02_corpus(bundle: ParsedBundle, sources: dict[str, Source], report: Report
                     f"tron corpus: nguon {sid} la {src.source_type}, workflow la {wf.source_type}",
                 )
 
+        _v02_language(wf, sources, report)
+
+
+def _v02_language(wf: Workflow, sources: dict[str, Source], report: Report) -> None:
+    """D-03: Workflow.language la ngon ngu dung de viet Claim.text.
+
+    Claim phai duoc viet bang ngon ngu cua nguon (video Haas tieng Anh => "en"),
+    vi ban dich co the lam sai thuat ngu, ma canh bao hoac muc do chac chan cua
+    nguoi noi. Dich sang tieng Viet la viec cua search index, khong phai cua KB.
+    """
+    langs = {sources[sid].language for sid in wf.source_ids if sid in sources and sources[sid].language}
+    if not langs:
+        return
+
+    path = _wf_path(wf, "language")
+    if wf.language not in langs:
+        report.error(
+            "V02",
+            path,
+            f"language={wf.language} khong khop ngon ngu cua nguon ({sorted(langs)}): "
+            "Claim.text phai viet bang ngon ngu nguon, khong dich (D-03)",
+        )
+    if len(langs) > 1:
+        report.warn(
+            "V02",
+            path,
+            f"workflow dung nguon nhieu ngon ngu ({sorted(langs)}): kiem lai claim.text va quote "
+            "khong bi dich lan",
+        )
+
 
 # --- V03: ID va tham chieu ---------------------------------------------------
 

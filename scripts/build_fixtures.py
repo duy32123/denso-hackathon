@@ -293,11 +293,13 @@ def write_bundle(
         ],
         "producer": {"team": team, "pipeline_version": "fixtures-1.0.0"},
     }
+    # newline="\n": tep bundle luon LF. Checksum tinh tren byte, nen eol la mot phan
+    # cua hop dong chu khong phai chi tiet trinh bay (xem .gitattributes).
     (target / "manifest.json").write_text(
-        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n"
     )
     (target / "expected.json").write_text(
-        json.dumps(expected, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        json.dumps(expected, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n"
     )
     return target
 
@@ -707,6 +709,7 @@ def main() -> int:
     (OUT / "index.json").write_text(
         json.dumps({"schema_version": "1.0.0", "fixtures": index}, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
+        newline="\n",
     )
     print(f"{len(index)} fixture -> {OUT}")
     return 0

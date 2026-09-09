@@ -17,6 +17,7 @@ from . import __version__
 from .issues import Report
 from .loader import load_bundle
 from .models import AnswerResponse, Manifest, QueryRequest, Source, Workflow
+from .search import StepSearchRecord, WorkflowSearchRecord
 from .snapshot import snapshot_content_hash
 from .validator import validate_bundle
 
@@ -26,6 +27,9 @@ EXPORTED_MODELS = {
     "workflow": Workflow,
     "query_request": QueryRequest,
     "answer_response": AnswerResponse,
+    # Dan xuat, do doi 2 so huu (D-03, D-06). Khong thuoc Canonical KB.
+    "workflow_search_record": WorkflowSearchRecord,
+    "step_search_record": StepSearchRecord,
 }
 
 

@@ -31,7 +31,22 @@ from .models import (
     Step,
     Workflow,
 )
+from .retrieval_policy import (
+    ClaimHit,
+    DedupedClaim,
+    dedup_claim_hits,
+    procedure_workflow_key,
+    spans_multiple_workflows,
+)
 from .rules import check_bundle
+from .search import (
+    ClaimReviewFlag,
+    IndexBuild,
+    SearchMetadata,
+    SearchText,
+    StepSearchRecord,
+    WorkflowSearchRecord,
+)
 from .snapshot import decide_reimport, snapshot_content_hash
 from .validator import validate_bundle
 
@@ -43,11 +58,15 @@ __all__ = [
     "AnswerResponse",
     "Citation",
     "Claim",
+    "ClaimHit",
+    "ClaimReviewFlag",
     "Context",
+    "DedupedClaim",
     "EntityRef",
     "Evidence",
     "EvidenceLink",
     "FieldRef",
+    "IndexBuild",
     "Issue",
     "Manifest",
     "ParsedBundle",
@@ -56,19 +75,26 @@ __all__ = [
     "Relation",
     "Report",
     "ReviewEvent",
+    "SearchMetadata",
+    "SearchText",
     "Severity",
     "Source",
     "Step",
+    "StepSearchRecord",
     "Workflow",
+    "WorkflowSearchRecord",
     "answer_qualifier",
     "check_bundle",
     "claim_blockers",
     "decide_reimport",
+    "dedup_claim_hits",
     "derive_support_status",
     "is_assertable",
     "load_bundle",
+    "procedure_workflow_key",
     "sha256_bytes",
     "sha256_file",
     "snapshot_content_hash",
+    "spans_multiple_workflows",
     "validate_bundle",
 ]

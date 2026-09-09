@@ -70,7 +70,11 @@ def cmd_export_json_schema(args: argparse.Namespace) -> int:
         schema["$id"] = f"https://knowflow.ai/schema/1.0.0/{name}.json"
         schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
         path = out / f"{name}.schema.json"
-        path.write_text(json.dumps(schema, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        # newline="\n": CI so sanh bang `git diff --exit-code`, eol phai on dinh
+        # giua Windows va Linux (xem .gitattributes).
+        path.write_text(
+            json.dumps(schema, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n"
+        )
         print(f"wrote {path}")
     return 0
 

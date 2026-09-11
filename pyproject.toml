@@ -20,5 +20,5 @@ packages = ["contracts/schema/knowflow_contracts"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-pythonpath = ["contracts/schema"]
+pythonpath = ["contracts/schema", "."]
 addopts = "-q"

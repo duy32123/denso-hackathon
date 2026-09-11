@@ -172,6 +172,14 @@ assessment — nothing seen so far suggests they would.
   confirming what is reserved — it must not inform workflow construction.
 - Do **not** expect `data/media/haas_d1a/*.mp4` to exist for anyone else — it is a local,
   gitignored processing input, not a handoff artifact.
+- `acquisition/export/haas_pilot_dev_bundle/` and
+  `acquisition/export/haas_pilot_holdout_bundle/` — matching `manifest.json` +
+  `sources.jsonl` + empty `workflows.jsonl` for each split (`dataset_split=dev` and
+  `dataset_split=holdout` respectively), both independently validated via
+  `knowflow-contracts validate`. This mirrors the Team 1 plan document's final handoff
+  checklist item ("bundle real/dev dùng demo và bundle real/holdout phục vụ evaluator;
+  mỗi bundle đủ manifest, sources, workflows") — D1-B/D2-A should later populate
+  `workflows.jsonl` in each bundle in place, not create a parallel structure.
 
 ## 15. Checksums for handoff artifacts (sha256)
 
@@ -183,6 +191,8 @@ ed4380dde64ba34ad3c8492668c1107d9efc6733340bed62e4c75a5d615c90c5  data/catalogs/
 ac2c7531cc973b93d90d2307f0c78b2f0409683d752e8a15a25bf76f1139c8b8  acquisition/video_catalog/haas_d1a_source_candidates.csv
 57c0d17094db3d40870d9fac09e36f2f16b54c68698f1fded08aadc9081cf819  acquisition/export/haas_pilot_dev_bundle/manifest.json
 e705acc5dba6653e07bdf5c7ebc615f82bd7ff92a9d4c1626021572e13a11b86  acquisition/export/haas_pilot_dev_bundle/sources.jsonl
+52bb761d1cbd43770c91258147f09d2f702a9498c76498ee3f4c145c8cc87aee  acquisition/export/haas_pilot_holdout_bundle/manifest.json
+1b448464affdbdecc7dd70abe43decaba4d1c61f9ada03af1575864ed8a75b98  acquisition/export/haas_pilot_holdout_bundle/sources.jsonl
 7ffe335737c13e9f424d68a1f2f41b343595b02d2ce64541036713d59e4c475b  acquisition/preprocessing/haas_d1a_media_inventory.jsonl
 addab43842e56993843a11b9cd03faf73b75bb5a20b8867bc5427d85d7b11ec0  docs/data_rights_register.md
 b5540919258a5e3a147095835f9e4ceb22138414e7dc05bc6b58b10bc158aa6a  docs/haas_d1a_quality_report.md
@@ -198,8 +208,8 @@ here.
 cd denso-hackathon
 python -m pip install -e ".[dev]"
 
-# schema validation of the dev bundle (real check, this repo's own validator):
-knowflow-contracts validate acquisition/export/haas_pilot_dev_bundle -v
+# schema validation of both bundles (real check, this repo's own validator):
+knowflow-contracts validate acquisition/export/haas_pilot_dev_bundle acquisition/export/haas_pilot_holdout_bundle -v
 
 # unit tests (ID allocator + extra D1-A checks) and the repo's own contract tests:
 pytest -q

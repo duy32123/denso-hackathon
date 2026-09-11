@@ -14,8 +14,8 @@ verdicts.
 | Publisher attribution supported | **PASS** | YouTube oEmbed `author_name="Haas Automation, Inc."` and yt-dlp `uploader`/`channel` both = "Haas Automation, Inc." — two independent confirmations, neither derived from the search-result title. |
 | Transcript span start/end align with source | **PASS** | First cue `00:00:00.000 --> 00:00:09.390` = video's actual opening line ("today we're going to talk about your sidemount to change a double arm"); last cue `00:02:59.370 --> 00:03:04.890` ends with the sign-off ("visit Haas CNC comm and thanks for watching"), consistent with `duration_ms=191000`. |
 | ≥3 utterances have correct timestamps | **PASS** | `00:01:44.340` "in extreme cases you may experience drop in tools"; `00:02:04.260` "let's check the clearance between the tool holder and the retaining fingers"; `00:02:26.100` "make sure that there's a ... gap between the finger and the V flange" — all three checked against the cue boundaries in the retained `.vtt`. |
-| Negation/terminology/numbers/units preserved | **CONCERN, not silently fixed** | The official caption at `00:02:26.100` reads "a 20,000 meter gap" — almost certainly a YouTube auto-punctuation/transcription artifact for a feeler-gauge spec (likely ".020 inch" / "20 thousandths", consistent with TG0128's independently-reported 0.014–0.020 in range). This session did **not** edit `corrected.json` to "fix" this number: no primary-source confirmation of the exact intended value was obtained (TG0128's own body text could not be re-fetched — see access note), and the D1-A rule is to correct only with an auditable diff, not to guess. Flagged here as an open item for whoever next has haascnc.com access to confirm against TG0128 directly. |
-| Clip/keyframe maps to original time | **N/A** | No clips or keyframes were produced this session (video file not downloaded; see rights register). |
+| Negation/terminology/numbers/units preserved | **PASS (corrected, with citation)** | The official caption at `00:02:26.100` originally read "a 20,000 meter gap". TG0128's own retrieved text (SRC_HAAS_0002) states verbatim: "The correct space is between 0.014 in (0.36 mm) and 0.020 in (0.51 mm)." `corrected.json` now reads "...a 0.020 in (0.51 mm) gap..." — see `acquisition/preprocessing/transcripts/SRC_HAAS_0001/corrections.diff` for the exact before/after and citation. `raw.json` is untouched. |
+| Clip/keyframe maps to original time | **PASS** | 3 keyframes extracted at `00:00:41.220`, `00:02:04.300`, `00:02:26.100` — original-video ms, unchanged. `kf_0124300.jpg` (00:02:04.3) was opened and visually inspected this session: shows a presenter beside an open Haas VMC with the tool changer visible, consistent with the transcript's "let's get the double arm in a position where we can check the clearance" at that timestamp. |
 | Access restrictions documented | **PASS** | `docs/data_rights_register.md` row for SRC_HAAS_0001. |
 | No metadata inferred from search-result title alone | **PASS** | `presenter`/`presenter_role` left `null` — the retained caption transcript is anonymous first-person narration; no name is self-stated, so none was invented even though earlier web-search snippets loosely attributed similar Haas videos to a named presenter. |
 
@@ -24,7 +24,9 @@ verdicts.
 | Check | Status | Evidence |
 |---|---|---|
 | Direct URL opens | **PASS (earlier in session)** | Confirmed HTTP 200, 349,057 bytes, title "Side Mount Tool Changer (SMTC) - Double Arm / Cambox - Troubleshooting Guide - TG0128" matched exactly. |
-| Body content re-verifiable now | **FAIL (documented, not concealed)** | A later fetch attempt to re-save the body for hashing returned HTTP 403 (Cloudflare interstitial). `raw_text`/`content_sha256` are `null`. This is recorded as an open gap, not glossed over. |
+| Body content retained and hashed | **PASS (via manual retrieval)** | Automated re-fetch stayed blocked (HTTP 403); the operator opened the same public URL directly and relayed the visible text, now stored as `raw_text` and hashed as `content_sha256=a8a47506...`. Provenance recorded honestly as operator-relayed, not an automated fetch. |
+| Reasoning/outcome coverage | **PASS** | Full symptom → possible-cause → corrective-action table (10 distinct alarm groups incl. 2066, 622, 627, 628/673, 855); explicit pass/fail criteria ("less than 1/4 in (6 mm) of lost motion"; feeler-gauge range 0.014–0.020 in); step-by-step manual-recovery procedure. |
+| Cross-references its own related sources | **PASS** | Page text explicitly names "Video - Tool Changer Recovery - Side Mount Tool Changer (SMTC)" and "VMC, HMC - Side-Mount Tool Changer - Manual Recovery" as the alarm-2066 remedy — corroborating, from the primary source itself, the curated FAM-SMTC-RECOVERY link already recorded between SRC_HAAS_0003 and SRC_HAAS_0004. |
 
 ## SRC_HAAS_0003 — Tool Changer Recovery; Haas Side Mount Tool Changer (SMTC)
 
@@ -38,13 +40,18 @@ verdicts.
 | ≥3 utterances have correct timestamps | **PASS** | `00:01:05.480` "I see that I've got this 2066 tool changer fault alarm"; `00:01:43.370` "press recover now it gives me the option of either restoring the tool changer or recovering a tap"; `00:04:02.900` "raise the pocket up ... now it's telling me no manual recovery action is required". |
 | Negation/terminology/numbers/units preserved | **PASS** | Alarm code "2066" is stated clearly and unambiguously twice in the caption at `00:01:05` and `00:01:32` — no correction needed. |
 | Access restrictions documented | **PASS** | `docs/data_rights_register.md` row for SRC_HAAS_0003. |
-| No metadata inferred from search-title alone | **PASS** | `alarm_codes=["2066"]` (catalog) taken directly from spoken caption text, not the video's title or a search snippet. |
+| No metadata inferred from search-title alone | **PASS** | `alarm_codes=["2066"]` (catalog) taken directly from spoken caption text, not the video's title or a search snippet; independently corroborated by TG0128's own symptom table, which lists "Alarm 2066 TOOL CHANGER HOME POSITION FAULT" as one of its entries. |
+| Clip/keyframe maps to original time | **PASS** | 3 keyframes extracted at `00:01:05.500`, `00:01:56.500`, `00:04:02.900`. `kf_0065500.jpg` (00:01:05.5) was opened and visually inspected this session: the machine control screen literally reads **"2066 TOOL CHANGER HOME POSITION FAULT"** with an "AUTOMATIC RECOVERY" label — a direct visual match to the transcript's "I see that I've got this 2066 tool changer fault alarm" at the same timestamp. |
 
 ## SRC_HAAS_0004 — Manual Recovery how-to guide (companion to SRC_HAAS_0003)
 
-Same status as SRC_HAAS_0002: URL/title confirmed HTTP 200 (301,243 bytes) earlier this
-session; body not retained before the host began challenging further requests.
-`raw_text`/`content_sha256` are `null` — **FAIL (documented)**, not concealed.
+URL/title confirmed HTTP 200 (301,243 bytes) earlier this session; body still not
+retained — automated re-fetch remains blocked (Cloudflare) and, unlike TG0128, no manual
+relay of this specific page's text was provided this session. `raw_text`/
+`content_sha256` remain `null` — **FAIL (documented)**, not concealed. TG0128's own text
+independently confirms this page is the correct alarm-2066 remedy ("VMC, HMC -
+Side-Mount Tool Changer - Manual Recovery"), so the URL/relationship is not in doubt —
+only the body text is still outstanding.
 
 ## SRC_HAAS_0005 — Replace a Tool Pocket on Your Haas SMTC
 
@@ -57,6 +64,7 @@ session; body not retained before the host began challenging further requests.
 | ≥3 utterances timestamped | **PASS** | `00:01:33.540` "disconnect the main air ... remove the pilot check valve"; `00:02:22.680` "rotate that cam follower, make sure that it's spinning freely"; `00:03:53.460` "release the e-stop and run the tool changer". |
 | Presenter | **PASS, partial** | `presenter="Orville"` self-stated in audio ("hi I'm Orville"). `presenter_role=null` — the haascnc.com page that might state a role could not be fetched this session; left null rather than borrowed from a third-party search snippet. |
 | Access restrictions documented | **PASS** | `docs/data_rights_register.md` row for SRC_HAAS_0005. |
+| Clip/keyframe maps to original time | **PASS** | 3 keyframes extracted at `00:00:11.800`, `00:02:22.700`, `00:04:04.800`. `kf_0011800.jpg` (00:00:11.8) was opened and visually inspected this session: shows the presenter beside the open carousel/pocket area, consistent with the transcript's "today we're going to replace a damaged pocket on the side mount tool changer" at that timestamp. |
 
 ## Holdout sources (SRC_HAAS_0006, SRC_HAAS_0007)
 
@@ -74,7 +82,9 @@ QC here is limited to confirming that constraint was actually honored:
 |---|---|
 | 3/3 dev videos: URL, duration, publisher confirmed from primary/independent sources | PASS |
 | 3/3 dev videos: ≥3 spot-checked utterance timestamps each | PASS (9 total) |
-| 2/2 companion guides: URL+title confirmed, body content **not** re-verifiable this session | FAIL, documented (not concealed) |
-| 1 numeric caption artifact identified, left uncorrected pending primary-source confirmation | Open item |
+| 3/3 dev videos: ≥3 keyframes extracted, hashed, and visually verified against transcript content | PASS (9 total) |
+| 1/2 companion guides: URL+title confirmed, full body retained and hashed | PASS (SRC_HAAS_0002 / TG0128) |
+| 1/2 companion guides: URL+title confirmed, body content still **not** retrieved | FAIL, documented (not concealed) (SRC_HAAS_0004) |
+| 1 numeric caption artifact identified and corrected with an auditable diff, citing TG0128 | Resolved |
 | No holdout content processed beyond eligibility | PASS |
 | No metadata inferred from search-result titles alone | PASS |

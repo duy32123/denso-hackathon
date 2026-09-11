@@ -1,1 +1,17 @@
-# no corrections applied: official caption text used as-is
+# Correction applied 2026-09-11, auditable per D1-A prompt section 10 rule 11
+# (numbers/units only, cited against a primary source)
+
+utterance start_ms=146100 end_ms=154260
+
+- ...make sure that there's a 20,000 meter gap between the...
++ ...make sure that there's a 0.020 in (0.51 mm) gap between the...
+
+Basis: TG0128 (SRC_HAAS_0002, official Haas guide, page text retained 2026-09-11)
+states verbatim: "Measure the space between the slide and the tool holder. Use a
+feeler gauge. The correct space is between 0.014 in (0.36 mm) and 0.020 in
+(0.51 mm)." The official YouTube caption's "20,000 meter gap" is a transcription
+artifact of "0.020 in" (the upper bound of that spec) misheard/mis-punctuated by
+the caption process; no other numeric interpretation matches a feeler-gauge
+context. No technical explanation was added beyond restating the source's own
+number and unit -- the sentence structure and all surrounding words are
+unchanged.

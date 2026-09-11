@@ -65,8 +65,10 @@ unknown keys.
 Notable `unknown`/`null` fields left honestly empty: `presenter`/`presenter_role` for
 SRC_HAAS_0001 (video is anonymous narration) and SRC_HAAS_0005 (`presenter_role` — the
 page that might state a role was inaccessible this session); `raw_text`/
-`content_sha256` for SRC_HAAS_0002 and SRC_HAAS_0004 (guide bodies not retained — see
-blockers).
+`content_sha256` for SRC_HAAS_0004 only (its guide body remains unretrieved — see
+blockers). SRC_HAAS_0002's `raw_text`/`content_sha256` are now populated: the guide body
+was relayed by the operator from the same public URL after automated re-fetch stayed
+blocked, and is hashed (`content_sha256=a8a47506a115f128e57290179fba3a874117c5f52ac8c8488ce065acc0f4ebb6`).
 
 ## 7. Rights and access limitations
 
@@ -89,11 +91,18 @@ meter gap" at 00:02:26.100, almost certainly a mis-punctuated feeler-gauge spec)
 
 ## 9. Media/locator availability
 
-No video/audio files or keyframes exist locally for any source (see blockers). Every
-`Source.url` is a public, directly resolvable locator (haascnc.com page or, where that
-page could not be reconfirmed this session, the equivalent public YouTube URL is in
-`access_note`). `acquisition/preprocessing/haas_d1a_media_inventory.jsonl` inventories
-the retained transcript artifacts only (6 rows: raw + corrected per dev video).
+Every `Source.url` is a public, directly resolvable locator (haascnc.com page or, where
+that page could not be reconfirmed this session, the equivalent public YouTube URL is in
+`access_note`). For the 3 dev videos, a low-resolution (144p, video-only) stream was
+downloaded locally under operator authorization solely to extract keyframes; it is kept
+under `data/media/haas_d1a/` (gitignored per the repo's own convention) and is **not**
+committed or redistributed — its hash is recorded in the inventory for provenance only.
+9 keyframes (3 per dev video) were extracted at transcript-identified action/verification
+moments, hashed, committed under `acquisition/preprocessing/keyframes/<source_id>/`, and
+visually opened/verified this session (see `docs/haas_d1a_quality_report.md`).
+`acquisition/preprocessing/haas_d1a_media_inventory.jsonl` inventories all of this: 6
+transcript rows (raw + corrected per dev video), 3 local-video provenance rows, and 9
+keyframe rows (18 total).
 
 ## 10. Duplicate-family assignments
 
@@ -124,49 +133,57 @@ assessment — nothing seen so far suggests they would.
 
 ## 13. Known blockers
 
-1. **haascnc.com became fully Cloudflare-blocked partway through this session** (9/9
-   late-session fetch attempts returned HTTP 403 "Just a moment..."). Two guide pages
-   (SRC_HAAS_0002, SRC_HAAS_0004) were confirmed reachable (HTTP 200, title-matched)
-   *before* the block began, but their bodies were not saved to disk in time, so
-   `raw_text`/`content_sha256` are `null` for both. **Action for next session:** re-fetch
-   both URLs (respecting the 10s `Crawl-delay` in `robots.txt`) and populate those two
-   fields; nothing else about the two Source records needs to change.
-2. **No video/audio binaries, clips, or keyframes were produced.** Given the session's
-   remaining time/compute budget after the access disruption above, work was
-   deliberately narrowed to the highest-value, verifiable deliverable — official caption
-   transcripts with real millisecond timestamps — rather than attempting a full
-   video-download + frame-extraction pipeline and running out of budget partway through
-   it. This is a scope reduction, not a silent gap: keyframing/clip generation for the 3
-   dev videos remains open work for D1-A, not something D1-B should assume exists.
-3. One numeric value in SRC_HAAS_0001's official caption ("20,000 meter gap") is
-   suspected to be a transcription artifact for a feeler-gauge spec; left uncorrected
-   pending confirmation against TG0128's own text (blocked this session — see #1).
+1. **haascnc.com remains Cloudflare-blocked for automated requests from this session**
+   (every automated fetch attempt to the domain returned HTTP 403 "Just a moment...").
+   One of the two affected guide pages (SRC_HAAS_0002 / TG0128) was resolved: the
+   operator manually opened the public URL in a browser and relayed the text, which is
+   now retained and hashed. **SRC_HAAS_0004 (Manual Recovery how-to) remains open** —
+   `raw_text`/`content_sha256` are still `null`. Action: either re-attempt an automated
+   fetch (respecting the 10s `Crawl-delay` in `robots.txt`) once the block lifts, or have
+   a person relay the page text as was done for TG0128.
+2. **Resolved this session:** 9 keyframes (3 per dev video) were extracted from
+   locally-downloaded low-resolution video streams and committed; see section 9.
+   Full-resolution clips (as opposed to single keyframes) were not produced — a further,
+   smaller scope reduction, since keyframes already give D1-B a visual anchor at each
+   cited timestamp.
+3. **Resolved this session:** the "20,000 meter gap" caption artifact in SRC_HAAS_0001
+   was corrected to "0.020 in (0.51 mm) gap" with an auditable diff citing TG0128's own
+   stated spec (0.014–0.020 in). See
+   `acquisition/preprocessing/transcripts/SRC_HAAS_0001/corrections.diff`.
 
 ## 14. Exact files D1-B should consume
 
 - `data/sources/haas_pilot_sources.jsonl` — the 5 canonical dev Source records.
 - `acquisition/preprocessing/transcripts/<source_id>/{raw,corrected}.json` — timestamped
   transcripts for SRC_HAAS_0001, SRC_HAAS_0003, SRC_HAAS_0005.
+- `acquisition/preprocessing/keyframes/<source_id>/kf_<ms>.jpg` — 3 visual anchors per
+  dev video, filename encodes the original-video millisecond timestamp.
 - `data/splits/haas_d1a_split_manifest.json` — family/split assignments.
 - `acquisition/video_catalog/haas_d1a_source_candidates.csv` — full catalog with
   provenance-basis columns, for any Context/metadata_provenance construction.
 - Do **not** consume `data/sources/haas_pilot_holdout_sources.jsonl` for anything beyond
   confirming what is reserved — it must not inform workflow construction.
+- Do **not** expect `data/media/haas_d1a/*.mp4` to exist for anyone else — it is a local,
+  gitignored processing input, not a handoff artifact.
 
 ## 15. Checksums for handoff artifacts (sha256)
 
 ```
-e9b588e9c91692cf669ad0a60bae63c2a02a22bd921689ba2e352fc4a9634923  data/sources/haas_pilot_sources.jsonl
+caf82a6cbb5a1f43db94226182dba097b5f6ecc09b3cd7f6e4c1ad9c8339e31c  data/sources/haas_pilot_sources.jsonl
 1b448464affdbdecc7dd70abe43decaba4d1c61f9ada03af1575864ed8a75b98  data/sources/haas_pilot_holdout_sources.jsonl
 0ce78038ce5abd07b74d2fe77d650e84d40f5bcd9a76572894ef6909f54ec1e9  data/splits/haas_d1a_split_manifest.json
 ed4380dde64ba34ad3c8492668c1107d9efc6733340bed62e4c75a5d615c90c5  data/catalogs/haas_d1a_source_id_registry.json
-dd4bd1b6ed3b389d5f4f9ac7ef4411d1b2b209757b1ef4cc5c1fd6f4fe9b0ac5  acquisition/video_catalog/haas_d1a_source_candidates.csv
-50c262e87f4260ae81ca76973437c50fc4f6336aee0eed7f566295276501a8ca  acquisition/export/haas_pilot_dev_bundle/manifest.json
-e9b588e9c91692cf669ad0a60bae63c2a02a22bd921689ba2e352fc4a9634923  acquisition/export/haas_pilot_dev_bundle/sources.jsonl
-63c24d3a4c9a4a2948caf0367f8f1e14fa51bbda339b3a588492c36ce27842ef  acquisition/preprocessing/haas_d1a_media_inventory.jsonl
-0f528cff0d8df5e1b6cc2e560c5bcca65442279a74ce6e12b1a87e52c278c203  docs/data_rights_register.md
-59fc7a0bbdaf209f0b4126bf87266a7aa8b4f6486d9e190d171711cab75d2029  docs/haas_d1a_quality_report.md
+49d43540797df070f59fecff1285e68320657ad04af8009c5e90ccbfd27af3c2  acquisition/video_catalog/haas_d1a_source_candidates.csv
+edbb4c95de5486f621df715cd933f86128a7e3749489a05cc0554a9cc652ee7f  acquisition/export/haas_pilot_dev_bundle/manifest.json
+caf82a6cbb5a1f43db94226182dba097b5f6ecc09b3cd7f6e4c1ad9c8339e31c  acquisition/export/haas_pilot_dev_bundle/sources.jsonl
+7ffe335737c13e9f424d68a1f2f41b343595b02d2ce64541036713d59e4c475b  acquisition/preprocessing/haas_d1a_media_inventory.jsonl
+8e43c597deb08d341fb1a6f455a4ca274b84c4a51cce9a96dfb968ee4b99f5d3  docs/data_rights_register.md
+75a9e37e9b6955cf02cd57ec758167adf456e33de9371b00c69dcd94dad50e01  docs/haas_d1a_quality_report.md
 ```
+
+Per-keyframe and per-video-provenance hashes are in
+`acquisition/preprocessing/haas_d1a_media_inventory.jsonl` (18 rows) rather than repeated
+here.
 
 ## 16. Commands to validate or regenerate D1-A outputs
 

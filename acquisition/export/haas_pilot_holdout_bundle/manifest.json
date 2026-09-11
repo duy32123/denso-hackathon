@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "bundle_id": "BUNDLE_HAAS_D1A_SMTC_HOLDOUT_PILOT",
+  "source_type": "real",
+  "dataset_split": "holdout",
+  "created_at": "2026-09-11T09:11:51Z",
+  "files": [
+    {
+      "path": "sources.jsonl",
+      "sha256": "1b448464affdbdecc7dd70abe43decaba4d1c61f9ada03af1575864ed8a75b98",
+      "record_count": 2
+    },
+    {
+      "path": "workflows.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "record_count": 0
+    }
+  ],
+  "producer": {
+    "team": "team_1",
+    "pipeline_version": "d1a-haas-smtc-pilot-0.1.0"
+  }
+}

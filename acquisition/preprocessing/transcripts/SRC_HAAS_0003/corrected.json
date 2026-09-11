@@ -1,0 +1,289 @@
+{
+  "source_id": "SRC_HAAS_0003",
+  "transcript_origin": "official_caption",
+  "timestamp_basis": "original_video_ms",
+  "producer": "yt-dlp 2026.x + youtube official uploader captions (en)",
+  "processed_at": "2026-09-11T08:15:26Z",
+  "utterances": [
+    {
+      "start_ms": 3710,
+      "end_ms": 8540,
+      "text": "so your tool changes alarm down and maybe you're thinking how am I going to get my"
+    },
+    {
+      "start_ms": 8540,
+      "end_ms": 15140,
+      "text": "machine running again well here at Hoss we call that tool changer recovery I'm Andrew and today"
+    },
+    {
+      "start_ms": 15140,
+      "end_ms": 19790,
+      "text": "we're going to walk you through the basics of recovering your sidemount tool changer now"
+    },
+    {
+      "start_ms": 19790,
+      "end_ms": 23690,
+      "text": "before we get into the specifics of the recovery process there's one thing you need to remember"
+    },
+    {
+      "start_ms": 23690,
+      "end_ms": 28430,
+      "text": "before anything else tool change of recovery on a Hoss always starts with this button right here"
+    },
+    {
+      "start_ms": 28430,
+      "end_ms": 34190,
+      "text": "the recover button there are some differences in the side mount recovery process between the many"
+    },
+    {
+      "start_ms": 34190,
+      "end_ms": 40430,
+      "text": "machine configurations the Hoss has built over the years but the basics of recovery always stay"
+    },
+    {
+      "start_ms": 40430,
+      "end_ms": 47150,
+      "text": "the same either the machine puts the tools back where they came from in automatic mode or you"
+    },
+    {
+      "start_ms": 47150,
+      "end_ms": 54410,
+      "text": "manually remove the tools from the double-arm when you're in manual mode either way once the"
+    },
+    {
+      "start_ms": 54410,
+      "end_ms": 59180,
+      "text": "tools are taken care of you simply return the arm and the tool pocket to their home positions"
+    },
+    {
+      "start_ms": 59180,
+      "end_ms": 65480,
+      "text": "and you're done so let's get started and take a look at automatic recovery I see that I've"
+    },
+    {
+      "start_ms": 65480,
+      "end_ms": 71120,
+      "text": "got this 2066 tool changer fault alarm down here now on some versions of software you're"
+    },
+    {
+      "start_ms": 71120,
+      "end_ms": 75170,
+      "text": "going to get an alarm immediately on other versions you won't get one until you try to"
+    },
+    {
+      "start_ms": 75170,
+      "end_ms": 81410,
+      "text": "do something like start the spindle or program either way don't worry you're not going to hurt"
+    },
+    {
+      "start_ms": 81410,
+      "end_ms": 85370,
+      "text": "the machine the only thing that the control is going to allow you to do at this point is"
+    },
+    {
+      "start_ms": 85370,
+      "end_ms": 92030,
+      "text": "recover the tool changer so we have this 2066 alarm here let's go to the alarms page and see"
+    },
+    {
+      "start_ms": 92030,
+      "end_ms": 97220,
+      "text": "what it has to say about that alarm it tells us that the tool changer is not in a safe position"
+    },
+    {
+      "start_ms": 97220,
+      "end_ms": 103370,
+      "text": "and that we need to press recover so let's do that press recover now it gives me the option of"
+    },
+    {
+      "start_ms": 103370,
+      "end_ms": 108590,
+      "text": "either restoring the tool changer or recovering a tap I'm going to press f1 to restore the tool"
+    },
+    {
+      "start_ms": 108590,
+      "end_ms": 116030,
+      "text": "changer I press reset and now I can press a to start automatic recovery let's do that"
+    },
+    {
+      "start_ms": 120710,
+      "end_ms": 124400,
+      "text": "the double arm returns the tools to where they came from and told change"
+    },
+    {
+      "start_ms": 124400,
+      "end_ms": 129110,
+      "text": "of recovery is complete i press e to exit that was pretty easy"
+    },
+    {
+      "start_ms": 129110,
+      "end_ms": 138170,
+      "text": "now it's unusual for this to happen but if automatic recovery doesn't work for some"
+    },
+    {
+      "start_ms": 138170,
+      "end_ms": 142640,
+      "text": "reason the machine is going to kick you into manual recovery mode if you've got an older"
+    },
+    {
+      "start_ms": 142640,
+      "end_ms": 148940,
+      "text": "machine then you're probably already familiar with manual recovery so I have the option of pressing m"
+    },
+    {
+      "start_ms": 148940,
+      "end_ms": 155270,
+      "text": "to engage manual recovery so let's press out now there's a lot going on this screen right"
+    },
+    {
+      "start_ms": 155270,
+      "end_ms": 160640,
+      "text": "here but basically this is the screen where you manually control the tool changer I can rotate"
+    },
+    {
+      "start_ms": 160640,
+      "end_ms": 165230,
+      "text": "the arm back and forth I can lift the pocket up and down actuate the drawbar and so forth"
+    },
+    {
+      "start_ms": 165230,
+      "end_ms": 171140,
+      "text": "now this notification on-screen tells me that I need to remove all the tools and then rotate"
+    },
+    {
+      "start_ms": 171140,
+      "end_ms": 176600,
+      "text": "the arm in the reverse direction to its origin position now I need to get those tools out of"
+    },
+    {
+      "start_ms": 176600,
+      "end_ms": 180560,
+      "text": "the arm and the arms in a position where I can reach one of the tools but I'm going to go get"
+    },
+    {
+      "start_ms": 180560,
+      "end_ms": 186650,
+      "text": "some work gloves first so I got my gloves on we're going to get that tool out of there I'm going to"
+    },
+    {
+      "start_ms": 186650,
+      "end_ms": 193160,
+      "text": "press this plunger and then give this thing a firm pull you got to remember you can only"
+    },
+    {
+      "start_ms": 193160,
+      "end_ms": 196580,
+      "text": "do that by depressing that plunger otherwise it's going to be really difficult and you're"
+    },
+    {
+      "start_ms": 196580,
+      "end_ms": 202580,
+      "text": "probably going to break something so now I need to rotate that arm so I can get access to the"
+    },
+    {
+      "start_ms": 202580,
+      "end_ms": 213470,
+      "text": "other tool I'm going to hit a TC reverse to get that thing as close as I can okay so I've got the"
+    },
+    {
+      "start_ms": 213470,
+      "end_ms": 219320,
+      "text": "arm to where I can reach that second tool we'll go in here I don't forget to press that plunger"
+    },
+    {
+      "start_ms": 219320,
+      "end_ms": 225980,
+      "text": "or it's really hard to get these tools out now I can continue rotating the arm until it reaches the"
+    },
+    {
+      "start_ms": 225980,
+      "end_ms": 236750,
+      "text": "origin position so now I see the notification that the arms at origin and it's asking me to"
+    },
+    {
+      "start_ms": 236750,
+      "end_ms": 242900,
+      "text": "raise the pocket up I do that by pushing the up arrow there it goes now it's telling me no mana"
+    },
+    {
+      "start_ms": 242900,
+      "end_ms": 250310,
+      "text": "recovery action is required and it's time for me to press e to exit total change your recovery is"
+    },
+    {
+      "start_ms": 250310,
+      "end_ms": 255740,
+      "text": "complete now I like to check which tools were removed by going to the active tool window I"
+    },
+    {
+      "start_ms": 255740,
+      "end_ms": 261350,
+      "text": "press MDI and here the window is going to tell me the two tools that were just in that arm now"
+    },
+    {
+      "start_ms": 261350,
+      "end_ms": 267110,
+      "text": "I can update the tool table now just to recap there are two key things to remember that will"
+    },
+    {
+      "start_ms": 267110,
+      "end_ms": 272990,
+      "text": "make the tool change a recovery process easy number one press the recover button to start"
+    },
+    {
+      "start_ms": 272990,
+      "end_ms": 278060,
+      "text": "the tool change the recovery process and number two don't blow through these screens take your"
+    },
+    {
+      "start_ms": 278060,
+      "end_ms": 282710,
+      "text": "time to read the information carefully now the tool change of recovery process we just"
+    },
+    {
+      "start_ms": 282710,
+      "end_ms": 289040,
+      "text": "finished covering is going to handle most of your common tool change or faults but there are times"
+    },
+    {
+      "start_ms": 289040,
+      "end_ms": 294380,
+      "text": "when the recover button is not going to fix your problem maybe you've got fluctuating air pressure"
+    },
+    {
+      "start_ms": 294380,
+      "end_ms": 301040,
+      "text": "or poor tool maintenance in those cases you need to talk to your hast factory outlet so they can"
+    },
+    {
+      "start_ms": 301040,
+      "end_ms": 306500,
+      "text": "help you out with your specific problem here's a list of the top five ways you can keep your"
+    },
+    {
+      "start_ms": 306500,
+      "end_ms": 312950,
+      "text": "tool changer running in tip-top shape provide the correct air pressure and air volume to the machine"
+    },
+    {
+      "start_ms": 312950,
+      "end_ms": 323090,
+      "text": "periodically lubricate the double arm v-grooves plungers and slider cap use the correct pull studs"
+    },
+    {
+      "start_ms": 323090,
+      "end_ms": 332030,
+      "text": "keep them greased and monitor their condition don't use tool holders with worn or damaged tapers"
+    },
+    {
+      "start_ms": 333170,
+      "end_ms": 340850,
+      "text": "keep your tool holders and the spindle taper clean thanks a lot for watching this video"
+    },
+    {
+      "start_ms": 358490,
+      "end_ms": 358550,
+      "text": "you"
+    }
+  ]
+}

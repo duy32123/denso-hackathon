@@ -1,0 +1,68 @@
+{
+  "schema_note": "Processing manifest for D1-A dev/holdout split assignment. Not a Schema 1.0.0 entity itself; split unit is the whole source family, never a clip.",
+  "generated_at": "2026-09-11T08:16:07Z",
+  "families": [
+    {
+      "near_duplicate_group": "FAM-DOUBLE-ARM-TROUBLESHOOTING",
+      "split": "dev",
+      "source_ids": ["SRC_HAAS_0001", "SRC_HAAS_0002"],
+      "members": [
+        {"source_id": "SRC_HAAS_0001", "role": "official_service_video"},
+        {"source_id": "SRC_HAAS_0002", "role": "service_document companion guide (TG0128)"}
+      ],
+      "why_family": "Same subsystem and task (SMTC double-arm troubleshooting); guide and video are curated as one family though not literally embedded together.",
+      "why_no_cross_split": "No other confirmed source shares this exact family. O4hmziNXEXQ (also 'double arm') was considered but excluded from dev entirely (not assigned to any split) rather than risk a near-duplicate crossing dev/holdout, since its content could not be verified this session."
+    },
+    {
+      "near_duplicate_group": "FAM-SMTC-RECOVERY",
+      "split": "dev",
+      "source_ids": ["SRC_HAAS_0003", "SRC_HAAS_0004"],
+      "members": [
+        {"source_id": "SRC_HAAS_0003", "role": "official_service_video"},
+        {"source_id": "SRC_HAAS_0004", "role": "service_document companion guide (manual recovery how-to)"}
+      ],
+      "why_family": "Same subsystem and task (SMTC recovery procedure).",
+      "why_no_cross_split": "No other candidate this session covers SMTC recovery; family is isolated to dev."
+    },
+    {
+      "near_duplicate_group": "FAM-SMTC-POCKET-REPAIR",
+      "split": "dev",
+      "source_ids": ["SRC_HAAS_0005"],
+      "members": [
+        {"source_id": "SRC_HAAS_0005", "role": "official_service_video"}
+      ],
+      "why_family": "Standalone -- no companion guide was confirmed reachable this session.",
+      "why_no_cross_split": "Single-member family; nothing to cross."
+    },
+    {
+      "near_duplicate_group": "FAM-UMBRELLA-CT-MAINTENANCE",
+      "split": "holdout",
+      "source_ids": ["SRC_HAAS_0006"],
+      "members": [
+        {"source_id": "SRC_HAAS_0006", "role": "official_service_video"}
+      ],
+      "why_family": "Umbrella/carousel-style (CT) tool changer -- a different subsystem from side-mount (SMTC), confirmed by title/description.",
+      "why_no_cross_split": "No dev pick addresses this subsystem; the family is untouched beyond eligibility metadata (title, duration, publisher, upload date) and reserved entirely for holdout."
+    },
+    {
+      "near_duplicate_group": "FAM-STUCK-TOOLHOLDER-GENERIC",
+      "split": "holdout",
+      "source_ids": ["SRC_HAAS_0007"],
+      "members": [
+        {"source_id": "SRC_HAAS_0007", "role": "official_service_video"}
+      ],
+      "why_family": "Title does not state a specific tool-changer subsystem; kept isolated rather than merged into either dev family to avoid misclassifying it.",
+      "why_no_cross_split": "Reserved entirely for holdout; untouched beyond eligibility metadata."
+    }
+  ],
+  "excluded_not_split": {
+    "note": "Candidates rejected before split assignment -- neither dev nor holdout. See acquisition/video_catalog/haas_d1a_source_candidates.csv for full reasons.",
+    "candidate_ids": ["CAND-008", "CAND-009", "CAND-010", "CAND-011", "CAND-012"]
+  },
+  "rules_applied": [
+    "Three pilot videos (SRC_HAAS_0001, SRC_HAAS_0003, SRC_HAAS_0005) assigned to dev, each in its own near-duplicate family.",
+    "Two untouched source families (SRC_HAAS_0006, SRC_HAAS_0007) reserved for holdout.",
+    "Holdout sources received eligibility/metadata processing only (title, duration_ms, publisher, upload date via yt-dlp/oEmbed) -- no captions downloaded, no transcript built, no guide page fetched.",
+    "No source_id appears in both data/sources/haas_pilot_sources.jsonl (dev) and data/sources/haas_pilot_holdout_sources.jsonl (holdout)."
+  ]
+}

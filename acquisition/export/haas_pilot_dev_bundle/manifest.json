@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "bundle_id": "BUNDLE_HAAS_D1A_SMTC_DEV_PILOT",
+  "source_type": "real",
+  "dataset_split": "dev",
+  "created_at": "2026-09-11T08:16:07Z",
+  "files": [
+    {
+      "path": "sources.jsonl",
+      "sha256": "e9b588e9c91692cf669ad0a60bae63c2a02a22bd921689ba2e352fc4a9634923",
+      "record_count": 5
+    },
+    {
+      "path": "workflows.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "record_count": 0
+    }
+  ],
+  "producer": {
+    "team": "team_1",
+    "pipeline_version": "d1a-haas-smtc-pilot-0.1.0"
+  }
+}

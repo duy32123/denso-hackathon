@@ -16,11 +16,11 @@ redistribution.
 
 | source_id | Canonical page | Canonical video | Public? | Download permitted? | Local retention? | Clips/keyframes/transcripts storable? | Redistribution? | Decision | Open question |
 |---|---|---|---|---|---|---|---|---|---|
-| SRC_HAAS_0001 | haascnc.com guide page (confirmed HTTP 200) | youtube.com/watch?v=TmjjC7BDDag | Yes | Unclear (YouTube ToS restricts downloading without permission; operator authorized for this prototype) | Caption text (hashed) + a 144p video-only stream (local, gitignored, not committed) | Yes — caption transcript committed; 3 keyframes extracted, hashed, and committed | **No** | `asset_uri=null` (no committed media asset); video kept out of git per repo's own `data/media/` convention | Whether Haas/YouTube would license clip/keyframe storage for a shipped (non-prototype) product |
+| SRC_HAAS_0001 | haascnc.com guide page (confirmed HTTP 200) | youtube.com/watch?v=TmjjC7BDDag | Yes | Unclear (YouTube ToS restricts downloading without permission; operator authorized for this prototype) | Caption text (hashed) + a 1080p video-only stream (local, gitignored, not committed) | Yes — caption transcript committed; 3 keyframes extracted, hashed, and committed | **No** | `asset_uri=null` (no committed media asset); video kept out of git per repo's own `data/media/` convention | Whether Haas/YouTube would license clip/keyframe storage for a shipped (non-prototype) product |
 | SRC_HAAS_0002 | haascnc.com guide TG0128 — full page text retrieved | n/a (document) | Yes | N/A (text page) | Full body text retained and hashed (operator manually copied it from the public page after automated re-fetch was blocked) | N/A (text document) | No | `raw_text`/`content_sha256` populated | none — resolved |
-| SRC_HAAS_0003 | haascnc.com how-to page (confirmed HTTP 200) | youtube.com/watch?v=2bRa6qm6wm4 | Yes | Unclear (same as above; operator authorized) | Caption text (hashed) + a 144p video-only stream (local, gitignored) | Yes — caption transcript committed; 3 keyframes extracted, hashed, and committed | **No** | `asset_uri=null`; video kept out of git | Same as SRC_HAAS_0001 |
+| SRC_HAAS_0003 | haascnc.com how-to page (confirmed HTTP 200) | youtube.com/watch?v=2bRa6qm6wm4 | Yes | Unclear (same as above; operator authorized) | Caption text (hashed) + a 1080p video-only stream (local, gitignored) | Yes — caption transcript committed; 3 keyframes extracted, hashed, and committed | **No** | `asset_uri=null`; video kept out of git | Same as SRC_HAAS_0001 |
 | SRC_HAAS_0004 | haascnc.com how-to page — full page text retrieved | n/a (document) | Yes | N/A (text page) | Full body text retained and hashed (operator manually copied it from the public page after automated re-fetch was blocked) | N/A (text document) | No | `raw_text`/`content_sha256` populated | none — resolved |
-| SRC_HAAS_0005 | not confirmed this session (Cloudflare 403) | youtube.com/watch?v=cs-BvWsKXyU | Yes | Unclear (same as above; operator authorized) | Caption text (hashed) + a 144p video-only stream (local, gitignored) | Yes — caption transcript committed; 3 keyframes extracted, hashed, and committed | **No** | `asset_uri=null`; video kept out of git | Confirm the haascnc.com page separately from YouTube |
+| SRC_HAAS_0005 | not confirmed this session (Cloudflare 403) | youtube.com/watch?v=cs-BvWsKXyU | Yes | Unclear (same as above; operator authorized) | Caption text (hashed) + a 1080p video-only stream (local, gitignored) | Yes — caption transcript committed; 3 keyframes extracted, hashed, and committed | **No** | `asset_uri=null`; video kept out of git | Confirm the haascnc.com page separately from YouTube |
 
 ## Holdout sources (untouched beyond eligibility)
 
@@ -32,7 +32,8 @@ redistribution.
 ## Operational decisions applied everywhere
 
 - **No holdout video/audio was downloaded**, and no dev video/audio was committed to
-  git. For the 3 dev videos, a low-resolution (144p, video-only, no audio) stream was
+  git. For the 3 dev videos, a 1080p (full-HD) video-only stream (no audio; upgraded
+  from an initial 144p pass once production-quality keyframes were requested) was
   downloaded locally under the operator's explicit authorization, solely to extract
   keyframes; it lives under `data/media/haas_d1a/`, which the repository's own
   `.gitignore` already excludes ("Media va bundle sinh ra khi chay pipeline (khong

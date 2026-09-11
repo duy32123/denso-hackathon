@@ -97,13 +97,16 @@ meter gap" at 00:02:26.100, almost certainly a mis-punctuated feeler-gauge spec)
 
 Every `Source.url` is a public, directly resolvable locator (haascnc.com page or, where
 that page could not be reconfirmed this session, the equivalent public YouTube URL is in
-`access_note`). For the 3 dev videos, a low-resolution (144p, video-only) stream was
-downloaded locally under operator authorization solely to extract keyframes; it is kept
-under `data/media/haas_d1a/` (gitignored per the repo's own convention) and is **not**
+`access_note`). For the 3 dev videos, a 1080p (full-HD) video-only stream (upgraded from
+an initial 144p pass once production-quality keyframes were requested) was downloaded
+locally under operator authorization solely to extract keyframes; it is kept under
+`data/media/haas_d1a/` (gitignored per the repo's own convention) and is **not**
 committed or redistributed — its hash is recorded in the inventory for provenance only.
 9 keyframes (3 per dev video) were extracted at transcript-identified action/verification
-moments, hashed, committed under `acquisition/preprocessing/keyframes/<source_id>/`, and
-visually opened/verified this session (see `docs/haas_d1a_quality_report.md`).
+moments **at full 1080p** (each 130–430 KB, vs. ~8 KB at the initial 144p pass), hashed,
+committed under `acquisition/preprocessing/keyframes/<source_id>/`, and visually
+opened/verified this session (see `docs/haas_d1a_quality_report.md`) — e.g. the alarm
+text in `SRC_HAAS_0003/kf_0065500.jpg` is now individually legible character-by-character.
 `acquisition/preprocessing/haas_d1a_media_inventory.jsonl` inventories all of this: 6
 transcript rows (raw + corrected per dev video), 3 local-video provenance rows, and 9
 keyframe rows (18 total).
@@ -193,9 +196,9 @@ ac2c7531cc973b93d90d2307f0c78b2f0409683d752e8a15a25bf76f1139c8b8  acquisition/vi
 e705acc5dba6653e07bdf5c7ebc615f82bd7ff92a9d4c1626021572e13a11b86  acquisition/export/haas_pilot_dev_bundle/sources.jsonl
 52bb761d1cbd43770c91258147f09d2f702a9498c76498ee3f4c145c8cc87aee  acquisition/export/haas_pilot_holdout_bundle/manifest.json
 1b448464affdbdecc7dd70abe43decaba4d1c61f9ada03af1575864ed8a75b98  acquisition/export/haas_pilot_holdout_bundle/sources.jsonl
-7ffe335737c13e9f424d68a1f2f41b343595b02d2ce64541036713d59e4c475b  acquisition/preprocessing/haas_d1a_media_inventory.jsonl
-addab43842e56993843a11b9cd03faf73b75bb5a20b8867bc5427d85d7b11ec0  docs/data_rights_register.md
-b5540919258a5e3a147095835f9e4ceb22138414e7dc05bc6b58b10bc158aa6a  docs/haas_d1a_quality_report.md
+db3a2bdca3dfae6a8cffd240f8cb82f798c05e42d91a24d9ee08a1823fb96bbd  acquisition/preprocessing/haas_d1a_media_inventory.jsonl
+3093e3abd1c2c609fa3b0abd3d87bf9831457607a41bfb04f3daf6c961701d48  docs/data_rights_register.md
+ffea53949ad3babfa4d8fbde486960c991104c3b0da977e2b76ea44c1221a6d9  docs/haas_d1a_quality_report.md
 ```
 
 Per-keyframe and per-video-provenance hashes are in

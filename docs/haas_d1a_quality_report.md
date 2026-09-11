@@ -41,7 +41,7 @@ verdicts.
 | Negation/terminology/numbers/units preserved | **PASS** | Alarm code "2066" is stated clearly and unambiguously twice in the caption at `00:01:05` and `00:01:32` — no correction needed. |
 | Access restrictions documented | **PASS** | `docs/data_rights_register.md` row for SRC_HAAS_0003. |
 | No metadata inferred from search-title alone | **PASS** | `alarm_codes=["2066"]` (catalog) taken directly from spoken caption text, not the video's title or a search snippet; independently corroborated by TG0128's own symptom table, which lists "Alarm 2066 TOOL CHANGER HOME POSITION FAULT" as one of its entries. |
-| Clip/keyframe maps to original time | **PASS** | 3 keyframes extracted at `00:01:05.500`, `00:01:56.500`, `00:04:02.900`. `kf_0065500.jpg` (00:01:05.5) was opened and visually inspected this session: the machine control screen literally reads **"2066 TOOL CHANGER HOME POSITION FAULT"** with an "AUTOMATIC RECOVERY" label — a direct visual match to the transcript's "I see that I've got this 2066 tool changer fault alarm" at the same timestamp. |
+| Clip/keyframe maps to original time | **PASS** | 3 keyframes extracted at `00:01:05.500`, `00:01:56.500`, `00:04:02.900`. `kf_0065500.jpg` (00:01:05.5) was opened and visually inspected this session: the machine control screen literally reads **"2066 TOOL CHANGER HOME POSITION FAULT"** with an "AUTOMATIC RECOVERY" label — a direct visual match to the transcript's "I see that I've got this 2066 tool changer fault alarm" at the same timestamp. Re-extracted at 1080p (up from an initial 144p pass) for production use; every character of the alarm text is now individually legible. |
 
 ## SRC_HAAS_0004 — Manual Recovery how-to guide (companion to SRC_HAAS_0003)
 

@@ -1,8 +1,10 @@
 # D1-A → D1-B Handoff — Haas SMTC Pilot
 
-D1-A status: **complete for the scope achievable this session**, with two honestly
-documented gaps (guide-body retention, keyframes/clips) — see "Known blockers" below.
-No claims, workflows, technical validation, RAG, or fine-tuning were created under D1-A.
+D1-A status: **complete**. All artifacts required by the acceptance criteria exist,
+validate, and are checksum-backed; both guide bodies are now retained; keyframes exist
+for all 3 dev videos. One content-overlap observation is flagged for D1-B's awareness
+(section 13) rather than concealed. No claims, workflows, technical validation, RAG, or
+fine-tuning were created under D1-A.
 
 ## 1. Selected development sources
 
@@ -64,11 +66,13 @@ unknown keys.
 
 Notable `unknown`/`null` fields left honestly empty: `presenter`/`presenter_role` for
 SRC_HAAS_0001 (video is anonymous narration) and SRC_HAAS_0005 (`presenter_role` — the
-page that might state a role was inaccessible this session); `raw_text`/
-`content_sha256` for SRC_HAAS_0004 only (its guide body remains unretrieved — see
-blockers). SRC_HAAS_0002's `raw_text`/`content_sha256` are now populated: the guide body
-was relayed by the operator from the same public URL after automated re-fetch stayed
-blocked, and is hashed (`content_sha256=a8a47506a115f128e57290179fba3a874117c5f52ac8c8488ce065acc0f4ebb6`).
+page that might state a role was inaccessible this session). Both guide bodies
+(SRC_HAAS_0002, SRC_HAAS_0004) are now fully populated: `raw_text`/`content_sha256` were
+filled after the operator relayed each page's visible text from the same public URL once
+automated re-fetch stayed blocked
+(`content_sha256=a8a47506a115f128e57290179fba3a874117c5f52ac8c8488ce065acc0f4ebb6` for
+SRC_HAAS_0002, `66454ed72f033d500a25df30bdd3db84939b0411a6ed32ab9cd9e206f3aa0109` for
+SRC_HAAS_0004).
 
 ## 7. Rights and access limitations
 
@@ -135,21 +139,24 @@ assessment — nothing seen so far suggests they would.
 
 1. **haascnc.com remains Cloudflare-blocked for automated requests from this session**
    (every automated fetch attempt to the domain returned HTTP 403 "Just a moment...").
-   One of the two affected guide pages (SRC_HAAS_0002 / TG0128) was resolved: the
-   operator manually opened the public URL in a browser and relayed the text, which is
-   now retained and hashed. **SRC_HAAS_0004 (Manual Recovery how-to) remains open** —
-   `raw_text`/`content_sha256` are still `null`. Action: either re-attempt an automated
-   fetch (respecting the 10s `Crawl-delay` in `robots.txt`) once the block lifts, or have
-   a person relay the page text as was done for TG0128.
+   **Resolved via manual retrieval:** both affected guide pages (SRC_HAAS_0002 / TG0128
+   and SRC_HAAS_0004 / manual-recovery how-to) were opened by the operator in a normal
+   browser and their text relayed, then retained and hashed here. No automated bypass of
+   the Cloudflare interstitial was performed or attempted.
 2. **Resolved this session:** 9 keyframes (3 per dev video) were extracted from
    locally-downloaded low-resolution video streams and committed; see section 9.
-   Full-resolution clips (as opposed to single keyframes) were not produced — a further,
-   smaller scope reduction, since keyframes already give D1-B a visual anchor at each
+   Full-resolution clips (as opposed to single keyframes) were not produced — a smaller,
+   deliberate scope reduction, since keyframes already give D1-B a visual anchor at each
    cited timestamp.
 3. **Resolved this session:** the "20,000 meter gap" caption artifact in SRC_HAAS_0001
    was corrected to "0.020 in (0.51 mm) gap" with an auditable diff citing TG0128's own
    stated spec (0.014–0.020 in). See
    `acquisition/preprocessing/transcripts/SRC_HAAS_0001/corrections.diff`.
+4. **Content-overlap observation, not a blocker:** SRC_HAAS_0004's 7-step recovery
+   procedure is word-for-word identical to the "MANUAL RECOVERY HOW TO" section already
+   reproduced inside TG0128 (SRC_HAAS_0002). Both correctly stay in `dev` — this is not a
+   split-leakage issue — but D1-B should dedup this shared procedure text rather than
+   treat the two Sources as independently corroborating it.
 
 ## 14. Exact files D1-B should consume
 
@@ -169,16 +176,16 @@ assessment — nothing seen so far suggests they would.
 ## 15. Checksums for handoff artifacts (sha256)
 
 ```
-caf82a6cbb5a1f43db94226182dba097b5f6ecc09b3cd7f6e4c1ad9c8339e31c  data/sources/haas_pilot_sources.jsonl
+e705acc5dba6653e07bdf5c7ebc615f82bd7ff92a9d4c1626021572e13a11b86  data/sources/haas_pilot_sources.jsonl
 1b448464affdbdecc7dd70abe43decaba4d1c61f9ada03af1575864ed8a75b98  data/sources/haas_pilot_holdout_sources.jsonl
 0ce78038ce5abd07b74d2fe77d650e84d40f5bcd9a76572894ef6909f54ec1e9  data/splits/haas_d1a_split_manifest.json
 ed4380dde64ba34ad3c8492668c1107d9efc6733340bed62e4c75a5d615c90c5  data/catalogs/haas_d1a_source_id_registry.json
-49d43540797df070f59fecff1285e68320657ad04af8009c5e90ccbfd27af3c2  acquisition/video_catalog/haas_d1a_source_candidates.csv
-edbb4c95de5486f621df715cd933f86128a7e3749489a05cc0554a9cc652ee7f  acquisition/export/haas_pilot_dev_bundle/manifest.json
-caf82a6cbb5a1f43db94226182dba097b5f6ecc09b3cd7f6e4c1ad9c8339e31c  acquisition/export/haas_pilot_dev_bundle/sources.jsonl
+ac2c7531cc973b93d90d2307f0c78b2f0409683d752e8a15a25bf76f1139c8b8  acquisition/video_catalog/haas_d1a_source_candidates.csv
+57c0d17094db3d40870d9fac09e36f2f16b54c68698f1fded08aadc9081cf819  acquisition/export/haas_pilot_dev_bundle/manifest.json
+e705acc5dba6653e07bdf5c7ebc615f82bd7ff92a9d4c1626021572e13a11b86  acquisition/export/haas_pilot_dev_bundle/sources.jsonl
 7ffe335737c13e9f424d68a1f2f41b343595b02d2ce64541036713d59e4c475b  acquisition/preprocessing/haas_d1a_media_inventory.jsonl
-8e43c597deb08d341fb1a6f455a4ca274b84c4a51cce9a96dfb968ee4b99f5d3  docs/data_rights_register.md
-75a9e37e9b6955cf02cd57ec758167adf456e33de9371b00c69dcd94dad50e01  docs/haas_d1a_quality_report.md
+addab43842e56993843a11b9cd03faf73b75bb5a20b8867bc5427d85d7b11ec0  docs/data_rights_register.md
+b5540919258a5e3a147095835f9e4ceb22138414e7dc05bc6b58b10bc158aa6a  docs/haas_d1a_quality_report.md
 ```
 
 Per-keyframe and per-video-provenance hashes are in

@@ -3,11 +3,11 @@
   "bundle_id": "BUNDLE_HAAS_D1A_SMTC_DEV_PILOT",
   "source_type": "real",
   "dataset_split": "dev",
-  "created_at": "2026-09-11T08:41:02Z",
+  "created_at": "2026-09-11T08:51:49Z",
   "files": [
     {
       "path": "sources.jsonl",
-      "sha256": "caf82a6cbb5a1f43db94226182dba097b5f6ecc09b3cd7f6e4c1ad9c8339e31c",
+      "sha256": "e705acc5dba6653e07bdf5c7ebc615f82bd7ff92a9d4c1626021572e13a11b86",
       "record_count": 5
     },
     {

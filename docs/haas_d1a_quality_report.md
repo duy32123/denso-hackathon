@@ -45,13 +45,14 @@ verdicts.
 
 ## SRC_HAAS_0004 — Manual Recovery how-to guide (companion to SRC_HAAS_0003)
 
-URL/title confirmed HTTP 200 (301,243 bytes) earlier this session; body still not
-retained — automated re-fetch remains blocked (Cloudflare) and, unlike TG0128, no manual
-relay of this specific page's text was provided this session. `raw_text`/
-`content_sha256` remain `null` — **FAIL (documented)**, not concealed. TG0128's own text
-independently confirms this page is the correct alarm-2066 remedy ("VMC, HMC -
-Side-Mount Tool Changer - Manual Recovery"), so the URL/relationship is not in doubt —
-only the body text is still outstanding.
+| Check | Status | Evidence |
+|---|---|---|
+| Direct URL opens | **PASS (earlier in session)** | Confirmed HTTP 200, 301,243 bytes, title "Side-Mount Tool Changer - Manual Recovery - Mill" matched exactly. |
+| Body content retained and hashed | **PASS (via manual retrieval)** | Automated re-fetch stayed blocked (HTTP 403); the operator opened the same public URL directly and relayed the visible text, now stored as `raw_text` and hashed as `content_sha256=66454ed7...`. |
+| Machine family stated explicitly | **PASS** | Page states "how to perform a manual recovery on the Side-Mount Tool Changer (SMTC) of a Haas mill" and the title itself ends in "- Mill" — `machine_family` in the catalog is `basis=source`, not curated. |
+| Outcome/verification present | **PASS** | Step 7: "Push [ATC/FWD] to test the recovery. If the tool change recovery is not successful, it is most likely that the machine is mechanically jammed." — an explicit pass/fail with a named next action. |
+| Content-overlap finding | **Noted for D1-B** | This page's 7-step procedure is **word-for-word identical** to the "MANUAL RECOVERY HOW TO" section already reproduced verbatim inside TG0128 (SRC_HAAS_0002) — confirmed by direct text comparison. Both stay in `dev` (no split issue), but D1-B should be aware these two Source records carry duplicate procedure text and dedup accordingly rather than double-counting it as two independent confirmations. |
+| Cross-references its own related source | **PASS** | TG0128 (SRC_HAAS_0002) independently names this exact page ("VMC, HMC - Side-Mount Tool Changer - Manual Recovery") as the alarm-2066 remedy, corroborating the curated FAM-SMTC-RECOVERY link from the primary source itself. |
 
 ## SRC_HAAS_0005 — Replace a Tool Pocket on Your Haas SMTC
 
@@ -83,8 +84,8 @@ QC here is limited to confirming that constraint was actually honored:
 | 3/3 dev videos: URL, duration, publisher confirmed from primary/independent sources | PASS |
 | 3/3 dev videos: ≥3 spot-checked utterance timestamps each | PASS (9 total) |
 | 3/3 dev videos: ≥3 keyframes extracted, hashed, and visually verified against transcript content | PASS (9 total) |
-| 1/2 companion guides: URL+title confirmed, full body retained and hashed | PASS (SRC_HAAS_0002 / TG0128) |
-| 1/2 companion guides: URL+title confirmed, body content still **not** retrieved | FAIL, documented (not concealed) (SRC_HAAS_0004) |
+| 2/2 companion guides: URL+title confirmed, full body retained and hashed | PASS (SRC_HAAS_0002 / TG0128 and SRC_HAAS_0004) |
+| Content-overlap between SRC_HAAS_0002 and SRC_HAAS_0004 (identical 7-step procedure) | Noted for D1-B dedup awareness, not a split issue |
 | 1 numeric caption artifact identified and corrected with an auditable diff, citing TG0128 | Resolved |
 | No holdout content processed beyond eligibility | PASS |
 | No metadata inferred from search-result titles alone | PASS |

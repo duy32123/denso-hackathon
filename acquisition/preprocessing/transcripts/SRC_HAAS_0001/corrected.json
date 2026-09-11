@@ -1,0 +1,134 @@
+{
+  "source_id": "SRC_HAAS_0001",
+  "transcript_origin": "official_caption",
+  "timestamp_basis": "original_video_ms",
+  "producer": "yt-dlp 2026.x + youtube official uploader captions (en)",
+  "processed_at": "2026-09-11T08:15:26Z",
+  "utterances": [
+    {
+      "start_ms": 0,
+      "end_ms": 9390,
+      "text": "[Music] today we're going to talk about your sidemount to change a double arm your machine"
+    },
+    {
+      "start_ms": 9390,
+      "end_ms": 14340,
+      "text": "will most likely do tens of thousands of two changes with you never even thinking about this"
+    },
+    {
+      "start_ms": 14340,
+      "end_ms": 20700,
+      "text": "arm but at some point you might experience some wears that requires your attention let's start by"
+    },
+    {
+      "start_ms": 20700,
+      "end_ms": 28020,
+      "text": "talking about some warning signs usually the first sign of trouble is either visual as in rough tool"
+    },
+    {
+      "start_ms": 28020,
+      "end_ms": 35070,
+      "text": "change or audible as in unusual puffin or banging sound when the arm is loading or unloading a tool"
+    },
+    {
+      "start_ms": 35070,
+      "end_ms": 41220,
+      "text": "if you notice either of these here are some things you should look for inspect the arms for"
+    },
+    {
+      "start_ms": 41220,
+      "end_ms": 50010,
+      "text": "dings nicks and gouges on the alignment key and V shape of the arm any of these is an indication of"
+    },
+    {
+      "start_ms": 50010,
+      "end_ms": 59550,
+      "text": "MIS loaded tools protruding set screw or for to change or alignment in most cases if you address"
+    },
+    {
+      "start_ms": 59550,
+      "end_ms": 66930,
+      "text": "the source of the problem any damage can easily be fixed by using a stone or a file and the double"
+    },
+    {
+      "start_ms": 66930,
+      "end_ms": 74280,
+      "text": "arm will not need to be replaced if you notice excessive wear on the end of the double arm that's"
+    },
+    {
+      "start_ms": 74280,
+      "end_ms": 80310,
+      "text": "an indication that the double arm height is set incorrectly or if you notice that the double arm"
+    },
+    {
+      "start_ms": 80310,
+      "end_ms": 87990,
+      "text": "moves as in raises or lowers as it engages a tool that's also an indication that you have a problem"
+    },
+    {
+      "start_ms": 87990,
+      "end_ms": 95190,
+      "text": "with alignment or height to further assist you we have a separate video that's dedicated to proper"
+    },
+    {
+      "start_ms": 95190,
+      "end_ms": 104340,
+      "text": "alignment and to change your height of your tool changer double arm in extreme cases you"
+    },
+    {
+      "start_ms": 104340,
+      "end_ms": 111330,
+      "text": "may experience drop in tools if this is the cause the first place to look is that the tool changer"
+    },
+    {
+      "start_ms": 111330,
+      "end_ms": 117510,
+      "text": "locking mechanism this finger should prevent the tool from being removed and while they may be a"
+    },
+    {
+      "start_ms": 117510,
+      "end_ms": 124260,
+      "text": "small amount of play you should not be able to remove the tool now let's get the double arm in a"
+    },
+    {
+      "start_ms": 124260,
+      "end_ms": 130830,
+      "text": "position where we can check the clearance between the tool holder and the retaining fingers we'll"
+    },
+    {
+      "start_ms": 130830,
+      "end_ms": 138510,
+      "text": "press 5% rapid to slow things down then command a tool change and press e stop when the double arm"
+    },
+    {
+      "start_ms": 138510,
+      "end_ms": 146100,
+      "text": "is at the bottom of its travel checking the arm is simple with the tool in the arm and the arm"
+    },
+    {
+      "start_ms": 146100,
+      "end_ms": 154260,
+      "text": "in the down position use a feeler gauge and make sure that there's a 20,000 meter gap between the"
+    },
+    {
+      "start_ms": 154260,
+      "end_ms": 160650,
+      "text": "finger and the V flange of the tool holder this clearance can be adjusted by changing the shin"
+    },
+    {
+      "start_ms": 160650,
+      "end_ms": 167220,
+      "text": "washers between the slide and the actuated arm you should also check the straightness of the arm"
+    },
+    {
+      "start_ms": 167220,
+      "end_ms": 179370,
+      "text": "and this is simply done with a straightedge okay guys that about wraps it up for more information"
+    },
+    {
+      "start_ms": 179370,
+      "end_ms": 184890,
+      "text": "about the care and maintenance of your double arm visit Haas CNC comm and thanks for watching"
+    }
+  ]
+}

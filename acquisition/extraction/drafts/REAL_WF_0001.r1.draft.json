@@ -1,6 +1,7 @@
 {
   "workflow_id": "REAL_WF_0001",
   "revision": 1,
+  "authored_by": "claude-code-d1b-draft",
   "dataset_split": "dev",
   "title": "Replace a damaged pocket on a Haas side-mount tool changer (SMTC)",
   "language": "en",

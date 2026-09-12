@@ -299,6 +299,7 @@ def test_cli_flow_sheet_apply_status_promote(monkeypatch, tmp_path, capsys):
     assert not (cw.REPO_ROOT / "data" / "workflows" / "dev").exists(), "the test must not write into the repo"
 
 
-def test_the_committed_draft_has_not_been_reviewed_yet(snapshot):
+def test_the_committed_draft_has_been_source_checked(snapshot):
     status = rv.review_status(snapshot, rv.load_record("REAL_WF_0001", 1))
-    assert status["source_checked"] == 0 and len(status["pending"]) == 39
+    assert status["source_checked"] == 39
+    assert status["rejected"] == status["pending"] == status["stale"] == []

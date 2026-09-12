@@ -9,3 +9,6 @@ __pycache__/
 data/media/
 data/bundles/
 out/
+
+# Phieu review tam cua D1-C; ban ghi chinh thuc la *.review.json
+acquisition/extraction/reviews/*.sheet.csv

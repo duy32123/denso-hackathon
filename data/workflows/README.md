@@ -17,10 +17,14 @@ python -m acquisition.extraction.evidence_pool show SRC_HAAS_0005:U0018 SRC_HAAS
 # 2. compile: issues every ID, builds Evidence, derives support_status, validates
 python -m acquisition.extraction.compile_workflow acquisition/extraction/drafts/REAL_WF_0001.r1.draft.json
 
-# 3. a second person (D1-C) checks every claim against the source and records ReviewEvents
-#    (tooling for this step is the next D1-B issue)
+# 3. a second person (D1-C) checks every claim against the source
+#    guide: acquisition/extraction/reviews/README.md
+python -m acquisition.extraction.review sheet acquisition/extraction/drafts/REAL_WF_0001.r1.draft.json
+python -m acquisition.extraction.review apply acquisition/extraction/drafts/REAL_WF_0001.r1.draft.json \
+    acquisition/extraction/reviews/REAL_WF_0001.r1.sheet.csv --reviewer-id <github-user> --reviewer-role "D1-C annotation/QA"
 
-# 4. promote to dev/, then export
+# 4. promote (merges ReviewEvents, writes dev/), then export
+python -m acquisition.extraction.review promote acquisition/extraction/drafts/REAL_WF_0001.r1.draft.json
 python -m acquisition.export.exporter --split dev --check
 python -m acquisition.export.exporter --split dev
 ```

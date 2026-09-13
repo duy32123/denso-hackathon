@@ -13,8 +13,6 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-from dotenv import load_dotenv
-
 # Setup repository root and module import path
 REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
@@ -28,9 +26,12 @@ if hasattr(sys.stdout, "reconfigure"):
     except Exception:
         pass
 
-
-# Load .env file from repository root
-load_dotenv(REPO_ROOT / ".env")
+# Load .env file from repository root if python-dotenv is available
+try:
+    from dotenv import load_dotenv
+    load_dotenv(REPO_ROOT / ".env")
+except ImportError:
+    pass
 
 from acquisition.extraction.schema_v1 import (
     FieldState,

@@ -1,0 +1,2368 @@
+{
+  "schema_version": "1.0.0",
+  "workflow_id": "B0_WF_0001",
+  "revision": 1,
+  "source_type": "real",
+  "dataset_split": "dev",
+  "title": "Replace a Tool Pocket on Your Haas Side Mount Tool Changer (SMTC)",
+  "language": "en",
+  "created_at": "2026-09-13T00:00:00Z",
+  "supersedes_revision": null,
+  "lifecycle": "active",
+  "source_ids": [
+    "SRC_HAAS_0005"
+  ],
+  "context": {
+    "manufacturer": "Haas Automation, Inc.",
+    "machine_family": null,
+    "machine_model": null,
+    "subsystem": "side mount tool changer",
+    "task_type": "maintenance",
+    "symptoms": [
+      "damaged pocket"
+    ],
+    "alarm_codes": [],
+    "components": [
+      "tool pocket",
+      "cam box",
+      "double arm",
+      "carousel disk",
+      "number ring",
+      "pilot check valve",
+      "pocket stop",
+      "shoulder bolt",
+      "retaining bolt",
+      "lower proximity switch",
+      "cam follower",
+      "plunger",
+      "pocket slider",
+      "pocket up switch",
+      "pocket down switch"
+    ],
+    "metadata_provenance": {
+      "manufacturer": {
+        "basis": "source",
+        "source_ids": [
+          "SRC_HAAS_0005"
+        ],
+        "note": "Publisher is Haas Automation, Inc."
+      },
+      "machine_family": {
+        "basis": "unknown",
+        "source_ids": [],
+        "note": "Not stated."
+      },
+      "machine_model": {
+        "basis": "unknown",
+        "source_ids": [],
+        "note": "Not stated."
+      },
+      "subsystem": {
+        "basis": "source",
+        "source_ids": [
+          "SRC_HAAS_0005"
+        ],
+        "note": "Named in the narration."
+      },
+      "task_type": {
+        "basis": "curated",
+        "source_ids": [],
+        "note": "Team label: part replacement."
+      },
+      "symptoms": {
+        "basis": "source",
+        "source_ids": [
+          "SRC_HAAS_0005"
+        ],
+        "note": "Stated in the narration."
+      },
+      "alarm_codes": {
+        "basis": "unknown",
+        "source_ids": [],
+        "note": "Not stated."
+      },
+      "components": {
+        "basis": "source",
+        "source_ids": [
+          "SRC_HAAS_0005"
+        ],
+        "note": "Parts named in the narration."
+      }
+    }
+  },
+  "steps": [
+    {
+      "step_id": "B0_WF_0001_ST_001",
+      "display_order": 1,
+      "title": "Bring the damaged pocket into position and press E-stop",
+      "fields": {
+        "context": {
+          "state": "present",
+          "claim_ids": [
+            "B0_WF_0001_CL_001"
+          ]
+        },
+        "observation": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "action": {
+          "state": "present",
+          "claim_ids": [
+            "B0_WF_0001_CL_002",
+            "B0_WF_0001_CL_003"
+          ]
+        },
+        "rationale": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "condition": {
+          "state": "present",
+          "claim_ids": [
+            "B0_WF_0001_CL_004"
+          ]
+        },
+        "outcome": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claim_ids": []
+        }
+      }
+    },
+    {
+      "step_id": "B0_WF_0001_ST_002",
+      "display_order": 2,
+      "title": "Remove the top fasteners and the cam-box sheet metal",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "observation": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "action": {
+          "state": "present",
+          "claim_ids": [
+            "B0_WF_0001_CL_005",
+            "B0_WF_0001_CL_006"
+          ]
+        },
+        "rationale": {
+          "state": "present",
+          "claim_ids": [
+            "B0_WF_0001_CL_007"
+          ]
+        },
+        "condition": {
+          "state": "present",
+          "claim_ids": [
+            "B0_WF_0001_CL_008"
+          ]
+        },
+        "outcome": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claim_ids": []
+        }
+      }
+    },
+    {
+      "step_id": "B0_WF_0001_ST_003",
+      "display_order": 3,
+      "title": "Remove tools and mark the carousel disk and pocket",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "observation": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "action": {
+          "state": "present",
+          "claim_ids": [
+            "B0_WF_0001_CL_009",
+            "B0_WF_0001_CL_010"
+          ]
+        },
+        "rationale": {
+          "state": "present",
+          "claim_ids": [
+            "B0_WF_0001_CL_011",
+            "B0_WF_0001_CL_012"
+          ]
+        },
+        "condition": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "outcome": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claim_ids": []
+        }
+      }
+    },
+    {
+      "step_id": "B0_WF_0001_ST_004",
+      "display_order": 4,
+      "title": "Remove number ring, disconnect main air, and remove pilot check valve",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "observation": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "action": {
+          "state": "present",
+          "claim_ids": [
+            "B0_WF_0001_CL_013",
+            "B0_WF_0001_CL_014",
+            "B0_WF_0001_CL_015"
+          ]
+        },
+        "rationale": {
+          "state": "present",
+          "claim_ids": [
+            "B0_WF_0001_CL_016"
+          ]
+        },
+        "condition": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "outcome": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claim_ids": []
+        }
+      }
+    },
+    {
+      "step_id": "B0_WF_0001_ST_005",
+      "display_order": 5,
+      "title": "Remove pocket stop, shoulder bolt, retaining bolt, and pocket",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "observation": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "action": {
+          "state": "present",
+          "claim_ids": [
+            "B0_WF_0001_CL_017",
+            "B0_WF_0001_CL_018",
+            "B0_WF_0001_CL_019"
+          ]
+        },
+        "rationale": {
+          "state": "present",
+          "claim_ids": [
+            "B0_WF_0001_CL_020"
+          ]
+        },
+        "condition": {
+          "state": "present",
+          "claim_ids": [
+            "B0_WF_0001_CL_021",
+            "B0_WF_0001_CL_022"
+          ]
+        },
+        "outcome": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claim_ids": []
+        }
+      }
+    },
+    {
+      "step_id": "B0_WF_0001_ST_006",
+      "display_order": 6,
+      "title": "Inspect cam follower and plungers",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "observation": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "action": {
+          "state": "present",
+          "claim_ids": [
+            "B0_WF_0001_CL_023",
+            "B0_WF_0001_CL_024"
+          ]
+        },
+        "rationale": {
+          "state": "present",
+          "claim_ids": [
+            "B0_WF_0001_CL_025"
+          ]
+        },
+        "condition": {
+          "state": "present",
+          "claim_ids": [
+            "B0_WF_0001_CL_026"
+          ]
+        },
+        "outcome": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claim_ids": []
+        }
+      }
+    },
+    {
+      "step_id": "B0_WF_0001_ST_007",
+      "display_order": 7,
+      "title": "Grease pocket slider, install new pocket, and fasten",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "observation": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "action": {
+          "state": "present",
+          "claim_ids": [
+            "B0_WF_0001_CL_027",
+            "B0_WF_0001_CL_028",
+            "B0_WF_0001_CL_029",
+            "B0_WF_0001_CL_030"
+          ]
+        },
+        "rationale": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "condition": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "outcome": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claim_ids": []
+        }
+      }
+    },
+    {
+      "step_id": "B0_WF_0001_ST_008",
+      "display_order": 8,
+      "title": "Verify pocket movement and switch readings",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "observation": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "action": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "rationale": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "condition": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "outcome": {
+          "state": "present",
+          "claim_ids": [
+            "B0_WF_0001_CL_031",
+            "B0_WF_0001_CL_032"
+          ]
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claim_ids": []
+        }
+      }
+    },
+    {
+      "step_id": "B0_WF_0001_ST_009",
+      "display_order": 9,
+      "title": "Install pocket stop, check valve, and number disc",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "observation": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "action": {
+          "state": "present",
+          "claim_ids": [
+            "B0_WF_0001_CL_033",
+            "B0_WF_0001_CL_034",
+            "B0_WF_0001_CL_035"
+          ]
+        },
+        "rationale": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "condition": {
+          "state": "present",
+          "claim_ids": [
+            "B0_WF_0001_CL_036"
+          ]
+        },
+        "outcome": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claim_ids": []
+        }
+      }
+    },
+    {
+      "step_id": "B0_WF_0001_ST_010",
+      "display_order": 10,
+      "title": "Reinstall panels and tools",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "observation": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "action": {
+          "state": "present",
+          "claim_ids": [
+            "B0_WF_0001_CL_037",
+            "B0_WF_0001_CL_038"
+          ]
+        },
+        "rationale": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "condition": {
+          "state": "present",
+          "claim_ids": [
+            "B0_WF_0001_CL_039"
+          ]
+        },
+        "outcome": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claim_ids": []
+        }
+      }
+    },
+    {
+      "step_id": "B0_WF_0001_ST_011",
+      "display_order": 11,
+      "title": "Test the tool changer",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "observation": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "action": {
+          "state": "present",
+          "claim_ids": [
+            "B0_WF_0001_CL_040",
+            "B0_WF_0001_CL_041",
+            "B0_WF_0001_CL_042"
+          ]
+        },
+        "rationale": {
+          "state": "present",
+          "claim_ids": [
+            "B0_WF_0001_CL_043"
+          ]
+        },
+        "condition": {
+          "state": "present",
+          "claim_ids": [
+            "B0_WF_0001_CL_044"
+          ]
+        },
+        "outcome": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claim_ids": []
+        }
+      }
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "B0_WF_0001_CL_001",
+      "text": "The procedure replaces a damaged pocket on the side mount tool changer.",
+      "role": "context",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_001",
+          "support_status": "supported",
+          "explanation": "The presenter states the task at the start of the video."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_002",
+      "text": "Set the rapids down to 25% and rotate to the damaged pocket.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_002",
+          "support_status": "supported",
+          "explanation": "The presenter provides this instruction."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_003",
+      "text": "Press e stop.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_003",
+          "support_status": "supported",
+          "explanation": "The presenter provides this instruction."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_004",
+      "text": "Press e stop once the pocket is in position.",
+      "role": "condition",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_003",
+          "support_status": "supported",
+          "explanation": "The presenter specifies the condition for pressing e stop."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_005",
+      "text": "Remove four fasteners on top of the machine.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_004",
+          "support_status": "supported",
+          "explanation": "The presenter provides this instruction."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_006",
+      "text": "Remove three pieces of sheet metal from the bottom of the cam box: one larger piece and two smaller pieces right below the double arm.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_005",
+          "support_status": "supported",
+          "explanation": "The presenter provides this instruction."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_007",
+      "text": "The sheet metal pieces are removed in order to gain access to the damaged pocket and the switches behind it.",
+      "role": "rationale",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_006",
+          "support_status": "supported",
+          "explanation": "The presenter states the reason for removing the sheet metal."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_008",
+      "text": "The four fasteners on top of the machine must be removed before the larger panel can be moved.",
+      "role": "condition",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_004",
+          "support_status": "supported",
+          "explanation": "The presenter states this condition."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_009",
+      "text": "Remove all tools from the carousel.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_007",
+          "support_status": "supported",
+          "explanation": "The presenter provides this instruction."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_010",
+      "text": "Put a mark on the disk and on the pocket.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_008",
+          "support_status": "supported",
+          "explanation": "The presenter provides this instruction."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_011",
+      "text": "Tools are removed because the repair area will be worked on for a few minutes.",
+      "role": "rationale",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_009",
+          "support_status": "supported",
+          "explanation": "The presenter provides this reason."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_012",
+      "text": "The disk and pocket are marked to ensure the carousel disk is installed correctly during reinstallation.",
+      "role": "rationale",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_008",
+          "support_status": "supported",
+          "explanation": "The presenter provides this reason."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_013",
+      "text": "Remove the number ring.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_010",
+          "support_status": "supported",
+          "explanation": "The presenter provides this instruction."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_014",
+      "text": "Disconnect the main air to the machine.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_011",
+          "support_status": "supported",
+          "explanation": "The presenter provides this instruction."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_015",
+      "text": "Remove the pilot check valve.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_012",
+          "support_status": "supported",
+          "explanation": "The presenter provides this instruction."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_016",
+      "text": "Removing the check valve allows the pocket to be moved up and down freely to get to a screw.",
+      "role": "rationale",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_013",
+          "support_status": "supported",
+          "explanation": "The presenter provides this reason."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_017",
+      "text": "Remove the four bolts from the pocket stop.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_014",
+          "support_status": "supported",
+          "explanation": "The presenter provides this instruction."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_018",
+      "text": "Remove the shoulder bolt on the backside of the carousel right next to the lower proximity switch.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_015",
+          "support_status": "supported",
+          "explanation": "The presenter provides this instruction."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_019",
+      "text": "Remove the retaining bolt and remove the pocket.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_016",
+          "support_status": "supported",
+          "explanation": "The presenter provides this instruction."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_020",
+      "text": "The bolts from the pocket stop are removed to continue with the removal of the pocket.",
+      "role": "rationale",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_017",
+          "support_status": "supported",
+          "explanation": "The presenter states the reason for removing the bolts."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_021",
+      "text": "The pocket stop must be removed before the shoulder bolt can be removed.",
+      "role": "condition",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_015",
+          "support_status": "supported",
+          "explanation": "The presenter states 'now with this pocket stop remove we'll remove the shoulder bolt'."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_022",
+      "text": "The shoulder bolts must be removed before removing the retaining bolt and pocket.",
+      "role": "condition",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_018",
+          "support_status": "supported",
+          "explanation": "The presenter states 'with the shoulder bolts remove will then remove the retaining bolt'."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_023",
+      "text": "Rotate the cam follower to check that it is spinning freely.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_019",
+          "support_status": "supported",
+          "explanation": "The presenter provides this instruction."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_024",
+      "text": "Check the plunger inside the pocket.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_020",
+          "support_status": "supported",
+          "explanation": "The presenter provides this instruction."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_025",
+      "text": "The plunger is checked to make sure it is not worn out.",
+      "role": "rationale",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_021",
+          "support_status": "supported",
+          "explanation": "The presenter provides this reason."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_026",
+      "text": "These checks must be done before installing the new pocket.",
+      "role": "condition",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_022",
+          "support_status": "supported",
+          "explanation": "The presenter states 'before we install the new pocket there's a few things we need to check'."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_027",
+      "text": "Apply grease in the pocket slider.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_023",
+          "support_status": "supported",
+          "explanation": "The presenter provides this instruction."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_028",
+      "text": "Install the pocket to the slider and install both back in position.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_024",
+          "support_status": "supported",
+          "explanation": "The presenter provides this instruction."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_029",
+      "text": "Reinstall the retainer bolt and tighten it.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_025",
+          "support_status": "supported",
+          "explanation": "The presenter provides this instruction."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_030",
+      "text": "Lower the pocket and attach the shoulder bolt and screw it in.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_026",
+          "support_status": "supported",
+          "explanation": "The presenter provides this instruction."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_031",
+      "text": "The pocket is moving freely.",
+      "role": "outcome",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_027",
+          "support_status": "supported",
+          "explanation": "The presenter states this outcome after installing."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_032",
+      "text": "The presenter is reading the pocket up and pocket down switches.",
+      "role": "outcome",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_028",
+          "support_status": "supported",
+          "explanation": "The presenter states this outcome."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_033",
+      "text": "Install the pocket stop.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_029",
+          "support_status": "supported",
+          "explanation": "The presenter provides this instruction."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_034",
+      "text": "Install the check valve.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_030",
+          "support_status": "supported",
+          "explanation": "The presenter provides this instruction."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_035",
+      "text": "Reinstall the number disc by lining up the dot on the number disc with the dot on the pocket.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_031",
+          "support_status": "supported",
+          "explanation": "The presenter provides this instruction."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_036",
+      "text": "The check valve is installed after the pocket stop and new pocket are installed.",
+      "role": "condition",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_029",
+          "support_status": "supported",
+          "explanation": "The presenter states this condition."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_037",
+      "text": "Install the remaining three panels.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_032",
+          "support_status": "supported",
+          "explanation": "The presenter provides this instruction."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_038",
+      "text": "Install the tools.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_032",
+          "support_status": "supported",
+          "explanation": "The presenter provides this instruction."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_039",
+      "text": "Tools are installed after the panels are all in place.",
+      "role": "condition",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_032",
+          "support_status": "supported",
+          "explanation": "The presenter states 'now with the panels all in place we'll install the tools'."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_040",
+      "text": "Test the system.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_033",
+          "support_status": "supported",
+          "explanation": "The presenter provides this instruction."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_041",
+      "text": "Release the e-stop and run the tool changer.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_034",
+          "support_status": "supported",
+          "explanation": "The presenter provides this instruction."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_042",
+      "text": "Run the tool changer through several tool changes.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_035",
+          "support_status": "supported",
+          "explanation": "The presenter provides this instruction."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_043",
+      "text": "The tool changer is run through several tool changes to ensure everything is working correctly.",
+      "role": "rationale",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_036",
+          "support_status": "supported",
+          "explanation": "The presenter provides this reason."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "B0_WF_0001_CL_044",
+      "text": "Testing occurs with the new pocket installed, the panels secured, and the main air turned on.",
+      "role": "condition",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Orville",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Pocket replacement demonstrated in SRC_HAAS_0005."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "B0_WF_0001_EV_037",
+          "support_status": "supported",
+          "explanation": "The presenter states these conditions for testing."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "B0_WF_0001_EV_001",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 0,
+        "end_ms": 19140,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "hi I'm Orville and today we're going to replace a damaged pocket on the side mount tool changer set your Rapids down to 25% and then rotate to the damaged pocket",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_002",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 11820,
+        "end_ms": 19140,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "side mount tool changer set your Rapids down to 25% and then rotate to the damaged pocket",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_003",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 23770,
+        "end_ms": 33430,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "press e stop once the pocket is in position okay we need to remove three pieces of sheet",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_004",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 44620,
+        "end_ms": 60310,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "switches behind it but before we can move this larger panel there are four of those fasteners on top of the machine we'll start with those four first we'll be working in this area for",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_005",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 23770,
+        "end_ms": 44620,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "press e stop once the pocket is in position okay we need to remove three pieces of sheet metal from the bottom of the cam box this larger piece to my left and also two smaller piece right below the double arm in order to gain access to the damaged pocket and the",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_006",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 39910,
+        "end_ms": 50050,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "piece right below the double arm in order to gain access to the damaged pocket and the switches behind it but before we can move this larger panel there are four of those fasteners",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_007",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 60310,
+        "end_ms": 67240,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "a few minutes so we'll remove all the tools from the carousel and mark their location we",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_008",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 67240,
+        "end_ms": 79060,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "want to make sure we installed it carousel disk correctly so we'll put a mark on the disk and on the pocket for reinstallation now we're going to remove the number ring",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_009",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 50050,
+        "end_ms": 67240,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "on top of the machine we'll start with those four first we'll be working in this area for a few minutes so we'll remove all the tools from the carousel and mark their location we",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_010",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 72700,
+        "end_ms": 79060,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "disk and on the pocket for reinstallation now we're going to remove the number ring",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_011",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 85170,
+        "end_ms": 93540,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "and now we're going to disconnect the main air to the machine and now we're going to remove the pilot check valve",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_012",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 87780,
+        "end_ms": 93540,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "the machine and now we're going to remove the pilot check valve",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_013",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 93540,
+        "end_ms": 113580,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "now with this check valve remove now I can move the pocket up and down freely to get to that screw now we're going to remove the four bolts from the pocket stop so we",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_014",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 106200,
+        "end_ms": 113580,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "to that screw now we're going to remove the four bolts from the pocket stop so we",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_015",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 113580,
+        "end_ms": 127770,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "can continue with it removal of the pocket now with this pocket stop remove we'll remove the shoulder bolt on the backside of the carousel right next to the lower proximity switch with",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_016",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 127770,
+        "end_ms": 134010,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "the shoulder bolts remove will then remove the retaining bolt and remove the pocket",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_017",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 106200,
+        "end_ms": 120630,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "to that screw now we're going to remove the four bolts from the pocket stop so we can continue with it removal of the pocket now with this pocket stop remove we'll remove the",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_018",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 120630,
+        "end_ms": 134010,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "shoulder bolt on the backside of the carousel right next to the lower proximity switch with the shoulder bolts remove will then remove the retaining bolt and remove the pocket",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_019",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 134010,
+        "end_ms": 147840,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "before we install the new pocket there's a few things we need to check rotate that cam follower make sure that it's spinning freely we also want to check the plunger",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_020",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 142680,
+        "end_ms": 153660,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "cam follower make sure that it's spinning freely we also want to check the plunger inside the pocket to make sure they're not worn out now with the pocket slider we'll apply some",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_021",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 147840,
+        "end_ms": 153660,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "inside the pocket to make sure they're not worn out now with the pocket slider we'll apply some",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_022",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 134010,
+        "end_ms": 142680,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "before we install the new pocket there's a few things we need to check rotate that",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_023",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 147840,
+        "end_ms": 165270,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "inside the pocket to make sure they're not worn out now with the pocket slider we'll apply some grease in there now we're ready to reinstall the pocket install the pocket to the slider",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_024",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 153660,
+        "end_ms": 173940,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "grease in there now we're ready to reinstall the pocket install the pocket to the slider and install both of them back in position now we're going to reinstall it retainer bolt and",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_025",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 165270,
+        "end_ms": 182490,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "and install both of them back in position now we're going to reinstall it retainer bolt and tighten it so now we will install the shoulder boat lower the pocket and attach the shoulder",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_026",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 173940,
+        "end_ms": 192360,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "tighten it so now we will install the shoulder boat lower the pocket and attach the shoulder bolt and screw it in now the pocket is moving freely and I'm also reading the switches which",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_027",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 182490,
+        "end_ms": 192360,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "bolt and screw it in now the pocket is moving freely and I'm also reading the switches which",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_028",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 182490,
+        "end_ms": 199530,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "bolt and screw it in now the pocket is moving freely and I'm also reading the switches which is the pocket up and pocket down switches so now let's install the pocket stop with the",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_029",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 192360,
+        "end_ms": 207600,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "is the pocket up and pocket down switches so now let's install the pocket stop with the pocket stop and the new pocket installed now let's install the check valve now reinstall",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_030",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 199530,
+        "end_ms": 207600,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "pocket stop and the new pocket installed now let's install the check valve now reinstall",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_031",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 199530,
+        "end_ms": 216390,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "pocket stop and the new pocket installed now let's install the check valve now reinstall the number disc by lining up the dot on the number disc with the dot on the pocket now",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_032",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 216390,
+        "end_ms": 225420,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "we'll install the remaining three panels now with the panels all in place we'll install the tools",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_033",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 225420,
+        "end_ms": 233460,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "and then test the system with the new pocket installed the panels are secured the main air",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_034",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 233460,
+        "end_ms": 244800,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "is turned on let's release the e-stop and run the tool changer run the tool changer through",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_035",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 233460,
+        "end_ms": 249390,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "is turned on let's release the e-stop and run the tool changer run the tool changer through several two changes to ensure everything is working correctly thanks for watching",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_036",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 244800,
+        "end_ms": 249390,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "several two changes to ensure everything is working correctly thanks for watching",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "B0_WF_0001_EV_037",
+      "source_id": "SRC_HAAS_0005",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 225420,
+        "end_ms": 244800,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "and then test the system with the new pocket installed the panels are secured the main air is turned on let's release the e-stop and run the tool changer run the tool changer through",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    }
+  ],
+  "relations": [],
+  "questions": [
+    {
+      "question_id": "B0_WF_0001_Q_001",
+      "step_id": "B0_WF_0001_ST_001",
+      "target_field": "rationale",
+      "reason": "missing",
+      "question": "Why should the rapids be set down to 25%?",
+      "status": "open",
+      "answer_source_ids": [],
+      "resolution_note": null
+    },
+    {
+      "question_id": "B0_WF_0001_Q_002",
+      "step_id": "B0_WF_0001_ST_004",
+      "target_field": "rationale",
+      "reason": "missing",
+      "question": "Why is the main air disconnected at this point in the procedure?",
+      "status": "open",
+      "answer_source_ids": [],
+      "resolution_note": null
+    },
+    {
+      "question_id": "B0_WF_0001_Q_003",
+      "step_id": "B0_WF_0001_ST_008",
+      "target_field": "acceptance_criteria",
+      "reason": "missing",
+      "question": "What should the pocket up and pocket down switches read to confirm correct installation?",
+      "status": "open",
+      "answer_source_ids": [],
+      "resolution_note": null
+    }
+  ],
+  "review_events": [],
+  "change_log": []
+}

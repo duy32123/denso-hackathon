@@ -186,6 +186,8 @@ def test_mock_adapter_structured_output():
 
 def test_get_llm_adapter_factory(monkeypatch):
     """Tests provider resolution via factory function."""
+    # A developer's .env may pin a provider; this test exercises model heuristics.
+    monkeypatch.delenv("LLM_PROVIDER", raising=False)
     monkeypatch.setenv("GEMINI_API_KEY", "test-gemini-key")
     monkeypatch.setenv("OPENAI_API_KEY", "test-openai-key")
 

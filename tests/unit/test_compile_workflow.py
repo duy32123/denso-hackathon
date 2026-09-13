@@ -14,6 +14,9 @@ from acquisition.extraction import evidence_pool as ep
 
 DRAFT = cw.REPO_ROOT / "acquisition" / "extraction" / "drafts" / "REAL_WF_0001.r1.draft.json"
 SNAPSHOT = cw.DRAFT_OUT / "REAL_WF_0001.r1.json"
+DRAFTS_DIR = cw.REPO_ROOT / "acquisition" / "extraction" / "drafts"
+DEV_SOURCES = cw.REPO_ROOT / "data" / "sources" / "haas_pilot_sources.jsonl"
+DEV_WORKFLOWS_DIR = cw.REPO_ROOT / "data" / "workflows" / "dev"
 
 
 @pytest.fixture(scope="module")
@@ -46,9 +49,12 @@ def tiny_draft(**claim) -> dict:
 # --- REAL_WF_0001 ------------------------------------------------------------------
 
 
-def test_committed_snapshot_is_exactly_the_compiled_draft(draft, pool, tmp_path):
+@pytest.mark.parametrize("draft_path", sorted(DRAFTS_DIR.glob("*.r*.draft.json")), ids=lambda p: p.stem)
+def test_committed_snapshot_is_exactly_the_compiled_draft(draft_path, pool, tmp_path):
+    draft = json.loads(draft_path.read_text(encoding="utf-8"))
+    snapshot_path = cw.DRAFT_OUT / f"{draft['workflow_id']}.r{draft['revision']}.json"
     path = cw.write_snapshot(cw.compile_draft(draft, pool), tmp_path)
-    assert path.read_bytes() == SNAPSHOT.read_bytes(), "edit the draft and recompile; never hand-edit the snapshot"
+    assert path.read_bytes() == snapshot_path.read_bytes(), "edit the draft and recompile; never hand-edit the snapshot"
 
 
 def test_snapshot_passes_the_contract_validator_without_warnings(snapshot):
@@ -166,6 +172,23 @@ def test_context_value_needs_a_provenance_basis(pool):
     d["context"] = {"machine_model": "VM-3"}
     with pytest.raises(cw.DraftError, match="no provenance basis"):
         cw.compile_draft(d, pool)
+
+
+def test_every_dev_pilot_video_has_a_reviewed_workflow():
+    """Team 1 plan Week-1 gate: 3 pilot videos, each with a knowledge-unit workflow."""
+    pilot_video_ids = set()
+    for line in DEV_SOURCES.read_text(encoding="utf-8").splitlines():
+        source = json.loads(line)
+        if source["source_kind"] == "official_service_video":
+            pilot_video_ids.add(source["source_id"])
+
+    covered = set()
+    for path in DEV_WORKFLOWS_DIR.glob("*.r*.json"):
+        snapshot = json.loads(path.read_text(encoding="utf-8"))
+        covered.update(snapshot["source_ids"])
+
+    missing = pilot_video_ids - covered
+    assert not missing, f"pilot video(s) with no dev workflow: {sorted(missing)}"
 
 
 def test_relation_condition_must_point_at_a_condition_claim(pool):

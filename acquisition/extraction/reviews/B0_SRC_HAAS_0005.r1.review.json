@@ -1,0 +1,245 @@
+{
+  "workflow_id": "B0_SRC_HAAS_0005",
+  "revision": 1,
+  "sessions": [
+    {
+      "reviewer_id": "duy32123",
+      "reviewer_role": "D1-C annotation/QA",
+      "reviewed_at": "2026-09-13T12:56:35Z",
+      "self_review": false,
+      "decisions": [
+        {
+          "claim_id": "B0_SRC_HAAS_0005_CL_001",
+          "fingerprint": "0ddb2f8019a40aa0",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "B0_SRC_HAAS_0005_CL_002",
+          "fingerprint": "011995f11f95b22d",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "B0_SRC_HAAS_0005_CL_003",
+          "fingerprint": "6fad51b658168b32",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "B0_SRC_HAAS_0005_CL_004",
+          "fingerprint": "18aaf01b456067cf",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "B0_SRC_HAAS_0005_CL_005",
+          "fingerprint": "2469ca6c52998494",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "B0_SRC_HAAS_0005_CL_006",
+          "fingerprint": "c5faacd4c80f4d6b",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "B0_SRC_HAAS_0005_CL_007",
+          "fingerprint": "61a7e19132bdc75e",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "B0_SRC_HAAS_0005_CL_008",
+          "fingerprint": "8ba2f5735a6a4d36",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "B0_SRC_HAAS_0005_CL_009",
+          "fingerprint": "4fc07eda469d885c",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "B0_SRC_HAAS_0005_CL_010",
+          "fingerprint": "5db160aff56ee080",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "B0_SRC_HAAS_0005_CL_011",
+          "fingerprint": "aa2f682eea18112e",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "B0_SRC_HAAS_0005_CL_012",
+          "fingerprint": "3a6d3a69c89ef9b2",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "B0_SRC_HAAS_0005_CL_013",
+          "fingerprint": "ae889c225ef89bf7",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "B0_SRC_HAAS_0005_CL_014",
+          "fingerprint": "7f183bef586c34df",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "B0_SRC_HAAS_0005_CL_015",
+          "fingerprint": "34a6ea820040d3b5",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "B0_SRC_HAAS_0005_CL_016",
+          "fingerprint": "f446b7532b3639ed",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "B0_SRC_HAAS_0005_CL_017",
+          "fingerprint": "51fee3ef35be4642",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "B0_SRC_HAAS_0005_CL_018",
+          "fingerprint": "0319286809a304a5",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "B0_SRC_HAAS_0005_CL_019",
+          "fingerprint": "306ac6ca23e678cb",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "B0_SRC_HAAS_0005_CL_020",
+          "fingerprint": "2f52aafaa8fae3f0",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "B0_SRC_HAAS_0005_CL_021",
+          "fingerprint": "2c53f262b461eceb",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "B0_SRC_HAAS_0005_CL_022",
+          "fingerprint": "23d23e86a5de57ed",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "B0_SRC_HAAS_0005_CL_023",
+          "fingerprint": "5fa39ba4dfb21a65",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "B0_SRC_HAAS_0005_CL_024",
+          "fingerprint": "5f5dd5ef5846c05e",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "B0_SRC_HAAS_0005_CL_025",
+          "fingerprint": "38671e95bc6d164f",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "B0_SRC_HAAS_0005_CL_026",
+          "fingerprint": "a1128d47a334e85a",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "B0_SRC_HAAS_0005_CL_027",
+          "fingerprint": "d334de65f49df2d5",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "B0_SRC_HAAS_0005_CL_028",
+          "fingerprint": "1287dd442215a833",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "B0_SRC_HAAS_0005_CL_029",
+          "fingerprint": "c40e20c8f9358faf",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "B0_SRC_HAAS_0005_CL_030",
+          "fingerprint": "268802209aa8acfb",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "B0_SRC_HAAS_0005_CL_031",
+          "fingerprint": "9f7d39744e4fe891",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "B0_SRC_HAAS_0005_CL_032",
+          "fingerprint": "d6cf0b428f4c7d9a",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "B0_SRC_HAAS_0005_CL_033",
+          "fingerprint": "0f3b0a8594b54e62",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        }
+      ]
+    }
+  ]
+}

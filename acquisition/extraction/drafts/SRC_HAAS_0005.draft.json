@@ -1,0 +1,1256 @@
+{
+  "dataset_split": "dev",
+  "title": "Replace a Tool Pocket on Your Haas Side Mount Tool Changer (SMTC)",
+  "language": "en",
+  "source_ids": [
+    "SRC_HAAS_0005"
+  ],
+  "attribution": {
+    "label": "Orville",
+    "kind": "speaker"
+  },
+  "scope": "Pocket replacement demonstrated in SRC_HAAS_0005; the machine model is not stated.",
+  "context": {
+    "manufacturer": "Haas Automation, Inc.",
+    "machine_family": null,
+    "machine_model": null,
+    "subsystem": "side mount tool changer",
+    "task_type": "maintenance",
+    "symptoms": [
+      "damaged pocket"
+    ],
+    "alarm_codes": [],
+    "components": [
+      "tool pocket",
+      "cam box",
+      "double arm",
+      "carousel disk",
+      "number ring",
+      "pilot check valve",
+      "pocket stop",
+      "shoulder bolt",
+      "retaining bolt",
+      "lower proximity switch",
+      "cam follower",
+      "plunger",
+      "pocket slider",
+      "pocket up switch",
+      "pocket down switch"
+    ],
+    "provenance": {
+      "manufacturer": {
+        "basis": "source",
+        "source_ids": [
+          "SRC_HAAS_0005"
+        ],
+        "note": "Publisher is Haas Automation, Inc."
+      },
+      "machine_family": {
+        "basis": "unknown",
+        "source_ids": [],
+        "note": "Not stated."
+      },
+      "machine_model": {
+        "basis": "unknown",
+        "source_ids": [],
+        "note": "Not stated."
+      },
+      "subsystem": {
+        "basis": "source",
+        "source_ids": [
+          "SRC_HAAS_0005"
+        ],
+        "note": "Named in the narration."
+      },
+      "task_type": {
+        "basis": "curated",
+        "source_ids": [],
+        "note": "Team label: part replacement."
+      },
+      "symptoms": {
+        "basis": "source",
+        "source_ids": [
+          "SRC_HAAS_0005"
+        ],
+        "note": "Stated in the narration."
+      },
+      "alarm_codes": {
+        "basis": "unknown",
+        "source_ids": [],
+        "note": "Not stated."
+      },
+      "components": {
+        "basis": "source",
+        "source_ids": [
+          "SRC_HAAS_0005"
+        ],
+        "note": "Parts named in the narration."
+      }
+    }
+  },
+  "steps": [
+    {
+      "display_order": 1,
+      "title": "Bring the damaged pocket into position and press E-stop",
+      "fields": {
+        "context": {
+          "state": "present",
+          "claims": [
+            {
+              "text": "The procedure replaces a damaged pocket on the side mount tool changer.",
+              "role": "context",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0001",
+                  "SRC_HAAS_0005:U0002"
+                ]
+              ],
+              "explanation": "The presenter states the task at the start of the video."
+            }
+          ]
+        },
+        "observation": {
+          "state": "missing",
+          "claims": []
+        },
+        "action": {
+          "state": "present",
+          "claims": [
+            {
+              "text": "Set the rapids down to 25% and rotate to the damaged pocket.",
+              "role": "action",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0002"
+                ]
+              ],
+              "explanation": "The presenter provides this instruction."
+            },
+            {
+              "text": "Press e stop.",
+              "role": "action",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0003"
+                ]
+              ],
+              "explanation": "The presenter provides this instruction."
+            }
+          ]
+        },
+        "rationale": {
+          "state": "missing",
+          "claims": []
+        },
+        "condition": {
+          "state": "present",
+          "claims": [
+            {
+              "text": "Press e stop once the pocket is in position.",
+              "role": "condition",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0003"
+                ]
+              ],
+              "explanation": "The presenter specifies the condition for pressing e stop."
+            }
+          ]
+        },
+        "outcome": {
+          "state": "missing",
+          "claims": []
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claims": []
+        }
+      },
+      "questions": [
+        {
+          "target_field": "rationale",
+          "reason": "missing",
+          "question": "Why should the rapids be set down to 25%?"
+        }
+      ]
+    },
+    {
+      "display_order": 2,
+      "title": "Remove the top fasteners and the cam-box sheet metal",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claims": []
+        },
+        "observation": {
+          "state": "missing",
+          "claims": []
+        },
+        "action": {
+          "state": "present",
+          "claims": [
+            {
+              "text": "Remove four fasteners on top of the machine.",
+              "role": "action",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0006",
+                  "SRC_HAAS_0005:U0007"
+                ]
+              ],
+              "explanation": "The presenter provides this instruction."
+            },
+            {
+              "text": "Remove three pieces of sheet metal from the bottom of the cam box: one larger piece and two smaller pieces right below the double arm.",
+              "role": "action",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0003",
+                  "SRC_HAAS_0005:U0004",
+                  "SRC_HAAS_0005:U0005"
+                ]
+              ],
+              "explanation": "The presenter provides this instruction."
+            }
+          ]
+        },
+        "rationale": {
+          "state": "present",
+          "claims": [
+            {
+              "text": "The sheet metal pieces are removed in order to gain access to the damaged pocket and the switches behind it.",
+              "role": "rationale",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0005",
+                  "SRC_HAAS_0005:U0006"
+                ]
+              ],
+              "explanation": "The presenter states the reason for removing the sheet metal."
+            }
+          ]
+        },
+        "condition": {
+          "state": "present",
+          "claims": [
+            {
+              "text": "The four fasteners on top of the machine must be removed before the larger panel can be moved.",
+              "role": "condition",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0006",
+                  "SRC_HAAS_0005:U0007"
+                ]
+              ],
+              "explanation": "The presenter states this condition."
+            }
+          ]
+        },
+        "outcome": {
+          "state": "missing",
+          "claims": []
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claims": []
+        }
+      },
+      "questions": []
+    },
+    {
+      "display_order": 3,
+      "title": "Remove tools and mark the carousel disk and pocket",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claims": []
+        },
+        "observation": {
+          "state": "missing",
+          "claims": []
+        },
+        "action": {
+          "state": "present",
+          "claims": [
+            {
+              "text": "Remove all tools from the carousel.",
+              "role": "action",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0008"
+                ]
+              ],
+              "explanation": "The presenter provides this instruction."
+            },
+            {
+              "text": "Put a mark on the disk and on the pocket.",
+              "role": "action",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0009",
+                  "SRC_HAAS_0005:U0010"
+                ]
+              ],
+              "explanation": "The presenter provides this instruction."
+            }
+          ]
+        },
+        "rationale": {
+          "state": "present",
+          "claims": [
+            {
+              "text": "Tools are removed because the repair area will be worked on for a few minutes.",
+              "role": "rationale",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0007",
+                  "SRC_HAAS_0005:U0008"
+                ]
+              ],
+              "explanation": "The presenter provides this reason."
+            },
+            {
+              "text": "The disk and pocket are marked to ensure the carousel disk is installed correctly during reinstallation.",
+              "role": "rationale",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0009",
+                  "SRC_HAAS_0005:U0010"
+                ]
+              ],
+              "explanation": "The presenter provides this reason."
+            }
+          ]
+        },
+        "condition": {
+          "state": "missing",
+          "claims": []
+        },
+        "outcome": {
+          "state": "missing",
+          "claims": []
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claims": []
+        }
+      },
+      "questions": []
+    },
+    {
+      "display_order": 4,
+      "title": "Remove number ring, disconnect main air, and remove pilot check valve",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claims": []
+        },
+        "observation": {
+          "state": "missing",
+          "claims": []
+        },
+        "action": {
+          "state": "present",
+          "claims": [
+            {
+              "text": "Remove the number ring.",
+              "role": "action",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0010"
+                ]
+              ],
+              "explanation": "The presenter provides this instruction."
+            },
+            {
+              "text": "Disconnect the main air to the machine.",
+              "role": "action",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0011",
+                  "SRC_HAAS_0005:U0012"
+                ]
+              ],
+              "explanation": "The presenter provides this instruction."
+            },
+            {
+              "text": "Remove the pilot check valve.",
+              "role": "action",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0012"
+                ]
+              ],
+              "explanation": "The presenter provides this instruction."
+            }
+          ]
+        },
+        "rationale": {
+          "state": "present",
+          "claims": [
+            {
+              "text": "Removing the check valve allows the pocket to be moved up and down freely to get to a screw.",
+              "role": "rationale",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0013",
+                  "SRC_HAAS_0005:U0014"
+                ]
+              ],
+              "explanation": "The presenter provides this reason."
+            }
+          ]
+        },
+        "condition": {
+          "state": "missing",
+          "claims": []
+        },
+        "outcome": {
+          "state": "missing",
+          "claims": []
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claims": []
+        }
+      },
+      "questions": [
+        {
+          "target_field": "rationale",
+          "reason": "missing",
+          "question": "Why is the main air disconnected at this point in the procedure?"
+        }
+      ]
+    },
+    {
+      "display_order": 5,
+      "title": "Remove pocket stop, shoulder bolt, retaining bolt, and pocket",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claims": []
+        },
+        "observation": {
+          "state": "missing",
+          "claims": []
+        },
+        "action": {
+          "state": "present",
+          "claims": [
+            {
+              "text": "Remove the four bolts from the pocket stop.",
+              "role": "action",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0014"
+                ]
+              ],
+              "explanation": "The presenter provides this instruction."
+            },
+            {
+              "text": "Remove the shoulder bolt on the backside of the carousel right next to the lower proximity switch.",
+              "role": "action",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0015",
+                  "SRC_HAAS_0005:U0016"
+                ]
+              ],
+              "explanation": "The presenter provides this instruction."
+            },
+            {
+              "text": "Remove the retaining bolt and remove the pocket.",
+              "role": "action",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0017"
+                ]
+              ],
+              "explanation": "The presenter provides this instruction."
+            }
+          ]
+        },
+        "rationale": {
+          "state": "present",
+          "claims": [
+            {
+              "text": "The bolts from the pocket stop are removed to continue with the removal of the pocket.",
+              "role": "rationale",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0014",
+                  "SRC_HAAS_0005:U0015"
+                ]
+              ],
+              "explanation": "The presenter states the reason for removing the bolts."
+            }
+          ]
+        },
+        "condition": {
+          "state": "present",
+          "claims": [
+            {
+              "text": "The pocket stop must be removed before the shoulder bolt can be removed.",
+              "role": "condition",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0015",
+                  "SRC_HAAS_0005:U0016"
+                ]
+              ],
+              "explanation": "The presenter states 'now with this pocket stop remove we'll remove the shoulder bolt'."
+            },
+            {
+              "text": "The shoulder bolts must be removed before removing the retaining bolt and pocket.",
+              "role": "condition",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0016",
+                  "SRC_HAAS_0005:U0017"
+                ]
+              ],
+              "explanation": "The presenter states 'with the shoulder bolts remove will then remove the retaining bolt'."
+            }
+          ]
+        },
+        "outcome": {
+          "state": "missing",
+          "claims": []
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claims": []
+        }
+      },
+      "questions": []
+    },
+    {
+      "display_order": 6,
+      "title": "Inspect cam follower and plungers",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claims": []
+        },
+        "observation": {
+          "state": "missing",
+          "claims": []
+        },
+        "action": {
+          "state": "present",
+          "claims": [
+            {
+              "text": "Rotate the cam follower to check that it is spinning freely.",
+              "role": "action",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0018",
+                  "SRC_HAAS_0005:U0019"
+                ]
+              ],
+              "explanation": "The presenter provides this instruction."
+            },
+            {
+              "text": "Check the plunger inside the pocket.",
+              "role": "action",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0019",
+                  "SRC_HAAS_0005:U0020"
+                ]
+              ],
+              "explanation": "The presenter provides this instruction."
+            }
+          ]
+        },
+        "rationale": {
+          "state": "present",
+          "claims": [
+            {
+              "text": "The plunger is checked to make sure it is not worn out.",
+              "role": "rationale",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0020"
+                ]
+              ],
+              "explanation": "The presenter provides this reason."
+            }
+          ]
+        },
+        "condition": {
+          "state": "present",
+          "claims": [
+            {
+              "text": "These checks must be done before installing the new pocket.",
+              "role": "condition",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0018"
+                ]
+              ],
+              "explanation": "The presenter states 'before we install the new pocket there's a few things we need to check'."
+            }
+          ]
+        },
+        "outcome": {
+          "state": "missing",
+          "claims": []
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claims": []
+        }
+      },
+      "questions": []
+    },
+    {
+      "display_order": 7,
+      "title": "Grease pocket slider, install new pocket, and fasten",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claims": []
+        },
+        "observation": {
+          "state": "missing",
+          "claims": []
+        },
+        "action": {
+          "state": "present",
+          "claims": [
+            {
+              "text": "Apply grease in the pocket slider.",
+              "role": "action",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0020",
+                  "SRC_HAAS_0005:U0021"
+                ]
+              ],
+              "explanation": "The presenter provides this instruction."
+            },
+            {
+              "text": "Install the pocket to the slider and install both back in position.",
+              "role": "action",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0021",
+                  "SRC_HAAS_0005:U0022"
+                ]
+              ],
+              "explanation": "The presenter provides this instruction."
+            },
+            {
+              "text": "Reinstall the retainer bolt and tighten it.",
+              "role": "action",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0022",
+                  "SRC_HAAS_0005:U0023"
+                ]
+              ],
+              "explanation": "The presenter provides this instruction."
+            },
+            {
+              "text": "Lower the pocket and attach the shoulder bolt and screw it in.",
+              "role": "action",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0023",
+                  "SRC_HAAS_0005:U0024"
+                ]
+              ],
+              "explanation": "The presenter provides this instruction."
+            }
+          ]
+        },
+        "rationale": {
+          "state": "missing",
+          "claims": []
+        },
+        "condition": {
+          "state": "missing",
+          "claims": []
+        },
+        "outcome": {
+          "state": "missing",
+          "claims": []
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claims": []
+        }
+      },
+      "questions": []
+    },
+    {
+      "display_order": 8,
+      "title": "Verify pocket movement and switch readings",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claims": []
+        },
+        "observation": {
+          "state": "missing",
+          "claims": []
+        },
+        "action": {
+          "state": "missing",
+          "claims": []
+        },
+        "rationale": {
+          "state": "missing",
+          "claims": []
+        },
+        "condition": {
+          "state": "missing",
+          "claims": []
+        },
+        "outcome": {
+          "state": "present",
+          "claims": [
+            {
+              "text": "The pocket is moving freely.",
+              "role": "outcome",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0024"
+                ]
+              ],
+              "explanation": "The presenter states this outcome after installing."
+            },
+            {
+              "text": "The presenter is reading the pocket up and pocket down switches.",
+              "role": "outcome",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0024",
+                  "SRC_HAAS_0005:U0025"
+                ]
+              ],
+              "explanation": "The presenter states this outcome."
+            }
+          ]
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claims": []
+        }
+      },
+      "questions": [
+        {
+          "target_field": "acceptance_criteria",
+          "reason": "missing",
+          "question": "What should the pocket up and pocket down switches read to confirm correct installation?"
+        }
+      ]
+    },
+    {
+      "display_order": 9,
+      "title": "Install pocket stop, check valve, and number disc",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claims": []
+        },
+        "observation": {
+          "state": "missing",
+          "claims": []
+        },
+        "action": {
+          "state": "present",
+          "claims": [
+            {
+              "text": "Install the pocket stop.",
+              "role": "action",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0025",
+                  "SRC_HAAS_0005:U0026"
+                ]
+              ],
+              "explanation": "The presenter provides this instruction."
+            },
+            {
+              "text": "Install the check valve.",
+              "role": "action",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0026"
+                ]
+              ],
+              "explanation": "The presenter provides this instruction."
+            },
+            {
+              "text": "Reinstall the number disc by lining up the dot on the number disc with the dot on the pocket.",
+              "role": "action",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0026",
+                  "SRC_HAAS_0005:U0027"
+                ]
+              ],
+              "explanation": "The presenter provides this instruction."
+            }
+          ]
+        },
+        "rationale": {
+          "state": "missing",
+          "claims": []
+        },
+        "condition": {
+          "state": "present",
+          "claims": [
+            {
+              "text": "The check valve is installed after the pocket stop and new pocket are installed.",
+              "role": "condition",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0025",
+                  "SRC_HAAS_0005:U0026"
+                ]
+              ],
+              "explanation": "The presenter states this condition."
+            }
+          ]
+        },
+        "outcome": {
+          "state": "missing",
+          "claims": []
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claims": []
+        }
+      },
+      "questions": []
+    },
+    {
+      "display_order": 10,
+      "title": "Reinstall panels and tools",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claims": []
+        },
+        "observation": {
+          "state": "missing",
+          "claims": []
+        },
+        "action": {
+          "state": "present",
+          "claims": [
+            {
+              "text": "Install the remaining three panels.",
+              "role": "action",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0028"
+                ]
+              ],
+              "explanation": "The presenter provides this instruction."
+            },
+            {
+              "text": "Install the tools.",
+              "role": "action",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0028"
+                ]
+              ],
+              "explanation": "The presenter provides this instruction."
+            }
+          ]
+        },
+        "rationale": {
+          "state": "missing",
+          "claims": []
+        },
+        "condition": {
+          "state": "present",
+          "claims": [
+            {
+              "text": "Tools are installed after the panels are all in place.",
+              "role": "condition",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0028"
+                ]
+              ],
+              "explanation": "The presenter states 'now with the panels all in place we'll install the tools'."
+            }
+          ]
+        },
+        "outcome": {
+          "state": "missing",
+          "claims": []
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claims": []
+        }
+      },
+      "questions": []
+    },
+    {
+      "display_order": 11,
+      "title": "Test the tool changer",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claims": []
+        },
+        "observation": {
+          "state": "missing",
+          "claims": []
+        },
+        "action": {
+          "state": "present",
+          "claims": [
+            {
+              "text": "Test the system.",
+              "role": "action",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0029"
+                ]
+              ],
+              "explanation": "The presenter provides this instruction."
+            },
+            {
+              "text": "Release the e-stop and run the tool changer.",
+              "role": "action",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0030"
+                ]
+              ],
+              "explanation": "The presenter provides this instruction."
+            },
+            {
+              "text": "Run the tool changer through several tool changes.",
+              "role": "action",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0030",
+                  "SRC_HAAS_0005:U0031"
+                ]
+              ],
+              "explanation": "The presenter provides this instruction."
+            }
+          ]
+        },
+        "rationale": {
+          "state": "present",
+          "claims": [
+            {
+              "text": "The tool changer is run through several tool changes to ensure everything is working correctly.",
+              "role": "rationale",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0031"
+                ]
+              ],
+              "explanation": "The presenter provides this reason."
+            }
+          ]
+        },
+        "condition": {
+          "state": "present",
+          "claims": [
+            {
+              "text": "Testing occurs with the new pocket installed, the panels secured, and the main air turned on.",
+              "role": "condition",
+              "evidence_type": "stated",
+              "attribution": {
+                "label": "Orville",
+                "kind": "speaker"
+              },
+              "scope": "Pocket replacement demonstrated in SRC_HAAS_0005.",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0029",
+                  "SRC_HAAS_0005:U0030"
+                ]
+              ],
+              "explanation": "The presenter states these conditions for testing."
+            }
+          ]
+        },
+        "outcome": {
+          "state": "missing",
+          "claims": []
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claims": []
+        }
+      },
+      "questions": []
+    }
+  ],
+  "workflow_id": "B0_WF_0001",
+  "revision": 1,
+  "created_at": "2026-09-13T00:00:00Z",
+  "lifecycle": "active"
+}

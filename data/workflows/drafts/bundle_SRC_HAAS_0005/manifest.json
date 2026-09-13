@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "bundle_id": "BUNDLE_B0_SRC_HAAS_0005_dbc6a291",
+  "source_type": "real",
+  "dataset_split": "dev",
+  "created_at": "2026-09-13T06:14:04Z",
+  "files": [
+    {
+      "path": "sources.jsonl",
+      "sha256": "62c971c1722ca50a218ab223f5f4e8ad29e9e6c3088e1c30104fe7cbdf540e5b",
+      "record_count": 1
+    },
+    {
+      "path": "workflows.jsonl",
+      "sha256": "ed0aaac47e5902d0d9ea70750345a71c685c92e72f953587738d7704c27403a0",
+      "record_count": 1
+    }
+  ],
+  "producer": {
+    "team": "team_1",
+    "pipeline_version": "d1b-extraction-exporter-0.1.0"
+  }
+}

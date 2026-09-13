@@ -1,0 +1,36 @@
+{
+  "pipeline_name": "KnowFlow AI Extraction & Export Pipeline",
+  "pipeline_version": "d1b-extraction-exporter-0.1.0",
+  "exported_at": "2026-09-13T06:14:04Z",
+  "bundle_id": "BUNDLE_B0_SRC_HAAS_0005_dbc6a291",
+  "workflow_id": "B0_SRC_HAAS_0005",
+  "schema_version": "1.0.0",
+  "pydantic_validated": true,
+  "contract_validation": {
+    "status": "passed",
+    "issues": []
+  },
+  "lineage": {
+    "provider": "GeminiAdapter",
+    "model": "gemini-3.6-flash",
+    "source_id": "SRC_HAAS_0005",
+    "transcript_file": "acquisition\\preprocessing\\transcripts\\SRC_HAAS_0005\\corrected.json",
+    "transcript_sha256": "9106f9a6764ea43c9aa6079051339e30f485c0e385db1b202dcd3d77a3c98cc8",
+    "metadata_file": "data\\sources\\haas_pilot_sources.jsonl",
+    "metadata_sha256": "e705acc5dba6653e07bdf5c7ebc615f82bd7ff92a9d4c1626021572e13a11b86",
+    "draft_output": "data\\workflows\\drafts\\SRC_HAAS_0005.draft.json"
+  },
+  "checksums": {
+    "manifest.json": "ad6d7312dd026552db4a104c333ed8db9ed8c6dc3c2adef06a7b9f83ca0b5b78",
+    "sources.jsonl": "62c971c1722ca50a218ab223f5f4e8ad29e9e6c3088e1c30104fe7cbdf540e5b",
+    "workflows.jsonl": "ed0aaac47e5902d0d9ea70750345a71c685c92e72f953587738d7704c27403a0"
+  },
+  "counts": {
+    "sources": 1,
+    "workflows": 1,
+    "steps": 9,
+    "claims": 22,
+    "evidence": 23,
+    "questions": 0
+  }
+}

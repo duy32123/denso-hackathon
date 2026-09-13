@@ -1,0 +1,711 @@
+{
+  "schema_version": "1.0.0",
+  "workflow_id": "B0_SRC_HAAS_0005",
+  "revision": 1,
+  "source_type": "real",
+  "dataset_split": "dev",
+  "title": "Replace a Tool Pocket on Your Haas Side Mount Tool Changer (SMTC)",
+  "language": "en",
+  "created_at": "2026-09-13T06:14:04Z",
+  "source_ids": [
+    "SRC_HAAS_0005"
+  ],
+  "context": {
+    "manufacturer": "Haas",
+    "subsystem": "Side Mount Tool Changer (SMTC)",
+    "task_type": "maintenance",
+    "symptoms": [],
+    "alarm_codes": [],
+    "components": [
+      "cam box",
+      "pocket",
+      "carousel disk",
+      "number ring",
+      "pilot check valve",
+      "pocket stop",
+      "shoulder bolt",
+      "retaining bolt",
+      "cam follower",
+      "plunger",
+      "pocket slider",
+      "proximity switch",
+      "sheet metal panel"
+    ]
+  },
+  "steps": [
+    {
+      "step_id": "ST_001",
+      "display_order": 1,
+      "title": "Position damaged pocket and engage Emergency Stop",
+      "fields": {
+        "context": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "The procedure targets replacing a damaged pocket on the side mount tool changer.",
+              "role": "context",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0001",
+                  "SRC_HAAS_0005:U0002"
+                ]
+              ],
+              "explanation": "Presenter Orville introduces replacing a damaged pocket on the side mount tool changer."
+            }
+          ]
+        },
+        "observation": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "action": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "Set rapids down to 25%, rotate to the damaged pocket, and press E-stop once the pocket is in position.",
+              "role": "action",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0002",
+                  "SRC_HAAS_0005:U0003"
+                ]
+              ],
+              "explanation": "Instructs setting rapid speed to 25%, rotating to the target pocket, and pressing E-stop when positioned."
+            }
+          ]
+        },
+        "rationale": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "condition": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "Press Emergency Stop only after the damaged pocket reaches position.",
+              "role": "condition",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0003"
+                ]
+              ],
+              "explanation": "Specifies pressing E-stop once the pocket is in position."
+            }
+          ]
+        },
+        "outcome": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        }
+      },
+      "questions": []
+    },
+    {
+      "step_id": "ST_002",
+      "display_order": 2,
+      "title": "Remove sheet metal panels from the bottom of the cam box",
+      "fields": {
+        "context": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "Accessing the damaged pocket and switches requires removing bottom panels from the cam box.",
+              "role": "context",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0003",
+                  "SRC_HAAS_0005:U0005"
+                ]
+              ],
+              "explanation": "States sheet metal removal is required to gain access to the pocket and switches."
+            }
+          ]
+        },
+        "observation": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "action": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "Remove four fasteners on top of the machine first, then remove the large sheet metal piece on the left and two smaller pieces below the double arm at the bottom of the cam box.",
+              "role": "action",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0003",
+                  "SRC_HAAS_0005:U0007"
+                ]
+              ],
+              "explanation": "Describes removing four top fasteners and three sheet metal panels."
+            }
+          ]
+        },
+        "rationale": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "Removing the panels provides physical access to the damaged pocket and the switches positioned behind it.",
+              "role": "rationale",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0005"
+                ]
+              ],
+              "explanation": "Explains panel removal is needed to reach the damaged pocket and rear switches."
+            }
+          ]
+        },
+        "condition": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "Remove the four fasteners on top of the machine before removing the larger panel.",
+              "role": "condition",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0006",
+                  "SRC_HAAS_0005:U0007"
+                ]
+              ],
+              "explanation": "Specifies removing top fasteners first prior to larger panel removal."
+            }
+          ]
+        },
+        "outcome": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        }
+      },
+      "questions": []
+    },
+    {
+      "step_id": "ST_003",
+      "display_order": 3,
+      "title": "Unload tools and apply alignment marks on carousel disk and pocket",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "observation": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "action": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "Remove all tools from the carousel, mark their locations, and put alignment marks on the carousel disk and pocket.",
+              "role": "action",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0008",
+                  "SRC_HAAS_0005:U0010"
+                ]
+              ],
+              "explanation": "Directs removing tools, marking locations, and placing alignment marks on the disk and pocket."
+            }
+          ]
+        },
+        "rationale": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "Marking the disk and pocket ensures correct carousel disk reinstallation.",
+              "role": "rationale",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0009"
+                ]
+              ],
+              "explanation": "States marking ensures the carousel disk is reinstalled correctly."
+            }
+          ]
+        },
+        "condition": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "outcome": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        }
+      },
+      "questions": []
+    },
+    {
+      "step_id": "ST_004",
+      "display_order": 4,
+      "title": "Remove number ring, disconnect main air supply, and remove pilot check valve",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "observation": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "action": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "Remove the number ring, disconnect main air supply to the machine, and remove the pilot check valve.",
+              "role": "action",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0010",
+                  "SRC_HAAS_0005:U0012"
+                ]
+              ],
+              "explanation": "Instructs removing the number ring, disconnecting air, and removing pilot check valve."
+            }
+          ]
+        },
+        "rationale": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "condition": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "outcome": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "Removing the pilot check valve allows free up and down movement of the pocket to access the mounting screw.",
+              "role": "outcome",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0013"
+                ]
+              ],
+              "explanation": "Explains removing the check valve frees the pocket to move up and down."
+            }
+          ]
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        }
+      },
+      "questions": []
+    },
+    {
+      "step_id": "ST_005",
+      "display_order": 5,
+      "title": "Remove pocket stop, shoulder bolt, retaining bolt, and damaged pocket",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "observation": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "action": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "Remove four bolts from the pocket stop, remove the pocket stop, remove the shoulder bolt on the backside of the carousel next to the lower proximity switch, remove retaining bolt, and remove the pocket.",
+              "role": "action",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0014",
+                  "SRC_HAAS_0005:U0017"
+                ]
+              ],
+              "explanation": "Details step-by-step disassembly of pocket stop, shoulder bolt, retaining bolt, and pocket."
+            }
+          ]
+        },
+        "rationale": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "condition": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "outcome": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        }
+      },
+      "questions": []
+    },
+    {
+      "step_id": "ST_006",
+      "display_order": 6,
+      "title": "Inspect component wear and lubricate pocket slider",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "observation": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "action": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "Rotate cam follower to verify free spinning, check internal pocket plunger for wear, and apply grease to the pocket slider before installing new pocket.",
+              "role": "action",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0018",
+                  "SRC_HAAS_0005:U0020"
+                ]
+              ],
+              "explanation": "Instructs checking cam follower rotation, plunger wear, and applying grease to pocket slider."
+            }
+          ]
+        },
+        "rationale": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "condition": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "Perform inspection checks and slider lubrication prior to installing the new pocket.",
+              "role": "condition",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0018"
+                ]
+              ],
+              "explanation": "States checks must be done before new pocket installation."
+            }
+          ]
+        },
+        "outcome": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "acceptance_criteria": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "Cam follower must spin freely, and internal pocket plungers must not be worn out.",
+              "role": "acceptance_criteria",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0018",
+                  "SRC_HAAS_0005:U0020"
+                ]
+              ],
+              "explanation": "Defines pass criteria for cam follower mobility and plunger wear state."
+            }
+          ]
+        }
+      },
+      "questions": []
+    },
+    {
+      "step_id": "ST_007",
+      "display_order": 7,
+      "title": "Install new pocket, slider, retaining bolt, and shoulder bolt",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "observation": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "action": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "Install the pocket to the slider, install both back into position, reinstall retainer bolt and tighten, then lower pocket, attach and screw in shoulder bolt.",
+              "role": "action",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0021",
+                  "SRC_HAAS_0005:U0024"
+                ]
+              ],
+              "explanation": "Outlines installation of new pocket, slider, retainer bolt, and shoulder bolt."
+            }
+          ]
+        },
+        "rationale": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "condition": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "outcome": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "acceptance_criteria": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "Pocket moves freely and pocket up and pocket down proximity switches read correctly.",
+              "role": "acceptance_criteria",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0024"
+                ]
+              ],
+              "explanation": "Verifies pocket movement freedom and proximity switch signal readings."
+            }
+          ]
+        }
+      },
+      "questions": []
+    },
+    {
+      "step_id": "ST_008",
+      "display_order": 8,
+      "title": "Reinstall pocket stop, pilot check valve, number disc, and sheet metal panels",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "observation": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "action": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "Install the pocket stop, install pilot check valve, reinstall number disc aligning the dot on number disc with dot on pocket, and install the three remaining sheet metal panels.",
+              "role": "action",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0025",
+                  "SRC_HAAS_0005:U0028"
+                ]
+              ],
+              "explanation": "Covers reassembly of pocket stop, check valve, aligned number disc, and remaining panels."
+            }
+          ]
+        },
+        "rationale": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "condition": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "Align dot on number disc with dot on pocket during number disc reinstallation.",
+              "role": "condition",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0027"
+                ]
+              ],
+              "explanation": "Specifies alignment condition between number disc dot and pocket dot."
+            }
+          ]
+        },
+        "outcome": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        }
+      },
+      "questions": []
+    },
+    {
+      "step_id": "ST_009",
+      "display_order": 9,
+      "title": "Reload tools, restore air supply, release Emergency Stop, and test operation",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "observation": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "action": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "Install tools into carousel, turn on main air supply, release E-stop, and run tool changer through several tool changes.",
+              "role": "action",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0028",
+                  "SRC_HAAS_0005:U0031"
+                ]
+              ],
+              "explanation": "Instructs tool reloading, air restoration, E-stop reset, and operational testing."
+            }
+          ]
+        },
+        "rationale": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "condition": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "Ensure all panels are secured and main air is turned on before releasing E-stop.",
+              "role": "condition",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0029",
+                  "SRC_HAAS_0005:U0030"
+                ]
+              ],
+              "explanation": "States pre-requisites of securing panels and restoring air before resetting E-stop."
+            }
+          ]
+        },
+        "outcome": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "acceptance_criteria": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "Tool changer operates correctly through several tool change cycles.",
+              "role": "acceptance_criteria",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0030",
+                  "SRC_HAAS_0005:U0031"
+                ]
+              ],
+              "explanation": "Defines test criteria to verify correct system operation across multiple cycles."
+            }
+          ]
+        }
+      },
+      "questions": []
+    }
+  ],
+  "claims": [],
+  "relations": [],
+  "questions": [],
+  "attribution": {
+    "label": "Orville",
+    "kind": "speaker"
+  },
+  "scope": "Procedure described in B0_SRC_HAAS_0005"
+}

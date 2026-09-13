@@ -1,10 +1,17 @@
 import json
 import os
 import sys
-from dotenv import load_dotenv
-from openai import OpenAI
 
-load_dotenv()
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
+try:
+    from openai import OpenAI
+except ImportError:
+    OpenAI = None
 
 def load_json(filepath):
     with open(filepath, 'r', encoding='utf-8') as f:

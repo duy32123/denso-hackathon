@@ -272,6 +272,9 @@ def test_cli_flow_sheet_apply_status_promote(monkeypatch, tmp_path, capsys):
     """The path D1-C actually takes, end to end, without touching the repo."""
     import csv
 
+    repo_dev = cw.REPO_ROOT / "data" / "workflows" / "dev"
+    existed_before = repo_dev.exists()
+    before = {p.relative_to(repo_dev): p.read_bytes() for p in repo_dev.rglob("*") if p.is_file()}
     monkeypatch.setattr(rv, "REVIEWS_DIR", tmp_path / "reviews")
     monkeypatch.setattr(rv, "WORKFLOWS_ROOT", tmp_path / "workflows")
     draft = str(DRAFT_PATH)
@@ -296,7 +299,8 @@ def test_cli_flow_sheet_apply_status_promote(monkeypatch, tmp_path, capsys):
     assert rv.main(["promote", draft]) == 0
     promoted = tmp_path / "workflows" / "dev" / "REAL_WF_0001.r1.json"
     assert cw.check_snapshot(json.loads(promoted.read_text(encoding="utf-8"))).report.ok
-    assert not (cw.REPO_ROOT / "data" / "workflows" / "dev").exists(), "the test must not write into the repo"
+    assert repo_dev.exists() == existed_before, "the test must not create the repo's dev store"
+    assert {p.relative_to(repo_dev): p.read_bytes() for p in repo_dev.rglob("*") if p.is_file()} == before
 
 
 def test_the_committed_draft_has_been_source_checked(snapshot):

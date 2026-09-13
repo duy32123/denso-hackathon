@@ -1,8 +1,7 @@
 """Extraction Pipeline for KnowFlow AI (Schema 1.0.0).
 
-Reads transcript and metadata, queries OpenAI LLM API (v1+), validates the response
-using Pydantic models from schema_v1.py (FieldRef, StepRecord, WorkflowBundle),
-and saves the validated draft to `data/workflows/drafts/`.
+Reads transcript and metadata, calls an LLM or reuses a saved draft, then
+normalizes, compiles and contract-validates the output before reporting success.
 """
 from __future__ import annotations
 
@@ -40,8 +39,11 @@ from acquisition.extraction.schema_v1 import (
 from acquisition.extraction.exporter import (
     ExportSummary,
     export_schema_v1_bundle,
+    prepare_draft,
+    sha256_bytes,
     sha256_file,
 )
+from acquisition.extraction import compile_workflow as cw
 from acquisition.extraction.llm_adapters import get_llm_adapter
 
 # Configure logging
@@ -51,6 +53,7 @@ logging.basicConfig(
     datefmt="%H:%M:%S",
 )
 logger = logging.getLogger("extraction_pipeline")
+PROMPT_VERSION = "b0-transcript-0.2.0"
 
 # Silence noisy third-party libraries (Google GenAI AFC warnings, HTTP requests)
 for noisy_name in ("google", "google_genai", "google.genai", "urllib3", "httpx", "httpcore"):
@@ -76,8 +79,13 @@ def load_source_metadata(metadata_path: Path, source_id: str) -> Dict[str, Any]:
             record = json.loads(line)
             if record.get("source_id") == source_id:
                 return record
-    logger.warning(f"Không tìm thấy source_id '{source_id}' trong {metadata_path}. Sử dụng metadata rỗng.")
-    return {"source_id": source_id, "title": "Unknown Title"}
+    raise ValueError(f"Không tìm thấy source_id '{source_id}' trong {metadata_path}.")
+
+
+def _lineage_path(path: Path) -> str:
+    """Use repo-relative paths when possible, absolute paths for external files."""
+    resolved = path.resolve()
+    return resolved.relative_to(REPO_ROOT).as_posix() if resolved.is_relative_to(REPO_ROOT) else str(resolved)
 
 
 def format_transcript_with_pool_ids(utterances: list[dict], source_id: str) -> str:
@@ -145,6 +153,8 @@ Người thực hiện: {presenter}
            - "role": Trùng với vai trò của field này (ví dụ "action").
            - "evidence_type": "stated" (lời nói trực tiếp), "observed" (quan sát hình ảnh), hoặc "inferred".
            - "evidence": Danh sách candidate pool ID từ transcript, ví dụ [["{source_id}:U0001", "{source_id}:U0002"]] (bọc trong list).
+             Mỗi nhóm chỉ chứa các câu thoại liên tiếp của cùng nguồn. Nếu không liên tiếp, tách thành nhiều nhóm,
+             ví dụ [["{source_id}:U0001"], ["{source_id}:U0003"]]. Không tự thêm câu ở giữa hoặc tạo ID không có trong transcript.
            - "explanation": Giải thích ngắn gọn tại sao câu thoại đó làm bằng chứng hỗ trợ cho claim.
    - "questions": Nếu các trường quan trọng (như rationale, condition, acceptance_criteria) bị missing hoặc ambiguous, tạo câu hỏi kỹ thuật trong danh sách này để kỹ sư rà soát.
 
@@ -165,21 +175,36 @@ def run_extraction_pipeline(
     model: Optional[str] = None,
     export_bundle: bool = True,
     dry_run: bool = False,
+    from_draft: Optional[Path] = None,
 ) -> WorkflowBundle:
     """Executes the end-to-end extraction pipeline:
     1. Reads transcript & metadata.
     2. Calls LLM via Adapter Pattern (Gemini, OpenAI, DeepSeek, LiteLLM).
-    3. Validates with Pydantic Schema 1.0.0 (WorkflowBundle).
-    4. Writes validated draft to data/workflows/drafts/.
-    5. Exports Schema 1.0.0 hand-off bundle (manifest, sources, workflows, lineage).
+    3. Saves raw output, normalizes evidence, compiles and validates the snapshot.
+    4. Exports the bundle and saves the same normalized draft for standalone review.
+    With from_draft, no LLM adapter is instantiated and the input is preserved.
     """
     # Resolve paths
-    transcript_file = transcript_path or (
+    if from_draft and dry_run:
+        raise ValueError("Không kết hợp --from-draft với --dry-run.")
+    saved_draft = Path(from_draft).resolve() if from_draft else None
+    transcript_file = (transcript_path or (
         REPO_ROOT / "acquisition" / "preprocessing" / "transcripts" / source_id / "corrected.json"
+    )).resolve()
+    metadata_file = (metadata_path or (REPO_ROOT / "data" / "sources" / "haas_pilot_sources.jsonl")).resolve()
+    default_output = (
+        saved_draft.with_name(f"{saved_draft.stem.removesuffix('.draft')}.normalized.draft.json")
+        if saved_draft else REPO_ROOT / "data" / "workflows" / "drafts" / f"{source_id}.draft.json"
     )
-    metadata_file = metadata_path or (REPO_ROOT / "data" / "sources" / "haas_pilot_sources.jsonl")
-    output_file = output_path or (REPO_ROOT / "data" / "workflows" / "drafts" / f"{source_id}.draft.json")
-    target_bundle_dir = bundle_dir or (REPO_ROOT / "data" / "workflows" / "drafts" / f"bundle_{source_id}")
+    output_file = (output_path or default_output).resolve()
+    raw_path = output_file.with_suffix(".raw.json")
+    if saved_draft in (output_file, raw_path):
+        raise ValueError("--output phải khác --from-draft để giữ nguyên bản đầu vào.")
+    default_bundle = (
+        output_file.parent / f"bundle_{output_file.stem.removesuffix('.draft')}"
+        if saved_draft else REPO_ROOT / "data" / "workflows" / "drafts" / f"bundle_{source_id}"
+    )
+    target_bundle_dir = (bundle_dir or default_bundle).resolve()
 
     logger.info(f"🚀 Bắt đầu trích xuất quy trình cho {source_id} (Provider: {provider or 'auto'}, Model: {model or 'default'})...")
     logger.debug(f"Transcript: {transcript_file}")
@@ -209,64 +234,79 @@ def run_extraction_pipeline(
             steps=[create_empty_step("ST_001", 1, "Dry Run Placeholder Step")]
         )
 
-    # 2. Instantiate LLM Adapter via Factory
-    try:
+    # 2. Acquire JSON, optionally reusing an existing response without API access.
+    if saved_draft:
+        raw_json_output = saved_draft.read_text(encoding="utf-8")
+        run_lineage = {
+            "mode": "from_draft",
+            "input_draft": _lineage_path(saved_draft),
+            "input_draft_sha256": sha256_file(saved_draft),
+            "provider": provider,
+            "model": model,
+            "model_provenance": "user_supplied" if provider or model else "unknown",
+        }
+        logger.info(f"Đọc lại draft {saved_draft.name}; không gọi LLM API.")
+    else:
         adapter = get_llm_adapter(provider=provider, model=model)
-    except Exception as err:
-        logger.error(f"❌ Lỗi cấu hình LLM Adapter: {err}")
-        sys.exit(1)
+        logger.debug(f"Đang gửi request tới {adapter.__class__.__name__} (Model: {adapter.model})...")
+        system_prompt = "You are a precise technical data extraction engine that outputs valid JSON only adhering to Schema 1.0.0."
+        try:
+            raw_json_output = adapter.generate_structured_output(
+                prompt=prompt,
+                schema_class=WorkflowBundle,
+                system_instruction=system_prompt,
+            )
+        except Exception as err:
+            raise RuntimeError(f"Lỗi khi gọi {adapter.__class__.__name__}: {err}") from err
+        run_lineage = {
+            "mode": "llm",
+            "provider": adapter.__class__.__name__,
+            "model": adapter.model,
+            "prompt_version": PROMPT_VERSION,
+            "prompt_sha256": sha256_bytes(prompt.encode("utf-8")),
+            "system_prompt_sha256": sha256_bytes(system_prompt.encode("utf-8")),
+        }
 
-    # 3. Call LLM Adapter to generate structured output
-    logger.debug(f"Đang gửi request tới {adapter.__class__.__name__} (Model: {adapter.model})...")
-    system_prompt = (
-        "You are a precise technical data extraction engine that outputs valid JSON only adhering to Schema 1.0.0."
-    )
-    try:
-        raw_json_output = adapter.generate_structured_output(
-            prompt=prompt,
-            schema_class=WorkflowBundle,
-            system_instruction=system_prompt,
-        )
-        logger.debug(f"Đã nhận phản hồi từ {adapter.__class__.__name__} thành công.")
-    except Exception as e:
-        logger.error(f"❌ Lỗi khi gọi {adapter.__class__.__name__}: {e}")
-        sys.exit(1)
+    # Preserve exact input even if Pydantic, compilation or export fails later.
+    output_file.parent.mkdir(parents=True, exist_ok=True)
+    raw_path.write_text(raw_json_output, encoding="utf-8", newline="\n")
+    logger.info(f"Đã giữ bản thô: {raw_path}")
 
     # 4. Validate output with Pydantic Schema 1.0.0
     logger.debug("Đang kiểm thực kết quả trả về bằng Pydantic models (schema_v1)...")
     try:
         bundle = WorkflowBundle.from_llm_json(raw_json_output)
-        logger.debug(f"Kiểm thực thành công! Workflow: {bundle.workflow_id}, Tổng số bước: {len(bundle.steps)}")
+        if bundle.source_ids and bundle.source_ids != [source_id]:
+            raise ValueError(f"source_ids {bundle.source_ids} không khớp --source-id {source_id}.")
+        draft_dict = prepare_draft(bundle, metadata)
+        snapshot = cw.compile_draft(draft_dict)
+        # The export branch validates against its actual Source record in staging.
+        # Draft-only runs validate against the same supplied Source metadata.
+        if not export_bundle:
+            result = cw.check_snapshot(snapshot, draft_dict["dataset_split"], source_records=[metadata])
+            if not result.report.ok:
+                raise ValueError("\n".join(str(issue) for issue in result.report.errors))
+            for issue in result.report.warnings:
+                logger.warning(str(issue))
+        logger.debug(f"Compile thành công! Workflow: {bundle.workflow_id}, Tổng số bước: {len(bundle.steps)}")
         for step in bundle.steps:
             present_roles = [f.role for f in step.fields if f.state == FieldState.PRESENT]
             logger.debug(f"   - Bước {step.display_order} [{step.step_id}]: '{step.title}' (Fields: {', '.join(present_roles)})")
     except Exception as val_err:
-        logger.error(f"❌ Lỗi kiểm thực Schema 1.0.0 cho dữ liệu từ LLM: {val_err}")
-        # Lưu file debug nếu lỗi schema để tiện phân tích
-        debug_path = output_file.with_suffix(".raw_error.json")
-        with open(debug_path, "w", encoding="utf-8") as df:
-            df.write(raw_json_output)
-        logger.warning(f"Đã lưu phản hồi thô gặp lỗi tại: {debug_path}")
-        sys.exit(1)
-
-    # 5. Write validated output to destination
-    output_file.parent.mkdir(parents=True, exist_ok=True)
-    draft_dict = bundle.to_draft_dict()
-    with open(output_file, "w", encoding="utf-8") as out_f:
-        json.dump(draft_dict, out_f, indent=2, ensure_ascii=False)
-    logger.info(f"📄 Đã lưu Draft JSON: {output_file.name} ({len(bundle.steps)} bước)")
+        raise ValueError(f"Draft không hợp lệ: {val_err}. Bản thô: {raw_path}") from val_err
 
     # 6. Export Schema 1.0.0 hand-off bundle
     if export_bundle:
         lineage_meta = {
-            "provider": adapter.__class__.__name__,
-            "model": adapter.model,
+            **run_lineage,
             "source_id": source_id,
-            "transcript_file": str(transcript_file.relative_to(REPO_ROOT)),
+            "transcript_file": _lineage_path(transcript_file),
             "transcript_sha256": sha256_file(transcript_file),
-            "metadata_file": str(metadata_file.relative_to(REPO_ROOT)),
+            "metadata_file": _lineage_path(metadata_file),
             "metadata_sha256": sha256_file(metadata_file),
-            "draft_output": str(output_file.relative_to(REPO_ROOT)),
+            "draft_output": _lineage_path(output_file),
+            "raw_output": _lineage_path(raw_path),
+            "raw_sha256": sha256_file(raw_path),
         }
         summary: ExportSummary = export_schema_v1_bundle(
             bundle=bundle,
@@ -281,6 +321,9 @@ def run_extraction_pipeline(
         logger.debug(f"   - Workflows: {summary.workflows_path.name} ({summary.counts.get('workflows')} records, {summary.counts.get('claims')} claims)")
         logger.debug(f"   - Lineage:   {summary.lineage_path.name} (SHA: {summary.checksums.get('lineage.json', '')[:12]}...)")
 
+    # Save exactly the draft compiled above, after all required checks have passed.
+    output_file.write_text(json.dumps(draft_dict, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
+    logger.info(f"📄 Đã lưu Draft JSON: {output_file.name} ({len(bundle.steps)} bước)")
     logger.info(f"🎉 Hoàn tất quy trình trích xuất cho {source_id}!")
     return bundle
 
@@ -333,6 +376,11 @@ def main():
         help="Thư mục xuất Bundle Schema 1.0.0 (mặc định: data/workflows/drafts/bundle_{source_id})",
     )
     parser.add_argument(
+        "--from-draft",
+        type=Path,
+        help="Đọc draft đã lưu, chuẩn hóa và compile/export lại mà không gọi LLM. Mặc định tạo file .normalized.draft.json riêng.",
+    )
+    parser.add_argument(
         "--no-bundle",
         action="store_true",
         help="Bỏ qua bước xuất Bundle Schema 1.0.0 (chỉ ghi file draft)",
@@ -357,17 +405,22 @@ def main():
     logging.getLogger("extraction_exporter").setLevel(target_level)
     logging.getLogger("llm_adapters").setLevel(target_level)
 
-    run_extraction_pipeline(
-        source_id=args.source_id,
-        transcript_path=args.transcript,
-        metadata_path=args.metadata,
-        output_path=args.output,
-        bundle_dir=args.bundle_dir,
-        provider=args.provider,
-        model=args.model,
-        export_bundle=not args.no_bundle,
-        dry_run=args.dry_run,
-    )
+    try:
+        run_extraction_pipeline(
+            source_id=args.source_id,
+            transcript_path=args.transcript,
+            metadata_path=args.metadata,
+            output_path=args.output,
+            bundle_dir=args.bundle_dir,
+            provider=args.provider,
+            model=args.model,
+            export_bundle=not args.no_bundle,
+            dry_run=args.dry_run,
+            from_draft=args.from_draft,
+        )
+    except (ValueError, OSError, RuntimeError, ImportError) as err:
+        logger.error(f"❌ {err}")
+        sys.exit(1)
 
 
 if __name__ == "__main__":

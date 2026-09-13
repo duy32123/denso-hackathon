@@ -188,10 +188,19 @@ class _Compiler:
             value = step.get("fields", {}).get(role, "missing")
             if value == "missing":
                 fields[role] = {"state": "missing", "claim_ids": []}
-            elif isinstance(value, list):
-                fields[role] = {"state": "present", "claim_ids": [self._claim(c, role) for c in value]}
             else:
-                fields[role] = {"state": value["state"], "claim_ids": [self._claim(c, role) for c in value["claims"]]}
+                state = "present" if isinstance(value, list) else value["state"]
+                specs = value if isinstance(value, list) else value["claims"]
+                claim_ids = []
+                for n, spec in enumerate(specs, 1):
+                    try:
+                        claim_ids.append(self._claim(spec, role))
+                    except (DraftError, ep.PoolError) as exc:
+                        raise DraftError(
+                            f"step {step['title']!r}, field {role}, claim {n} "
+                            f"({spec.get('text', '')!r}), evidence={spec.get('evidence')!r}: {exc}"
+                        ) from exc
+                fields[role] = {"state": state, "claim_ids": claim_ids}
         return fields
 
     def _context(self) -> dict:
@@ -276,15 +285,22 @@ def compile_draft(draft: dict, pool: dict[str, ep.Candidate] | None = None) -> d
     return _Compiler(draft, pool if pool is not None else ep.load_pool()).compile()
 
 
-def check_snapshot(snapshot: dict, split: str = "dev") -> exporter.ExportResult:
-    """Validate the snapshot inside a would-be bundle with the real Source file. Writes nothing."""
+def check_snapshot(snapshot: dict, split: str = "dev", *, source_records: list[dict] | None = None) -> exporter.ExportResult:
+    """Validate using supplied Sources or the canonical split, without publishing files."""
     cfg = exporter.SPLITS[split]
     with tempfile.TemporaryDirectory(prefix="draft-check-") as tmp:
         snap_dir = Path(tmp) / "snapshots"
         snap_dir.mkdir()
         write_snapshot(snapshot, snap_dir)
+        sources_path = cfg["sources"]
+        if source_records is not None:
+            sources_path = Path(tmp) / "sources.jsonl"
+            sources_path.write_text(
+                "".join(json.dumps(source, ensure_ascii=False) + "\n" for source in source_records),
+                encoding="utf-8", newline="\n",
+            )
         return exporter.export_bundle(
-            split=split, sources_path=cfg["sources"], snapshot_dir=snap_dir,
+            split=split, sources_path=sources_path, snapshot_dir=snap_dir,
             out_dir=Path(tmp) / "bundle", bundle_prefix="DRAFT_CHECK", check_only=True,
         )
 

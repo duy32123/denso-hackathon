@@ -19,6 +19,36 @@ knowflow-contracts validate data/fixtures/F01_complete -v
 
 Không có `uv` thì dùng `python -m venv .venv` rồi `pip install -e ".[dev]"`.
 
+## Chạy B0 và xử lý lại draft
+
+PowerShell không bắt buộc activate môi trường; có thể dùng `uv run python` hoặc
+`.\.venv\Scripts\python.exe`. Chạy từ thư mục gốc repo:
+
+```powershell
+uv run python -m acquisition.extraction.extraction_pipeline --source-id SRC_HAAS_0005 --dry-run
+```
+
+Chạy thật cần SDK của provider và API key trong `.env`. Để xử lý lại draft đã có
+mà không gọi API, dùng `--from-draft`:
+
+```powershell
+uv run python -m acquisition.extraction.extraction_pipeline --source-id SRC_HAAS_0005 --from-draft data/workflows/drafts/SRC_HAAS_0005.test.draft.json --output data/workflows/drafts/SRC_HAAS_0005.test.normalized.draft.json --bundle-dir data/workflows/drafts/bundle_SRC_HAAS_0005_test --verbose
+uv run python -m acquisition.extraction.compile_workflow data/workflows/drafts/SRC_HAAS_0005.test.normalized.draft.json
+uv run knowflow-contracts validate data/workflows/drafts/bundle_SRC_HAAS_0005_test -v
+```
+
+Pipeline giữ JSON trước chuẩn hóa cạnh output với hậu tố `.raw.json`, tách các
+evidence span không liên tiếp rồi compile và validate trước khi ghi draft.
+Lỗi compile/contract sẽ dừng chương trình với exit code 1, giữ bản thô để kiểm tra;
+không thay draft hoặc bundle hiện có bằng kết quả lỗi. `--no-bundle` vẫn kiểm tra
+compile và contract. Đường dẫn tương đối và tuyệt đối đều được hỗ trợ.
+
+`--from-draft` giữ file đầu vào; nếu bỏ `--output`, tạo file `.normalized.draft.json`
+riêng. Provider/model của bản cũ chỉ được ghi vào lineage nếu người chạy truyền
+`--provider`/`--model` và được đánh dấu `user_supplied`; không gán phiên bản prompt
+hiện tại cho bản cũ. Bundle B0 thử nghiệm vẫn có claims `source_review=pending`;
+cần review trước khi promote và bàn giao qua `acquisition.export.exporter`.
+
 ## Bản đồ repo
 
 | Thư mục | Chủ | Nội dung |

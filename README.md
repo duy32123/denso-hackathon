@@ -51,6 +51,10 @@ cần review trước khi promote và bàn giao qua `acquisition.export.exporter
 
 ## Bản đồ repo
 
+D2-A xem [retrieval/README.md](retrieval/README.md): importer bundle, snapshot theo
+revision, search records và truy xuất BM25/vector/hybrid với bộ lọc context.
+Có lệnh build embedding Gemini và query trên bundle thật; chưa có answer generator/UI.
+
 | Thư mục | Chủ | Nội dung |
 |---|---|---|
 | [contracts/](contracts) | hai đội | Schema 1.0.0: models, validator V01–V10, chính sách truy xuất. **Nguồn sự thật duy nhất.** |

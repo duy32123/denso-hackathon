@@ -1,0 +1,170 @@
+# D2-A — WP1/WP2: importer, lexical, vector và hybrid retrieval
+
+Nhập bundle đội 1 bằng validator chung, lưu bản sao nguồn/snapshot bất biến và
+dựng search records hai tầng Workflow/Step theo contract D-06. SQLite là lựa chọn
+local cho bước đầu, chưa phải PostgreSQL/pgvector trong đề xuất của plan.
+
+Chạy từ thư mục gốc repo trên PowerShell (không cần activate):
+
+```powershell
+.\.venv\Scripts\python.exe -m retrieval.importer import acquisition/export/haas_pilot_dev_bundle --db out/retrieval/real_dev.sqlite --source-type real --split dev
+.\.venv\Scripts\python.exe -m retrieval.importer status --db out/retrieval/real_dev.sqlite
+```
+
+Có thể thay `.\.venv\Scripts\python.exe` bằng `uv run python`. Lần đầu trả
+`status=imported`; chạy lại cùng nội dung trả `status=noop`, giữ `index_build_id`.
+Bundle pilot hiện có 5 sources, 2 workflow, 20 step. Kết quả thực tế được in ra JSON.
+Database đặt trong `out/` đã được gitignore.
+
+Thử synthetic bằng database riêng:
+
+```powershell
+.\.venv\Scripts\python.exe -m retrieval.importer import data/fixtures/F01_complete --db out/retrieval/synthetic_dev.sqlite --source-type synthetic --split dev
+```
+
+## Quy tắc nhập và lưu
+
+- Manifest khai báo đúng hai JSONL; checksum được kiểm trước khi parse nội dung.
+  Sau đó dùng loader/rules của `knowflow_contracts` để kiểm schema, ID/reference,
+  corpus/split, evidence và review; từ chối cả bundle nếu sai. Không sửa dữ liệu đầu vào.
+- Một database thuộc duy nhất một `source_type` và `dataset_split`. Các tham số CLI
+  này bắt buộc để tránh nhập nhầm corpus. Holdout chỉ nhập khi đến giai đoạn đã khóa.
+- Cùng `(workflow_id, revision)` và hash: no-op; khác hash: lỗi V09. Giữ toàn bộ
+  revision cũ. So sánh evidence giữa cả các lần nhập bằng validator chung.
+- Source được giữ nguyên bản. Bước đầu từ chối source_id đã tồn tại nhưng payload
+  khác, kể cả metadata; cần thống nhất chính sách version nguồn với D1-B trước khi
+  hỗ trợ cập nhật trường hợp này. Không tự gán ID mới hay overwrite nguồn cũ.
+- Mỗi bundle bổ sung vào kho; workflow vắng mặt trong bundle mới không bị xóa.
+  Muốn rút workflow, nhận revision mới có `lifecycle=withdrawn`. Chọn latest trước
+  khi lọc lifecycle, không quay về bản cũ. Kho vẫn giữ snapshot/bản build lịch sử.
+- Snapshot, search records, manifest build và active pointer cùng một transaction.
+  Lỗi ở bất kỳ bước nào rollback toàn bộ lần nhập; bản active trước đó vẫn dùng được.
+
+## Đầu ra để nối WP2
+
+Các bảng SQLite: `sources`, `snapshots`, `builds`, `search_records`, `imports`, `settings`.
+Snapshot giữ nguyên claims, evidence, locator, field state, relation và review history.
+Search records giữ context, claim text nguyên văn, attribution, scope và review flags.
+Không dịch, không sinh thêm claim. Claim conflict/pending được giữ để WP2 phân loại.
+
+```python
+from retrieval.importer import read_active_records
+
+manifest, records = read_active_records("out/retrieval/real_dev.sqlite")
+# Một lần đọc nhất quán: manifest và records cùng index_build_id.
+```
+
+`index_build_id` phụ thuộc namespace, danh sách source/snapshot hash và cấu hình;
+đổi thứ tự dòng JSONL không tạo build mới. Mỗi record ghi hash snapshot tương ứng.
+Manifest lưu inventory và `text_template_version` để tái tạo.
+
+Manifest importer vẫn ghi `index_kind=search-records`, `embedding_model=none`,
+`embedding_version=not-built`: đây là bản record đầu vào. Chỉ mục retrieval có
+manifest và active pointer riêng, được build từ chính phiên bản record này.
+
+Chạy kiểm thử importer:
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest tests/unit/test_importer.py
+```
+
+## Build và chạy retrieval
+
+SDK Gemini là optional dependency. Nếu chưa cài:
+
+```powershell
+uv pip install -e ".[dev,retrieval]"
+```
+
+Đặt `GEMINI_API_KEY` trong `.env`. Build mặc định gửi search text đến Gemini để
+tạo embedding; query vector/hybrid gửi câu hỏi để tạo query embedding. Lexical
+không gọi API. Không log API key và không tự fallback sang vector giả khi API lỗi.
+
+```powershell
+.\.venv\Scripts\python.exe -m retrieval.retrieval build --db out/retrieval/real_dev.sqlite --mode real --split dev --embedding gemini
+.\.venv\Scripts\python.exe -m retrieval.retrieval status --db out/retrieval/real_dev.sqlite --mode real --split dev
+.\.venv\Scripts\python.exe -m retrieval.retrieval query "Bôi trơn con trượt của hốc dao trước khi lắp như thế nào?" --db out/retrieval/real_dev.sqlite --mode real --split dev --strategy hybrid --manufacturer Haas --subsystem SMTC --summary
+```
+
+Đổi `--strategy` thành `lexical`, `vector`, `hybrid` để chạy ba baseline với cùng
+index và filter policy. Bỏ `--summary` để nhận đầy đủ claim/evidence package, các
+cửa sổ timestamp, source locator, review flags, field state, questions và trace.
+`--intent procedure` chọn một workflow rồi trả các Step đủ điều kiện theo thứ tự;
+trace ghi Step bị bỏ vì thiếu claim đủ điều kiện. `--intent detail` lấy top-k Step.
+
+Nếu chỉ muốn lexical offline, build với `--embedding none`. Index này không phục
+vụ vector/hybrid; cần build lại với Gemini trước. Build cùng cấu hình và cùng
+record build trả `noop` và không gọi embedding lại.
+
+## Thuật toán và bộ lọc
+
+- Lexical: BM25 thật (k1=1.2, b=0.75), tokenizer Unicode có bỏ dấu để hỗ trợ
+  tiếng Việt không dấu. Giữ phủ định, đơn vị, chữ số và mã dạng `VF-2`.
+- Vector: `gemini-embedding-001`, 768 chiều mặc định, chuẩn hóa L2 và cosine
+  chính xác trên tập đã lọc. SQLite lưu vector; chưa cần ANN/pgvector cho pilot.
+  Tài liệu dùng `RETRIEVAL_DOCUMENT`, câu hỏi dùng `RETRIEVAL_QUERY` theo
+  [Gemini Embeddings](https://ai.google.dev/gemini-api/docs/embeddings).
+  Model phục vụ [hơn 100 ngôn ngữ](https://developers.googleblog.com/en/gemini-embedding-available-gemini-api/).
+- Record dài được chia theo giới hạn 1800 UTF-8 bytes/đoạn rồi lấy trung bình
+  vector đã chuẩn hóa, có trọng số theo chiều dài. Giữ toàn bộ text, không cắt bỏ
+  phần cuối. Đây là lựa chọn ban đầu; cần đo tác động pooling trên dev.
+- Hybrid: RRF với k=60, lexical top-20 + vector top-20, top-5 Step mặc định.
+  `--candidate-k`, `--top-k`, `--min-cosine` là cấu hình thử nghiệm, chưa tối ưu.
+  Điểm RRF/cosine không phải xác suất đúng hoặc độ có căn cứ của câu trả lời.
+- Luồng hai tầng: lọc context → xếp hạng Workflow → chọn một Workflow/revision
+  → xếp hạng Step trong Workflow đó. Không ghép các quy trình thành một quy trình mới.
+- Corpus/split được kiểm trước khi đọc record/vector/snapshot. Sai namespace báo
+  lỗi. Chỉ dùng latest active revision; nhập revision mới làm index cũ stale và query
+  bị chặn cho đến khi build lại. Workflow withdrawn không quay về revision cũ.
+- Hard filters: manufacturer, family, model, subsystem, task type và alarm code
+  nếu có trong query context. Biết khác thì loại; thiếu metadata cần thiết thì
+  `needs_clarification`. Nhận diện tên/model và alarm từ câu hỏi bằng luật bảo thủ;
+  tên máy ngoài mẫu nhận diện cần truyền `--machine-model` rõ ràng.
+- Alias có kiểm soát: `Haas`/`Haas Automation`, `SMTC`/`side-mount tool changer`.
+  Mã alarm so khớp chính xác, không gộp `2066` với `2067` hoặc `20.66`.
+  `--component` và `--symptom` là search hints; không dùng chúng để nới hard filters.
+- `claim_blockers` được dùng trước khi dựng nội dung để xếp hạng và kiểm lại trước
+  khi xuất claim. Pending real/inferred/unsupported/rejected không trở thành claim
+  khẳng định. Conflict có index chẩn đoán riêng trong cùng corpus/context và được
+  trả với `purpose=warning_only`, kèm cả hai phía, không dùng để đề xuất thao tác.
+- Dedup claim theo workflow/revision/claim_id, lấy điểm max và giữ matched_step_ids.
+  Giữ nguyên field missing, scope, attribution và loại relation trong snapshot.
+- Cache truy vấn hiện tắt. Build manifest lưu namespace, base build, checksum,
+  embedding/model/adapter/SDK version. Build lỗi giữ nguyên active index; importer
+  thay đổi trong lúc gọi embedding thì từ chối activate kết quả đã cũ.
+
+## Giao diện cho D2-B và kiểm thử
+
+```python
+from knowflow_contracts.models import QueryContext, QueryRequest
+from retrieval.retrieval.engine import RetrievalConfig, retrieve
+
+result = retrieve(
+    "out/retrieval/real_dev.sqlite",
+    QueryRequest(question="How is the pocket slider lubricated?", mode="real",
+                 dataset_split="dev", context=QueryContext(manufacturer="Haas", subsystem="SMTC")),
+    config=RetrievalConfig(strategy="hybrid"),
+)
+```
+
+Đây là **retrieval result**, chưa phải `AnswerResponse` của `/v1/ask`.
+`retrieved` nghĩa là tìm được claim candidates; D2-B còn phải kiểm câu khẳng định,
+khả năng mở evidence và sinh câu trả lời theo WP3. Source URL/keyframe không được
+truy cập mạng trong retrieval: `evidence_openability_checked=false`, từng evidence
+có `access_status=not_checked`; không tự gọi citation là đã xác minh.
+
+Các status khác: `needs_clarification`, `insufficient_evidence`, `conflicting_sources`.
+Chưa triển khai reranker, tự mở rộng Step lân cận hay answer generator. Các relation
+gốc được trả để phần tích hợp xử lý có căn cứ. Bộ unit tests dùng vector giả chỉ
+để kiểm logic; không được dùng kết quả đó làm số đo chất lượng embedding thật.
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest tests/unit/test_importer.py tests/unit/test_retrieval.py
+```
+
+Đã smoke-test trên bundle real/dev `BUNDLE_HAAS_SMTC_DEV_e98521a7942a`:
+22 record (2 Workflow, 20 Step), build Gemini 768 chiều qua 2 API calls. Câu hỏi
+tiếng Việt trong ví dụ trên tìm được `B0_SRC_HAAS_0005_ST_006` ở top-1 trong cả
+vector và hybrid. Đây là kiểm chứng tích hợp trên một câu hỏi, chưa phải benchmark
+recall/precision; chưa chạy holdout. Gemini là model hosted: version lưu model ID,
+adapter/SDK và output vector hash, không khẳng định pin được hash trọng số server.

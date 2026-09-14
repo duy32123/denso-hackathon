@@ -1226,8 +1226,8 @@
       "source_id": "SRC_HAAS_0001",
       "modality": "visual",
       "locator": {
-        "start_ms": 41220,
-        "end_ms": 41221,
+        "start_ms": 41219,
+        "end_ms": 41220,
         "page": null,
         "text_span": null
       },
@@ -1354,8 +1354,8 @@
       "source_id": "SRC_HAAS_0001",
       "modality": "visual",
       "locator": {
-        "start_ms": 115000,
-        "end_ms": 115001,
+        "start_ms": 114999,
+        "end_ms": 115000,
         "page": null,
         "text_span": null
       },
@@ -1402,8 +1402,8 @@
       "source_id": "SRC_HAAS_0001",
       "modality": "visual",
       "locator": {
-        "start_ms": 124300,
-        "end_ms": 124301,
+        "start_ms": 124299,
+        "end_ms": 124300,
         "page": null,
         "text_span": null
       },
@@ -1550,8 +1550,8 @@
       "source_id": "SRC_HAAS_0001",
       "modality": "visual",
       "locator": {
-        "start_ms": 170000,
-        "end_ms": 170001,
+        "start_ms": 169999,
+        "end_ms": 170000,
         "page": null,
         "text_span": null
       },

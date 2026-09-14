@@ -77,6 +77,11 @@ class _Compiler:
         self.evidence: list[dict] = []
         self._evidence_ids: dict[tuple, str] = {}
         self._claim_keys: dict[str, dict] = {}
+        # Loaded once (not per keyframe reference) and resolved against this module's
+        # REPO_ROOT -- not keyframes.py's own default -- so a test (or a caller) that
+        # points REPO_ROOT elsewhere gets a fully isolated inventory, never a silent
+        # fallback to the real committed one.
+        self._media_inventory = kf.load_inventory(REPO_ROOT / "acquisition" / "preprocessing" / "haas_d1a_media_inventory.jsonl")
 
     # --- ids -------------------------------------------------------------------
 
@@ -120,15 +125,20 @@ class _Compiler:
         # overwritten in place while keeping its name. The media inventory,
         # verified by content hash, is the only source of truth for both.
         uri = Path(ref["keyframe"]).as_posix()
-        row = kf.load_inventory().get(uri)
+        row = self._media_inventory.get(uri)
         if row is None:
-            raise DraftError(f"{path.name}: not recorded in the media inventory (no lineage) -- run keyframe promote first")
+            raise DraftError(
+                f"{path.name}: not recorded in the media inventory (no lineage) -- add a row to "
+                "acquisition/preprocessing/haas_d1a_media_inventory.jsonl for this exact file "
+                "(storage_uri, content_sha256, original_start_ms) before citing it as evidence"
+            )
         actual_hash = kf.sha256_of(path)
         if actual_hash != row["content_sha256"]:
             raise DraftError(
                 f"{path.name}: file content does not match its inventory content_sha256 "
                 f"(got {actual_hash[:12]}, inventory says {row['content_sha256'][:12]}) -- "
-                "possible silent overwrite; promote a new artifact instead of replacing this file"
+                "possible silent overwrite; add a new artifact file + inventory row instead of "
+                "replacing this file's bytes in place"
             )
         frame_ms = row["original_start_ms"]
         if not ref["start_ms"] <= frame_ms < ref["end_ms"]:
@@ -136,7 +146,7 @@ class _Compiler:
         if not ref.get("observation_note"):
             raise DraftError(f"{path.name}: visual evidence needs an observation_note describing only what is visible")
 
-        key = ("keyframe", ref["keyframe"], frame_ms)
+        key = ("keyframe", uri, frame_ms)  # normalized path -- two spellings of the same file must dedupe
         if key in self._evidence_ids:
             return self._evidence_ids[key]
         eid = self._nested("EV", len(self.evidence) + 1)
@@ -145,9 +155,12 @@ class _Compiler:
             "source_id": ref["source_id"],
             "modality": "visual",
             # A still frame is an instant, not the transcript-derived search window
-            # (ref start_ms/end_ms) it was found within. V04 requires start_ms < end_ms,
-            # so a 1ms window is the closest the schema allows to "this exact frame".
-            "locator": {"start_ms": frame_ms, "end_ms": frame_ms + 1, "page": None, "text_span": None},
+            # (ref start_ms/end_ms) it was found within. V04 requires start_ms < end_ms
+            # AND end_ms <= the source's duration_ms; ending the window *at* frame_ms
+            # (rather than starting there) means end_ms can only exceed duration_ms if
+            # frame_ms itself genuinely does -- a real error, not a boundary artifact.
+            "locator": {"start_ms": max(0, frame_ms - 1), "end_ms": frame_ms if frame_ms > 0 else 1,
+                        "page": None, "text_span": None},
             "quote": None,
             "observation_note": ref["observation_note"],
             "asset_uri": ref["keyframe"],

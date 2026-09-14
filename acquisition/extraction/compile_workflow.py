@@ -52,6 +52,7 @@ from knowflow_contracts.enums import FIELD_ROLES
 
 from acquisition.export import exporter
 from acquisition.extraction import evidence_pool as ep
+from acquisition.preprocessing import keyframes as kf
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 DRAFT_OUT = REPO_ROOT / "data" / "workflows" / "drafts"
@@ -76,6 +77,11 @@ class _Compiler:
         self.evidence: list[dict] = []
         self._evidence_ids: dict[tuple, str] = {}
         self._claim_keys: dict[str, dict] = {}
+        # Loaded once (not per keyframe reference) and resolved against this module's
+        # REPO_ROOT -- not keyframes.py's own default -- so a test (or a caller) that
+        # points REPO_ROOT elsewhere gets a fully isolated inventory, never a silent
+        # fallback to the real committed one.
+        self._media_inventory = kf.load_inventory(REPO_ROOT / "acquisition" / "preprocessing" / "haas_d1a_media_inventory.jsonl")
 
     # --- ids -------------------------------------------------------------------
 
@@ -114,13 +120,33 @@ class _Compiler:
         path = REPO_ROOT / ref["keyframe"]
         if not path.is_file():
             raise DraftError(f"keyframe not found: {ref['keyframe']}")
-        frame_ms = int(path.stem.split("_")[-1])
+
+        # Never trust the filename for identity or timestamp -- a file can be
+        # overwritten in place while keeping its name. The media inventory,
+        # verified by content hash, is the only source of truth for both.
+        uri = Path(ref["keyframe"]).as_posix()
+        row = self._media_inventory.get(uri)
+        if row is None:
+            raise DraftError(
+                f"{path.name}: not recorded in the media inventory (no lineage) -- add a row to "
+                "acquisition/preprocessing/haas_d1a_media_inventory.jsonl for this exact file "
+                "(storage_uri, content_sha256, original_start_ms) before citing it as evidence"
+            )
+        actual_hash = kf.sha256_of(path)
+        if actual_hash != row["content_sha256"]:
+            raise DraftError(
+                f"{path.name}: file content does not match its inventory content_sha256 "
+                f"(got {actual_hash[:12]}, inventory says {row['content_sha256'][:12]}) -- "
+                "possible silent overwrite; add a new artifact file + inventory row instead of "
+                "replacing this file's bytes in place"
+            )
+        frame_ms = row["original_start_ms"]
         if not ref["start_ms"] <= frame_ms < ref["end_ms"]:
             raise DraftError(f"{path.name}: frame at {frame_ms} ms is outside [{ref['start_ms']}, {ref['end_ms']})")
         if not ref.get("observation_note"):
             raise DraftError(f"{path.name}: visual evidence needs an observation_note describing only what is visible")
 
-        key = ("keyframe", ref["keyframe"], ref["start_ms"], ref["end_ms"])
+        key = ("keyframe", uri, frame_ms)  # normalized path -- two spellings of the same file must dedupe
         if key in self._evidence_ids:
             return self._evidence_ids[key]
         eid = self._nested("EV", len(self.evidence) + 1)
@@ -128,7 +154,13 @@ class _Compiler:
             "evidence_id": eid,
             "source_id": ref["source_id"],
             "modality": "visual",
-            "locator": {"start_ms": ref["start_ms"], "end_ms": ref["end_ms"], "page": None, "text_span": None},
+            # A still frame is an instant, not the transcript-derived search window
+            # (ref start_ms/end_ms) it was found within. V04 requires start_ms < end_ms
+            # AND end_ms <= the source's duration_ms; ending the window *at* frame_ms
+            # (rather than starting there) means end_ms can only exceed duration_ms if
+            # frame_ms itself genuinely does -- a real error, not a boundary artifact.
+            "locator": {"start_ms": max(0, frame_ms - 1), "end_ms": frame_ms if frame_ms > 0 else 1,
+                        "page": None, "text_span": None},
             "quote": None,
             "observation_note": ref["observation_note"],
             "asset_uri": ref["keyframe"],

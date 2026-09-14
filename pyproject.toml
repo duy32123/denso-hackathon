@@ -19,6 +19,14 @@ dev = [
     "pytest>=8",
     "python-dotenv>=1.0",
 ]
+# Keyframe-evidence hardening (docs/keyframe_capability_audit.md): pinned so the
+# extraction/pre-filter environment is reproducible. ffmpeg/ffprobe are system
+# binaries, pinned by producer_version in the media inventory instead.
+media = [
+    "opencv-python==4.13.0.92",
+    "numpy==2.3.5",
+    "Pillow==12.3.0",
+]
 
 [build-system]
 requires = ["hatchling"]

@@ -157,3 +157,49 @@ this session (method identical to the original 9's "opened and visually verified
 fell inside an existing step (all 6). The 5 SRC_HAAS_0005 frames stay unwired media:
 `REAL_WF_0001` is already reviewed and exported by D1-B, so incorporating them means a
 revision 2 — flagged in `docs/haas_d1a_to_d1b_handoff.md` for D1-B/D1-C.
+
+## Third QC pass (2026-09-14) — keyframe evidence hardening, corrective
+
+The second pass above states each new keyframe was "opened and visually inspected this
+session" and treats that as sufficient. It was not: "opened" and "judged against a defined
+evidence standard" are different things, and no per-frame judgment against a standard was
+recorded. This pass re-audited all 20 committed keyframes (the original 9 plus the second
+pass's 11) against a written standard (`docs/keyframe_selection_method.md`) and recorded a
+structured verdict for every one (`data/keyframes/keyframe_selections.jsonl`), not just the
+ones later found wrong. Full detail, reasoning and per-item results are in
+`docs/keyframe_evidence_review.md`; capability/calibration proof is in
+`docs/keyframe_capability_audit.md` and `docs/keyframe_calibration_report.md`.
+
+**What was actually wrong**, confirmed by reading pixels rather than filenames or
+timestamps:
+
+- `REAL_WF_0002_CL_017` (`SRC_HAAS_0001` step "Measure the finger-to-flange gap with a
+  feeler gauge") was anchored to `kf_0146100.jpg`, which shows two empty hands reaching
+  toward the machine — no feeler gauge. Dense re-sampling of the full surrounding window
+  confirms the gauge is never filmed in this source; the visual claim was removed from the
+  draft rather than forced onto a nearby frame, leaving the step's existing transcript
+  claim as its only (correct) evidence.
+- `REAL_WF_0001_CL_021` (`SRC_HAAS_0005`, the "cam follower" claim, already exported) named
+  a component and a motion ("spins freely") that the narration states but the still frame
+  cannot show. `REAL_WF_0001.r2` (`supersedes_revision: 1`) reworks the claim to describe
+  only what `kf_0142700.jpg` visibly shows; the exported r1 is untouched, per the repo's
+  immutability rule, and the affected claim's review status correctly goes stale on
+  recompile (see `test_the_committed_draft_has_been_source_checked`).
+- `REAL_WF_0002_CL_012`'s evidence explanation justified `kf_0115000.jpg` by "the window
+  where the narration names the locking-mechanism finger" — audio proximity, the exact
+  anti-pattern this correction targets — even though the frame is bench B-roll of a
+  detached part. The claim text itself was already purely descriptive, so the frame is
+  kept for that narrower purpose and only the explanation was corrected.
+- The unwired `kf_0011800.jpg` inventory note misdescribed a closed-door intro shot as "the
+  open carousel/pocket area"; corrected in the media inventory. No claim cites this frame.
+
+A compiler defect was also found and fixed: `compile_workflow.py`'s `_keyframe_evidence`
+derived a keyframe's timestamp by parsing its filename (`int(path.stem.split("_")[-1])`)
+with no check that the file's bytes matched anything — a silently overwritten file with
+the same name would pass unnoticed. It now looks the file up in
+`acquisition/preprocessing/haas_d1a_media_inventory.jsonl` by path and re-hashes it against
+the recorded `content_sha256`, refusing to compile on any mismatch or missing lineage
+(`tests/unit/test_compile_workflow.py::test_keyframe_evidence_is_rejected_when_file_bytes_do_not_match_the_inventory_hash`).
+It also stopped writing a fabricated multi-second locator span (borrowed from the
+transcript search window) for a single still frame; a still now gets a 1ms locator at its
+real timestamp (schema V04 forbids a zero-width interval).

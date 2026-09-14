@@ -171,6 +171,112 @@ def test_unknown_field_name_is_refused(pool):
         cw.compile_draft(d, pool)
 
 
+# --- keyframe evidence trusts the media inventory, not the filename ----------------
+
+
+def _fake_repo(tmp_path, keyframe_rel: str, jpg_bytes: bytes, inventory_row: dict | None):
+    """A self-contained fake REPO_ROOT with one keyframe file and its own inventory --
+    exercises _keyframe_evidence without depending on the real committed media inventory.
+    """
+    kf_path = tmp_path / keyframe_rel
+    kf_path.parent.mkdir(parents=True, exist_ok=True)
+    kf_path.write_bytes(jpg_bytes)
+    inv_path = tmp_path / "acquisition/preprocessing/haas_d1a_media_inventory.jsonl"
+    inv_path.parent.mkdir(parents=True, exist_ok=True)
+    rows = [inventory_row] if inventory_row is not None else []
+    inv_path.write_text("\n".join(json.dumps(r) for r in rows) + ("\n" if rows else ""), encoding="utf-8")
+    return kf_path
+
+
+def test_keyframe_evidence_is_rejected_when_file_bytes_do_not_match_the_inventory_hash(pool, tmp_path, monkeypatch):
+    """A keyframe file can be silently overwritten while its artifact_id/filename stay
+    the same. The compiler must catch that by content hash, not trust the filename. Fully
+    self-contained: a fake repo whose own inventory row's hash deliberately does not match
+    the file's real bytes -- must not depend on the real committed inventory to pass.
+    """
+    rel = "acquisition/preprocessing/keyframes/SRC_HAAS_0005/kf_0142700.jpg"
+    _fake_repo(tmp_path, rel, b"tampered bytes", {
+        "storage_uri": rel, "artifact_type": "keyframe", "source_id": "SRC_HAAS_0005",
+        "original_start_ms": 142700, "content_sha256": "0" * 64,
+    })
+    monkeypatch.setattr(cw, "REPO_ROOT", tmp_path)
+
+    d = tiny_draft(evidence=[{"keyframe": rel, "source_id": "SRC_HAAS_0005",
+                               "start_ms": 142680, "end_ms": 147840, "observation_note": "x"}])
+    with pytest.raises(cw.DraftError, match="content_sha256"):
+        cw.compile_draft(d, pool)
+
+
+def test_two_spellings_of_the_same_keyframe_path_dedupe_to_one_evidence_record(pool):
+    """The inventory lookup normalizes the path (Path(...).as_posix()) before comparing;
+    the dedup key must use that same normalized form, not the raw ref string, or two
+    claims spelling the same file differently would wastefully mint two Evidence rows
+    for one frame.
+    """
+    rel = "acquisition/preprocessing/keyframes/SRC_HAAS_0005/kf_0142700.jpg"
+    d = tiny_draft(evidence=[{"keyframe": rel, "source_id": "SRC_HAAS_0005",
+                               "start_ms": 142680, "end_ms": 147840, "observation_note": "x"}])
+    d["steps"][0]["fields"]["condition"] = [
+        {"text": "y", "evidence": [{"keyframe": f"./{rel}",
+                                     "source_id": "SRC_HAAS_0005", "start_ms": 142680, "end_ms": 147840,
+                                     "observation_note": "x"}], "explanation": "y"}
+    ]
+    snap = cw.compile_draft(d, pool)
+    assert len(snap["evidence"]) == 1
+    assert {l["evidence_id"] for c in snap["claims"] for l in c["evidence_links"]} == {snap["evidence"][0]["evidence_id"]}
+
+
+def test_keyframe_locator_never_exceeds_its_sources_stated_duration(pool, tmp_path, monkeypatch):
+    """A frame extracted right at (or ffprobe-PTS-rounded up to) a source's stated
+    duration must not produce a locator whose end_ms exceeds duration_ms -- schema V04
+    would reject otherwise-correct evidence for a boundary frame.
+    """
+    rel = "acquisition/preprocessing/keyframes/FAKE/kf_last.jpg"
+    duration_ms = 5000
+    import hashlib
+    _fake_repo(tmp_path, rel, b"x", {
+        "storage_uri": rel, "artifact_type": "keyframe", "source_id": "SRC_HAAS_0005",
+        "original_start_ms": duration_ms, "content_sha256": hashlib.sha256(b"x").hexdigest(),
+    })
+    monkeypatch.setattr(cw, "REPO_ROOT", tmp_path)
+    d = tiny_draft(evidence=[{"keyframe": rel, "source_id": "SRC_HAAS_0005",
+                               "start_ms": duration_ms - 100, "end_ms": duration_ms + 100,
+                               "observation_note": "x"}])
+    snap = cw.compile_draft(d, pool)
+    locator = snap["evidence"][0]["locator"]
+    assert locator["end_ms"] <= duration_ms, \
+        f"locator end_ms={locator['end_ms']} must not exceed the frame's own timestamp={duration_ms}"
+
+
+def test_keyframe_not_in_the_inventory_is_refused_even_with_a_valid_file(pool, tmp_path, monkeypatch):
+    """No lineage, no evidence -- a file that merely exists on disk with the right name
+    is not enough; it must be a recorded, hash-verified artifact.
+    """
+    rel = "acquisition/preprocessing/keyframes/SRC_HAAS_0005/kf_0142700.jpg"
+    _fake_repo(tmp_path, rel, b"some bytes", inventory_row=None)
+    monkeypatch.setattr(cw, "REPO_ROOT", tmp_path)
+
+    d = tiny_draft(evidence=[{"keyframe": rel, "source_id": "SRC_HAAS_0005",
+                               "start_ms": 142680, "end_ms": 147840, "observation_note": "x"}])
+    with pytest.raises(cw.DraftError, match="not recorded in the media inventory"):
+        cw.compile_draft(d, pool)
+
+
+def test_keyframe_evidence_locator_is_the_frame_instant_not_the_search_window(pool):
+    """A still frame is an instant; the draft's start_ms/end_ms is only the search
+    window used to sanity-check the frame falls in the right place, not the locator.
+    """
+    d = tiny_draft(evidence=[{"keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0005/kf_0142700.jpg",
+                               "source_id": "SRC_HAAS_0005", "start_ms": 142680, "end_ms": 147840,
+                               "observation_note": "x"}])
+    snap = cw.compile_draft(d, pool)
+    locator = snap["evidence"][0]["locator"]
+    assert (locator["start_ms"], locator["end_ms"]) == (142699, 142700), \
+        "1ms window ending at the frame's own timestamp (schema V04 forbids a zero-width " \
+        "locator, and ending here rather than starting here avoids exceeding duration_ms " \
+        "for a boundary frame) -- not the 5s caption-cue span"
+
+
 def test_context_value_needs_a_provenance_basis(pool):
     d = tiny_draft()
     d["context"] = {"machine_model": "VM-3"}

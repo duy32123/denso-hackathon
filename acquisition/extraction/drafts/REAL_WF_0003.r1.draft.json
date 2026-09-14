@@ -34,8 +34,8 @@
         "context": [
           {
             "text": "The presenter says a tool changer alarm has occurred and that Haas calls the fix 'tool changer recovery'.",
-            "evidence": [["SRC_HAAS_0003:U0001", "SRC_HAAS_0003:U0002", "SRC_HAAS_0003:U0003"]],
-            "explanation": "The presenter states this at the start of the video."
+            "evidence": [["SRC_HAAS_0003:C0001", "SRC_HAAS_0003:C0002", "SRC_HAAS_0003:U0003"]],
+            "explanation": "The presenter states this at the start of the video; cites the corrected cues (raw caption said 'tool changes' / 'Hoss', corrected per corrections.diff citing the publisher's own name)."
           }
         ],
         "action": [
@@ -128,8 +128,24 @@
         "outcome": [
           {
             "text": "The presenter says the double arm returns the tools to where they came from, tool changer recovery is complete, and they press E to exit; the presenter calls this 'pretty easy'.",
-            "evidence": [["SRC_HAAS_0003:U0021", "SRC_HAAS_0003:U0022"]],
-            "explanation": "The caption states this outcome and the presenter's own assessment directly."
+            "evidence": [["SRC_HAAS_0003:C0021", "SRC_HAAS_0003:U0022"]],
+            "explanation": "The caption states this outcome and the presenter's own assessment directly; cites the corrected cue (raw caption said 'told change', corrected per corrections.diff)."
+          },
+          {
+            "text": "The control screen shows a 'Tool Changer Status Summary' reading 'Tool changer recovery completed. Press \"E\" to exit.', with the Carousel and Double Arm status fields both reading OK.",
+            "evidence_type": "observed",
+            "attribution": {"label": "D1-A keyframe observation, pending human check", "kind": "model"},
+            "evidence": [
+              {
+                "keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0003/kf_0123000.jpg",
+                "source_id": "SRC_HAAS_0003",
+                "start_ms": 123000,
+                "end_ms": 124000,
+                "observation_note": "Same control screen as kf_0116500.jpg, now showing 'Carousel status ok' and 'Double arm status ok' under 'Tool Changer Status Summary:', with the text 'Tool changer recovery completed. Press \"E\" to exit.' below.",
+                "explanation": "The frame is at the exact moment the narration describes recovery completing."
+              }
+            ],
+            "explanation": "The frame shows the exact completion message the narration is describing at this moment."
           }
         ]
       },
@@ -164,6 +180,22 @@
             "text": "The presenter says there is a lot going on this screen, but basically it is where the tool changer is manually controlled: rotate the arm back and forth, lift the pocket up and down, actuate the drawbar, and so forth.",
             "evidence": [["SRC_HAAS_0003:U0026", "SRC_HAAS_0003:U0027", "SRC_HAAS_0003:U0028"]],
             "explanation": "The caption describes the manual recovery screen's controls in general terms."
+          },
+          {
+            "text": "The control screen shows a 'TOOL CHANGER RECOVERY' page with 'Carousel', 'Spindle', and 'Double arm' status fields, with 'Carousel pocket' and 'Double arm' both reading 'OFF POSITION'.",
+            "evidence_type": "observed",
+            "attribution": {"label": "D1-A keyframe observation, pending human check", "kind": "model"},
+            "evidence": [
+              {
+                "keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0003/kf_0157000.jpg",
+                "source_id": "SRC_HAAS_0003",
+                "start_ms": 157000,
+                "end_ms": 158000,
+                "observation_note": "Screen titled 'TOOL CHANGER RECOVERY' showing 'Carousel: POCKET 23', 'Spindle: TOOL 2', 'Carousel pocket: OFF POSITION' and 'Double arm: OFF POSITION', with a 'Manual tool changer operation' help text below listing ATC REV/TOOL RELEASE/UP-DOWN/ORIENT SPINDLE/LF-RT ARROW commands.",
+                "explanation": "The frame is at the moment the narration describes entering the manual recovery screen, before the arm reaches origin."
+              }
+            ],
+            "explanation": "The frame shows the manual recovery screen the narration is describing at this moment, at its initial 'OFF POSITION' state."
           }
         ],
         "action": [
@@ -199,6 +231,22 @@
             "text": "The presenter then hits TC reverse to rotate the arm as close as possible to reach the second tool, presses the plunger again, and removes that tool too.",
             "evidence": [["SRC_HAAS_0003:U0035", "SRC_HAAS_0003:U0036", "SRC_HAAS_0003:U0037"]],
             "explanation": "The caption states this second removal directly."
+          },
+          {
+            "text": "In the video, a gloved hand presses near a small cylindrical fitting at the base of a tool holder mounted in the double arm.",
+            "evidence_type": "observed",
+            "attribution": {"label": "D1-A keyframe observation, pending human check", "kind": "model"},
+            "evidence": [
+              {
+                "keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0003/kf_0190000.jpg",
+                "source_id": "SRC_HAAS_0003",
+                "start_ms": 190000,
+                "end_ms": 191000,
+                "observation_note": "Close-up, desaturated lighting: a gloved hand presses near a small cylindrical fitting at the base of a conical tool holder mounted in a dark double-arm bracket.",
+                "explanation": "The frame falls within the window where the narration describes pressing the plunger to remove the first tool."
+              }
+            ],
+            "explanation": "The frame shows a gloved hand at the tool holder the narration describes working on at this moment."
           }
         ],
         "condition": [
@@ -245,8 +293,8 @@
         "outcome": [
           {
             "text": "The presenter says the screen then tells them no manual recovery action is required, and it is time to press E to exit; tool changer recovery is complete.",
-            "evidence": [["SRC_HAAS_0003:U0040", "SRC_HAAS_0003:U0041"]],
-            "explanation": "The caption states this final confirmation directly."
+            "evidence": [["SRC_HAAS_0003:U0040", "SRC_HAAS_0003:C0041"]],
+            "explanation": "The caption states this final confirmation directly; cites the corrected cue (raw caption said 'total change your', corrected per corrections.diff)."
           }
         ]
       },
@@ -265,6 +313,22 @@
             "text": "The presenter says they can now update the tool table.",
             "evidence": [["SRC_HAAS_0003:U0043", "SRC_HAAS_0003:U0044"]],
             "explanation": "The caption states this final action directly."
+          },
+          {
+            "text": "The control screen shows an 'ACTIVE TOOL' panel identifying the current tool and pocket, with the presenter pointing at it. The exact tool and pocket numbers shown are not spoken aloud in the narration.",
+            "evidence_type": "observed",
+            "attribution": {"label": "D1-A keyframe observation, pending human check", "kind": "model"},
+            "evidence": [
+              {
+                "keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0003/kf_0258000.jpg",
+                "source_id": "SRC_HAAS_0003",
+                "start_ms": 258000,
+                "end_ms": 259000,
+                "observation_note": "Control screen showing 'MAIN SPINDLE', 'POSITION: MACHINE' and 'ACTIVE TOOL' panels side by side; the 'ACTIVE TOOL' box reads 'T2 - P23 T4' with an end-mill icon below it; the presenter's finger points directly at this box.",
+                "explanation": "The frame is at the moment the narration describes the active tool window telling them the tools that were in the arm."
+              }
+            ],
+            "explanation": "The frame shows the exact screen the narration is describing at this moment."
           }
         ],
         "rationale": [

@@ -220,3 +220,24 @@ pytest -q
 # recompute a checksum to spot-check section 15:
 python -c "import hashlib;print(hashlib.sha256(open('data/sources/haas_pilot_sources.jsonl','rb').read()).hexdigest())"
 ```
+
+## 17. WP2 second pass (2026-09-14) — new for D1-B/D1-C
+
+A second, full line-by-line re-read of all 3 dev transcripts plus a keyframe-coverage
+review (branch `team1/pilot-workflows-0001-0003`) found and fixed more caption artifacts
+of the same kind as the original gap-spec fix, and added 11 new keyframes. Full detail in
+`docs/haas_d1a_quality_report.md`'s "Second QC pass" section. Two things D1-B/D1-C should
+know:
+
+1. **The evidence pool changed.** `SRC_HAAS_0001`, `SRC_HAAS_0003` and `SRC_HAAS_0005` each
+   gained new `C####` corrected-cue candidates. This does **not** renumber any existing
+   `U####` candidate (positional, tied to array index) — any workflow already citing raw
+   cues from these sources is unaffected. `REAL_WF_0001` (already reviewed/exported) was
+   not touched.
+2. **5 new SRC_HAAS_0005 keyframes are unwired media**, not yet cited by any claim:
+   `kf_0028000.jpg` (E-stop press), `kf_0065000.jpg` (removing a tool from the carousel),
+   `kf_0076000.jpg` (marking the disc for reinstallation), `kf_0158000.jpg` (applying
+   grease to the pocket slider), `kf_0222000.jpg` (reinstalling with a pneumatic tool near
+   the numbered carousel). `REAL_WF_0001` is already reviewed and exported, so
+   incorporating these means a revision 2 (new `observed` claims, re-review, re-export) —
+   left for D1-B/D1-C to decide, not done here.

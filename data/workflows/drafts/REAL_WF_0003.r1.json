@@ -206,7 +206,8 @@
         "outcome": {
           "state": "present",
           "claim_ids": [
-            "REAL_WF_0003_CL_010"
+            "REAL_WF_0003_CL_010",
+            "REAL_WF_0003_CL_011"
           ]
         },
         "acceptance_criteria": {
@@ -231,7 +232,7 @@
         "action": {
           "state": "present",
           "claim_ids": [
-            "REAL_WF_0003_CL_011"
+            "REAL_WF_0003_CL_012"
           ]
         },
         "rationale": {
@@ -241,7 +242,7 @@
         "condition": {
           "state": "present",
           "claim_ids": [
-            "REAL_WF_0003_CL_012"
+            "REAL_WF_0003_CL_013"
           ]
         },
         "outcome": {
@@ -262,19 +263,20 @@
         "context": {
           "state": "present",
           "claim_ids": [
-            "REAL_WF_0003_CL_013"
+            "REAL_WF_0003_CL_014"
           ]
         },
         "observation": {
           "state": "present",
           "claim_ids": [
-            "REAL_WF_0003_CL_014"
+            "REAL_WF_0003_CL_015",
+            "REAL_WF_0003_CL_016"
           ]
         },
         "action": {
           "state": "present",
           "claim_ids": [
-            "REAL_WF_0003_CL_015"
+            "REAL_WF_0003_CL_017"
           ]
         },
         "rationale": {
@@ -311,8 +313,9 @@
         "action": {
           "state": "present",
           "claim_ids": [
-            "REAL_WF_0003_CL_016",
-            "REAL_WF_0003_CL_017"
+            "REAL_WF_0003_CL_018",
+            "REAL_WF_0003_CL_019",
+            "REAL_WF_0003_CL_020"
           ]
         },
         "rationale": {
@@ -322,7 +325,7 @@
         "condition": {
           "state": "present",
           "claim_ids": [
-            "REAL_WF_0003_CL_018"
+            "REAL_WF_0003_CL_021"
           ]
         },
         "outcome": {
@@ -351,9 +354,9 @@
         "action": {
           "state": "present",
           "claim_ids": [
-            "REAL_WF_0003_CL_019",
-            "REAL_WF_0003_CL_020",
-            "REAL_WF_0003_CL_021"
+            "REAL_WF_0003_CL_022",
+            "REAL_WF_0003_CL_023",
+            "REAL_WF_0003_CL_024"
           ]
         },
         "rationale": {
@@ -367,7 +370,7 @@
         "outcome": {
           "state": "present",
           "claim_ids": [
-            "REAL_WF_0003_CL_022"
+            "REAL_WF_0003_CL_025"
           ]
         },
         "acceptance_criteria": {
@@ -392,14 +395,15 @@
         "action": {
           "state": "present",
           "claim_ids": [
-            "REAL_WF_0003_CL_023",
-            "REAL_WF_0003_CL_024"
+            "REAL_WF_0003_CL_026",
+            "REAL_WF_0003_CL_027",
+            "REAL_WF_0003_CL_028"
           ]
         },
         "rationale": {
           "state": "present",
           "claim_ids": [
-            "REAL_WF_0003_CL_025"
+            "REAL_WF_0003_CL_029"
           ]
         },
         "condition": {
@@ -440,22 +444,22 @@
         "condition": {
           "state": "present",
           "claim_ids": [
-            "REAL_WF_0003_CL_026"
+            "REAL_WF_0003_CL_030"
           ]
         },
         "outcome": {
           "state": "present",
           "claim_ids": [
-            "REAL_WF_0003_CL_027"
+            "REAL_WF_0003_CL_031"
           ]
         },
         "acceptance_criteria": {
           "state": "present",
           "claim_ids": [
-            "REAL_WF_0003_CL_028",
-            "REAL_WF_0003_CL_029",
-            "REAL_WF_0003_CL_030",
-            "REAL_WF_0003_CL_031"
+            "REAL_WF_0003_CL_032",
+            "REAL_WF_0003_CL_033",
+            "REAL_WF_0003_CL_034",
+            "REAL_WF_0003_CL_035"
           ]
         }
       }
@@ -478,9 +482,9 @@
       },
       "evidence_links": [
         {
-          "evidence_id": "REAL_WF_0003_EV_001",
+          "evidence_id": "REAL_WF_0003_EV_002",
           "support_status": "supported",
-          "explanation": "The presenter states this at the start of the video."
+          "explanation": "The presenter states this at the start of the video; cites the corrected cues (raw caption said 'tool changes' / 'Hoss', corrected per corrections.diff citing the publisher's own name)."
         }
       ],
       "support_status": "supported",
@@ -505,7 +509,7 @@
       },
       "evidence_links": [
         {
-          "evidence_id": "REAL_WF_0003_EV_002",
+          "evidence_id": "REAL_WF_0003_EV_003",
           "support_status": "supported",
           "explanation": "The caption states this as the one thing to remember before anything else."
         }
@@ -532,7 +536,7 @@
       },
       "evidence_links": [
         {
-          "evidence_id": "REAL_WF_0003_EV_003",
+          "evidence_id": "REAL_WF_0003_EV_004",
           "support_status": "supported",
           "explanation": "The caption states this generalization directly."
         }
@@ -559,7 +563,7 @@
       },
       "evidence_links": [
         {
-          "evidence_id": "REAL_WF_0003_EV_004",
+          "evidence_id": "REAL_WF_0003_EV_005",
           "support_status": "supported",
           "explanation": "The caption describes this shared end-state for both recovery paths."
         }
@@ -586,7 +590,7 @@
       },
       "evidence_links": [
         {
-          "evidence_id": "REAL_WF_0003_EV_005",
+          "evidence_id": "REAL_WF_0003_EV_006",
           "support_status": "supported",
           "explanation": "The caption states this directly after showing the alarm."
         }
@@ -613,12 +617,12 @@
       },
       "evidence_links": [
         {
-          "evidence_id": "REAL_WF_0003_EV_006",
+          "evidence_id": "REAL_WF_0003_EV_007",
           "support_status": "supported",
           "explanation": "The frame is at the moment the narration describes viewing the 2066 alarm."
         },
         {
-          "evidence_id": "REAL_WF_0003_EV_007",
+          "evidence_id": "REAL_WF_0003_EV_008",
           "support_status": "supported",
           "explanation": "The frame shows the exact alarm text the narration names verbally at the same moment ('this 2066 tool changer fault alarm')."
         }
@@ -645,7 +649,7 @@
       },
       "evidence_links": [
         {
-          "evidence_id": "REAL_WF_0003_EV_008",
+          "evidence_id": "REAL_WF_0003_EV_009",
           "support_status": "supported",
           "explanation": "The caption states the alarm page's message and the next action directly."
         }
@@ -672,7 +676,7 @@
       },
       "evidence_links": [
         {
-          "evidence_id": "REAL_WF_0003_EV_009",
+          "evidence_id": "REAL_WF_0003_EV_010",
           "support_status": "supported",
           "explanation": "The caption states this exact button sequence."
         }
@@ -699,7 +703,7 @@
       },
       "evidence_links": [
         {
-          "evidence_id": "REAL_WF_0003_EV_010",
+          "evidence_id": "REAL_WF_0003_EV_011",
           "support_status": "supported",
           "explanation": "The frame falls within the window where the narration describes reaching the automatic-recovery option."
         }
@@ -726,9 +730,9 @@
       },
       "evidence_links": [
         {
-          "evidence_id": "REAL_WF_0003_EV_011",
+          "evidence_id": "REAL_WF_0003_EV_013",
           "support_status": "supported",
-          "explanation": "The caption states this outcome and the presenter's own assessment directly."
+          "explanation": "The caption states this outcome and the presenter's own assessment directly; cites the corrected cue (raw caption said 'told change', corrected per corrections.diff)."
         }
       ],
       "support_status": "supported",
@@ -739,6 +743,33 @@
     },
     {
       "claim_id": "REAL_WF_0003_CL_011",
+      "text": "The control screen shows a 'Tool Changer Status Summary' reading 'Tool changer recovery completed. Press \"E\" to exit.', with the Carousel and Double Arm status fields both reading OK.",
+      "role": "outcome",
+      "evidence_type": "observed",
+      "attribution": {
+        "actor_id": null,
+        "label": "D1-A keyframe observation, pending human check",
+        "kind": "model"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Tool changer recovery (automatic and manual) demonstrated in SRC_HAAS_0003. SRC_HAAS_0004's written manual-recovery how-to is cited for the exact button names in step 5, since the video's own narration names controls more loosely; SRC_HAAS_0004's 7-step procedure is word-for-word identical to TG0128's 'MANUAL RECOVERY HOW TO' section (SRC_HAAS_0002), so TG0128 is deliberately not also cited here to avoid presenting the same guide text twice as independent corroboration. The machine model is not stated."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0003_EV_014",
+          "support_status": "supported",
+          "explanation": "The frame is at the exact moment the narration describes recovery completing."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0003_CL_012",
       "text": "The presenter says that on an older machine, one is probably already familiar with manual recovery, and to press M to engage it.",
       "role": "action",
       "evidence_type": "stated",
@@ -753,7 +784,7 @@
       },
       "evidence_links": [
         {
-          "evidence_id": "REAL_WF_0003_EV_012",
+          "evidence_id": "REAL_WF_0003_EV_015",
           "support_status": "supported",
           "explanation": "The caption states this directly."
         }
@@ -765,7 +796,7 @@
       "supersedes_claim_ids": []
     },
     {
-      "claim_id": "REAL_WF_0003_CL_012",
+      "claim_id": "REAL_WF_0003_CL_013",
       "text": "The presenter says it is unusual for automatic recovery not to work, but if it doesn't, the machine kicks into manual recovery mode.",
       "role": "condition",
       "evidence_type": "stated",
@@ -780,7 +811,7 @@
       },
       "evidence_links": [
         {
-          "evidence_id": "REAL_WF_0003_EV_013",
+          "evidence_id": "REAL_WF_0003_EV_016",
           "support_status": "supported",
           "explanation": "The caption states this as the trigger for switching to manual recovery."
         }
@@ -792,7 +823,7 @@
       "supersedes_claim_ids": []
     },
     {
-      "claim_id": "REAL_WF_0003_CL_013",
+      "claim_id": "REAL_WF_0003_CL_014",
       "text": "The presenter says the on-screen notification tells them to remove all the tools, then rotate the arm in the reverse direction to its origin position.",
       "role": "context",
       "evidence_type": "stated",
@@ -807,7 +838,7 @@
       },
       "evidence_links": [
         {
-          "evidence_id": "REAL_WF_0003_EV_014",
+          "evidence_id": "REAL_WF_0003_EV_017",
           "support_status": "supported",
           "explanation": "The caption states the notification's instruction directly."
         }
@@ -819,7 +850,7 @@
       "supersedes_claim_ids": []
     },
     {
-      "claim_id": "REAL_WF_0003_CL_014",
+      "claim_id": "REAL_WF_0003_CL_015",
       "text": "The presenter says there is a lot going on this screen, but basically it is where the tool changer is manually controlled: rotate the arm back and forth, lift the pocket up and down, actuate the drawbar, and so forth.",
       "role": "observation",
       "evidence_type": "stated",
@@ -834,7 +865,7 @@
       },
       "evidence_links": [
         {
-          "evidence_id": "REAL_WF_0003_EV_015",
+          "evidence_id": "REAL_WF_0003_EV_018",
           "support_status": "supported",
           "explanation": "The caption describes the manual recovery screen's controls in general terms."
         }
@@ -846,7 +877,34 @@
       "supersedes_claim_ids": []
     },
     {
-      "claim_id": "REAL_WF_0003_CL_015",
+      "claim_id": "REAL_WF_0003_CL_016",
+      "text": "The control screen shows a 'TOOL CHANGER RECOVERY' page with 'Carousel', 'Spindle', and 'Double arm' status fields, with 'Carousel pocket' and 'Double arm' both reading 'OFF POSITION'.",
+      "role": "observation",
+      "evidence_type": "observed",
+      "attribution": {
+        "actor_id": null,
+        "label": "D1-A keyframe observation, pending human check",
+        "kind": "model"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Tool changer recovery (automatic and manual) demonstrated in SRC_HAAS_0003. SRC_HAAS_0004's written manual-recovery how-to is cited for the exact button names in step 5, since the video's own narration names controls more loosely; SRC_HAAS_0004's 7-step procedure is word-for-word identical to TG0128's 'MANUAL RECOVERY HOW TO' section (SRC_HAAS_0002), so TG0128 is deliberately not also cited here to avoid presenting the same guide text twice as independent corroboration. The machine model is not stated."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0003_EV_019",
+          "support_status": "supported",
+          "explanation": "The frame is at the moment the narration describes entering the manual recovery screen, before the arm reaches origin."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0003_CL_017",
       "text": "Push [ATC FWD] or [ATC REV] to turn the double arm. Push the [UP] or [DOWN] cursor arrows to raise or lower the tool pocket. Push [ORIENT SPINDLE] to reset the spindle orientation and lock it. Push the [LEFT] or [RIGHT] cursor arrows to turn the carousel left or right. Push the [TOOL RELEASE] button to trigger the tool clamp/unclamp.",
       "role": "action",
       "evidence_type": "stated",
@@ -861,7 +919,7 @@
       },
       "evidence_links": [
         {
-          "evidence_id": "REAL_WF_0003_EV_016",
+          "evidence_id": "REAL_WF_0003_EV_020",
           "support_status": "supported",
           "explanation": "SRC_HAAS_0004 names these specific buttons; the video's narration describes the same controls only in general terms ('rotate the arm', 'lift the pocket')."
         }
@@ -873,116 +931,8 @@
       "supersedes_claim_ids": []
     },
     {
-      "claim_id": "REAL_WF_0003_CL_016",
-      "text": "The presenter says the arm is in a position to reach one of the tools, puts on work gloves, presses the plunger, and gives the tool a firm pull to remove it.",
-      "role": "action",
-      "evidence_type": "stated",
-      "attribution": {
-        "actor_id": null,
-        "label": "Andrew (presenter)",
-        "kind": "speaker"
-      },
-      "scope": {
-        "level": "case",
-        "description": "Tool changer recovery (automatic and manual) demonstrated in SRC_HAAS_0003. SRC_HAAS_0004's written manual-recovery how-to is cited for the exact button names in step 5, since the video's own narration names controls more loosely; SRC_HAAS_0004's 7-step procedure is word-for-word identical to TG0128's 'MANUAL RECOVERY HOW TO' section (SRC_HAAS_0002), so TG0128 is deliberately not also cited here to avoid presenting the same guide text twice as independent corroboration. The machine model is not stated."
-      },
-      "evidence_links": [
-        {
-          "evidence_id": "REAL_WF_0003_EV_017",
-          "support_status": "supported",
-          "explanation": "The caption states this sequence directly."
-        }
-      ],
-      "support_status": "supported",
-      "source_review": "pending",
-      "technical_review": "not_requested",
-      "conflicts_with": [],
-      "supersedes_claim_ids": []
-    },
-    {
-      "claim_id": "REAL_WF_0003_CL_017",
-      "text": "The presenter then hits TC reverse to rotate the arm as close as possible to reach the second tool, presses the plunger again, and removes that tool too.",
-      "role": "action",
-      "evidence_type": "stated",
-      "attribution": {
-        "actor_id": null,
-        "label": "Andrew (presenter)",
-        "kind": "speaker"
-      },
-      "scope": {
-        "level": "case",
-        "description": "Tool changer recovery (automatic and manual) demonstrated in SRC_HAAS_0003. SRC_HAAS_0004's written manual-recovery how-to is cited for the exact button names in step 5, since the video's own narration names controls more loosely; SRC_HAAS_0004's 7-step procedure is word-for-word identical to TG0128's 'MANUAL RECOVERY HOW TO' section (SRC_HAAS_0002), so TG0128 is deliberately not also cited here to avoid presenting the same guide text twice as independent corroboration. The machine model is not stated."
-      },
-      "evidence_links": [
-        {
-          "evidence_id": "REAL_WF_0003_EV_018",
-          "support_status": "supported",
-          "explanation": "The caption states this second removal directly."
-        }
-      ],
-      "support_status": "supported",
-      "source_review": "pending",
-      "technical_review": "not_requested",
-      "conflicts_with": [],
-      "supersedes_claim_ids": []
-    },
-    {
       "claim_id": "REAL_WF_0003_CL_018",
-      "text": "The presenter says a tool can only be removed by depressing the plunger; otherwise it is really difficult and something is probably going to break.",
-      "role": "condition",
-      "evidence_type": "stated",
-      "attribution": {
-        "actor_id": null,
-        "label": "Andrew (presenter)",
-        "kind": "speaker"
-      },
-      "scope": {
-        "level": "case",
-        "description": "Tool changer recovery (automatic and manual) demonstrated in SRC_HAAS_0003. SRC_HAAS_0004's written manual-recovery how-to is cited for the exact button names in step 5, since the video's own narration names controls more loosely; SRC_HAAS_0004's 7-step procedure is word-for-word identical to TG0128's 'MANUAL RECOVERY HOW TO' section (SRC_HAAS_0002), so TG0128 is deliberately not also cited here to avoid presenting the same guide text twice as independent corroboration. The machine model is not stated."
-      },
-      "evidence_links": [
-        {
-          "evidence_id": "REAL_WF_0003_EV_019",
-          "support_status": "supported",
-          "explanation": "The caption states this warning directly, repeated when removing the second tool (U0037-U0038)."
-        }
-      ],
-      "support_status": "supported",
-      "source_review": "pending",
-      "technical_review": "not_requested",
-      "conflicts_with": [],
-      "supersedes_claim_ids": []
-    },
-    {
-      "claim_id": "REAL_WF_0003_CL_019",
-      "text": "The presenter says they continue rotating the arm until it reaches the origin position.",
-      "role": "action",
-      "evidence_type": "stated",
-      "attribution": {
-        "actor_id": null,
-        "label": "Andrew (presenter)",
-        "kind": "speaker"
-      },
-      "scope": {
-        "level": "case",
-        "description": "Tool changer recovery (automatic and manual) demonstrated in SRC_HAAS_0003. SRC_HAAS_0004's written manual-recovery how-to is cited for the exact button names in step 5, since the video's own narration names controls more loosely; SRC_HAAS_0004's 7-step procedure is word-for-word identical to TG0128's 'MANUAL RECOVERY HOW TO' section (SRC_HAAS_0002), so TG0128 is deliberately not also cited here to avoid presenting the same guide text twice as independent corroboration. The machine model is not stated."
-      },
-      "evidence_links": [
-        {
-          "evidence_id": "REAL_WF_0003_EV_020",
-          "support_status": "supported",
-          "explanation": "The caption states this directly."
-        }
-      ],
-      "support_status": "supported",
-      "source_review": "pending",
-      "technical_review": "not_requested",
-      "conflicts_with": [],
-      "supersedes_claim_ids": []
-    },
-    {
-      "claim_id": "REAL_WF_0003_CL_020",
-      "text": "The presenter says the notification tells them the arm is at origin and asks them to raise the pocket up, which they do by pressing the up arrow.",
+      "text": "The presenter says the arm is in a position to reach one of the tools, puts on work gloves, presses the plunger, and gives the tool a firm pull to remove it.",
       "role": "action",
       "evidence_type": "stated",
       "attribution": {
@@ -998,7 +948,7 @@
         {
           "evidence_id": "REAL_WF_0003_EV_021",
           "support_status": "supported",
-          "explanation": "The caption states this notification and the action taken directly."
+          "explanation": "The caption states this sequence directly."
         }
       ],
       "support_status": "supported",
@@ -1008,8 +958,35 @@
       "supersedes_claim_ids": []
     },
     {
-      "claim_id": "REAL_WF_0003_CL_021",
-      "text": "The control screen shows a 'Manual tool changer operation' help page listing control commands (ATC REV, TOOL RELEASE, UP/DOWN arrow, ORIENT SPINDLE, LF/RT arrow), a 'Suggested next action: Raise pocket up' box, and the status 'Arm at ORIGIN'.",
+      "claim_id": "REAL_WF_0003_CL_019",
+      "text": "The presenter then hits TC reverse to rotate the arm as close as possible to reach the second tool, presses the plunger again, and removes that tool too.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Tool changer recovery (automatic and manual) demonstrated in SRC_HAAS_0003. SRC_HAAS_0004's written manual-recovery how-to is cited for the exact button names in step 5, since the video's own narration names controls more loosely; SRC_HAAS_0004's 7-step procedure is word-for-word identical to TG0128's 'MANUAL RECOVERY HOW TO' section (SRC_HAAS_0002), so TG0128 is deliberately not also cited here to avoid presenting the same guide text twice as independent corroboration. The machine model is not stated."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0003_EV_022",
+          "support_status": "supported",
+          "explanation": "The caption states this second removal directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0003_CL_020",
+      "text": "In the video, a gloved hand presses near a small cylindrical fitting at the base of a tool holder mounted in the double arm.",
       "role": "action",
       "evidence_type": "observed",
       "attribution": {
@@ -1023,36 +1000,9 @@
       },
       "evidence_links": [
         {
-          "evidence_id": "REAL_WF_0003_EV_022",
-          "support_status": "supported",
-          "explanation": "The frame is at the exact moment the narration says the notification asks to raise the pocket, with the arm already at origin."
-        }
-      ],
-      "support_status": "supported",
-      "source_review": "pending",
-      "technical_review": "not_requested",
-      "conflicts_with": [],
-      "supersedes_claim_ids": []
-    },
-    {
-      "claim_id": "REAL_WF_0003_CL_022",
-      "text": "The presenter says the screen then tells them no manual recovery action is required, and it is time to press E to exit; tool changer recovery is complete.",
-      "role": "outcome",
-      "evidence_type": "stated",
-      "attribution": {
-        "actor_id": null,
-        "label": "Andrew (presenter)",
-        "kind": "speaker"
-      },
-      "scope": {
-        "level": "case",
-        "description": "Tool changer recovery (automatic and manual) demonstrated in SRC_HAAS_0003. SRC_HAAS_0004's written manual-recovery how-to is cited for the exact button names in step 5, since the video's own narration names controls more loosely; SRC_HAAS_0004's 7-step procedure is word-for-word identical to TG0128's 'MANUAL RECOVERY HOW TO' section (SRC_HAAS_0002), so TG0128 is deliberately not also cited here to avoid presenting the same guide text twice as independent corroboration. The machine model is not stated."
-      },
-      "evidence_links": [
-        {
           "evidence_id": "REAL_WF_0003_EV_023",
           "support_status": "supported",
-          "explanation": "The caption states this final confirmation directly."
+          "explanation": "The frame falls within the window where the narration describes pressing the plunger to remove the first tool."
         }
       ],
       "support_status": "supported",
@@ -1062,9 +1012,9 @@
       "supersedes_claim_ids": []
     },
     {
-      "claim_id": "REAL_WF_0003_CL_023",
-      "text": "The presenter says they like to check which tools were removed by going to the active tool window, pressing MDI; the window shows the two tools that were just in the arm.",
-      "role": "action",
+      "claim_id": "REAL_WF_0003_CL_021",
+      "text": "The presenter says a tool can only be removed by depressing the plunger; otherwise it is really difficult and something is probably going to break.",
+      "role": "condition",
       "evidence_type": "stated",
       "attribution": {
         "actor_id": null,
@@ -1079,7 +1029,7 @@
         {
           "evidence_id": "REAL_WF_0003_EV_024",
           "support_status": "supported",
-          "explanation": "The caption states this verification step directly."
+          "explanation": "The caption states this warning directly, repeated when removing the second tool (U0037-U0038)."
         }
       ],
       "support_status": "supported",
@@ -1089,8 +1039,8 @@
       "supersedes_claim_ids": []
     },
     {
-      "claim_id": "REAL_WF_0003_CL_024",
-      "text": "The presenter says they can now update the tool table.",
+      "claim_id": "REAL_WF_0003_CL_022",
+      "text": "The presenter says they continue rotating the arm until it reaches the origin position.",
       "role": "action",
       "evidence_type": "stated",
       "attribution": {
@@ -1106,7 +1056,7 @@
         {
           "evidence_id": "REAL_WF_0003_EV_025",
           "support_status": "supported",
-          "explanation": "The caption states this final action directly."
+          "explanation": "The caption states this directly."
         }
       ],
       "support_status": "supported",
@@ -1116,9 +1066,9 @@
       "supersedes_claim_ids": []
     },
     {
-      "claim_id": "REAL_WF_0003_CL_025",
-      "text": "The presenter recaps two key things to remember: press the recover button to start the tool changer recovery process, and don't rush through the screens, read the information carefully.",
-      "role": "rationale",
+      "claim_id": "REAL_WF_0003_CL_023",
+      "text": "The presenter says the notification tells them the arm is at origin and asks them to raise the pocket up, which they do by pressing the up arrow.",
+      "role": "action",
       "evidence_type": "stated",
       "attribution": {
         "actor_id": null,
@@ -1133,7 +1083,7 @@
         {
           "evidence_id": "REAL_WF_0003_EV_026",
           "support_status": "supported",
-          "explanation": "The caption states this recap directly."
+          "explanation": "The caption states this notification and the action taken directly."
         }
       ],
       "support_status": "supported",
@@ -1143,14 +1093,14 @@
       "supersedes_claim_ids": []
     },
     {
-      "claim_id": "REAL_WF_0003_CL_026",
-      "text": "The presenter says the recovery process just covered handles most common tool changer faults, but there are times when the recover button will not fix the problem, such as fluctuating air pressure or poor tool maintenance.",
-      "role": "condition",
-      "evidence_type": "stated",
+      "claim_id": "REAL_WF_0003_CL_024",
+      "text": "The control screen shows a 'Manual tool changer operation' help page listing control commands (ATC REV, TOOL RELEASE, UP/DOWN arrow, ORIENT SPINDLE, LF/RT arrow), a 'Suggested next action: Raise pocket up' box, and the status 'Arm at ORIGIN'.",
+      "role": "action",
+      "evidence_type": "observed",
       "attribution": {
         "actor_id": null,
-        "label": "Andrew (presenter)",
-        "kind": "speaker"
+        "label": "D1-A keyframe observation, pending human check",
+        "kind": "model"
       },
       "scope": {
         "level": "case",
@@ -1160,7 +1110,7 @@
         {
           "evidence_id": "REAL_WF_0003_EV_027",
           "support_status": "supported",
-          "explanation": "The caption states this limitation directly."
+          "explanation": "The frame is at the exact moment the narration says the notification asks to raise the pocket, with the arm already at origin."
         }
       ],
       "support_status": "supported",
@@ -1170,36 +1120,9 @@
       "supersedes_claim_ids": []
     },
     {
-      "claim_id": "REAL_WF_0003_CL_027",
-      "text": "The presenter says that in those cases, the viewer should talk to their Haas Factory Outlet so they can help with the specific problem.",
+      "claim_id": "REAL_WF_0003_CL_025",
+      "text": "The presenter says the screen then tells them no manual recovery action is required, and it is time to press E to exit; tool changer recovery is complete.",
       "role": "outcome",
-      "evidence_type": "stated",
-      "attribution": {
-        "actor_id": null,
-        "label": "Andrew (presenter)",
-        "kind": "speaker"
-      },
-      "scope": {
-        "level": "case",
-        "description": "Tool changer recovery (automatic and manual) demonstrated in SRC_HAAS_0003. SRC_HAAS_0004's written manual-recovery how-to is cited for the exact button names in step 5, since the video's own narration names controls more loosely; SRC_HAAS_0004's 7-step procedure is word-for-word identical to TG0128's 'MANUAL RECOVERY HOW TO' section (SRC_HAAS_0002), so TG0128 is deliberately not also cited here to avoid presenting the same guide text twice as independent corroboration. The machine model is not stated."
-      },
-      "evidence_links": [
-        {
-          "evidence_id": "REAL_WF_0003_EV_028",
-          "support_status": "supported",
-          "explanation": "The caption states this escalation path directly."
-        }
-      ],
-      "support_status": "supported",
-      "source_review": "pending",
-      "technical_review": "not_requested",
-      "conflicts_with": [],
-      "supersedes_claim_ids": []
-    },
-    {
-      "claim_id": "REAL_WF_0003_CL_028",
-      "text": "The presenter lists ways to keep the tool changer running well: provide the correct air pressure and air volume to the machine.",
-      "role": "acceptance_criteria",
       "evidence_type": "stated",
       "attribution": {
         "actor_id": null,
@@ -1214,7 +1137,7 @@
         {
           "evidence_id": "REAL_WF_0003_EV_029",
           "support_status": "supported",
-          "explanation": "The caption states this maintenance item directly."
+          "explanation": "The caption states this final confirmation directly; cites the corrected cue (raw caption said 'total change your', corrected per corrections.diff)."
         }
       ],
       "support_status": "supported",
@@ -1224,9 +1147,9 @@
       "supersedes_claim_ids": []
     },
     {
-      "claim_id": "REAL_WF_0003_CL_029",
-      "text": "The presenter says to periodically lubricate the double arm V-grooves, plungers and slider cap, and to use the correct pull studs.",
-      "role": "acceptance_criteria",
+      "claim_id": "REAL_WF_0003_CL_026",
+      "text": "The presenter says they like to check which tools were removed by going to the active tool window, pressing MDI; the window shows the two tools that were just in the arm.",
+      "role": "action",
       "evidence_type": "stated",
       "attribution": {
         "actor_id": null,
@@ -1241,7 +1164,7 @@
         {
           "evidence_id": "REAL_WF_0003_EV_030",
           "support_status": "supported",
-          "explanation": "The caption states this maintenance item directly."
+          "explanation": "The caption states this verification step directly."
         }
       ],
       "support_status": "supported",
@@ -1251,9 +1174,9 @@
       "supersedes_claim_ids": []
     },
     {
-      "claim_id": "REAL_WF_0003_CL_030",
-      "text": "The presenter says to keep pull studs greased and monitor their condition, and not to use tool holders with worn or damaged tapers.",
-      "role": "acceptance_criteria",
+      "claim_id": "REAL_WF_0003_CL_027",
+      "text": "The presenter says they can now update the tool table.",
+      "role": "action",
       "evidence_type": "stated",
       "attribution": {
         "actor_id": null,
@@ -1268,7 +1191,88 @@
         {
           "evidence_id": "REAL_WF_0003_EV_031",
           "support_status": "supported",
-          "explanation": "The caption states this maintenance item directly."
+          "explanation": "The caption states this final action directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0003_CL_028",
+      "text": "The control screen shows an 'ACTIVE TOOL' panel identifying the current tool and pocket, with the presenter pointing at it. The exact tool and pocket numbers shown are not spoken aloud in the narration.",
+      "role": "action",
+      "evidence_type": "observed",
+      "attribution": {
+        "actor_id": null,
+        "label": "D1-A keyframe observation, pending human check",
+        "kind": "model"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Tool changer recovery (automatic and manual) demonstrated in SRC_HAAS_0003. SRC_HAAS_0004's written manual-recovery how-to is cited for the exact button names in step 5, since the video's own narration names controls more loosely; SRC_HAAS_0004's 7-step procedure is word-for-word identical to TG0128's 'MANUAL RECOVERY HOW TO' section (SRC_HAAS_0002), so TG0128 is deliberately not also cited here to avoid presenting the same guide text twice as independent corroboration. The machine model is not stated."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0003_EV_032",
+          "support_status": "supported",
+          "explanation": "The frame is at the moment the narration describes the active tool window telling them the tools that were in the arm."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0003_CL_029",
+      "text": "The presenter recaps two key things to remember: press the recover button to start the tool changer recovery process, and don't rush through the screens, read the information carefully.",
+      "role": "rationale",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Tool changer recovery (automatic and manual) demonstrated in SRC_HAAS_0003. SRC_HAAS_0004's written manual-recovery how-to is cited for the exact button names in step 5, since the video's own narration names controls more loosely; SRC_HAAS_0004's 7-step procedure is word-for-word identical to TG0128's 'MANUAL RECOVERY HOW TO' section (SRC_HAAS_0002), so TG0128 is deliberately not also cited here to avoid presenting the same guide text twice as independent corroboration. The machine model is not stated."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0003_EV_033",
+          "support_status": "supported",
+          "explanation": "The caption states this recap directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0003_CL_030",
+      "text": "The presenter says the recovery process just covered handles most common tool changer faults, but there are times when the recover button will not fix the problem, such as fluctuating air pressure or poor tool maintenance.",
+      "role": "condition",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Tool changer recovery (automatic and manual) demonstrated in SRC_HAAS_0003. SRC_HAAS_0004's written manual-recovery how-to is cited for the exact button names in step 5, since the video's own narration names controls more loosely; SRC_HAAS_0004's 7-step procedure is word-for-word identical to TG0128's 'MANUAL RECOVERY HOW TO' section (SRC_HAAS_0002), so TG0128 is deliberately not also cited here to avoid presenting the same guide text twice as independent corroboration. The machine model is not stated."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0003_EV_034",
+          "support_status": "supported",
+          "explanation": "The caption states this limitation directly."
         }
       ],
       "support_status": "supported",
@@ -1279,6 +1283,114 @@
     },
     {
       "claim_id": "REAL_WF_0003_CL_031",
+      "text": "The presenter says that in those cases, the viewer should talk to their Haas Factory Outlet so they can help with the specific problem.",
+      "role": "outcome",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Tool changer recovery (automatic and manual) demonstrated in SRC_HAAS_0003. SRC_HAAS_0004's written manual-recovery how-to is cited for the exact button names in step 5, since the video's own narration names controls more loosely; SRC_HAAS_0004's 7-step procedure is word-for-word identical to TG0128's 'MANUAL RECOVERY HOW TO' section (SRC_HAAS_0002), so TG0128 is deliberately not also cited here to avoid presenting the same guide text twice as independent corroboration. The machine model is not stated."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0003_EV_035",
+          "support_status": "supported",
+          "explanation": "The caption states this escalation path directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0003_CL_032",
+      "text": "The presenter lists ways to keep the tool changer running well: provide the correct air pressure and air volume to the machine.",
+      "role": "acceptance_criteria",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Tool changer recovery (automatic and manual) demonstrated in SRC_HAAS_0003. SRC_HAAS_0004's written manual-recovery how-to is cited for the exact button names in step 5, since the video's own narration names controls more loosely; SRC_HAAS_0004's 7-step procedure is word-for-word identical to TG0128's 'MANUAL RECOVERY HOW TO' section (SRC_HAAS_0002), so TG0128 is deliberately not also cited here to avoid presenting the same guide text twice as independent corroboration. The machine model is not stated."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0003_EV_036",
+          "support_status": "supported",
+          "explanation": "The caption states this maintenance item directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0003_CL_033",
+      "text": "The presenter says to periodically lubricate the double arm V-grooves, plungers and slider cap, and to use the correct pull studs.",
+      "role": "acceptance_criteria",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Tool changer recovery (automatic and manual) demonstrated in SRC_HAAS_0003. SRC_HAAS_0004's written manual-recovery how-to is cited for the exact button names in step 5, since the video's own narration names controls more loosely; SRC_HAAS_0004's 7-step procedure is word-for-word identical to TG0128's 'MANUAL RECOVERY HOW TO' section (SRC_HAAS_0002), so TG0128 is deliberately not also cited here to avoid presenting the same guide text twice as independent corroboration. The machine model is not stated."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0003_EV_037",
+          "support_status": "supported",
+          "explanation": "The caption states this maintenance item directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0003_CL_034",
+      "text": "The presenter says to keep pull studs greased and monitor their condition, and not to use tool holders with worn or damaged tapers.",
+      "role": "acceptance_criteria",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Tool changer recovery (automatic and manual) demonstrated in SRC_HAAS_0003. SRC_HAAS_0004's written manual-recovery how-to is cited for the exact button names in step 5, since the video's own narration names controls more loosely; SRC_HAAS_0004's 7-step procedure is word-for-word identical to TG0128's 'MANUAL RECOVERY HOW TO' section (SRC_HAAS_0002), so TG0128 is deliberately not also cited here to avoid presenting the same guide text twice as independent corroboration. The machine model is not stated."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0003_EV_038",
+          "support_status": "supported",
+          "explanation": "The caption states this maintenance item directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "pending",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0003_CL_035",
       "text": "The presenter says to keep tool holders and the spindle taper clean.",
       "role": "acceptance_criteria",
       "evidence_type": "stated",
@@ -1293,7 +1405,7 @@
       },
       "evidence_links": [
         {
-          "evidence_id": "REAL_WF_0003_EV_032",
+          "evidence_id": "REAL_WF_0003_EV_039",
           "support_status": "supported",
           "explanation": "The caption states this maintenance item directly."
         }
@@ -1305,7 +1417,7 @@
       "supersedes_claim_ids": []
     },
     {
-      "claim_id": "REAL_WF_0003_CL_032",
+      "claim_id": "REAL_WF_0003_CL_036",
       "text": "If automatic recovery does not succeed, the presenter says the machine kicks into manual recovery mode instead of completing the automatic path.",
       "role": "relation",
       "evidence_type": "stated",
@@ -1320,7 +1432,7 @@
       },
       "evidence_links": [
         {
-          "evidence_id": "REAL_WF_0003_EV_013",
+          "evidence_id": "REAL_WF_0003_EV_016",
           "support_status": "supported",
           "explanation": "This branch reflects the presenter's own framing of automatic recovery (step 3) as the default path, with manual recovery (step 4 onward) reached only when it fails."
         }
@@ -1354,6 +1466,24 @@
       "source_id": "SRC_HAAS_0003",
       "modality": "speech",
       "locator": {
+        "start_ms": 3710,
+        "end_ms": 19790,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "so your tool changer's alarm down and maybe you're thinking how am I going to get my machine running again well here at Haas we call that tool changer recovery I'm Andrew and today we're going to walk you through the basics of recovering your sidemount tool changer now",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "human",
+      "parent_evidence_ids": [
+        "REAL_WF_0003_EV_001"
+      ]
+    },
+    {
+      "evidence_id": "REAL_WF_0003_EV_003",
+      "source_id": "SRC_HAAS_0003",
+      "modality": "speech",
+      "locator": {
         "start_ms": 19790,
         "end_ms": 28430,
         "page": null,
@@ -1366,7 +1496,7 @@
       "parent_evidence_ids": []
     },
     {
-      "evidence_id": "REAL_WF_0003_EV_003",
+      "evidence_id": "REAL_WF_0003_EV_004",
       "source_id": "SRC_HAAS_0003",
       "modality": "speech",
       "locator": {
@@ -1382,7 +1512,7 @@
       "parent_evidence_ids": []
     },
     {
-      "evidence_id": "REAL_WF_0003_EV_004",
+      "evidence_id": "REAL_WF_0003_EV_005",
       "source_id": "SRC_HAAS_0003",
       "modality": "speech",
       "locator": {
@@ -1398,7 +1528,7 @@
       "parent_evidence_ids": []
     },
     {
-      "evidence_id": "REAL_WF_0003_EV_005",
+      "evidence_id": "REAL_WF_0003_EV_006",
       "source_id": "SRC_HAAS_0003",
       "modality": "speech",
       "locator": {
@@ -1414,7 +1544,7 @@
       "parent_evidence_ids": []
     },
     {
-      "evidence_id": "REAL_WF_0003_EV_006",
+      "evidence_id": "REAL_WF_0003_EV_007",
       "source_id": "SRC_HAAS_0003",
       "modality": "visual",
       "locator": {
@@ -1430,7 +1560,7 @@
       "parent_evidence_ids": []
     },
     {
-      "evidence_id": "REAL_WF_0003_EV_007",
+      "evidence_id": "REAL_WF_0003_EV_008",
       "source_id": "SRC_HAAS_0003",
       "modality": "speech",
       "locator": {
@@ -1446,7 +1576,7 @@
       "parent_evidence_ids": []
     },
     {
-      "evidence_id": "REAL_WF_0003_EV_008",
+      "evidence_id": "REAL_WF_0003_EV_009",
       "source_id": "SRC_HAAS_0003",
       "modality": "speech",
       "locator": {
@@ -1462,7 +1592,7 @@
       "parent_evidence_ids": []
     },
     {
-      "evidence_id": "REAL_WF_0003_EV_009",
+      "evidence_id": "REAL_WF_0003_EV_010",
       "source_id": "SRC_HAAS_0003",
       "modality": "speech",
       "locator": {
@@ -1478,7 +1608,7 @@
       "parent_evidence_ids": []
     },
     {
-      "evidence_id": "REAL_WF_0003_EV_010",
+      "evidence_id": "REAL_WF_0003_EV_011",
       "source_id": "SRC_HAAS_0003",
       "modality": "visual",
       "locator": {
@@ -1494,7 +1624,7 @@
       "parent_evidence_ids": []
     },
     {
-      "evidence_id": "REAL_WF_0003_EV_011",
+      "evidence_id": "REAL_WF_0003_EV_012",
       "source_id": "SRC_HAAS_0003",
       "modality": "speech",
       "locator": {
@@ -1510,7 +1640,41 @@
       "parent_evidence_ids": []
     },
     {
-      "evidence_id": "REAL_WF_0003_EV_012",
+      "evidence_id": "REAL_WF_0003_EV_013",
+      "source_id": "SRC_HAAS_0003",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 120710,
+        "end_ms": 129110,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "the double arm returns the tools to where they came from and tool changer of recovery is complete i press e to exit that was pretty easy",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "human",
+      "parent_evidence_ids": [
+        "REAL_WF_0003_EV_012"
+      ]
+    },
+    {
+      "evidence_id": "REAL_WF_0003_EV_014",
+      "source_id": "SRC_HAAS_0003",
+      "modality": "visual",
+      "locator": {
+        "start_ms": 123000,
+        "end_ms": 124000,
+        "page": null,
+        "text_span": null
+      },
+      "quote": null,
+      "observation_note": "Same control screen as kf_0116500.jpg, now showing 'Carousel status ok' and 'Double arm status ok' under 'Tool Changer Status Summary:', with the text 'Tool changer recovery completed. Press \"E\" to exit.' below.",
+      "asset_uri": "acquisition/preprocessing/keyframes/SRC_HAAS_0003/kf_0123000.jpg",
+      "transcript_origin": "none",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0003_EV_015",
       "source_id": "SRC_HAAS_0003",
       "modality": "speech",
       "locator": {
@@ -1526,7 +1690,7 @@
       "parent_evidence_ids": []
     },
     {
-      "evidence_id": "REAL_WF_0003_EV_013",
+      "evidence_id": "REAL_WF_0003_EV_016",
       "source_id": "SRC_HAAS_0003",
       "modality": "speech",
       "locator": {
@@ -1542,7 +1706,7 @@
       "parent_evidence_ids": []
     },
     {
-      "evidence_id": "REAL_WF_0003_EV_014",
+      "evidence_id": "REAL_WF_0003_EV_017",
       "source_id": "SRC_HAAS_0003",
       "modality": "speech",
       "locator": {
@@ -1558,7 +1722,7 @@
       "parent_evidence_ids": []
     },
     {
-      "evidence_id": "REAL_WF_0003_EV_015",
+      "evidence_id": "REAL_WF_0003_EV_018",
       "source_id": "SRC_HAAS_0003",
       "modality": "speech",
       "locator": {
@@ -1574,7 +1738,23 @@
       "parent_evidence_ids": []
     },
     {
-      "evidence_id": "REAL_WF_0003_EV_016",
+      "evidence_id": "REAL_WF_0003_EV_019",
+      "source_id": "SRC_HAAS_0003",
+      "modality": "visual",
+      "locator": {
+        "start_ms": 157000,
+        "end_ms": 158000,
+        "page": null,
+        "text_span": null
+      },
+      "quote": null,
+      "observation_note": "Screen titled 'TOOL CHANGER RECOVERY' showing 'Carousel: POCKET 23', 'Spindle: TOOL 2', 'Carousel pocket: OFF POSITION' and 'Double arm: OFF POSITION', with a 'Manual tool changer operation' help text below listing ATC REV/TOOL RELEASE/UP-DOWN/ORIENT SPINDLE/LF-RT ARROW commands.",
+      "asset_uri": "acquisition/preprocessing/keyframes/SRC_HAAS_0003/kf_0157000.jpg",
+      "transcript_origin": "none",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0003_EV_020",
       "source_id": "SRC_HAAS_0004",
       "modality": "text",
       "locator": {
@@ -1590,7 +1770,7 @@
       "parent_evidence_ids": []
     },
     {
-      "evidence_id": "REAL_WF_0003_EV_017",
+      "evidence_id": "REAL_WF_0003_EV_021",
       "source_id": "SRC_HAAS_0003",
       "modality": "speech",
       "locator": {
@@ -1606,7 +1786,7 @@
       "parent_evidence_ids": []
     },
     {
-      "evidence_id": "REAL_WF_0003_EV_018",
+      "evidence_id": "REAL_WF_0003_EV_022",
       "source_id": "SRC_HAAS_0003",
       "modality": "speech",
       "locator": {
@@ -1622,7 +1802,23 @@
       "parent_evidence_ids": []
     },
     {
-      "evidence_id": "REAL_WF_0003_EV_019",
+      "evidence_id": "REAL_WF_0003_EV_023",
+      "source_id": "SRC_HAAS_0003",
+      "modality": "visual",
+      "locator": {
+        "start_ms": 190000,
+        "end_ms": 191000,
+        "page": null,
+        "text_span": null
+      },
+      "quote": null,
+      "observation_note": "Close-up, desaturated lighting: a gloved hand presses near a small cylindrical fitting at the base of a conical tool holder mounted in a dark double-arm bracket.",
+      "asset_uri": "acquisition/preprocessing/keyframes/SRC_HAAS_0003/kf_0190000.jpg",
+      "transcript_origin": "none",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0003_EV_024",
       "source_id": "SRC_HAAS_0003",
       "modality": "speech",
       "locator": {
@@ -1638,7 +1834,7 @@
       "parent_evidence_ids": []
     },
     {
-      "evidence_id": "REAL_WF_0003_EV_020",
+      "evidence_id": "REAL_WF_0003_EV_025",
       "source_id": "SRC_HAAS_0003",
       "modality": "speech",
       "locator": {
@@ -1654,7 +1850,7 @@
       "parent_evidence_ids": []
     },
     {
-      "evidence_id": "REAL_WF_0003_EV_021",
+      "evidence_id": "REAL_WF_0003_EV_026",
       "source_id": "SRC_HAAS_0003",
       "modality": "speech",
       "locator": {
@@ -1670,7 +1866,7 @@
       "parent_evidence_ids": []
     },
     {
-      "evidence_id": "REAL_WF_0003_EV_022",
+      "evidence_id": "REAL_WF_0003_EV_027",
       "source_id": "SRC_HAAS_0003",
       "modality": "visual",
       "locator": {
@@ -1686,7 +1882,7 @@
       "parent_evidence_ids": []
     },
     {
-      "evidence_id": "REAL_WF_0003_EV_023",
+      "evidence_id": "REAL_WF_0003_EV_028",
       "source_id": "SRC_HAAS_0003",
       "modality": "speech",
       "locator": {
@@ -1702,7 +1898,25 @@
       "parent_evidence_ids": []
     },
     {
-      "evidence_id": "REAL_WF_0003_EV_024",
+      "evidence_id": "REAL_WF_0003_EV_029",
+      "source_id": "SRC_HAAS_0003",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 236750,
+        "end_ms": 250310,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "raise the pocket up I do that by pushing the up arrow there it goes now it's telling me no mana recovery action is required and it's time for me to press e to exit tool changer recovery is",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "human",
+      "parent_evidence_ids": [
+        "REAL_WF_0003_EV_028"
+      ]
+    },
+    {
+      "evidence_id": "REAL_WF_0003_EV_030",
       "source_id": "SRC_HAAS_0003",
       "modality": "speech",
       "locator": {
@@ -1718,7 +1932,7 @@
       "parent_evidence_ids": []
     },
     {
-      "evidence_id": "REAL_WF_0003_EV_025",
+      "evidence_id": "REAL_WF_0003_EV_031",
       "source_id": "SRC_HAAS_0003",
       "modality": "speech",
       "locator": {
@@ -1734,7 +1948,23 @@
       "parent_evidence_ids": []
     },
     {
-      "evidence_id": "REAL_WF_0003_EV_026",
+      "evidence_id": "REAL_WF_0003_EV_032",
+      "source_id": "SRC_HAAS_0003",
+      "modality": "visual",
+      "locator": {
+        "start_ms": 258000,
+        "end_ms": 259000,
+        "page": null,
+        "text_span": null
+      },
+      "quote": null,
+      "observation_note": "Control screen showing 'MAIN SPINDLE', 'POSITION: MACHINE' and 'ACTIVE TOOL' panels side by side; the 'ACTIVE TOOL' box reads 'T2 - P23 T4' with an end-mill icon below it; the presenter's finger points directly at this box.",
+      "asset_uri": "acquisition/preprocessing/keyframes/SRC_HAAS_0003/kf_0258000.jpg",
+      "transcript_origin": "none",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0003_EV_033",
       "source_id": "SRC_HAAS_0003",
       "modality": "speech",
       "locator": {
@@ -1750,7 +1980,7 @@
       "parent_evidence_ids": []
     },
     {
-      "evidence_id": "REAL_WF_0003_EV_027",
+      "evidence_id": "REAL_WF_0003_EV_034",
       "source_id": "SRC_HAAS_0003",
       "modality": "speech",
       "locator": {
@@ -1766,7 +1996,7 @@
       "parent_evidence_ids": []
     },
     {
-      "evidence_id": "REAL_WF_0003_EV_028",
+      "evidence_id": "REAL_WF_0003_EV_035",
       "source_id": "SRC_HAAS_0003",
       "modality": "speech",
       "locator": {
@@ -1782,7 +2012,7 @@
       "parent_evidence_ids": []
     },
     {
-      "evidence_id": "REAL_WF_0003_EV_029",
+      "evidence_id": "REAL_WF_0003_EV_036",
       "source_id": "SRC_HAAS_0003",
       "modality": "speech",
       "locator": {
@@ -1798,7 +2028,7 @@
       "parent_evidence_ids": []
     },
     {
-      "evidence_id": "REAL_WF_0003_EV_030",
+      "evidence_id": "REAL_WF_0003_EV_037",
       "source_id": "SRC_HAAS_0003",
       "modality": "speech",
       "locator": {
@@ -1814,7 +2044,7 @@
       "parent_evidence_ids": []
     },
     {
-      "evidence_id": "REAL_WF_0003_EV_031",
+      "evidence_id": "REAL_WF_0003_EV_038",
       "source_id": "SRC_HAAS_0003",
       "modality": "speech",
       "locator": {
@@ -1830,7 +2060,7 @@
       "parent_evidence_ids": []
     },
     {
-      "evidence_id": "REAL_WF_0003_EV_032",
+      "evidence_id": "REAL_WF_0003_EV_039",
       "source_id": "SRC_HAAS_0003",
       "modality": "speech",
       "locator": {
@@ -1853,10 +2083,10 @@
       "to_step_id": "REAL_WF_0003_ST_004",
       "relation_type": "branch_if",
       "claim_ids": [
-        "REAL_WF_0003_CL_032"
+        "REAL_WF_0003_CL_036"
       ],
       "condition_claim_ids": [
-        "REAL_WF_0003_CL_012"
+        "REAL_WF_0003_CL_013"
       ]
     }
   ],

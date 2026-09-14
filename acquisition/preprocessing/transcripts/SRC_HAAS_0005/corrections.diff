@@ -1,1 +1,28 @@
-# no corrections applied: official caption text used as-is
+# Corrections applied 2026-09-14, second QC pass (WP2 re-review)
+# Auditable per D1-A prompt section 10 rule 11 (terminology only, cited against
+# a primary source; sentence structure and surrounding words unchanged).
+
+utterance start_ms=173940 end_ms=182490
+
+- tighten it so now we will install the shoulder boat lower the pocket...
++ tighten it so now we will install the shoulder bolt lower the pocket...
+
+Basis: self-consistency. "Shoulder bolt" is the correct part name and is used
+twice correctly earlier in this same transcript ("shoulder bolt on the
+backside of the carousel", start_ms=120630; "the shoulder bolts remove will
+then remove the retaining bolt", start_ms=127770). "Shoulder boat" is not a
+tool-changer part and does not appear in either retained source.
+
+utterance start_ms=233460 end_ms=244800 (spans two cues)
+
+- ...let's release the e-stop and run the tool changer run the tool changer
+  through several two changes to ensure everything is working correctly...
++ ...let's release the e-stop and run the tool changer run the tool changer
+  through several tool changes to ensure everything is working correctly...
+
+Basis: same "tool changer" mis-hearing pattern documented in
+acquisition/preprocessing/transcripts/SRC_HAAS_0001/corrections.diff and
+SRC_HAAS_0003/corrections.diff. "Run the tool changer through several ___
+changes" only parses with "tool" as the missing word; "two" does not fit the
+sentence (no other count is stated) and "tool" is used correctly earlier in
+this same sentence and throughout the transcript.

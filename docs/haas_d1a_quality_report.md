@@ -89,3 +89,71 @@ QC here is limited to confirming that constraint was actually honored:
 | 1 numeric caption artifact identified and corrected with an auditable diff, citing TG0128 | Resolved |
 | No holdout content processed beyond eligibility | PASS |
 | No metadata inferred from search-result titles alone | PASS |
+
+## Second QC pass (2026-09-14, WP2 re-review)
+
+Full line-by-line re-read of all 3 dev transcripts (not spot-checking), plus a review of
+keyframe coverage relative to each video's actual step count. Basis for method: the same
+1080p local files D1A originally downloaded (`data/media/haas_d1a/*.mp4`, gitignored,
+sha256-confirmed unchanged); `ffmpeg`/`ffprobe` 9.0, matching the version already recorded
+in the inventory.
+
+### Additional caption corrections
+
+Reading past the original spot-checks surfaced more of the same failure mode already
+identified once (the "20,000 meter gap" artifact): the caption model mis-hears domain
+terminology, most often "tool changer" itself, and once the publisher's own name. All of
+the following are recorded with full before/after text and citation in each video's
+`corrections.diff`; none change any timestamp or cue count.
+
+| Video | Cues | Fix | Basis |
+|---|---|---|---|
+| SRC_HAAS_0001 | 4 cues | "sidemount to change a double arm" / "two changes" / "for to change or" → "tool changer(s)" | Source's own title; self-consistent with correct usage elsewhere in the same transcript |
+| SRC_HAAS_0001 | 1 cue | "shin washers" → "shim washers" | TG0128 (SRC_HAAS_0002) T0038/T0111 both name this part "shim washers" |
+| SRC_HAAS_0003 | 2 cues | "Hoss" → "Haas" | Publisher of record ("Haas Automation, Inc.") |
+| SRC_HAAS_0003 | 3 cues | "tool changes"/"told change"/"total change your" → "tool changer" | Same self-consistency basis; matches the video's own title |
+| SRC_HAAS_0005 | 1 cue | "shoulder boat" → "shoulder bolt" | Self-consistent: "shoulder bolt" used correctly twice earlier in the same transcript |
+| SRC_HAAS_0005 | 1 cue | "several two changes" → "several tool changes" | Same self-consistency basis |
+
+**Flagged, not corrected**: SRC_HAAS_0001's "unusual puffin or banging sound" (00:00:28).
+"Puffin" is clearly wrong, but neither TG0128 nor any other retained source states whether
+"popping" or "puffing" was meant — left as-is in both `raw.json` and `corrected.json`,
+same discipline as the original gap-spec artifact before its citation was found.
+
+**Defect found and fixed in already-authored, not-yet-reviewed work**: 5 claims across
+`REAL_WF_0002`/`REAL_WF_0003` (branch `team1/pilot-workflows-0001-0003`, PR #10) had
+already paraphrased past exactly these caption errors — asserting "Haas"/"shim
+washers"/"tool changer" in claim text while citing the *raw*, uncorrected candidate. Fixed
+by switching each claim's evidence to the newly-added corrected (`C####`) candidate,
+following the same pattern the existing gap-spec claim already used. One further claim
+("popping") was reworded rather than corrected, since — as above — no source confirms
+which word was actually meant.
+
+### Additional keyframes (11 new, 9 → 20 total)
+
+The original bar was "≥3 keyframes, visually verified" — a pass threshold, not
+scene-change coverage. Re-checking coverage against each video's actual step count found
+real gaps, most severe in SRC_HAAS_0005 (a repair video where only 1 of ~17 physical
+sub-actions had a visual anchor) and SRC_HAAS_0003 (the physical tool-removal step and the
+final verification screen were both unillustrated). All new frames: extracted natively at
+1080p from the same local files as the original 9, sha256'd, and opened/visually inspected
+this session (method identical to the original 9's "opened and visually verified").
+
+| Video | New keyframe(s) | What each shows |
+|---|---|---|
+| SRC_HAAS_0001 | `kf_0115000.jpg` | Wider-angle B-roll cutaway of the double-arm bracket (drilled pockets, spring, forked finger) — anchors the locking-mechanism narration |
+| SRC_HAAS_0001 | `kf_0170000.jpg` | Presenter holding a red straightedge against the double arm, sighting along it — anchors the straightness-check narration |
+| SRC_HAAS_0003 | `kf_0123000.jpg` | Control screen reading "Tool changer recovery completed. Press 'E' to exit." with both status fields OK |
+| SRC_HAAS_0003 | `kf_0157000.jpg` | "TOOL CHANGER RECOVERY" screen at its initial "OFF POSITION" state, just after entering manual recovery |
+| SRC_HAAS_0003 | `kf_0190000.jpg` | Gloved hand pressing near the base of a tool holder mounted in the double arm |
+| SRC_HAAS_0003 | `kf_0258000.jpg` | "ACTIVE TOOL" panel on the control screen, presenter pointing at it |
+| SRC_HAAS_0005 | `kf_0028000.jpg` | Close-up of a hand pressing the EMERGENCY STOP button |
+| SRC_HAAS_0005 | `kf_0065000.jpg` | Gloved hand removing a tool holder from the carousel |
+| SRC_HAAS_0005 | `kf_0076000.jpg` | Hand marking a disc with a marker pen (reinstallation reference mark) |
+| SRC_HAAS_0005 | `kf_0158000.jpg` | Two gloved hands applying grease to a cylindrical part |
+| SRC_HAAS_0005 | `kf_0222000.jpg` | Presenter using a pneumatic tool near the numbered carousel, reinstalling |
+
+`REAL_WF_0002`/`REAL_WF_0003` (not yet reviewed) gained one `observed` claim per frame that
+fell inside an existing step (all 6). The 5 SRC_HAAS_0005 frames stay unwired media:
+`REAL_WF_0001` is already reviewed and exported by D1-B, so incorporating them means a
+revision 2 — flagged in `docs/haas_d1a_to_d1b_handoff.md` for D1-B/D1-C.

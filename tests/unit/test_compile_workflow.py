@@ -64,9 +64,13 @@ def test_snapshot_passes_the_contract_validator_without_warnings(snapshot):
 
 
 def test_every_speech_quote_is_verbatim_caption_text(snapshot, pool):
+    # REAL_WF_0001 cites only raw (kind="U") SRC_HAAS_0005 cues; a corrected cue at
+    # the same start_ms (a correction never moves timestamps) would collide in this
+    # start_ms-keyed lookup otherwise, since corrections were added after this
+    # workflow was authored.
     by_window = {}
     for c in pool.values():
-        if c.source_id == "SRC_HAAS_0005":
+        if c.source_id == "SRC_HAAS_0005" and c.kind == "U":
             by_window[c.start_ms] = c
     for ev in snapshot["evidence"]:
         if ev["modality"] != "speech":

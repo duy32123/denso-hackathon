@@ -43,7 +43,7 @@
         ],
         "observation": [
           {
-            "text": "The presenter says the first sign of trouble is either visual, such as rough tool change, or audible, such as an unusual popping or banging sound when the arm is loading or unloading a tool.",
+            "text": "The presenter says the first sign of trouble is either visual, such as rough tool change, or audible, such as an unusual sound or banging sound when the arm is loading or unloading a tool.",
             "evidence": [["SRC_HAAS_0001:U0004", "SRC_HAAS_0001:U0005"]],
             "explanation": "The caption states both warning-sign categories directly."
           }
@@ -136,6 +136,22 @@
             "text": "The presenter says the first place to look, if tools are dropping, is the tool changer locking mechanism (the finger).",
             "evidence": [["SRC_HAAS_0001:U0015", "SRC_HAAS_0001:U0016"]],
             "explanation": "The caption identifies the finger as the first check."
+          },
+          {
+            "text": "In the video, a hand holds a black bracket assembly with several drilled pockets and a spring visible along a track; a forked, V-shaped finger is at one end.",
+            "evidence_type": "observed",
+            "attribution": {"label": "D1-A keyframe observation, pending human check", "kind": "model"},
+            "evidence": [
+              {
+                "keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0001/kf_0115000.jpg",
+                "source_id": "SRC_HAAS_0001",
+                "start_ms": 115000,
+                "end_ms": 116000,
+                "observation_note": "Wider-angle close-up of the same style of forked black bracket assembly as kf_0041220.jpg (a different shot in this video's B-roll of the double-arm assembly): visible are 3-4 drilled pockets, a coiled spring along a track, and the forked V-shaped finger at the near end, held in one hand.",
+                "explanation": "The frame falls within the window where the narration names the locking-mechanism finger."
+              }
+            ],
+            "explanation": "The narration at this moment describes checking the tool changer locking mechanism (the finger)."
           }
         ],
         "acceptance_criteria": [
@@ -228,8 +244,8 @@
         "action": [
           {
             "text": "The presenter says the clearance can be adjusted by changing the shim washers between the slide and the actuated arm.",
-            "evidence": [["SRC_HAAS_0001:U0022"]],
-            "explanation": "The caption states this adjustment method directly."
+            "evidence": [["SRC_HAAS_0001:C0022"]],
+            "explanation": "The caption states this adjustment method directly; cites the corrected cue (raw caption said 'shin washers', corrected per corrections.diff citing TG0128's own part name)."
           },
           {
             "text": "TG0128 says to add or remove 0.01 in (0.25 mm) shim washers, part number 45-0075, until the space is correct, then reassemble the slider assembly with the spring and washer installed and apply Lithium Tacky Grease to the finger, spring and washer.",
@@ -251,6 +267,22 @@
             "text": "The presenter says to also check the straightness of the arm, done simply with a straightedge.",
             "evidence": [["SRC_HAAS_0001:U0023"]],
             "explanation": "The caption states this final check directly."
+          },
+          {
+            "text": "In the video, the presenter holds a red straightedge against the double arm inside the open machine, sighting along it.",
+            "evidence_type": "observed",
+            "attribution": {"label": "D1-A keyframe observation, pending human check", "kind": "model"},
+            "evidence": [
+              {
+                "keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0001/kf_0170000.jpg",
+                "source_id": "SRC_HAAS_0001",
+                "start_ms": 170000,
+                "end_ms": 171000,
+                "observation_note": "Presenter (name tag reads 'Orville') leans into the open machine, holding a flat red straightedge against a metal bar (the double arm) that carries a tool holder at each end; the presenter is looking closely along the straightedge.",
+                "explanation": "The frame is at the exact moment the narration describes the straightedge check."
+              }
+            ],
+            "explanation": "The frame shows the straightedge check the narration is describing at this moment."
           }
         ],
         "rationale": [

@@ -1,0 +1,220 @@
+"""WP2 retrieval API: candidates/evidence for D2-B, not a generated answer."""
+
+from __future__ import annotations
+
+import time
+from dataclasses import asdict, dataclass
+from pathlib import Path
+
+from knowflow_contracts.eligibility import claim_blockers
+from knowflow_contracts.enums import QueryMode
+from knowflow_contracts.models import QueryRequest
+from knowflow_contracts.retrieval_policy import ClaimHit, dedup_claim_hits
+from retrieval.indexing.embeddings import Embedder, GeminiEmbedder, unit_vector
+from retrieval.indexing.search_index import RetrievalError, read_corpus, require_index
+from .context import context_gate, resolve_context
+from .ranking import fold, rank
+
+
+@dataclass(frozen=True)
+class RetrievalConfig:
+    strategy: str = "hybrid"
+    top_k: int = 5
+    candidate_k: int = 20
+    rrf_k: int = 60
+    min_cosine: float = .25
+    intent: str = "auto"
+
+    def __post_init__(self):
+        if self.strategy not in ("lexical", "vector", "hybrid"):
+            raise ValueError("strategy must be lexical, vector or hybrid")
+        if not 1 <= self.top_k <= self.candidate_k <= 100 or self.rrf_k < 1:
+            raise ValueError("Require 1 <= top_k <= candidate_k <= 100 and rrf_k >= 1")
+        if not 0 <= self.min_cosine <= 1 or self.intent not in ("auto", "detail", "procedure"):
+            raise ValueError("Invalid min_cosine or intent")
+
+
+def retrieve(db: str | Path, request: QueryRequest, *, config: RetrievalConfig | None = None,
+             embedder: Embedder | None = None) -> dict:
+    start = time.perf_counter()
+    config = config or RetrievalConfig()
+    if not request.question.strip():
+        raise ValueError("Question must not be blank")
+    corpus = read_corpus(db, str(request.mode), str(request.dataset_split))
+    manifest, docs = require_index(corpus)
+    context, contradictions, detected = resolve_context(
+        request.question, request.context, list(corpus["workflows"].values()),
+    )
+    intent = config.intent
+    if intent == "auto":
+        intent = "procedure" if any(p in fold(request.question) for p in
+                                     ("quy trinh", "cac buoc", "all steps", "procedure", "step by step")) else "detail"
+    result = {
+        "status": "insufficient_evidence", "index_build_id": manifest["index_build_id"],
+        "record_build_id": manifest["record_build_id"], "source_type": str(request.mode),
+        "dataset_split": str(request.dataset_split), "context": context.model_dump(mode="json"),
+        "missing_context": [], "selected_workflow": None, "workflow_candidates": [],
+        "steps": [], "claims": [], "conflicts": [], "blocked_claims": [], "questions": [],
+        "relations": [], "evidence_openability_checked": False,
+        "trace": {"config": asdict(config), "intent": intent, "detected_context": detected,
+                  "filters": [], "workflow_ranking": [], "step_ranking": [],
+                  "embedding_calls": 0, "cache": "disabled"},
+    }
+
+    def finish(status=None):
+        if status:
+            result["status"] = status
+        result["trace"]["latency_ms"] = round((time.perf_counter() - start) * 1000, 2)
+        return result
+
+    if contradictions:
+        result["missing_context"] = contradictions
+        result["trace"]["context_error"] = "question and supplied context disagree, or multiple identities were named"
+        return finish("needs_clarification")
+    allowed, unknown = set(), set()
+    for wf in corpus["workflows"].values():
+        mismatches, missing = context_gate(wf, context)
+        result["trace"]["filters"].append({
+            "workflow_id": wf.workflow_id, "revision": wf.revision,
+            "mismatches": mismatches, "unknown_context": missing,
+        })
+        if not mismatches and not missing:
+            allowed.add(wf.workflow_id)
+        elif not mismatches:
+            unknown.update(missing)
+    if not allowed:
+        result["missing_context"] = sorted(unknown)
+        return finish("needs_clarification" if unknown else "insufficient_evidence")
+    # All ranking statistics, cosine scoring, fusion and conflict lookups share this set.
+    docs = [d for d in docs if d["record"]["workflow_id"] in allowed
+            and d["record"]["source_type"] == request.mode
+            and d["record"]["dataset_split"] == request.dataset_split
+            and d["record"]["revision"] == corpus["workflows"][d["record"]["workflow_id"]].revision
+            and d["record"]["lifecycle"] == "active"]
+    result["trace"]["eligible_documents"] = len(docs)
+    if not docs:
+        return finish()
+    query_text = request.question
+    # Soft symptoms/components are search hints; they never relax hard identity gates.
+    hints = context.symptoms + context.components
+    if hints:
+        query_text += "\n" + "; ".join(hints)
+    query_vector = None
+    if config.strategy != "lexical":
+        expected = manifest["embedding"]
+        if expected is None:
+            raise RetrievalError("Index has no vectors; rebuild with --embedding gemini or use --strategy lexical")
+        owned = embedder is None
+        if owned:
+            if expected["provider"] != "gemini":
+                raise RetrievalError("No configured query adapter for the indexed embedding provider")
+            embedder = GeminiEmbedder(expected["dimensions"])
+        try:
+            if embedder.config != expected:
+                raise RetrievalError("Query/index embedding configuration mismatch; rebuild or use matching adapter")
+            before = getattr(embedder, "calls", 0)
+            query_vector = unit_vector(embedder.query(query_text), expected["dimensions"])
+            result["trace"]["embedding_calls"] = getattr(embedder, "calls", before + 1) - before
+        finally:
+            if owned:
+                embedder.close()
+
+    def ranked(items):
+        return rank(query_text, items, query_vector, strategy=config.strategy,
+                    candidate_k=config.candidate_k, min_cosine=config.min_cosine, rrf_k=config.rrf_k)
+
+    def rank_trace(items):
+        return [{"document_id": h["doc"]["id"], "purpose": h["doc"]["purpose"],
+                 "score": h["score"], "lexical_score": h["lexical_score"], "vector_score": h["vector_score"]}
+                for h in items]
+
+    workflows = ranked([d for d in docs if d["record"]["record_type"] == "workflow"])
+    result["trace"]["workflow_ranking"] = rank_trace(workflows)
+    seen = set()
+    for hit in workflows:
+        record = hit["doc"]["record"]
+        if record["workflow_id"] not in seen:
+            seen.add(record["workflow_id"])
+            result["workflow_candidates"].append({
+                "workflow_id": record["workflow_id"], "revision": record["revision"],
+                "title": record["title"], "score": hit["score"],
+            })
+    if not result["workflow_candidates"]:
+        return finish()
+    selected = result["workflow_candidates"][0]
+    result["selected_workflow"] = selected
+    wf = corpus["workflows"][selected["workflow_id"]]
+    within_workflow = [d for d in docs if d["record"]["record_type"] == "step"
+                       and d["record"]["workflow_id"] == wf.workflow_id]
+    step_hits = ranked([d for d in within_workflow if d["purpose"] == "answer"])
+    result["trace"]["step_ranking"] = rank_trace(step_hits)
+    if intent == "procedure":
+        scores = {h["doc"]["id"]: h for h in step_hits}
+        # Entire selected workflow only, with gaps/relation semantics still explicit.
+        step_hits = [scores.get(d["id"], {"doc": d, "score": selected["score"],
+                                         "lexical_score": None, "vector_score": None})
+                     for d in sorted(within_workflow, key=lambda d: d["record"]["display_order"])
+                     if d["purpose"] == "answer"]
+    else:
+        step_hits = step_hits[:config.top_k]
+    claim_hits = []
+    for hit in step_hits:
+        record = hit["doc"]["record"]
+        step = next(s for s in wf.steps if s.step_id == record["step_id"])
+        result["steps"].append({
+            "workflow_id": wf.workflow_id, "revision": wf.revision,
+            "step_id": step.step_id, "display_order": step.display_order, "title": step.title,
+            "fields": step.fields.model_dump(mode="json"), "claim_ids": record["claim_ids"],
+            "score": hit["score"], "lexical_score": hit["lexical_score"], "vector_score": hit["vector_score"],
+        })
+        claim_hits.extend(ClaimHit(wf.workflow_id, wf.revision, cid, step.step_id, hit["score"])
+                          for cid in record["claim_ids"])
+
+    def package(workflow, cid, matched_steps, score, purpose):
+        claim = next(c for c in workflow.claims if c.claim_id == cid)
+        evidence = {e.evidence_id: e for e in workflow.evidence}
+        items = []
+        for link in claim.evidence_links:
+            ev = evidence[link.evidence_id]
+            src = corpus["sources"][ev.source_id]
+            items.append({"evidence": ev.model_dump(mode="json"), "link": link.model_dump(mode="json"),
+                          "source": src.model_dump(mode="json"), "access_status": "not_checked"})
+        return {"claim_ref": {"workflow_id": workflow.workflow_id, "revision": workflow.revision,
+                              "entity_type": "claim", "entity_id": cid},
+                "claim": claim.model_dump(mode="json"), "matched_step_ids": matched_steps,
+                "score": score, "purpose": purpose, "evidence": items}
+
+    for hit in dedup_claim_hits(claim_hits):
+        claim = next(c for c in wf.claims if c.claim_id == hit.claim_id)
+        reasons = claim_blockers(claim, wf, mode=QueryMode(request.mode), is_latest_indexed_revision=True)
+        if not reasons:
+            result["claims"].append(package(wf, hit.claim_id, hit.matched_step_ids, hit.score, "answer_candidate"))
+    # Separate lookup across the SAME filtered corpus, so conflicts cannot disappear
+    # merely because they were excluded from assertable search text.
+    conflict_hits = ranked([d for d in docs if d["record"]["record_type"] == "step" and d["purpose"] == "conflict"])
+    result["trace"]["conflict_ranking"] = rank_trace(conflict_hits)
+    conflict_keys = set()
+    for hit in conflict_hits[:config.top_k]:
+        record = hit["doc"]["record"]
+        other = corpus["workflows"][record["workflow_id"]]
+        claims = {c.claim_id: c for c in other.claims}
+        ids = set(record["claim_ids"])
+        ids.update(cid for selected_id in list(ids) for cid in claims[selected_id].conflicts_with)
+        for cid in sorted(ids):
+            key = (other.workflow_id, other.revision, cid)
+            if key not in conflict_keys:
+                conflict_keys.add(key)
+                result["conflicts"].append(package(other, cid, [record["step_id"]], hit["score"], "warning_only"))
+    for claim in wf.claims:
+        blockers = claim_blockers(claim, wf, mode=QueryMode(request.mode), is_latest_indexed_revision=True)
+        if blockers:
+            result["blocked_claims"].append({"workflow_id": wf.workflow_id, "revision": wf.revision,
+                                             "claim_id": claim.claim_id, "reasons": blockers})
+    step_ids = {s["step_id"] for s in result["steps"]}
+    result["questions"] = [q.model_dump(mode="json") for q in wf.questions if q.step_id in step_ids]
+    result["relations"] = [r.model_dump(mode="json") for r in wf.relations
+                           if r.from_step_id in step_ids or r.to_step_id in step_ids]
+    if intent == "procedure":
+        result["trace"]["omitted_step_ids"] = [s.step_id for s in wf.steps if s.step_id not in step_ids]
+    return finish("conflicting_sources" if result["conflicts"] else
+                  "retrieved" if result["claims"] else "insufficient_evidence")

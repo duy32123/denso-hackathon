@@ -1549,7 +1549,7 @@
       "modality": "visual",
       "locator": {
         "start_ms": 65500,
-        "end_ms": 66500,
+        "end_ms": 65501,
         "page": null,
         "text_span": null
       },
@@ -1613,7 +1613,7 @@
       "modality": "visual",
       "locator": {
         "start_ms": 116500,
-        "end_ms": 117500,
+        "end_ms": 116501,
         "page": null,
         "text_span": null
       },
@@ -1663,7 +1663,7 @@
       "modality": "visual",
       "locator": {
         "start_ms": 123000,
-        "end_ms": 124000,
+        "end_ms": 123001,
         "page": null,
         "text_span": null
       },
@@ -1743,7 +1743,7 @@
       "modality": "visual",
       "locator": {
         "start_ms": 157000,
-        "end_ms": 158000,
+        "end_ms": 157001,
         "page": null,
         "text_span": null
       },
@@ -1807,7 +1807,7 @@
       "modality": "visual",
       "locator": {
         "start_ms": 190000,
-        "end_ms": 191000,
+        "end_ms": 190001,
         "page": null,
         "text_span": null
       },
@@ -1871,7 +1871,7 @@
       "modality": "visual",
       "locator": {
         "start_ms": 242900,
-        "end_ms": 243900,
+        "end_ms": 242901,
         "page": null,
         "text_span": null
       },
@@ -1953,7 +1953,7 @@
       "modality": "visual",
       "locator": {
         "start_ms": 258000,
-        "end_ms": 259000,
+        "end_ms": 258001,
         "page": null,
         "text_span": null
       },

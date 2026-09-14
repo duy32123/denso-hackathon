@@ -1,0 +1,629 @@
+{
+  "workflow_id": "REAL_WF_0001",
+  "revision": 2,
+  "authored_by": "claude-code-d1b-draft",
+  "dataset_split": "dev",
+  "title": "Replace a damaged pocket on a Haas side-mount tool changer (SMTC)",
+  "language": "en",
+  "created_at": "2026-09-14T00:00:00Z",
+  "source_ids": [
+    "SRC_HAAS_0005"
+  ],
+  "attribution": {
+    "label": "Orville (presenter)",
+    "kind": "speaker"
+  },
+  "scope": "Pocket replacement demonstrated in SRC_HAAS_0005; the machine model is not stated.",
+  "context": {
+    "manufacturer": "Haas Automation",
+    "subsystem": "side-mount tool changer (SMTC)",
+    "task_type": "maintenance",
+    "symptoms": [
+      "damaged pocket"
+    ],
+    "components": [
+      "tool pocket",
+      "carousel",
+      "cam box",
+      "double arm",
+      "number ring",
+      "pilot check valve",
+      "pocket stop",
+      "shoulder bolt",
+      "retaining bolt",
+      "lower proximity switch",
+      "cam follower",
+      "plunger",
+      "pocket slider",
+      "pocket up switch",
+      "pocket down switch"
+    ],
+    "provenance": {
+      "manufacturer": {
+        "basis": "source",
+        "note": "Named in the source title; publisher is Haas Automation, Inc."
+      },
+      "machine_family": {
+        "basis": "unknown",
+        "note": "Not stated. A VM-3 sign is visible behind the presenter in the intro, but the video never says the repair is done on that machine."
+      },
+      "machine_model": {
+        "basis": "unknown",
+        "note": "Not stated in the narration or title."
+      },
+      "subsystem": {
+        "basis": "source",
+        "note": "Named in the narration (U0001-U0002) and the title."
+      },
+      "task_type": {
+        "basis": "curated",
+        "note": "Team label: part replacement. Schema 1.0.0 has no separate 'repair' task type."
+      },
+      "symptoms": {
+        "basis": "source",
+        "note": "Stated in the narration (U0001)."
+      },
+      "alarm_codes": {
+        "basis": "unknown",
+        "note": "No alarm code is mentioned."
+      },
+      "components": {
+        "basis": "source",
+        "note": "Only parts named in the narration."
+      }
+    }
+  },
+  "steps": [
+    {
+      "title": "Bring the damaged pocket into position and press E-stop",
+      "fields": {
+        "context": [
+          {
+            "text": "The procedure replaces a damaged pocket on the side-mount tool changer.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0001",
+                "SRC_HAAS_0005:U0002"
+              ]
+            ],
+            "explanation": "The presenter states the task at the start of the video."
+          }
+        ],
+        "action": [
+          {
+            "text": "The presenter says to set the rapids down to 25% and then rotate to the damaged pocket.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0002"
+              ]
+            ],
+            "explanation": "The caption states both instructions in one sentence."
+          },
+          {
+            "text": "The presenter says to press E-stop.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0003"
+              ]
+            ],
+            "explanation": "The caption states the instruction."
+          }
+        ],
+        "condition": [
+          {
+            "text": "The presenter says E-stop is pressed once the pocket is in position.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0003"
+              ]
+            ],
+            "explanation": "The caption gives 'once the pocket is in position' as the moment to press E-stop."
+          }
+        ]
+      },
+      "questions": [
+        {
+          "target_field": "rationale",
+          "reason": "missing",
+          "question": "Why are the rapids set down to 25% before rotating to the damaged pocket?"
+        }
+      ]
+    },
+    {
+      "title": "Remove the top fasteners and the cam-box sheet metal",
+      "fields": {
+        "action": [
+          {
+            "text": "The presenter says three pieces of sheet metal are removed from the bottom of the cam box: a larger piece and two smaller pieces right below the double arm.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0003",
+                "SRC_HAAS_0005:U0004",
+                "SRC_HAAS_0005:U0005"
+              ]
+            ],
+            "explanation": "The caption names the three pieces and where they are."
+          }
+        ],
+        "rationale": [
+          {
+            "text": "The presenter says the sheet metal is removed to gain access to the damaged pocket and the switches behind it.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0005",
+                "SRC_HAAS_0005:U0006"
+              ]
+            ],
+            "explanation": "The caption gives the reason with 'in order to gain access to'."
+          }
+        ],
+        "condition": [
+          {
+            "text": "The presenter says four fasteners on top of the machine must be removed before the larger panel can be moved.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0006",
+                "SRC_HAAS_0005:U0007"
+              ]
+            ],
+            "explanation": "The caption says 'before we can move this larger panel there are four of those fasteners on top of the machine'."
+          }
+        ]
+      }
+    },
+    {
+      "title": "Remove the tools and mark the carousel disk",
+      "fields": {
+        "action": [
+          {
+            "text": "The presenter says all tools are removed from the carousel and their locations are marked.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0008"
+              ]
+            ],
+            "explanation": "The caption states the instruction."
+          },
+          {
+            "text": "The presenter says a mark is put on the carousel disk and on the pocket.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0009",
+                "SRC_HAAS_0005:U0010"
+              ]
+            ],
+            "explanation": "The caption states where the marks go."
+          }
+        ],
+        "rationale": [
+          {
+            "text": "The presenter says the tools are removed because they will be working in this area for a few minutes.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0007",
+                "SRC_HAAS_0005:U0008"
+              ]
+            ],
+            "explanation": "The caption links the two with 'so'."
+          },
+          {
+            "text": "The presenter says the marks are made so the carousel disk is reinstalled correctly.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0009",
+                "SRC_HAAS_0005:U0010"
+              ]
+            ],
+            "explanation": "The caption says 'we want to make sure we installed it carousel disk correctly so we'll put a mark ... for reinstallation'."
+          }
+        ]
+      }
+    },
+    {
+      "title": "Remove the number ring, disconnect main air and remove the pilot check valve",
+      "fields": {
+        "action": [
+          {
+            "text": "The presenter says the number ring is removed.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0010"
+              ]
+            ],
+            "explanation": "The caption states the instruction."
+          },
+          {
+            "text": "The presenter says the main air to the machine is disconnected.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0011",
+                "SRC_HAAS_0005:U0012"
+              ]
+            ],
+            "explanation": "The caption states the instruction across two cues."
+          },
+          {
+            "text": "The presenter says the pilot check valve is removed.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0012"
+              ]
+            ],
+            "explanation": "The caption states the instruction."
+          }
+        ],
+        "outcome": [
+          {
+            "text": "The presenter says that with the check valve removed he can move the pocket up and down freely.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0013"
+              ]
+            ],
+            "explanation": "The caption states the result of removing the check valve."
+          }
+        ]
+      },
+      "questions": [
+        {
+          "target_field": "rationale",
+          "reason": "missing",
+          "question": "Why is the main air disconnected at this point in the procedure?"
+        }
+      ]
+    },
+    {
+      "title": "Remove the pocket stop, shoulder bolt, retaining bolt and pocket",
+      "fields": {
+        "action": [
+          {
+            "text": "The presenter says the four bolts are removed from the pocket stop.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0014"
+              ]
+            ],
+            "explanation": "The caption states the instruction."
+          },
+          {
+            "text": "The presenter says the shoulder bolt on the back side of the carousel, next to the lower proximity switch, is removed.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0015",
+                "SRC_HAAS_0005:U0016"
+              ]
+            ],
+            "explanation": "The caption names the bolt and where it is."
+          },
+          {
+            "text": "The presenter says the retaining bolt is then removed and the pocket is taken out.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0017"
+              ]
+            ],
+            "explanation": "The caption states both actions."
+          }
+        ],
+        "rationale": [
+          {
+            "text": "The presenter says the pocket stop is removed so that removal of the pocket can continue.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0014",
+                "SRC_HAAS_0005:U0015"
+              ]
+            ],
+            "explanation": "The caption links the two with 'so we can continue with it removal of the pocket'."
+          }
+        ]
+      }
+    },
+    {
+      "title": "Check the cam follower and plungers",
+      "fields": {
+        "action": [
+          {
+            "text": "The presenter says to rotate the cam follower.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0018",
+                "SRC_HAAS_0005:U0019"
+              ]
+            ],
+            "explanation": "The caption states the instruction."
+          },
+          {
+            "text": "In the video, gloved hands hold a removed pocket assembly and grip a cylindrical roller at one end.",
+            "evidence_type": "observed",
+            "attribution": {
+              "label": "D1-B keyframe observation, pending human check",
+              "kind": "model"
+            },
+            "evidence": [
+              {
+                "keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0005/kf_0142700.jpg",
+                "source_id": "SRC_HAAS_0005",
+                "start_ms": 142680,
+                "end_ms": 147840,
+                "observation_note": "Close-up: two gloved hands hold a machined metal pocket part; one hand grips a cylindrical roller at its end.",
+                "explanation": "Corrected in the D1-A keyframe-evidence hardening pass: the frame shows a hand gripping a cylindrical roller on the part; component identity (cam follower) and the spins-freely check were previously attributed to this still from the narration alone and are removed from the visual claim."
+              },
+              [
+                "SRC_HAAS_0005:U0019"
+              ]
+            ],
+            "explanation": "The frame shows a hand gripping a cylindrical roller on the removed part; it does not establish the roller's technical name or that it spins freely -- see the narration claim in this step for that (audio-only) verification."
+          },
+          {
+            "text": "The presenter says to check the plungers inside the pocket.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0019",
+                "SRC_HAAS_0005:U0020"
+              ]
+            ],
+            "explanation": "The caption states the instruction."
+          }
+        ],
+        "acceptance_criteria": [
+          {
+            "text": "The presenter says the cam follower should be spinning freely.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0019"
+              ]
+            ],
+            "explanation": "The caption says 'make sure that it's spinning freely'."
+          },
+          {
+            "text": "The presenter says the plungers should not be worn out.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0020"
+              ]
+            ],
+            "explanation": "The caption says 'make sure they're not worn out'."
+          }
+        ]
+      },
+      "questions": [
+        {
+          "target_field": "condition",
+          "reason": "missing",
+          "question": "What should be done if the cam follower does not spin freely or the plungers are worn?"
+        }
+      ]
+    },
+    {
+      "title": "Grease the slider and install the new pocket",
+      "fields": {
+        "action": [
+          {
+            "text": "The presenter says grease is applied to the pocket slider.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0020",
+                "SRC_HAAS_0005:U0021"
+              ]
+            ],
+            "explanation": "The caption states the instruction."
+          },
+          {
+            "text": "The presenter says the pocket is installed onto the slider and both are installed back in position.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0021",
+                "SRC_HAAS_0005:U0022"
+              ]
+            ],
+            "explanation": "The caption states the instruction."
+          },
+          {
+            "text": "The presenter says the retaining bolt is reinstalled and tightened.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0022",
+                "SRC_HAAS_0005:U0023"
+              ]
+            ],
+            "explanation": "The caption says 'reinstall it retainer bolt and tighten it'."
+          },
+          {
+            "text": "The presenter says the pocket is lowered and the shoulder bolt is attached and screwed in.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0023",
+                "SRC_HAAS_0005:U0024"
+              ]
+            ],
+            "explanation": "The caption first reads 'shoulder boat', then 'attach the shoulder bolt' in the same sentence."
+          }
+        ]
+      },
+      "questions": [
+        {
+          "target_field": "condition",
+          "reason": "missing",
+          "question": "Which grease is used, and what tightening torque applies to the retaining bolt and the shoulder bolt?"
+        }
+      ]
+    },
+    {
+      "title": "Check pocket movement and switches",
+      "fields": {
+        "action": [
+          {
+            "text": "The presenter says he is reading the pocket up and pocket down switches.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0024",
+                "SRC_HAAS_0005:U0025"
+              ]
+            ],
+            "explanation": "The caption states the check."
+          }
+        ],
+        "outcome": [
+          {
+            "text": "The presenter says the pocket is now moving freely.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0024"
+              ]
+            ],
+            "explanation": "The caption states the result."
+          }
+        ]
+      },
+      "questions": [
+        {
+          "target_field": "acceptance_criteria",
+          "reason": "missing",
+          "question": "What pocket up and pocket down switch readings confirm the new pocket is installed correctly?"
+        }
+      ]
+    },
+    {
+      "title": "Reinstall the pocket stop, check valve and number disc",
+      "fields": {
+        "action": [
+          {
+            "text": "The presenter says the pocket stop is installed.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0025"
+              ]
+            ],
+            "explanation": "The caption states the instruction."
+          },
+          {
+            "text": "The presenter says the check valve is installed.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0026"
+              ]
+            ],
+            "explanation": "The caption states the instruction."
+          },
+          {
+            "text": "The presenter says the number disc is reinstalled by lining up the dot on the number disc with the dot on the pocket.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0026",
+                "SRC_HAAS_0005:U0027"
+              ]
+            ],
+            "explanation": "The caption states how the disc is aligned."
+          }
+        ]
+      }
+    },
+    {
+      "title": "Reinstall the panels and the tools",
+      "fields": {
+        "action": [
+          {
+            "text": "The presenter says the remaining three panels are installed.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0028"
+              ]
+            ],
+            "explanation": "The caption states the instruction."
+          },
+          {
+            "text": "The presenter says the tools are installed once the panels are all in place.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0028"
+              ]
+            ],
+            "explanation": "The caption states the instruction and its timing."
+          }
+        ]
+      }
+    },
+    {
+      "title": "Test the tool changer",
+      "fields": {
+        "condition": [
+          {
+            "text": "The presenter says the test is run with the new pocket installed, the panels secured and the main air turned on.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0029",
+                "SRC_HAAS_0005:U0030"
+              ]
+            ],
+            "explanation": "The caption lists the state of the machine before the test."
+          }
+        ],
+        "action": [
+          {
+            "text": "The presenter says to release the E-stop and run the tool changer through several tool changes.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0030",
+                "SRC_HAAS_0005:U0031"
+              ]
+            ],
+            "explanation": "The caption reads 'several two changes'; the sentence is about running the tool changer, so it is taken as 'tool changes'."
+          }
+        ],
+        "acceptance_criteria": [
+          {
+            "text": "The presenter says the tool changes are run to ensure everything is working correctly.",
+            "evidence": [
+              [
+                "SRC_HAAS_0005:U0030",
+                "SRC_HAAS_0005:U0031"
+              ]
+            ],
+            "explanation": "The caption states the purpose of the test run."
+          }
+        ]
+      },
+      "questions": [
+        {
+          "target_field": "acceptance_criteria",
+          "reason": "ambiguous",
+          "question": "How many tool changes should be run, and what counts as 'working correctly'?"
+        }
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "type": "requires",
+      "from_step": 6,
+      "to_step": 7,
+      "claim": {
+        "text": "The presenter says the cam follower and plunger checks are made before the new pocket is installed.",
+        "evidence": [
+          [
+            "SRC_HAAS_0005:U0018"
+          ]
+        ],
+        "explanation": "The caption says 'before we install the new pocket there's a few things we need to check'."
+      }
+    }
+  ],
+  "supersedes_revision": 1,
+  "change_log": [
+    {
+      "changed_at": "2026-09-14T00:00:00Z",
+      "actor_id": "claude-opus-5-d1a-keyframe-hardening",
+      "reason": "Keyframe evidence hardening audit: REAL_WF_0001_CL_021's claim text and evidence explanation named the part as the cam follower and implicitly relied on the narration's claim that it spins freely -- neither is establishable from a still frame. Reworded the claim to describe only what kf_0142700.jpg visibly shows (gloved hands holding a machined part with a cylindrical roller); component identity and the free-spin verification remain sourced from the transcript claim in the same step, not misattributed to the visual evidence. No other claim in this workflow changed.",
+      "previous_revision": 1,
+      "id_mapping": [
+        {
+          "old_id": "REAL_WF_0001_CL_021",
+          "new_ids": [
+            "REAL_WF_0001_CL_021"
+          ]
+        }
+      ]
+    }
+  ]
+}

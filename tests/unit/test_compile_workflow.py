@@ -171,6 +171,40 @@ def test_unknown_field_name_is_refused(pool):
         cw.compile_draft(d, pool)
 
 
+# --- keyframe evidence trusts the media inventory, not the filename ----------------
+
+
+def test_keyframe_evidence_is_rejected_when_file_bytes_do_not_match_the_inventory_hash(pool, tmp_path, monkeypatch):
+    """A keyframe file can be silently overwritten while its artifact_id/filename stay
+    the same. The compiler must catch that by content hash, not trust the filename.
+    """
+    real = cw.REPO_ROOT / "acquisition/preprocessing/keyframes/SRC_HAAS_0005/kf_0142700.jpg"
+    tampered_dir = tmp_path / "acquisition/preprocessing/keyframes/SRC_HAAS_0005"
+    tampered_dir.mkdir(parents=True)
+    tampered = tampered_dir / "kf_0142700.jpg"
+    tampered.write_bytes(real.read_bytes() + b"\x00")  # same name, different bytes
+    monkeypatch.setattr(cw, "REPO_ROOT", tmp_path)
+
+    d = tiny_draft(evidence=[{"keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0005/kf_0142700.jpg",
+                               "source_id": "SRC_HAAS_0005", "start_ms": 142680, "end_ms": 147840,
+                               "observation_note": "x"}])
+    with pytest.raises(cw.DraftError, match="content_sha256"):
+        cw.compile_draft(d, pool)
+
+
+def test_keyframe_evidence_locator_is_the_frame_instant_not_the_search_window(pool):
+    """A still frame is an instant; the draft's start_ms/end_ms is only the search
+    window used to sanity-check the frame falls in the right place, not the locator.
+    """
+    d = tiny_draft(evidence=[{"keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0005/kf_0142700.jpg",
+                               "source_id": "SRC_HAAS_0005", "start_ms": 142680, "end_ms": 147840,
+                               "observation_note": "x"}])
+    snap = cw.compile_draft(d, pool)
+    locator = snap["evidence"][0]["locator"]
+    assert (locator["start_ms"], locator["end_ms"]) == (142700, 142701), \
+        "1ms window (schema V04 forbids a zero-width locator) -- not the 5s caption-cue span"
+
+
 def test_context_value_needs_a_provenance_basis(pool):
     d = tiny_draft()
     d["context"] = {"machine_model": "VM-3"}

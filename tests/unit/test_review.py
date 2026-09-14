@@ -304,6 +304,16 @@ def test_cli_flow_sheet_apply_status_promote(monkeypatch, tmp_path, capsys):
 
 
 def test_the_committed_draft_has_been_source_checked(snapshot):
+    """D1-A keyframe-evidence hardening (2026-09-14): the compiler bug fix that makes a
+    keyframe's locator come from the verified media inventory instead of a fabricated
+    transcript-cue span changed REAL_WF_0001_CL_021's evidence content, so the review
+    system correctly marks it stale rather than still source_checked -- it is exactly the
+    claim REAL_WF_0001.r2 (supersedes_revision=1) reworded to stop asserting an unverifiable
+    component identity ("cam follower") and rotation from a still frame. r1's published
+    dev/REAL_WF_0001.r1.json is untouched; this recompile of the draft is what would happen
+    if r1 were re-reviewed today, which is why it goes stale rather than staying checked.
+    """
     status = rv.review_status(snapshot, rv.load_record("REAL_WF_0001", 1))
-    assert status["source_checked"] == 39
-    assert status["rejected"] == status["pending"] == status["stale"] == []
+    assert status["source_checked"] == 38
+    assert status["stale"] == ["REAL_WF_0001_CL_021"]
+    assert status["rejected"] == status["pending"] == []

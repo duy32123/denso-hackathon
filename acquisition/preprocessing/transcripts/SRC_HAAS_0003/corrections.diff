@@ -1,1 +1,39 @@
-# no corrections applied: official caption text used as-is
+# Corrections applied 2026-09-14, second QC pass (WP2 re-review)
+# Auditable per D1-A prompt section 10 rule 11 (terminology only, cited against
+# a primary source; sentence structure and surrounding words unchanged).
+
+# The publisher of record is "Haas Automation, Inc." (data/sources/haas_pilot_sources.jsonl,
+# confirmed independently via YouTube oEmbed + yt-dlp uploader/channel, per
+# docs/haas_d1a_quality_report.md). "Hoss" is not a company name that appears
+# anywhere in either retained source; it is a caption mis-hearing of "Haas".
+
+utterance start_ms=8540 end_ms=15140
+
+- machine running again well here at Hoss we call that tool changer recovery...
++ machine running again well here at Haas we call that tool changer recovery...
+
+utterance start_ms=34190 end_ms=40430
+
+- machine configurations the Hoss has built over the years but the basics...
++ machine configurations the Haas has built over the years but the basics...
+
+# Same "tool changer" mis-hearing pattern documented in
+# acquisition/preprocessing/transcripts/SRC_HAAS_0001/corrections.diff. Basis:
+# self-consistency ("tool changer" used correctly dozens of times elsewhere in
+# this same transcript) and the video's own title, "Tool Changer Recovery;
+# Haas Side Mount Tool Changer (SMTC)".
+
+utterance start_ms=3710 end_ms=8540
+
+- so your tool changes alarm down and maybe you're thinking...
++ so your tool changer's alarm down and maybe you're thinking...
+
+utterance start_ms=120710 end_ms=124400
+
+- the double arm returns the tools to where they came from and told change
++ the double arm returns the tools to where they came from and tool changer
+
+utterance start_ms=242900 end_ms=250310
+
+- ...it's time for me to press e to exit total change your recovery is [complete]
++ ...it's time for me to press e to exit tool changer recovery is [complete]

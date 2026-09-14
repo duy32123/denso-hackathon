@@ -4,11 +4,11 @@
   "sources": {
     "SRC_HAAS_0001": {
       "file": "SRC_HAAS_0001.jsonl",
-      "sha256": "e49f757461d88426502aae81bd2850c36c920b1375e6f9777db2cfeaaf321706",
-      "candidate_count": 26,
+      "sha256": "cd3da69c6cdda84c0fcc222ef15aa712d451ccca2904817017a2ee461a4d8509",
+      "candidate_count": 30,
       "inputs": {
         "acquisition/preprocessing/transcripts/SRC_HAAS_0001/raw.json": "a889571799fd3d5ee34de0fc88fde4881b72e636d110c5e5ee6035b87456aa2c",
-        "acquisition/preprocessing/transcripts/SRC_HAAS_0001/corrected.json": "a306ce6770503d43088cd297a77476b6983e4f436f5b114daafafcba88076d1a"
+        "acquisition/preprocessing/transcripts/SRC_HAAS_0001/corrected.json": "66df79b11aad6a2a8c26d24dc38a1633552a122813c9fca257515227fcddc8d6"
       }
     },
     "SRC_HAAS_0002": {
@@ -21,10 +21,11 @@
     },
     "SRC_HAAS_0003": {
       "file": "SRC_HAAS_0003.jsonl",
-      "sha256": "440bccdda3dc34933c2f6e4a76ab6350bc8c07914283e926b0f0fbc92ddba0f4",
-      "candidate_count": 56,
+      "sha256": "d1a6087a5f05e5cde5919898d866318e1f7775a370fde18670cfbbce0d9a4410",
+      "candidate_count": 61,
       "inputs": {
-        "acquisition/preprocessing/transcripts/SRC_HAAS_0003/raw.json": "804bf22531e2b3afa453c016101d92a4322cb5abbe3cacfad3d0ef1796f28912"
+        "acquisition/preprocessing/transcripts/SRC_HAAS_0003/raw.json": "804bf22531e2b3afa453c016101d92a4322cb5abbe3cacfad3d0ef1796f28912",
+        "acquisition/preprocessing/transcripts/SRC_HAAS_0003/corrected.json": "ee1c43c555cad70a8db1c0808e73bd35366c23dc0ac260e17611e45becdaa180"
       }
     },
     "SRC_HAAS_0004": {
@@ -37,10 +38,11 @@
     },
     "SRC_HAAS_0005": {
       "file": "SRC_HAAS_0005.jsonl",
-      "sha256": "1df916a15a61f508b9119483130f594d36ebddfd18207b7b62aa35a0806a144d",
-      "candidate_count": 31,
+      "sha256": "bb05bf4824ef4f2d702dfcf35eaeba50f4420938cebed27af92062c11ebc4d53",
+      "candidate_count": 33,
       "inputs": {
-        "acquisition/preprocessing/transcripts/SRC_HAAS_0005/raw.json": "9106f9a6764ea43c9aa6079051339e30f485c0e385db1b202dcd3d77a3c98cc8"
+        "acquisition/preprocessing/transcripts/SRC_HAAS_0005/raw.json": "9106f9a6764ea43c9aa6079051339e30f485c0e385db1b202dcd3d77a3c98cc8",
+        "acquisition/preprocessing/transcripts/SRC_HAAS_0005/corrected.json": "eb85bc5081846578f88e3a27eed07ba67fb842cea574d082f66e260a2e899fd2"
       }
     }
   }

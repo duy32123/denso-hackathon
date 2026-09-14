@@ -15,3 +15,49 @@ the caption process; no other numeric interpretation matches a feeler-gauge
 context. No technical explanation was added beyond restating the source's own
 number and unit -- the sentence structure and all surrounding words are
 unchanged.
+
+# Corrections applied 2026-09-14, second QC pass (WP2 re-review)
+# All four below are the same caption-model failure mode: the term "tool
+# changer" is systematically mis-heard. Basis for each is self-consistency --
+# "tool change(r)" is used correctly elsewhere in this same transcript
+# (e.g. U0004 "rough tool change", U0019 "command a tool change") -- except
+# the first, which is also the Source's own title
+# ("Side-Mount Tool Changer Double Arm Troubleshooting").
+
+utterance start_ms=0 end_ms=9390
+
+- [Music] today we're going to talk about your sidemount to change a double arm...
++ [Music] today we're going to talk about your side-mount tool changer double arm...
+
+utterance start_ms=9390 end_ms=14340
+
+- will most likely do tens of thousands of two changes with you...
++ will most likely do tens of thousands of tool changes with you...
+
+utterance start_ms=50010 end_ms=59550
+
+- MIS loaded tools protruding set screw or for to change or alignment in most cases...
++ MIS loaded tools protruding set screw or tool changer alignment in most cases...
+
+utterance start_ms=154260 end_ms=160650
+
+- ...this clearance can be adjusted by changing the shin [washers]
++ ...this clearance can be adjusted by changing the shim [washers]
+
+Basis: TG0128 (SRC_HAAS_0002) uses "shim washers" twice for this exact part
+(T0038 "Shim washers: Shims adjust the slide for proper clearance...";
+T0111 "Add or remove 0.01 in (0.25 mm) shim washers, part number 45-0075").
+"Shin washers" is not a real part name and does not appear in either source.
+
+# Flagged, NOT corrected: no citable basis for either candidate reading.
+
+utterance start_ms=20700 end_ms=35070 (spans two cues)
+
+  ...usually the first sign of trouble is either visual as in rough tool
+  change or audible as in unusual puffin or banging sound when the arm is
+  loading or unloading a tool...
+
+"puffin" is clearly wrong (a bird, not a sound), but neither TG0128 nor any
+other retained source states whether "popping" or "puffing" was meant. Left
+uncorrected in both raw.json and corrected.json, same discipline as the
+gap-spec artifact before its citation was found: no guess without a basis.

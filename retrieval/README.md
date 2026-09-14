@@ -174,7 +174,8 @@ adapter/SDK và output vector hash, không khẳng định pin được hash tr�
 `retrieval.evaluation` chạy lexical, vector và hybrid trên cùng index và cùng filter
 policy, tính Recall@k, MRR@k, Hit@1, độ chính xác chọn workflow và status (gồm cả
 câu phải từ chối). Bộ câu hỏi, quy tắc tính và cách kiểm nhãn: xem
-[data/eval/README.md](../data/eval/README.md). Nhãn gold hiện là bản nháp.
+[data/eval/README.md](../data/eval/README.md). Nhãn gold hiện mới được AI kiểm
+(`ai_reviewed`), chưa có người kiểm; report giữ cảnh báo cho đến khi có người kiểm.
 
 ```powershell
 .\.venv\Scripts\python.exe -m retrieval.evaluation run --db out/retrieval/real_dev.sqlite --questions data/eval/haas_real_dev.retrieval.v0.jsonl --mode real --split dev

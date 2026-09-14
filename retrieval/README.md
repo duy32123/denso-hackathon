@@ -168,3 +168,15 @@ tiếng Việt trong ví dụ trên tìm được `B0_SRC_HAAS_0005_ST_006` ở 
 vector và hybrid. Đây là kiểm chứng tích hợp trên một câu hỏi, chưa phải benchmark
 recall/precision; chưa chạy holdout. Gemini là model hosted: version lưu model ID,
 adapter/SDK và output vector hash, không khẳng định pin được hash trọng số server.
+
+## Đánh giá retrieval
+
+`retrieval.evaluation` chạy lexical, vector và hybrid trên cùng index và cùng filter
+policy, tính Recall@k, MRR@k, Hit@1, độ chính xác chọn workflow và status (gồm cả
+câu phải từ chối). Bộ câu hỏi, quy tắc tính và cách kiểm nhãn: xem
+[data/eval/README.md](../data/eval/README.md). Nhãn gold hiện là bản nháp.
+
+```powershell
+.\.venv\Scripts\python.exe -m retrieval.evaluation run --db out/retrieval/real_dev.sqlite --questions data/eval/haas_real_dev.retrieval.v0.jsonl --mode real --split dev
+.\.venv\Scripts\python.exe -m pytest tests/unit/test_evaluation.py
+```

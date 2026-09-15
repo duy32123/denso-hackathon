@@ -12,6 +12,7 @@ import hashlib
 import json
 import math
 import subprocess
+import time
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
@@ -21,9 +22,10 @@ from pydantic import Field, ValidationError, model_validator
 
 from knowflow_contracts.enums import AnswerStatus, DatasetSplit, SourceType
 from knowflow_contracts.models import NonEmptyStr, QueryContext, QueryRequest, Strict
-from retrieval.indexing.embeddings import Embedder, GeminiEmbedder
+from retrieval.indexing.embeddings import RATE_LIMIT_WAITED, Embedder, GeminiEmbedder
 from retrieval.indexing.search_index import digest, read_corpus, require_index
 from retrieval.retrieval.engine import RetrievalConfig, retrieve
+from retrieval.retrieval.query import GeminiTranslator, Translator
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 STRATEGIES = ("lexical", "vector", "hybrid")
@@ -118,10 +120,17 @@ class EvalQuestion(Strict):
 
 
 class QueryCache:
-    """Share one query embedding across vector/hybrid; config stays the adapter's."""
+    """Share one query embedding across strategies and, with a path, across runs.
 
-    def __init__(self, inner: Embedder):
-        self.inner, self.calls, self._vectors = inner, 0, {}
+    Keyed by the adapter config and the exact text, so a model/dimension change never
+    reuses old vectors; config stays the adapter's so the engine's index check applies.
+    `reused_ms` is the original API time of a reused vector, added back to latency.
+    """
+
+    def __init__(self, inner: Embedder, path: str | Path | None = None):
+        self.inner, self.calls, self.reused_ms = inner, 0, 0.0
+        self.path = Path(path) if path else None
+        self._entries = _load_entries(self.path)
 
     @property
     def config(self) -> dict:
@@ -131,10 +140,53 @@ class QueryCache:
         raise EvaluationError("Evaluation never embeds documents")
 
     def query(self, text: str) -> list[float]:
-        if text not in self._vectors:
-            self._vectors[text] = self.inner.query(text)
-            self.calls += 1
-        return self._vectors[text]
+        return _cached(self, text, self.inner.query, "vector")
+
+
+class TranslationCache:
+    """QueryCache for query translations (search-only text); same keying and latency rule."""
+
+    def __init__(self, inner: Translator, path: str | Path | None = None):
+        self.inner, self.calls, self.reused_ms = inner, 0, 0.0
+        self.path = Path(path) if path else None
+        self._entries = _load_entries(self.path)
+
+    @property
+    def config(self) -> dict:
+        return self.inner.config
+
+    def to_english(self, text: str) -> str:
+        return _cached(self, text, self.inner.to_english, "text")
+
+
+def _load_entries(path: Path | None) -> dict[str, dict]:
+    entries = {}
+    if path and path.exists():
+        for line in path.read_text(encoding="utf-8").splitlines():
+            if line.strip():
+                entry = json.loads(line)
+                entries[entry["key"]] = entry
+    return entries
+
+
+def _cached(cache, text: str, call, field: str):
+    key = digest([cache.inner.config, text])
+    entry = cache._entries.get(key)
+    if entry is not None:
+        cache.reused_ms += entry["ms"]
+        return entry[field]
+    waited, start = RATE_LIMIT_WAITED["seconds"], time.perf_counter()
+    value = call(text)
+    # API time only: a 429 back-off would otherwise inflate the latency of every later run.
+    elapsed = time.perf_counter() - start - (RATE_LIMIT_WAITED["seconds"] - waited)
+    entry = {"key": key, "ms": round(elapsed * 1000, 2), field: value}
+    cache._entries[key] = entry
+    cache.calls += 1
+    if cache.path:
+        cache.path.parent.mkdir(parents=True, exist_ok=True)
+        with cache.path.open("a", encoding="utf-8") as fh:
+            fh.write(json.dumps(entry, ensure_ascii=False) + "\n")
+    return value
 
 
 def load_questions(path: str | Path) -> tuple[list[EvalQuestion], str]:
@@ -183,9 +235,15 @@ def score_ranking(ranked: list[StepKey], units: list[set[StepKey]], k: int) -> d
 
 
 def _evaluate_one(db, q: EvalQuestion, mode: str, split: str, config: RetrievalConfig,
-                  embedder: QueryCache | None, index_build_id: str) -> dict:
+                  embedder: QueryCache | None, translator: TranslationCache | None,
+                  index_build_id: str) -> dict:
+    caches = [cache for cache in (embedder, translator) if cache]
+    for cache in caches:
+        cache.reused_ms = 0.0
     result = retrieve(db, QueryRequest(question=q.question, context=q.context, mode=mode, dataset_split=split),
-                      config=config, embedder=embedder)
+                      config=config, embedder=embedder, translator=translator)
+    reused_ms = sum(cache.reused_ms for cache in caches)
+    relevance = result["trace"].get("relevance") or {}
     if result["index_build_id"] != index_build_id:
         raise EvaluationError("Active index changed during evaluation; rerun")
     units = [{ref.key for ref in unit} for unit in q.gold_units]
@@ -208,8 +266,12 @@ def _evaluate_one(db, q: EvalQuestion, mode: str, split: str, config: RetrievalC
                        "relevant": (s["workflow_id"], s["revision"], s["step_id"]) in relevant}
                       for s in result["steps"]],
         "missing_context": result["missing_context"],
+        "translation": (result["trace"].get("query_translation") or {}).get("text"),
+        "term_coverage": relevance.get("term_coverage"), "relevance_gate": relevance.get("gate"),
         "claim_count": len(result["claims"]), "conflict_count": len(result["conflicts"]),
-        "latency_ms": result["trace"]["latency_ms"], "embedding_calls": result["trace"]["embedding_calls"],
+        "latency_ms": round(result["trace"]["latency_ms"] + reused_ms, 2),
+        "engine_latency_ms": result["trace"]["latency_ms"], "embedding_reused": reused_ms > 0,
+        "embedding_calls": result["trace"]["embedding_calls"],
         "recall": None, "reciprocal_rank": None, "first_relevant_rank": None,
     }
     if q.scored:
@@ -288,13 +350,16 @@ def _git() -> dict:
 
 def run_evaluation(db: str | Path, questions_path: str | Path, *, mode: str, split: str,
                    strategies=STRATEGIES, top_k: int = 5, candidate_k: int = 20, min_cosine: float = .25,
-                   rrf_k: int = 60, embedder: Embedder | None = None,
+                   rrf_k: int = 60, min_term_coverage: float = .10, embedder: Embedder | None = None,
+                   query_cache: str | Path | None = None, translator: Translator | None = None,
+                   translation_cache: str | Path | None = None, translate: bool = True,
                    allow_holdout: bool = False) -> tuple[dict, list[dict]]:
     """Run every question under every strategy against the SAME active index."""
     if split == "holdout" and not allow_holdout:
         raise EvaluationError("Holdout is evaluated once, after the D15 lock; pass allow_holdout explicitly")
     strategies = list(dict.fromkeys(strategies))
-    settings = dict(top_k=top_k, candidate_k=candidate_k, min_cosine=min_cosine, rrf_k=rrf_k)
+    settings = dict(top_k=top_k, candidate_k=candidate_k, min_cosine=min_cosine, rrf_k=rrf_k,
+                    min_term_coverage=min_term_coverage, query_translation="auto" if translate else "never")
     for strategy in strategies:
         RetrievalConfig(strategy=strategy, **settings)  # reject bad config before any work
     questions, questions_sha256 = load_questions(questions_path)
@@ -313,16 +378,24 @@ def run_evaluation(db: str | Path, questions_path: str | Path, *, mode: str, spl
             if expected["provider"] != "gemini":
                 raise EvaluationError("No query adapter for the indexed embedding provider")
             embedder = owned = GeminiEmbedder(expected["dimensions"])
-    cache = QueryCache(embedder) if embedder else None
+    cache = QueryCache(embedder, query_cache) if embedder else None
+    # One translator for every strategy, so lexical, vector and hybrid see the same query.
+    owned_translator = None
+    if translate and translator is None:
+        translator = owned_translator = GeminiTranslator()
+    translation = TranslationCache(translator, translation_cache) if translate else None
     rows = []
     try:
         for strategy in strategies:
             for q in questions:
                 config = RetrievalConfig(strategy=strategy, intent=q.intent, **settings)
-                rows.append(_evaluate_one(db, q, mode, split, config, cache, manifest["index_build_id"]))
+                rows.append(_evaluate_one(db, q, mode, split, config, cache, translation,
+                                          manifest["index_build_id"]))
     finally:
         if owned:
             owned.close()
+        if owned_translator:
+            owned_translator.close()
     labels = Counter(q.label.status for q in questions)
     config = {**settings, "strategies": strategies}
     created = datetime.now(timezone.utc)
@@ -337,6 +410,10 @@ def run_evaluation(db: str | Path, questions_path: str | Path, *, mode: str, spl
         "questions": len(questions),
         "gold_labels": {status: labels[status] for status in ("draft", "ai_reviewed", "reviewed")},
         "config": config, "query_embedding_calls": cache.calls if cache else 0,
+        "query_cache": str(query_cache) if query_cache and cache else None,
+        "translation": translation.config if translation else None,
+        "query_translation_calls": translation.calls if translation else 0,
+        "translation_cache": str(translation_cache) if translation_cache and translation else None,
         "strategies": {s: summarize([r for r in rows if r["strategy"] == s], top_k) for s in strategies},
     }
     unchecked = labels["draft"] + labels["ai_reviewed"]
@@ -366,7 +443,8 @@ def format_summary(report: dict) -> str:
         f"{report['run_id']}  {report['source_type']}/{report['dataset_split']}  index {report['index_build_id']}",
         f"questions {report['questions']} (draft {labels['draft']}, ai_reviewed {labels['ai_reviewed']}, "
         f"reviewed {labels['reviewed']}); "
-        f"query embedding calls {report['query_embedding_calls']}",
+        f"query embedding calls {report['query_embedding_calls']}, "
+        f"translation calls {report['query_translation_calls']}",
     ]
     if "warning" in report:
         lines.append("WARNING: " + report["warning"])
@@ -378,6 +456,7 @@ def format_summary(report: dict) -> str:
                      f"{fmt(r['hit_at_1']):>8}{fmt(r['answer_coverage']):>8}"
                      f"{fmt(s['workflow_selection']['accuracy']):>8}{fmt(s['status']['accuracy']):>8}"
                      f"{s['latency_ms']['p50']:>8}{s['latency_ms']['p95']:>8}")
+    lines.append("(latency includes the query-embedding call, also when the vector was reused from cache)")
     lines.append("")
     for name, s in report["strategies"].items():
         status = s["status"]

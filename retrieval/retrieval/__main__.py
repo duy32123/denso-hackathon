@@ -29,6 +29,9 @@ def main(argv=None):
             sub.add_argument("--candidate-k", type=int, default=20)
             sub.add_argument("--min-cosine", type=float, default=.25)
             sub.add_argument("--intent", choices=("auto", "detail", "procedure"), default="auto")
+            sub.add_argument("--min-term-coverage", type=float, default=.10, help="relevance gate; 0 disables it")
+            sub.add_argument("--query-translation", choices=("auto", "never"), default="auto",
+                             help="auto: translate Vietnamese questions for vector/hybrid on an English corpus")
             sub.add_argument("--summary", action="store_true", help="show compact hits; omit to include evidence and trace")
             for key in ("manufacturer", "machine-family", "machine-model", "subsystem", "task-type"):
                 sub.add_argument("--" + key)
@@ -56,13 +59,16 @@ def main(argv=None):
                                                    mode=args.mode, dataset_split=args.split),
                               config=RetrievalConfig(strategy=args.strategy, top_k=args.top_k,
                                                      candidate_k=args.candidate_k, min_cosine=args.min_cosine,
-                                                     intent=args.intent))
+                                                     intent=args.intent, min_term_coverage=args.min_term_coverage,
+                                                     query_translation=args.query_translation))
             if args.summary:
                 result = {key: result[key] for key in (
                     "status", "index_build_id", "selected_workflow", "missing_context", "steps",
                 )} | {
                     "claim_count": len(result["claims"]), "conflict_count": len(result["conflicts"]),
                     "latency_ms": result["trace"]["latency_ms"],
+                    "translation": (result["trace"].get("query_translation") or {}).get("text"),
+                    "relevance": result["trace"].get("relevance"),
                 }
                 result["steps"] = [{key: step[key] for key in (
                     "step_id", "title", "score", "lexical_score", "vector_score",

@@ -4,6 +4,9 @@ from __future__ import annotations
 
 import math
 import os
+import re
+import sys
+import time
 from importlib.metadata import version
 from pathlib import Path
 from typing import Protocol
@@ -11,6 +14,29 @@ from typing import Protocol
 
 class EmbeddingError(ValueError):
     pass
+
+
+RATE_LIMIT_WAITED = {"seconds": 0.0}  # lets callers exclude back-off time from measured API time
+
+
+def retry_rate_limited(call, *, retries: int = 3, max_wait: float = 65.0, sleep=time.sleep):
+    """Retry only HTTP 429 (per-minute rate limit), waiting the server's retryDelay.
+
+    Any other error, or a requested wait above max_wait (a daily quota), is raised at once.
+    """
+    for attempt in range(retries + 1):
+        try:
+            return call()
+        except Exception as exc:
+            if getattr(exc, "code", None) != 429 or attempt == retries:
+                raise
+            match = re.search(r"retryDelay['\"]?\s*[:=]\s*['\"]?(\d+(?:\.\d+)?)s", str(exc))
+            wait = float(match.group(1)) + 1 if match else min(max_wait, 5.0 * 2 ** attempt)
+            if wait > max_wait:
+                raise
+            print(f"Gemini rate limit (429); retrying in {wait:.0f}s", file=sys.stderr)
+            RATE_LIMIT_WAITED["seconds"] += wait
+            sleep(wait)
 
 
 class Embedder(Protocol):
@@ -71,12 +97,12 @@ class GeminiEmbedder:
         for start in range(0, len(texts), 32):
             batch = texts[start:start + 32]
             try:
-                response = self._client.models.embed_content(
+                response = retry_rate_limited(lambda: self._client.models.embed_content(
                     model=self.config["model"], contents=batch,
                     config=types.EmbedContentConfig(
                         task_type=task, output_dimensionality=self.dimensions,
                     ),
-                )
+                ))
                 self.calls += 1
             except Exception as exc:
                 # SDK exception strings may contain request URLs/credentials.

@@ -23,7 +23,15 @@ def main(argv=None):
     run.add_argument("--candidate-k", type=int, default=20)
     run.add_argument("--min-cosine", type=float, default=.25)
     run.add_argument("--rrf-k", type=int, default=60)
+    run.add_argument("--min-term-coverage", type=float, default=.10, help="relevance gate; 0 disables it")
     run.add_argument("--out", default="out/eval", help="run folder with report.json and rows.jsonl")
+    run.add_argument("--query-cache", default="out/eval/query_embeddings.jsonl",
+                     help="reuse query embeddings across runs (keyed by embedding config + text)")
+    run.add_argument("--no-query-cache", action="store_true")
+    run.add_argument("--translation-cache", default="out/eval/query_translations.jsonl",
+                     help="reuse query translations across runs (keyed by translator config + text)")
+    run.add_argument("--no-translation", action="store_true",
+                     help="search Vietnamese questions untranslated (relevance gate is then skipped for them)")
     run.add_argument("--allow-holdout", action="store_true", help="only after the D15 pipeline lock")
     run.add_argument("--json", action="store_true", help="print the full report instead of the table")
     sheet = commands.add_parser("sheet", help="export a review sheet (CSV) for the gold labels")
@@ -44,6 +52,9 @@ def main(argv=None):
                 args.db, args.questions, mode=args.mode, split=args.split,
                 strategies=args.strategy or STRATEGIES, top_k=args.top_k, candidate_k=args.candidate_k,
                 min_cosine=args.min_cosine, rrf_k=args.rrf_k, allow_holdout=args.allow_holdout,
+                query_cache=None if args.no_query_cache else args.query_cache,
+                min_term_coverage=args.min_term_coverage, translate=not args.no_translation,
+                translation_cache=args.translation_cache,
             )
             target = write_run(report, rows, args.out)
             print(json.dumps(report, ensure_ascii=False, indent=2) if args.json else format_summary(report))

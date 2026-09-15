@@ -115,7 +115,8 @@ def project_documents(corpus: dict) -> list[dict]:
             doc_id = canonical([record["record_type"], wf.workflow_id, wf.revision,
                                 record.get("step_id", ""), purpose])
             docs.append({"id": doc_id, "purpose": purpose, "record": payload,
-                         "tokens": tokens(text), "text_hash": digest(text), "vector": None})
+                         "tokens": tokens(text, stem=wf.language == "en"), "text_hash": digest(text),
+                         "vector": None})
     return sorted(docs, key=lambda d: d["id"])
 
 

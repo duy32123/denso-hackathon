@@ -1,11 +1,17 @@
 # Bộ câu hỏi đánh giá retrieval (WP2)
 
-`haas_real_dev.retrieval.v0.jsonl`: 38 câu real/dev trên bundle
+`haas_real_dev.retrieval.v0.jsonl`: 54 câu real/dev, soạn trên bundle
 `BUNDLE_HAAS_SMTC_DEV_e98521a7942a` (`B0_SRC_HAAS_0005` r1 và `REAL_WF_0001` r1).
+Bundle hiện tại `BUNDLE_HAAS_SMTC_DEV_0209a847a66c` có thêm `REAL_WF_0002/0003`, nhưng mọi
+claim của hai workflow này còn `source_review=pending`, nên corpus real được phục vụ vẫn chỉ
+gồm hai workflow trên. Khi hai workflow này được review, cần xem lại nhãn: ví dụ Q038
+(alarm 2066) sẽ có quy trình ở `REAL_WF_0003`.
+Q001–Q038 là bộ gốc; Q039–Q054 là câu phủ định bổ sung (cùng lĩnh vực CNC nhưng KB
+không có), dùng để chỉnh ngưỡng từ chối.
 
-> **Nhãn gold hiện là bản nháp** (`label.status=draft`, `labeled_by=claude-draft`).
-> Chưa có người kiểm, nên số đo chỉ dùng để debug pipeline, **không báo cáo như kết quả**.
-> Evaluator in cảnh báo này trong mọi report cho đến khi mọi câu được kiểm.
+> **Chưa có người kiểm nhãn gold.** Q001–Q038 đã được AI (Codex) kiểm (`ai_reviewed`),
+> Q039–Q054 còn là bản nháp (`draft`). Số đo chỉ dùng để debug pipeline,
+> **không báo cáo như kết quả**. Evaluator in cảnh báo này cho đến khi mọi câu được người kiểm.
 
 ## Người kiểm cần làm
 
@@ -85,7 +91,11 @@ và liệt kê các ref cần gán lại; không tự đoán Step tương ứng.
 .\.venv\Scripts\python.exe -m retrieval.evaluation run --db out/retrieval/real_dev.sqlite --questions data/eval/haas_real_dev.retrieval.v0.jsonl --mode real --split dev
 ```
 
-Mặc định chạy cả `lexical`, `vector`, `hybrid` trên cùng index và cùng filter policy.
-Mỗi câu gọi Gemini tối đa một lần; vector và hybrid dùng chung query embedding.
+Mặc định chạy cả `lexical`, `vector`, `hybrid` trên cùng index, cùng filter policy và
+cùng bản dịch câu hỏi. Query embedding và bản dịch được cache ở
+`out/eval/query_embeddings.jsonl` và `out/eval/query_translations.jsonl` (khóa theo cấu hình
+model và nguyên văn câu), nên chạy lại hoặc thử ngưỡng khác (`--min-term-coverage`) không tốn
+API. Khi dùng cache, latency vẫn cộng thời gian API gốc; thời gian đợi 429 không được tính.
+`--no-translation` để đo khi không dịch.
 Kết quả ghi vào `out/eval/<run_id>/report.json` (kèm git commit, index build,
 embedding config và sha256 của bộ câu hỏi) và `rows.jsonl` (từng câu, từng strategy).

@@ -1,0 +1,23 @@
+:root { font-family: system-ui, sans-serif; color: #17312f; background: #f5f7f5; }
+body { margin: 0; } main { max-width: 1100px; margin: 2rem auto; padding: 0 1.2rem; }
+h1 { color: #12665b; } h2 { font-size: 1.15rem; }
+form, section { background: white; border: 1px solid #cedbd8; border-radius: 10px; padding: 1.2rem; }
+label { display: block; margin: .7rem 0; } input, select, textarea, button { font: inherit; padding: .6rem; border: 1px solid #abc0bb; border-radius: 5px; box-sizing: border-box; }
+textarea { width: 100%; display: block; } button { cursor: pointer; background: #12665b; color: white; }
+button:disabled { opacity: .5; } .context, .results { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.context input { width: 100%; } .results { grid-template-columns: 1fr 1fr; } section { min-width: 0; }
+#answer, blockquote { white-space: pre-wrap; } small { overflow-wrap: anywhere; } #banner { color: #9b4609; font-weight: 600; }
+#citations button { display: block; margin: .8rem 0; text-align: left; background: #e7f2ee; color: #17312f; }
+blockquote { border-left: 3px solid #12665b; margin: 1rem 0; padding: .8rem; background: #f5f7f5; }
+img { max-width: 100%; } a { color: #12665b; }
+.browser { margin-top: 1rem; } .muted { color: #4c635c; } .browser-controls { display: flex; gap: 1rem; align-items: end; flex-wrap: wrap; }
+.main-column { min-width: 0; } .evidence-panel { position: sticky; top: 1rem; align-self: start; max-height: calc(100vh - 2rem); overflow: auto; box-sizing: border-box; }
+.browser-controls label { flex: 1; min-width: 0; } #workflow-select { width: 100%; } #catalog-status { overflow-wrap: anywhere; font-size: .85rem; }
+details { border: 1px solid #cedbd8; padding: .8rem; border-radius: 6px; margin: .65rem 0; }
+summary { cursor: pointer; overflow-wrap: anywhere; font-weight: 600; } .field { margin-left: .5rem; background: #f8faf9; }
+.state-missing { border-style: dashed; } .claim { border-left: 3px solid #12665b; padding: .6rem 1rem; margin: .7rem 0; background: white; }
+.claim button { margin: .3rem 0; max-width: 100%; text-align: left; overflow-wrap: anywhere; }
+.metadata { display: grid; grid-template-columns: max-content 1fr; gap: .4rem 1rem; } .metadata dt { font-weight: 600; } .metadata dd { margin: 0; }
+#workflow-meta, #workflow-steps, #workflow-relations, #workflow-questions, #workflow-history, #evidence { overflow-wrap: anywhere; }
+#workflow-meta p, #workflow-history p, #evidence p { white-space: pre-wrap; }
+@media (max-width: 740px) { .context, .results { grid-template-columns: 1fr; } .evidence-panel { position: static; max-height: none; order: -1; } }

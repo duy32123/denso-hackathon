@@ -12,6 +12,10 @@ A draft says what the source supports, never how it is identified:
 The same draft format is the target output of the B0 baseline, so manual and
 model extraction are compiled, validated and compared the same way.
 
+New evidence-only revisions pin a prior snapshot with ``revision_base`` and
+preserve published evidence IDs. Changed steps/claims need a separate identity
+migration. See ``docs/b0_wf0005_r2_review.md`` for the draft fields and review flow.
+
 Draft shape (JSON)::
 
     {
@@ -52,6 +56,7 @@ from knowflow_contracts.enums import FIELD_ROLES
 
 from acquisition.export import exporter
 from acquisition.extraction import evidence_pool as ep
+from acquisition.extraction import revisions
 from acquisition.preprocessing import keyframes as kf
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -313,16 +318,38 @@ class _Compiler:
         }
 
 
+def revision_base(draft: dict) -> dict | None:
+    try:
+        return revisions.load_base(draft, REPO_ROOT)
+    except revisions.RevisionError as exc:
+        raise DraftError(str(exc)) from None
+
+
 def compile_draft(draft: dict, pool: dict[str, ep.Candidate] | None = None) -> dict:
-    return _Compiler(draft, pool if pool is not None else ep.load_pool()).compile()
+    legacy = type(draft.get("revision")) is int and draft["revision"] > 1 and "revision_base" not in draft
+    base = None if legacy else revision_base(draft)
+    snapshot = _Compiler(draft, pool if pool is not None else ep.load_pool()).compile()
+    try:
+        if legacy:
+            revisions.legacy_replay_base(snapshot, REPO_ROOT)
+        elif base is not None:
+            snapshot = revisions.preserve_evidence_ids(snapshot, base)
+    except revisions.RevisionError as exc:
+        raise DraftError(str(exc)) from None
+    return snapshot
 
 
-def check_snapshot(snapshot: dict, split: str = "dev", *, source_records: list[dict] | None = None) -> exporter.ExportResult:
+def check_snapshot(snapshot: dict, split: str = "dev", *, source_records: list[dict] | None = None,
+                   previous_snapshots: list[dict] | None = None) -> exporter.ExportResult:
     """Validate using supplied Sources or the canonical split, without publishing files."""
     cfg = exporter.SPLITS[split]
     with tempfile.TemporaryDirectory(prefix="draft-check-") as tmp:
         snap_dir = Path(tmp) / "snapshots"
         snap_dir.mkdir()
+        for previous in previous_snapshots or []:
+            if (previous["workflow_id"], previous["revision"]) == (snapshot["workflow_id"], snapshot["revision"]):
+                raise DraftError("Previous snapshot must not overwrite the revision being checked")
+            write_snapshot(previous, snap_dir)
         write_snapshot(snapshot, snap_dir)
         sources_path = cfg["sources"]
         if source_records is not None:
@@ -335,6 +362,21 @@ def check_snapshot(snapshot: dict, split: str = "dev", *, source_records: list[d
             split=split, sources_path=sources_path, snapshot_dir=snap_dir,
             out_dir=Path(tmp) / "bundle", bundle_prefix="DRAFT_CHECK", check_only=True,
         )
+
+
+def check_draft_snapshot(draft: dict, snapshot: dict) -> exporter.ExportResult:
+    """Run shared validation over base + candidate together, including D-02/V03."""
+    if draft["revision"] > 1 and "revision_base" not in draft:
+        # Compare the fresh unreviewed compile, even when validating a reviewed
+        # candidate during promotion. ReviewEvents do not change draft identity.
+        try:
+            compiled = _Compiler(draft, ep.load_pool()).compile()
+            base = revisions.legacy_replay_base(compiled, REPO_ROOT)
+        except revisions.RevisionError as exc:
+            raise DraftError(str(exc)) from None
+    else:
+        base = revision_base(draft)
+    return check_snapshot(snapshot, draft["dataset_split"], previous_snapshots=[base] if base else [])
 
 
 def write_snapshot(snapshot: dict, out_dir: Path = DRAFT_OUT) -> Path:
@@ -358,7 +400,7 @@ def main(argv: list[str] | None = None) -> int:
         print(f"error: {exc}", file=sys.stderr)
         return 1
 
-    result = check_snapshot(snapshot, draft["dataset_split"])
+    result = check_draft_snapshot(draft, snapshot)
     for issue in result.report.issues:
         if issue.severity == "error" or args.verbose:
             print(f"  {issue}")

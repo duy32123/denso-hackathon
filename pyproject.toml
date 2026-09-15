@@ -16,9 +16,17 @@ knowflow-contracts = "knowflow_contracts.cli:main"
 retrieval = [
     "google-genai>=2.23,<3",
 ]
+api = [
+    "fastapi>=0.115,<1",
+    "uvicorn>=0.30,<1",
+    "Pillow==12.3.0",
+]
 dev = [
     "pytest>=8",
     "python-dotenv>=1.0",
+    "fastapi>=0.115,<1",
+    "httpx>=0.27,<1",
+    "Pillow==12.3.0",
 ]
 # Keyframe-evidence hardening (docs/keyframe_capability_audit.md): pinned so the
 # extraction/pre-filter environment is reproducible. ffmpeg/ffprobe are system

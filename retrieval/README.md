@@ -1,5 +1,11 @@
 # D2-A — WP1/WP2: importer, lexical, vector và hybrid retrieval
 
+**Tiếp nối WP3/API:** đã có generator + citation guard, `/v1/ask` và trang đọc
+evidence tối thiểu. Cách chạy và giới hạn: [grounded QA pilot](../docs/team2_grounded_qa.md).
+
+**WP4 đọc/lịch sử:** tự mở citation, duyệt Step/field/claim và so sánh revision với đúng
+index lịch sử. Xem [WP4 reader](../docs/team2_wp4_reader.md). Phần ghi feedback chờ service đội 1.
+
 Nhập bundle đội 1 bằng validator chung, lưu bản sao nguồn/snapshot bất biến và
 dựng search records hai tầng Workflow/Step theo contract D-06. SQLite là lựa chọn
 local cho bước đầu, chưa phải PostgreSQL/pgvector trong đề xuất của plan.
@@ -174,7 +180,8 @@ truy cập mạng trong retrieval: `evidence_openability_checked=false`, từng 
 có `access_status=not_checked`; không tự gọi citation là đã xác minh.
 
 Các status khác: `needs_clarification`, `insufficient_evidence`, `conflicting_sources`.
-Chưa triển khai reranker, tự mở rộng Step lân cận hay answer generator. Các relation
+Chưa triển khai reranker hay tự mở rộng Step lân cận. Answer generator và API nằm ở
+`retrieval/generation` và `retrieval/api` (xem hướng dẫn ở đầu trang). Các relation
 gốc được trả để phần tích hợp xử lý có căn cứ. Bộ unit tests dùng vector giả chỉ
 để kiểm logic; không được dùng kết quả đó làm số đo chất lượng embedding thật.
 

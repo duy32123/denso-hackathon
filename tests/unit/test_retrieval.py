@@ -326,3 +326,96 @@ def test_document_chunk_pooling_normalizes_and_never_drops_tail(monkeypatch):
     result = embedder.documents([text])
     assert "".join(seen) == text
     assert len(result) == 1 and result[0] == [1.0] + [0.0] * 767
+
+
+# --- WP2 step 5: dependency expansion ---------------------------------------
+
+
+def ask_near(db, question, *, top_k=1, mode="synthetic", context=None, **config):
+    return retrieve(db, QueryRequest(question=question, context=QueryContext(**(context or {})),
+                                     mode=mode, dataset_split="dev"),
+                    config=RetrievalConfig(strategy="lexical", intent="detail", top_k=top_k, **config))
+
+
+def test_branch_point_is_pulled_in_as_context_never_as_an_answer(tmp_path):
+    db = prepare(tmp_path, "F08_branch_if")
+    result = ask_near(db, "kiem cam bien")
+    assert [s["step_id"] for s in result["steps"]] == ["SYN_WF_0009_ST_002"]
+    related = result["related_steps"]
+    assert [s["step_id"] for s in related] == ["SYN_WF_0009_ST_001"]
+    assert [v["relation_type"] for v in related[0]["via"]] == ["branch_if"]
+    # The condition lives on the edge; without it the neighbour reads as unconditional.
+    assert related[0]["via"][0]["condition_claim_ids"] == ["SYN_WF_0009_CL_002"]
+    assert related[0]["depth"] == 1
+    assert all(c["purpose"] == "context_only" and c["score"] is None for c in result["related_claims"])
+    answers = {c["claim_ref"]["entity_id"] for c in result["claims"]}
+    context_only = {c["claim_ref"]["entity_id"] for c in result["related_claims"]}
+    assert not answers & context_only  # one claim, one purpose
+    assert all(c["evidence"] for c in result["related_claims"])
+
+
+@pytest.mark.parametrize("fixture,question,context", [
+    ("F01_complete", "thao nap che", {"machine_model": "DEMO_TC_A"}),   # observed_next
+    ("F07_repeated_step", "thu lai", {}),                                # repeated_step
+])
+def test_chronology_and_repetition_are_not_dependencies(tmp_path, fixture, question, context):
+    """Schema 1.0.0 section 6: order in the source never implies a requirement."""
+    db = prepare(tmp_path / fixture, fixture)
+    result = ask_near(db, question, context=context)
+    assert result["status"] == "retrieved" and len(result["steps"]) == 1  # a neighbour exists to skip
+    assert result["related_steps"] == [] and result["related_claims"] == []
+    assert result["trace"]["neighbors"]["relations"] == ["branch_if", "corrects", "requires"]
+
+
+def test_depth_zero_disables_expansion_without_touching_the_answer(tmp_path):
+    db = prepare(tmp_path, "F08_branch_if")
+    on = ask_near(db, "kiem cam bien")
+    off = ask_near(db, "kiem cam bien", neighbor_depth=0)
+    assert off["related_steps"] == [] and off["related_claims"] == []
+    assert off["steps"] == on["steps"] and off["claims"] == on["claims"]
+    assert off["status"] == on["status"]
+
+
+def test_a_neighbour_cannot_make_an_unanswerable_question_answered(tmp_path):
+    raw = read_bundle(FIXTURE_ROOT / "F08_branch_if")
+    for wf in raw["workflows"]:
+        for claim in wf["claims"]:
+            if claim["claim_id"] == "SYN_WF_0009_CL_003":
+                claim["text"] = "Nguoi noi cho biet khi do se kiem tra cam bien."
+    db = prepare(tmp_path, raw)
+    result = ask_near(db, "quantum chromodynamics")
+    assert result["status"] == "insufficient_evidence"
+    assert result["claims"] == [] and result["related_claims"] == []
+
+
+def test_a_dependency_outside_the_served_corpus_is_reported_not_dropped(tmp_path):
+    """A prerequisite with no assertable claim must surface as a gap, not vanish."""
+    raw = read_bundle(FIXTURE_ROOT / "F08_branch_if")
+    for wf in raw["workflows"]:
+        # A step record carries its FieldRef claims plus the relation/condition claims that
+        # touch it, so ST_001 loses its answer document only when all three are blocked.
+        for claim in wf["claims"]:
+            if claim["claim_id"] in ("SYN_WF_0009_CL_001", "SYN_WF_0009_CL_002", "SYN_WF_0009_CL_004"):
+                # D-01 derives the claim status from its links, so weaken the link.
+                for link in claim["evidence_links"]:
+                    link["support_status"] = "insufficient"
+                claim["support_status"] = "insufficient"
+    db = prepare(tmp_path, raw)
+    result = ask_near(db, "kiem cam bien")
+    assert result["related_steps"] == [] and result["related_claims"] == []
+    assert result["trace"]["neighbors"]["unavailable_step_ids"] == ["SYN_WF_0009_ST_001"]
+    blocked = {c["claim_id"] for c in result["blocked_claims"]}
+    assert {"SYN_WF_0009_CL_001", "SYN_WF_0009_CL_002"} <= blocked
+
+
+def test_related_steps_are_capped_deterministically_and_the_rest_named(tmp_path):
+    db = prepare(tmp_path, "F08_branch_if")
+    result = ask_near(db, "kiem cam bien", max_related_steps=0)
+    assert result["related_steps"] == [] and result["related_claims"] == []
+    assert result["trace"]["neighbors"]["truncated_step_ids"] == ["SYN_WF_0009_ST_001"]
+
+
+@pytest.mark.parametrize("bad", [{"neighbor_depth": -1}, {"neighbor_depth": 4}, {"max_related_steps": 21}])
+def test_neighbour_config_bounds(bad):
+    with pytest.raises(ValueError):
+        RetrievalConfig(**bad)

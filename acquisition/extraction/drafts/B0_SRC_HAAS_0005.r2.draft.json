@@ -1,0 +1,879 @@
+{
+  "schema_version": "1.0.0",
+  "workflow_id": "B0_SRC_HAAS_0005",
+  "revision": 2,
+  "source_type": "real",
+  "dataset_split": "dev",
+  "title": "Replace a Tool Pocket on Your Haas Side Mount Tool Changer (SMTC)",
+  "language": "en",
+  "created_at": "2026-09-15T06:12:00Z",
+  "source_ids": [
+    "SRC_HAAS_0005"
+  ],
+  "context": {
+    "manufacturer": "Haas",
+    "subsystem": "Side Mount Tool Changer (SMTC)",
+    "task_type": "maintenance",
+    "symptoms": [],
+    "alarm_codes": [],
+    "components": [],
+    "provenance": {
+      "manufacturer": {
+        "basis": "source",
+        "source_ids": [
+          "SRC_HAAS_0005"
+        ],
+        "note": "Extracted from source SRC_HAAS_0005"
+      },
+      "machine_family": {
+        "basis": "unknown",
+        "source_ids": [],
+        "note": "Not stated"
+      },
+      "machine_model": {
+        "basis": "unknown",
+        "source_ids": [],
+        "note": "Not stated"
+      },
+      "subsystem": {
+        "basis": "source",
+        "source_ids": [
+          "SRC_HAAS_0005"
+        ],
+        "note": "Extracted from source SRC_HAAS_0005"
+      },
+      "task_type": {
+        "basis": "source",
+        "source_ids": [
+          "SRC_HAAS_0005"
+        ],
+        "note": "Extracted from source SRC_HAAS_0005"
+      },
+      "symptoms": {
+        "basis": "unknown",
+        "source_ids": [],
+        "note": "Not stated"
+      },
+      "alarm_codes": {
+        "basis": "unknown",
+        "source_ids": [],
+        "note": "Not stated"
+      },
+      "components": {
+        "basis": "unknown",
+        "source_ids": [],
+        "note": "Not stated"
+      }
+    }
+  },
+  "steps": [
+    {
+      "step_id": "ST_001",
+      "display_order": 1,
+      "title": "Position Damaged Pocket and Press Emergency Stop",
+      "fields": {
+        "context": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "The procedure is performed on a Haas Side Mount Tool Changer (SMTC).",
+              "role": "context",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0001",
+                  "SRC_HAAS_0005:U0002"
+                ]
+              ],
+              "explanation": "Presenter states working on the side mount tool changer."
+            }
+          ]
+        },
+        "observation": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "action": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "Set machine rapids down to 25%.",
+              "role": "action",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0002"
+                ]
+              ],
+              "explanation": "Presenter explicitly instructs setting rapid overrides to 25%."
+            },
+            {
+              "text": "Rotate the carousel to the damaged pocket.",
+              "role": "action",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0002"
+                ]
+              ],
+              "explanation": "Presenter instructs rotating the tool changer to the pocket needing replacement."
+            },
+            {
+              "text": "Press Emergency Stop (E-stop) once the damaged pocket is in position.",
+              "role": "action",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0003"
+                ]
+              ],
+              "explanation": "Presenter states to hit e-stop after positioning the pocket."
+            }
+          ]
+        },
+        "rationale": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "condition": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "outcome": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        }
+      },
+      "questions": []
+    },
+    {
+      "step_id": "ST_002",
+      "display_order": 2,
+      "title": "Remove Cam Box Sheet Metal Cover Panels",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "observation": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "action": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "Remove four top fasteners located on top of the machine panel first.",
+              "role": "action",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0006",
+                  "SRC_HAAS_0005:U0007"
+                ]
+              ],
+              "explanation": "Presenter specifies removing the four fasteners on top before panel removal."
+            },
+            {
+              "text": "Remove the large panel on the left side and two smaller panel pieces below the double arm from the bottom of the cam box.",
+              "role": "action",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0003",
+                  "SRC_HAAS_0005:U0004",
+                  "SRC_HAAS_0005:U0005"
+                ]
+              ],
+              "explanation": "Presenter details removing three sheet metal pieces at the bottom of the cam box."
+            }
+          ]
+        },
+        "rationale": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "Removing sheet metal panels provides physical access to the damaged pocket and its corresponding switches behind it.",
+              "role": "rationale",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0005"
+                ]
+              ],
+              "explanation": "Presenter explicitly explains this removal is required to gain access to the damaged pocket and switches."
+            }
+          ]
+        },
+        "condition": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "outcome": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        }
+      },
+      "questions": []
+    },
+    {
+      "step_id": "ST_003",
+      "display_order": 3,
+      "title": "Remove Tools, Mark Carousel Disk Alignment, and Remove Number Ring",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "observation": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "action": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "Remove all tools from the carousel and mark their original positions.",
+              "role": "action",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0008"
+                ]
+              ],
+              "explanation": "Presenter states to remove all tools and mark their locations."
+            },
+            {
+              "text": "Mark both the carousel disk and the pocket to ensure correct alignment upon reinstallation.",
+              "role": "action",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0009",
+                  "SRC_HAAS_0005:U0010"
+                ]
+              ],
+              "explanation": "Presenter marks disk and pocket to ensure proper disk installation later."
+            },
+            {
+              "text": "Remove the number ring from the carousel.",
+              "role": "action",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0010"
+                ]
+              ],
+              "explanation": "Presenter removes the number ring."
+            }
+          ]
+        },
+        "rationale": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "Marking positions ensures the carousel disk and tools are reinstalled correctly.",
+              "role": "rationale",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0009"
+                ]
+              ],
+              "explanation": "Presenter explains marking ensures correct reinstallation of the carousel disk."
+            }
+          ]
+        },
+        "condition": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "outcome": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        }
+      },
+      "questions": []
+    },
+    {
+      "step_id": "ST_004",
+      "display_order": 4,
+      "title": "Disconnect Pneumatic Air Supply and Remove Pilot Check Valve",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "observation": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "action": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "Disconnect main pneumatic air supply to the machine.",
+              "role": "action",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0011"
+                ]
+              ],
+              "explanation": "Presenter states to disconnect main air."
+            },
+            {
+              "text": "Remove the pilot check valve.",
+              "role": "action",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0012"
+                ]
+              ],
+              "explanation": "Presenter removes the pilot check valve."
+            }
+          ]
+        },
+        "rationale": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "Removing the pilot check valve allows the pocket to move up and down freely to gain access to mounting screws.",
+              "role": "rationale",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0013"
+                ]
+              ],
+              "explanation": "Presenter notes removing check valve allows free vertical movement of pocket to reach screw."
+            }
+          ]
+        },
+        "condition": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "outcome": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        }
+      },
+      "questions": []
+    },
+    {
+      "step_id": "ST_005",
+      "display_order": 5,
+      "title": "Remove Pocket Stop, Shoulder Bolt, Retaining Bolt, and Damaged Pocket",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "observation": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "action": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "Remove four bolts from the pocket stop and remove the pocket stop.",
+              "role": "action",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0014",
+                  "SRC_HAAS_0005:U0015"
+                ]
+              ],
+              "explanation": "Presenter unbolts and removes pocket stop."
+            },
+            {
+              "text": "Remove the shoulder bolt located on the backside of the carousel right next to the lower proximity switch.",
+              "role": "action",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0015",
+                  "SRC_HAAS_0005:U0016"
+                ]
+              ],
+              "explanation": "Presenter removes shoulder bolt from back side of carousel near proximity switch."
+            },
+            {
+              "text": "Remove the retaining bolt and extract the damaged pocket from the assembly.",
+              "role": "action",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0017"
+                ]
+              ],
+              "explanation": "Presenter removes retaining bolt and lifts out the pocket."
+            }
+          ]
+        },
+        "rationale": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "condition": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "outcome": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        }
+      },
+      "questions": []
+    },
+    {
+      "step_id": "ST_006",
+      "display_order": 6,
+      "title": "Inspect Components and Lubricate Pocket Slider",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "observation": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "action": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "Rotate the cam follower to confirm it spins freely.",
+              "role": "action",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0018",
+                  "SRC_HAAS_0005:U0019"
+                ]
+              ],
+              "explanation": "Presenter instructs rotating cam follower to check free movement."
+            },
+            {
+              "text": "Check the plungers inside the pocket to ensure they are not worn out.",
+              "role": "action",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0019",
+                  "SRC_HAAS_0005:U0020"
+                ]
+              ],
+              "explanation": "Presenter instructs checking internal plungers for wear."
+            },
+            {
+              "text": "Apply grease to the pocket slider.",
+              "role": "action",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0020",
+                  "SRC_HAAS_0005:U0021"
+                ]
+              ],
+              "explanation": "Presenter states applying grease inside pocket slider."
+            }
+          ]
+        },
+        "rationale": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "condition": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "outcome": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        }
+      },
+      "questions": []
+    },
+    {
+      "step_id": "ST_007",
+      "display_order": 7,
+      "title": "Install Replacement Pocket and Fasten Hardware",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "observation": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "action": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "Assemble the new pocket onto the slider and position both back into place.",
+              "role": "action",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0021",
+                  "SRC_HAAS_0005:U0022"
+                ]
+              ],
+              "explanation": "Presenter states attaching new pocket to slider and placing back in position."
+            },
+            {
+              "text": "Reinstall the retainer bolt and tighten securely.",
+              "role": "action",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0022",
+                  "SRC_HAAS_0005:U0023"
+                ]
+              ],
+              "explanation": "Presenter reinstalls and tightens retainer bolt."
+            },
+            {
+              "text": "Lower the pocket, attach the shoulder bolt, and screw it in.",
+              "role": "action",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0023",
+                  "SRC_HAAS_0005:U0024"
+                ]
+              ],
+              "explanation": "Presenter lowers pocket and fastens shoulder bolt."
+            },
+            {
+              "text": "Reinstall the pocket stop hardware.",
+              "role": "action",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0025"
+                ]
+              ],
+              "explanation": "Presenter installs the pocket stop."
+            }
+          ]
+        },
+        "rationale": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "condition": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "outcome": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "The installed pocket moves freely and triggers pocket-up and pocket-down proximity switches properly.",
+              "role": "outcome",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0024"
+                ]
+              ],
+              "explanation": "Presenter observes pocket moves freely and switches read pocket up/down status."
+            }
+          ]
+        },
+        "acceptance_criteria": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "Pocket movement is smooth and pocket up/down proximity switches generate correct signals.",
+              "role": "acceptance_criteria",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0024"
+                ]
+              ],
+              "explanation": "Presenter confirms free movement and switch output reading."
+            }
+          ]
+        }
+      },
+      "questions": []
+    },
+    {
+      "step_id": "ST_008",
+      "display_order": 8,
+      "title": "Reinstall Pilot Check Valve, Number Disc, and Covers",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "observation": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "action": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "Reinstall the pilot check valve.",
+              "role": "action",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0026"
+                ]
+              ],
+              "explanation": "Presenter states installing check valve."
+            },
+            {
+              "text": "Reinstall the number disc by aligning the dot on the number disc with the dot on the pocket.",
+              "role": "action",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0027"
+                ]
+              ],
+              "explanation": "Presenter aligns alignment dots on disc and pocket."
+            },
+            {
+              "text": "Reinstall the remaining three sheet metal cover panels.",
+              "role": "action",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0028"
+                ]
+              ],
+              "explanation": "Presenter reinstalls three panels."
+            }
+          ]
+        },
+        "rationale": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "condition": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "outcome": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        }
+      },
+      "questions": []
+    },
+    {
+      "step_id": "ST_009",
+      "display_order": 9,
+      "title": "Restore Power/Air, Reload Tools, and Test Tool Changer Operation",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "observation": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "action": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "Reinstall all tools into their original carousel locations.",
+              "role": "action",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0028",
+                  "SRC_HAAS_0005:U0029"
+                ]
+              ],
+              "explanation": "Presenter installs tools back."
+            },
+            {
+              "text": "Turn on main pneumatic air supply and release the E-stop.",
+              "role": "action",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0029",
+                  "SRC_HAAS_0005:U0030"
+                ]
+              ],
+              "explanation": "Presenter restores air supply and releases e-stop."
+            },
+            {
+              "text": "Run the tool changer through several tool changes.",
+              "role": "action",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0030",
+                  "SRC_HAAS_0005:U0031"
+                ]
+              ],
+              "explanation": "Presenter instructs running tool changer through multiple tool changes to verify function."
+            }
+          ]
+        },
+        "rationale": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "condition": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "outcome": {
+          "state": "missing",
+          "claim_ids": [],
+          "claims": []
+        },
+        "acceptance_criteria": {
+          "state": "present",
+          "claim_ids": [],
+          "claims": [
+            {
+              "text": "All sheet metal panels must be secured, main air turned on, and tool changer operates flawlessly through several test tool changes.",
+              "role": "acceptance_criteria",
+              "evidence_type": "stated",
+              "evidence": [
+                [
+                  "SRC_HAAS_0005:U0029"
+                ],
+                [
+                  "SRC_HAAS_0005:U0031"
+                ]
+              ],
+              "explanation": "Presenter outlines test verification criteria."
+            }
+          ]
+        }
+      },
+      "questions": []
+    }
+  ],
+  "claims": [],
+  "relations": [],
+  "questions": [],
+  "attribution": {
+    "label": "Orville",
+    "kind": "speaker"
+  },
+  "scope": "Procedure described in B0_SRC_HAAS_0005",
+  "supersedes_revision": 1,
+  "authored_by": "codex",
+  "revision_base": {
+    "path": "data/workflows/dev/B0_SRC_HAAS_0005.r1.json",
+    "snapshot_sha256": "0c0455591f5db02032ba9dbaa13e92b7f93a2e134bde7a2a61131ec65bcfd69b"
+  },
+  "change_log": [
+    {
+      "changed_at": "2026-09-15T06:12:00Z",
+      "actor_id": "codex",
+      "reason": "Repair the evidence window for B0_SRC_HAAS_0005_CL_020: join raw caption cues U0020 and U0021 so the quote includes 'grease'. Preserve claim text and prior evidence IDs; this draft has no human source review.",
+      "previous_revision": 1,
+      "id_mapping": []
+    }
+  ]
+}

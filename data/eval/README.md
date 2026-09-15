@@ -2,16 +2,27 @@
 
 `haas_real_dev.retrieval.v0.jsonl`: 54 câu real/dev, soạn trên bundle
 `BUNDLE_HAAS_SMTC_DEV_e98521a7942a` (`B0_SRC_HAAS_0005` r1 và `REAL_WF_0001` r1).
-Bundle hiện tại `BUNDLE_HAAS_SMTC_DEV_0209a847a66c` có thêm `REAL_WF_0002/0003`, nhưng mọi
+Bundle hiện tại `BUNDLE_HAAS_SMTC_DEV_4d433ec6bd90` có thêm `REAL_WF_0002/0003`, nhưng mọi
 claim của hai workflow này còn `source_review=pending`, nên corpus real được phục vụ vẫn chỉ
-gồm hai workflow trên. Khi hai workflow này được review, cần xem lại nhãn: ví dụ Q038
+gồm B0 r2 và REAL_WF_0001 r1. B0 r1 vẫn giữ để tra cứu lịch sử, không phải revision active.
+Khi hai workflow này được review, cần xem lại nhãn: ví dụ Q038
 (alarm 2066) sẽ có quy trình ở `REAL_WF_0003`.
 Q001–Q038 là bộ gốc; Q039–Q054 là câu phủ định bổ sung (cùng lĩnh vực CNC nhưng KB
 không có), dùng để chỉnh ngưỡng từ chối.
 
-> **Chưa có người kiểm nhãn gold.** Q001–Q038 đã được AI (Codex) kiểm (`ai_reviewed`),
-> Q039–Q054 còn là bản nháp (`draft`). Số đo chỉ dùng để debug pipeline,
+> **Chưa có người kiểm nhãn gold.** Q032–Q038 giữ lượt AI review (`ai_reviewed`).
+> Q001–Q031 về `draft` sau khi chuyển B0 r1 sang r2; Q039–Q054 vẫn là bản nháp.
+> Số đo chỉ dùng để debug pipeline,
 > **không báo cáo như kết quả**. Evaluator in cảnh báo này cho đến khi mọi câu được người kiểm.
+
+Bảo trì ref ngày 2026-09-15: đối chiếu xác nhận toàn bộ Step, nội dung/ID Claim và
+context của B0 không đổi giữa r1/r2; chỉ cửa sổ evidence của CL_020 được mở rộng.
+Chuyển ref B0 của 31 câu sang r2, giữ nguyên câu hỏi, gold Step ID và các trạng thái kỳ vọng.
+Đây không phải lượt gán lại nhãn theo kết quả retrieval và không phải human review.
+Note AI cũ vẫn lưu để đối chiếu r1; các câu bị ảnh hưởng chờ kiểm lại gold trên r2.
+Review nguồn của `duy32123` không áp dụng cho nhãn eval. Cần xuất sheet mới sau thay đổi;
+sheet cũ của những câu này có fingerprint không còn khớp. Evaluator vẫn từ chối ref stale,
+không tự động ánh xạ revision trong lúc chấm điểm.
 
 ## Người kiểm cần làm
 

@@ -41,7 +41,17 @@ def test_import_real_bundle_and_noop_preserves_inputs(tmp_path):
     assert manifest["embedding_model"] == "none"
     assert manifest["index_kind"] == "search-records"
     steps = [r for r in records if r["record_type"] == "step"]
-    assert len(steps) == sum(len(w["steps"]) for w in original["workflows"])
+    # Bundles retain historical revisions; search records contain only the
+    # latest active revision of each workflow, not every stored snapshot.
+    latest = {}
+    for workflow in original["workflows"]:
+        wid = workflow["workflow_id"]
+        if wid not in latest or workflow["revision"] > latest[wid]["revision"]:
+            latest[wid] = workflow
+    active = [w for w in latest.values() if w["lifecycle"] == "active"]
+    assert len(steps) == sum(len(w["steps"]) for w in active)
+    assert {(r["workflow_id"], r["revision"]) for r in records} == {
+        (w["workflow_id"], w["revision"]) for w in active}
     for record in records:
         (StepSearchRecord if record["record_type"] == "step" else WorkflowSearchRecord).model_validate(record)
         assert record["source_type"] == "real"

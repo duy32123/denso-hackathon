@@ -5,7 +5,10 @@ import re
 import unicodedata
 from collections import Counter
 
-TOKENIZER_VERSION = "unicode-fold-1"
+from snowballstemmer import stemmer
+
+TOKENIZER_VERSION = "unicode-fold-2+snowball-en"
+_ENGLISH = stemmer("english")
 STOPWORDS = set("a an the is are of to for and or how what why when do does i you can "
                 "la va cua cho toi cac nhung mot nhu nao gi tai sao khi co duoc voi de".split())
 
@@ -15,15 +18,23 @@ def fold(text: str) -> str:
                    if not unicodedata.combining(c))
 
 
-def tokens(text: str) -> list[str]:
-    # Preserve numbers, negation, and codes like VF-2; do not stem technical units.
-    return [t for t in re.findall(r"[^\W_]+(?:[-_\.][^\W_]+)*", fold(text)) if t not in STOPWORDS]
+def stem_word(token: str) -> str:
+    """English stem for plain words only; codes and numbers ("vf-2", "2066") stay intact."""
+    return _ENGLISH.stemWord(token) if token.isalpha() else token
 
 
-def bm25(query: str, documents: dict[str, list[str]], k1: float = 1.2, b: float = .75) -> dict[str, float]:
+def tokens(text: str, *, stem: bool = False) -> list[str]:
+    # Preserve numbers, negation, and codes like VF-2. Stem only English text, so that
+    # "rapids"/"rapid" and "rotating"/"rotate" match; folded Vietnamese is never stemmed.
+    found = [t for t in re.findall(r"[^\W_]+(?:[-_\.][^\W_]+)*", fold(text)) if t not in STOPWORDS]
+    return [stem_word(t) for t in found] if stem else found
+
+
+def bm25(query: str, documents: dict[str, list[str]], k1: float = 1.2, b: float = .75, *,
+         stem: bool = False) -> dict[str, float]:
     if not documents:
         return {}
-    terms = set(tokens(query))
+    terms = set(tokens(query, stem=stem))
     lengths = {key: len(words) for key, words in documents.items()}
     average = sum(lengths.values()) / len(documents) or 1
     frequencies = {key: Counter(words) for key, words in documents.items()}
@@ -54,8 +65,8 @@ def rrf(rankings: list[list[str]], k: int = 60) -> dict[str, float]:
 
 
 def rank(query: str, docs: list[dict], query_vector: list[float] | None, *,
-         strategy: str, candidate_k: int, min_cosine: float, rrf_k: int) -> list[dict]:
-    lexical = bm25(query, {d["id"]: d["tokens"] for d in docs}) if strategy != "vector" else {}
+         strategy: str, candidate_k: int, min_cosine: float, rrf_k: int, stem: bool = False) -> list[dict]:
+    lexical = bm25(query, {d["id"]: d["tokens"] for d in docs}, stem=stem) if strategy != "vector" else {}
     dense = {}
     if strategy != "lexical":
         if query_vector is None:

@@ -8,7 +8,7 @@ from conftest import FIXTURE_ROOT, REPO_ROOT, read_bundle, write_bundle
 from knowflow_contracts.models import Workflow
 from retrieval.evaluation.__main__ import main
 from retrieval.evaluation.harness import (
-    EvalQuestion, EvaluationError, check_gold, load_questions, run_evaluation, score_ranking,
+    EvalQuestion, EvaluationError, TranslationCache, check_gold, load_questions, run_evaluation, score_ranking,
 )
 from retrieval.importer import import_bundle
 from retrieval.indexing.embeddings import unit_vector
@@ -98,7 +98,38 @@ def test_vector_and_hybrid_share_one_query_embedding(tmp_path):
                                   strategies=["vector", "hybrid"], embedder=stub)
     assert sum(r["embedding_calls"] for r in rows if r["strategy"] == "hybrid") == 0
     assert stub.query_calls == report["query_embedding_calls"] == sum(r["embedding_calls"] for r in rows)
-    assert stub.query_calls == 2  # Q3 needs clarification before any embedding
+    assert stub.query_calls == 1  # Q2 fails the relevance gate, Q3 needs clarification: neither embeds
+
+
+def test_disk_query_cache_reuses_vectors_across_runs(tmp_path):
+    stub = StubEmbedder()
+    db, path = setup(tmp_path, embedder=stub)
+    cache = tmp_path / "query_cache.jsonl"
+    first, _ = run_evaluation(db, path, mode="synthetic", split="dev", strategies=["vector"],
+                              embedder=stub, query_cache=cache)
+    assert stub.query_calls == first["query_embedding_calls"] == 1
+    second, rows = run_evaluation(db, path, mode="synthetic", split="dev", strategies=["vector"],
+                                  embedder=stub, query_cache=cache)
+    assert stub.query_calls == 1 and second["query_embedding_calls"] == 0
+    assert first["strategies"]["vector"]["retrieval"] == second["strategies"]["vector"]["retrieval"]
+    assert all(r["latency_ms"] >= r["engine_latency_ms"] for r in rows)
+    assert any(r["embedding_reused"] for r in rows)
+
+
+def test_translation_cache_reuses_across_runs(tmp_path):
+    class Upper:
+        config = {"provider": "test", "model": "upper", "prompt_version": "1"}
+        calls = 0
+
+        def to_english(self, text):
+            Upper.calls += 1
+            return text.upper()
+
+    path = tmp_path / "translations.jsonl"
+    assert TranslationCache(Upper(), path).to_english("xin chào") == "XIN CHÀO"
+    second = TranslationCache(Upper(), path)
+    assert second.to_english("xin chào") == "XIN CHÀO"
+    assert Upper.calls == 1 and second.calls == 0
 
 
 def test_stale_gold_is_rejected_before_retrieval(tmp_path):

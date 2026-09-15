@@ -77,8 +77,11 @@ uv pip install -e ".[dev,retrieval]"
 ```
 
 Đặt `GEMINI_API_KEY` trong `.env`. Build mặc định gửi search text đến Gemini để
-tạo embedding; query vector/hybrid gửi câu hỏi để tạo query embedding. Lexical
-không gọi API. Không log API key và không tự fallback sang vector giả khi API lỗi.
+tạo embedding; query vector/hybrid gửi câu hỏi để tạo query embedding, và câu hỏi
+tiếng Việt được gửi thêm một lần để dịch (xem bên dưới). Lexical không tự gọi API.
+Không log API key và không tự fallback sang vector giả hay câu chưa dịch khi API lỗi.
+Lỗi 429 (giới hạn theo phút; bậc miễn phí của model dịch là 15 lần/phút) được thử lại
+tối đa 3 lần theo `retryDelay` của server; đợi quá 65 giây (hết quota ngày) thì báo lỗi.
 
 ```powershell
 .\.venv\Scripts\python.exe -m retrieval.retrieval build --db out/retrieval/real_dev.sqlite --mode real --split dev --embedding gemini
@@ -99,7 +102,22 @@ record build trả `noop` và không gọi embedding lại.
 ## Thuật toán và bộ lọc
 
 - Lexical: BM25 thật (k1=1.2, b=0.75), tokenizer Unicode có bỏ dấu để hỗ trợ
-  tiếng Việt không dấu. Giữ phủ định, đơn vị, chữ số và mã dạng `VF-2`.
+  tiếng Việt không dấu. Giữ phủ định, đơn vị, chữ số và mã dạng `VF-2`. Record tiếng
+  Anh được stem bằng Snowball (`rapids`/`rapid`, `rotating`/`rotate`); mã, số và tiếng
+  Việt không bị stem.
+- Câu hỏi tiếng Việt (có dấu hoặc không dấu) trên corpus tiếng Anh được dịch sang tiếng
+  Anh bằng `gemini-3.5-flash-lite` (prompt `q2en-2`, temperature 0) **chỉ để tìm**: nhánh
+  lexical và cổng liên quan dùng bản dịch, vector dùng câu gốc, claim/citation luôn lấy từ
+  snapshot gốc (D-03). Bản dịch ghi ở `trace.query_translation`. Lexical-only không tự dịch;
+  `--query-translation never` tắt dịch.
+- Cổng liên quan (`--min-term-coverage`, mặc định 0.10): tỷ lệ từ nội dung của câu hỏi
+  (trọng số IDF) có trong corpus đủ điều kiện sau bộ lọc context. Dưới ngưỡng thì trả
+  `insufficient_evidence` trước khi gọi embedding. Câu tiếng Việt chưa dịch được thì bỏ qua
+  cổng (`gate=skipped`) thay vì từ chối oan. Ngưỡng chọn trên real/dev (nhãn chưa người kiểm,
+  15/09): mọi giá trị 0.10–0.15 cho 0/31 câu trả lời được bị loại và 13/19 câu ngoài phạm vi
+  bị chặn; lấy đầu thấp vì từ chối oan không cứu lại được. Không dùng cosine làm cổng: câu
+  cùng lĩnh vực mà KB không có vẫn đạt cosine cao hơn câu trả lời được. Câu dùng toàn từ chung
+  ("level the machine") vẫn lọt, WP3 phải từ chối. Cần chỉnh lại khi corpus lớn hơn.
 - Vector: `gemini-embedding-001`, 768 chiều mặc định, chuẩn hóa L2 và cosine
   chính xác trên tập đã lọc. SQLite lưu vector; chưa cần ANN/pgvector cho pilot.
   Tài liệu dùng `RETRIEVAL_DOCUMENT`, câu hỏi dùng `RETRIEVAL_QUERY` theo
@@ -127,6 +145,8 @@ record build trả `noop` và không gọi embedding lại.
   khi xuất claim. Pending real/inferred/unsupported/rejected không trở thành claim
   khẳng định. Conflict có index chẩn đoán riêng trong cùng corpus/context và được
   trả với `purpose=warning_only`, kèm cả hai phía, không dùng để đề xuất thao tác.
+  Conflict chỉ được báo khi Step chứa nó lọt top-k cùng các Step trả lời; xếp riêng thì
+  chỉ cần có một conflict trong corpus là câu nào cũng bị gắn `conflicting_sources`.
 - Dedup claim theo workflow/revision/claim_id, lấy điểm max và giữ matched_step_ids.
   Giữ nguyên field missing, scope, attribution và loại relation trong snapshot.
 - Cache truy vấn hiện tắt. Build manifest lưu namespace, base build, checksum,

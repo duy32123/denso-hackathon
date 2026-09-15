@@ -13,6 +13,7 @@ from knowflow_contracts.retrieval_policy import ClaimHit, dedup_claim_hits
 from retrieval.indexing.embeddings import Embedder, GeminiEmbedder, unit_vector
 from retrieval.indexing.search_index import RetrievalError, read_corpus, require_index
 from .context import context_gate, resolve_context
+from .query import GeminiTranslator, Translator, content_terms, looks_vietnamese, term_coverage
 from .ranking import fold, rank
 
 
@@ -24,6 +25,11 @@ class RetrievalConfig:
     rrf_k: int = 60
     min_cosine: float = .25
     intent: str = "auto"
+    # Chosen on real/dev (labels not human-checked, 2026-09-15): any value in 0.10-0.15 rejected
+    # 0/31 answerable and 13/19 out-of-scope questions; the low end, since a false rejection
+    # cannot be recovered downstream. Recalibrate when the corpus grows.
+    min_term_coverage: float = .10
+    query_translation: str = "auto"
 
     def __post_init__(self):
         if self.strategy not in ("lexical", "vector", "hybrid"):
@@ -32,10 +38,12 @@ class RetrievalConfig:
             raise ValueError("Require 1 <= top_k <= candidate_k <= 100 and rrf_k >= 1")
         if not 0 <= self.min_cosine <= 1 or self.intent not in ("auto", "detail", "procedure"):
             raise ValueError("Invalid min_cosine or intent")
+        if not 0 <= self.min_term_coverage <= 1 or self.query_translation not in ("auto", "never"):
+            raise ValueError("Invalid min_term_coverage or query_translation")
 
 
 def retrieve(db: str | Path, request: QueryRequest, *, config: RetrievalConfig | None = None,
-             embedder: Embedder | None = None) -> dict:
+             embedder: Embedder | None = None, translator: Translator | None = None) -> dict:
     start = time.perf_counter()
     config = config or RetrievalConfig()
     if not request.question.strip():
@@ -99,6 +107,33 @@ def retrieve(db: str | Path, request: QueryRequest, *, config: RetrievalConfig |
     hints = context.symptoms + context.components
     if hints:
         query_text += "\n" + "; ".join(hints)
+    # Lexical text in the corpus language. Translation is for SEARCH only (contract D-03);
+    # dense retrieval keeps the original question. Lexical-only never calls an API itself.
+    lexical_text, translation = query_text, None
+    english_corpus = {d["record"]["language"] for d in docs} == {"en"}
+    vietnamese = english_corpus and looks_vietnamese(query_text)
+    if vietnamese and config.query_translation == "auto":
+        owned_translator = translator is None and config.strategy != "lexical"
+        if owned_translator:
+            translator = GeminiTranslator()
+        if translator is not None:
+            try:
+                lexical_text = translator.to_english(query_text)
+            finally:
+                if owned_translator:
+                    translator.close()
+            translation = {"text": lexical_text, **translator.config}
+    result["trace"]["query_translation"] = translation
+    # Coverage counts conflict diagnostics too: a question about a contested fact must reach
+    # the conflict lookup instead of being rejected as out of scope.
+    step_docs = [d for d in docs if d["record"]["record_type"] == "step"]
+    coverage, unseen = term_coverage(content_terms(lexical_text, stem=english_corpus), step_docs)
+    gate = ("skipped" if vietnamese and translation is None
+            else "rejected" if coverage < config.min_term_coverage else "passed")
+    result["trace"]["relevance"] = {"term_coverage": round(coverage, 4), "unseen_terms": unseen,
+                                    "min_term_coverage": config.min_term_coverage, "gate": gate}
+    if gate == "rejected":
+        return finish("insufficient_evidence")  # before any embedding call
     query_vector = None
     if config.strategy != "lexical":
         expected = manifest["embedding"]
@@ -120,7 +155,7 @@ def retrieve(db: str | Path, request: QueryRequest, *, config: RetrievalConfig |
                 embedder.close()
 
     def ranked(items):
-        return rank(query_text, items, query_vector, strategy=config.strategy,
+        return rank(lexical_text, items, query_vector, strategy=config.strategy, stem=english_corpus,
                     candidate_k=config.candidate_k, min_cosine=config.min_cosine, rrf_k=config.rrf_k)
 
     def rank_trace(items):
@@ -143,6 +178,9 @@ def retrieve(db: str | Path, request: QueryRequest, *, config: RetrievalConfig |
         return finish()
     selected = result["workflow_candidates"][0]
     result["selected_workflow"] = selected
+    if len(result["workflow_candidates"]) > 1:
+        # Same scale as the strategy's score; a near-zero margin means the pick is arbitrary.
+        result["trace"]["workflow_margin"] = selected["score"] - result["workflow_candidates"][1]["score"]
     wf = corpus["workflows"][selected["workflow_id"]]
     within_workflow = [d for d in docs if d["record"]["record_type"] == "step"
                        and d["record"]["workflow_id"] == wf.workflow_id]
@@ -191,10 +229,13 @@ def retrieve(db: str | Path, request: QueryRequest, *, config: RetrievalConfig |
             result["claims"].append(package(wf, hit.claim_id, hit.matched_step_ids, hit.score, "answer_candidate"))
     # Separate lookup across the SAME filtered corpus, so conflicts cannot disappear
     # merely because they were excluded from assertable search text.
-    conflict_hits = ranked([d for d in docs if d["record"]["record_type"] == "step" and d["purpose"] == "conflict"])
+    # Conflict diagnostics compete with assertable steps of the same filtered corpus and are
+    # reported only inside the top-k; ranked alone, any conflict would flag every query.
+    competing = ranked([d for d in docs if d["record"]["record_type"] == "step"])[:config.top_k]
+    conflict_hits = [hit for hit in competing if hit["doc"]["purpose"] == "conflict"]
     result["trace"]["conflict_ranking"] = rank_trace(conflict_hits)
     conflict_keys = set()
-    for hit in conflict_hits[:config.top_k]:
+    for hit in conflict_hits:
         record = hit["doc"]["record"]
         other = corpus["workflows"][record["workflow_id"]]
         claims = {c.claim_id: c for c in other.claims}

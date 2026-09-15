@@ -6,6 +6,7 @@ requires-python = ">=3.11"
 dependencies = [
     "pydantic>=2.7,<3",
     "python-dotenv>=1.0",
+    "snowballstemmer>=2.2",
 ]
 
 [project.scripts]

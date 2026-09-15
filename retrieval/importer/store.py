@@ -32,7 +32,7 @@ BUILD_CONFIG = {
 }
 
 
-class ImportError(ValueError):
+class BundleImportError(ValueError):
     """An actionable input, namespace or immutable-content conflict."""
 
 
@@ -46,7 +46,7 @@ def _hash(value: object) -> str:
 
 def _raise_errors(report: Report) -> None:
     if not report.ok:
-        raise ImportError("\n".join(str(issue) for issue in report.errors))
+        raise BundleImportError("\n".join(str(issue) for issue in report.errors))
 
 
 def _read_validated(root: Path) -> tuple[ParsedBundle, Report]:
@@ -55,15 +55,15 @@ def _read_validated(root: Path) -> tuple[ParsedBundle, Report]:
     try:
         manifest = Manifest.model_validate_json(manifest_bytes)
     except ValidationError as exc:
-        raise ImportError(f"V01 manifest.json: {exc}") from exc
+        raise BundleImportError(f"V01 manifest.json: {exc}") from exc
     declared = [entry.path for entry in manifest.files]
     if sorted(declared) != sorted(REQUIRED_FILES):
-        raise ImportError("V02 WP1 requires exactly sources.jsonl and workflows.jsonl in manifest.files")
+        raise BundleImportError("V02 WP1 requires exactly sources.jsonl and workflows.jsonl in manifest.files")
     contents = {name: (root / name).read_bytes() for name in REQUIRED_FILES}
     # Check transport integrity BEFORE parsing source/workflow schema.
     for entry in manifest.files:
         if hashlib.sha256(contents[entry.path]).hexdigest() != entry.sha256:
-            raise ImportError(f"V02 checksum mismatch: {entry.path}")
+            raise BundleImportError(f"V02 checksum mismatch: {entry.path}")
     report = Report(bundle_path=str(root))
     with tempfile.TemporaryDirectory(prefix="knowflow-import-") as scratch:
         stage = Path(scratch)
@@ -75,7 +75,7 @@ def _read_validated(root: Path) -> tuple[ParsedBundle, Report]:
             check_bundle(bundle, report)
         _raise_errors(report)
         if bundle is None:
-            raise ImportError("V01 could not parse bundle")
+            raise BundleImportError("V01 could not parse bundle")
     return bundle, report
 
 
@@ -104,7 +104,7 @@ def _initialize(conn: sqlite3.Connection, source_type: str, split: str) -> None:
     for key, value in {"store_version": STORE_VERSION, "source_type": source_type, "dataset_split": split}.items():
         row = conn.execute("SELECT value FROM settings WHERE key=?", (key,)).fetchone()
         if row is not None and row[0] != value:
-            raise ImportError(f"store {key}={row[0]}, requested {value}; use a separate database")
+            raise BundleImportError(f"store {key}={row[0]}, requested {value}; use a separate database")
         conn.execute("INSERT OR IGNORE INTO settings VALUES (?, ?)", (key, value))
 
 
@@ -116,7 +116,7 @@ def _insert_inputs(conn: sqlite3.Connection, bundle: ParsedBundle) -> tuple[int,
         row = conn.execute("SELECT content_hash FROM sources WHERE source_id=?", (source.source_id,)).fetchone()
         if row is not None:
             if row[0] != digest:
-                raise ImportError(f"source conflict: {source.source_id}; stored source cannot be overwritten")
+                raise BundleImportError(f"source conflict: {source.source_id}; stored source cannot be overwritten")
         else:
             conn.execute("INSERT INTO sources VALUES (?, ?, ?)", (source.source_id, digest, _json(payload)))
             new_sources += 1
@@ -126,7 +126,7 @@ def _insert_inputs(conn: sqlite3.Connection, bundle: ParsedBundle) -> tuple[int,
         ).fetchone()
         decision = decide_reimport(row[0] if row else None, workflow)
         if decision == "conflict":
-            raise ImportError(f"V09 snapshot conflict: {workflow.workflow_id}@r{workflow.revision}")
+            raise BundleImportError(f"V09 snapshot conflict: {workflow.workflow_id}@r{workflow.revision}")
         if decision == "new":
             conn.execute("INSERT INTO snapshots VALUES (?, ?, ?, ?)", (
                 *workflow.key, snapshot_content_hash(workflow), _json(workflow.model_dump(mode="json")),
@@ -196,7 +196,7 @@ def import_bundle(
     source_type, split = SourceType(source_type).value, DatasetSplit(split).value
     bundle, report = _read_validated(Path(bundle_dir))
     if (bundle.manifest.source_type, bundle.manifest.dataset_split) != (source_type, split):
-        raise ImportError(f"V02 bundle namespace does not match requested {source_type}/{split}")
+        raise BundleImportError(f"V02 bundle namespace does not match requested {source_type}/{split}")
     db = Path(db)
     db.parent.mkdir(parents=True, exist_ok=True)
     with closing(sqlite3.connect(db, timeout=30)) as conn:
@@ -230,7 +230,7 @@ def status(db: str | Path) -> dict:
             "WHERE s.key='active_build'"
         ).fetchone()
         if row is None:
-            raise ImportError("no completed active build")
+            raise BundleImportError("no completed active build")
         return json.loads(row[0])
 
 
@@ -248,7 +248,7 @@ def read_active_records(db: str | Path) -> tuple[dict, list[dict]]:
             "WHERE s.key='active_build'"
         ).fetchone()
         if row is None:
-            raise ImportError("no completed active build")
+            raise BundleImportError("no completed active build")
         manifest = json.loads(row[0])
         records = [json.loads(r[0]) for r in conn.execute(
             "SELECT payload FROM search_records WHERE index_build_id=? "

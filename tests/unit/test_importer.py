@@ -12,7 +12,7 @@ from conftest import FIXTURE_ROOT, REPO_ROOT, read_bundle, write_bundle
 from knowflow_contracts.models import Workflow
 from knowflow_contracts.search import StepSearchRecord, WorkflowSearchRecord
 from knowflow_contracts.snapshot import snapshot_content_hash
-from retrieval.importer import ImportError, import_bundle, read_active_records, status
+from retrieval.importer import BundleImportError, import_bundle, read_active_records, status
 from retrieval.importer import store
 from retrieval.importer.__main__ import main
 
@@ -81,7 +81,7 @@ def test_invalid_bundle_rejected_before_db_creation(tmp_path, f01, fault, code):
         manifest["files"][0]["record_count"] += 1
         (path / "manifest.json").write_text(json.dumps(manifest))
     db = tmp_path / "store.sqlite"
-    with pytest.raises(ImportError, match=code):
+    with pytest.raises(BundleImportError, match=code):
         ingest(path, db)
     assert not db.exists()
 
@@ -94,7 +94,7 @@ def test_same_revision_different_content_rolls_back_whole_bundle(tmp_path, f01, 
     f09["sources"].extend(f01["sources"])
     f01["workflows"][0]["title"] = "changed without revision"
     f09["workflows"].extend(f01["workflows"])
-    with pytest.raises(ImportError, match="V09 snapshot conflict"):
+    with pytest.raises(BundleImportError, match="V09 snapshot conflict"):
         ingest(write_bundle(tmp_path / "incoming", f09), db)
     assert (counts(db), status(db)) == before
 
@@ -104,7 +104,7 @@ def test_source_content_conflict_is_not_silently_overwritten(tmp_path, f01):
     ingest(write_bundle(tmp_path / "initial", f01), db)
     before = counts(db), status(db)
     f01["sources"][0]["title"] = "new source metadata"
-    with pytest.raises(ImportError, match="source conflict"):
+    with pytest.raises(BundleImportError, match="source conflict"):
         ingest(write_bundle(tmp_path / "incoming", f01), db)
     assert (counts(db), status(db)) == before
 
@@ -142,7 +142,7 @@ def test_evidence_immutability_checked_across_imports(tmp_path, f09):
     before = counts(db), status(db)
     f09["workflows"] = f09["workflows"][1:]
     f09["workflows"][0]["evidence"][0]["quote"] = "changed evidence retaining ID"
-    with pytest.raises(ImportError, match="V03"):
+    with pytest.raises(BundleImportError, match="V03"):
         ingest(write_bundle(tmp_path / "new", f09), db)
     assert (counts(db), status(db)) == before
 
@@ -165,7 +165,7 @@ def test_build_failure_keeps_last_active_build(tmp_path, f01, f09, monkeypatch):
 
 def test_wrong_requested_namespace_fails_before_creation(tmp_path, f01):
     db = tmp_path / "store.sqlite"
-    with pytest.raises(ImportError, match="namespace"):
+    with pytest.raises(BundleImportError, match="namespace"):
         ingest(write_bundle(tmp_path / "bundle", f01), db, "real")
     assert not db.exists()
 
@@ -184,7 +184,7 @@ def test_database_namespace_cannot_be_reused(tmp_path, f01, dimension):
             wf["dataset_split"] = "holdout"
         path = write_bundle(tmp_path / "holdout", f01)
         source_type, split = "synthetic", "holdout"
-    with pytest.raises(ImportError, match="separate database"):
+    with pytest.raises(BundleImportError, match="separate database"):
         ingest(path, db, source_type, split)
     assert (counts(db), status(db)) == before
 

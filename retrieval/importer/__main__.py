@@ -5,7 +5,7 @@ import json
 import sqlite3
 import sys
 
-from .store import ImportError, import_bundle, status
+from .store import BundleImportError, import_bundle, status
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -23,7 +23,7 @@ def main(argv: list[str] | None = None) -> int:
         result = status(args.db) if args.command == "status" else import_bundle(
             args.bundle, args.db, source_type=args.source_type, split=args.split,
         )
-    except (ImportError, OSError, ValueError, sqlite3.Error) as exc:
+    except (BundleImportError, OSError, ValueError, sqlite3.Error) as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
         return 1
     print(json.dumps(result, ensure_ascii=False, indent=2))

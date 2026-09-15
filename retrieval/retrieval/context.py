@@ -1,11 +1,19 @@
 """Conservative context extraction and hard metadata gates before ranking."""
 
 import re
+import unicodedata
 
 from knowflow_contracts.models import QueryContext, Workflow
 from .ranking import fold
 
 SCALAR_FIELDS = ("manufacturer", "machine_family", "machine_model", "subsystem", "task_type")
+# VF/VM/UMC are unambiguous even as "VF 2"; short prefixes must touch the number
+# ("ST-10", "EC400") so that "DC 24 V" or "st 2" are not read as machine models.
+MODEL_PATTERN = re.compile(r"\b(?:vf|vm|umc)[- ]?\d+(?:ss|y|l)?\b|\b(?:st|ds|dt|dm|ec|tm)-?\d+(?:ss|y|l)?\b"
+                           r"|\bdemo[_ -]tc[_ -][a-z0-9]+\b")
+# Matched on the question WITH diacritics: "lỗi 2066" is an alarm, "lối"/"lời"/"lợi" are not.
+ALARM_PATTERN = re.compile(r"(?<!\w)(?:alarm(?:\s+code)?|lỗi|loi|báo\s+động|bao\s+dong)(?:\s*[:#]\s*|\s+)"
+                           r"(?:(?:số|so)\s+)?([a-z]*\d[\w.-]*)")
 
 
 def normal(field: str, value: str) -> str:
@@ -22,7 +30,7 @@ def normal(field: str, value: str) -> str:
 def resolve_context(question: str, provided: QueryContext, workflows: list[Workflow]) -> tuple[QueryContext, list[str], dict]:
     text = fold(question)
     detected: dict[str, list[str]] = {}
-    models = re.findall(r"\b(?:vf|vm|st|umc|dt|dm|ec|dc)[- ]?\d+(?:ss|y|l)?\b|\bdemo[_ -]tc[_ -][a-z0-9]+\b", text)
+    models = MODEL_PATTERN.findall(text)
     if models:
         detected["machine_model"] = models
     # Match exact known model/family names, including synthetic fixture identities.
@@ -35,7 +43,8 @@ def resolve_context(question: str, provided: QueryContext, workflows: list[Workf
         detected.setdefault("manufacturer", []).append("Haas")
     if re.search(r"\bsmtc\b|side[- ]mount tool changer", text):
         detected.setdefault("subsystem", []).append("SMTC")
-    alarms = re.findall(r"(?:alarm(?: code)?|ma loi|loi|bao dong)\s*[:#]?\s*([a-z]*\d[\w.-]*)", text)
+    lowered = unicodedata.normalize("NFC", question).casefold()
+    alarms = [code.rstrip(".-") for code in ALARM_PATTERN.findall(lowered)]
     merged = provided.model_dump()
     conflicts = []
     for field, values in detected.items():

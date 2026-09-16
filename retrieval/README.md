@@ -137,6 +137,18 @@ record build trả `noop` và không gọi embedding lại.
   Điểm RRF/cosine không phải xác suất đúng hoặc độ có căn cứ của câu trả lời.
 - Luồng hai tầng: lọc context → xếp hạng Workflow → chọn một Workflow/revision
   → xếp hạng Step trong Workflow đó. Không ghép các quy trình thành một quy trình mới.
+- Mở rộng theo **quan hệ phụ thuộc** (`--neighbor-depth`, mặc định 1): từ Step đã khớp
+  lấy thêm `requires` (điều kiện tiên quyết), `branch_if` (điểm rẽ nhánh chi phối Step đó,
+  kèm `condition_claim_ids` nằm trên cạnh) và `corrects` (bản đính chính sau này).
+  **Không** mở rộng theo `observed_next` hay `repeated_step`: thứ tự trong nguồn không
+  phải quan hệ phụ thuộc (Schema 1.0.0 mục 6). Kết quả nằm ở khóa riêng `related_steps`
+  và `related_claims` (`purpose=context_only`, `score=null`): `steps`, `claims` và `status`
+  không đổi, nên một Step lân cận không bao giờ biến câu không trả lời được thành trả lời
+  được. Mỗi claim lân cận được kiểm lại bằng `claim_blockers` theo review flags **của chính
+  nó**, không kế thừa của Step đã khớp; claim đã là answer candidate không lặp lại ở đây.
+  Step phụ thuộc nằm ngoài corpus đã lọc được ghi ở `trace.neighbors.unavailable_step_ids`,
+  bị cắt vì `--max-related-steps` thì ghi ở `truncated_step_ids` — không biến mất im lặng.
+  **WP3 chưa dùng `related_steps`:** dữ liệu đã có, generator chưa nối; cần đo trên dev trước.
 - Corpus/split được kiểm trước khi đọc record/vector/snapshot. Sai namespace báo
   lỗi. Chỉ dùng latest active revision; nhập revision mới làm index cũ stale và query
   bị chặn cho đến khi build lại. Workflow withdrawn không quay về revision cũ.
@@ -208,3 +220,23 @@ câu phải từ chối). Bộ câu hỏi, quy tắc tính và cách kiểm nhã
 .\.venv\Scripts\python.exe -m retrieval.evaluation run --db out/retrieval/real_dev.sqlite --questions data/eval/haas_real_dev.retrieval.v0.jsonl --mode real --split dev
 .\.venv\Scripts\python.exe -m pytest tests/unit/test_evaluation.py
 ```
+
+## Đánh giá câu trả lời
+
+`retrieval.evaluation answers` chạy cùng bộ câu hỏi qua **đường phục vụ** `QAService`
+(đường mà `/v1/ask` dùng, không phải bản dựng lại) rồi chấm ở mức câu trả lời:
+citation correctness, answer groundedness, đúng/sai trạng thái từ chối — tách riêng
+`false_answer` và `false_abstention` — rò rỉ corpus/model, latency và token/chi phí.
+
+```powershell
+.\.venv\Scripts\python.exe -m retrieval.evaluation answers --db out/retrieval/real_dev.sqlite --questions data/eval/haas_real_dev.retrieval.v0.jsonl --mode real --verdict-template <github-user>
+.\.venv\Scripts\python.exe -m pytest tests/unit/test_evaluation_answers.py
+```
+
+Những gì code chứng minh được (claim có trong snapshot, đúng revision active, evidence
+link `supported` và mở được, review flags khớp snapshot, số trong câu có trong evidence
+được cite, không trộn corpus/workflow) được chấm trên mọi câu. Việc nguồn **có hỗ trợ**
+phát biểu hay không là việc của người kiểm: `citation_correctness` và `answer_groundedness`
+là `null` cho tới khi có file verdict, vì lượt kiểm nghĩa bằng LLM trong pipeline chính là
+thứ đang bị đo và không được tự chấm mình. Cách kiểm và định dạng verdict:
+[data/eval/README.md](../data/eval/README.md). Holdout bị chặn; đường phục vụ chỉ bật `dev`.

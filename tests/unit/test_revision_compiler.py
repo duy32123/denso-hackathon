@@ -223,10 +223,11 @@ def test_legacy_revision_is_replay_only_and_existing_id_conflict_is_detected(poo
     assert "revision_base" not in legacy
     snapshot = cw.compile_draft(legacy, pool)
     report = cw.check_draft_snapshot(legacy, snapshot).report
-    # The existing draft r2 changed a visual locator while keeping its r1 ID.
-    # It remains reproducible but cannot pass the stronger cross-revision gate.
-    assert not report.ok
-    assert any(issue.code == "V03" for issue in report.errors)
+    # Team 1 fixed this: the visual evidence whose locator changed now pins a fresh
+    # evidence_id (see acquisition.extraction.compile_workflow._keyframe_evidence's
+    # explicit "evidence_id" override) instead of reusing its r1 ID, so it clears
+    # the stronger cross-revision gate.
+    assert report.ok, "\n".join(str(i) for i in report.errors)
     legacy["steps"][0]["title"] += " changed"
     with pytest.raises(cw.DraftError, match="exact existing compiled snapshot"):
         cw.compile_draft(legacy, pool)

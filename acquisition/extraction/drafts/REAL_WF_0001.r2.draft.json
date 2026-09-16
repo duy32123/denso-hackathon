@@ -343,6 +343,7 @@
             "evidence": [
               {
                 "keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0005/kf_0142700.jpg",
+                "evidence_id": "REAL_WF_0001_EV_036",
                 "source_id": "SRC_HAAS_0005",
                 "start_ms": 142680,
                 "end_ms": 147840,
@@ -621,6 +622,12 @@
           "old_id": "REAL_WF_0001_CL_021",
           "new_ids": [
             "REAL_WF_0001_CL_021"
+          ]
+        },
+        {
+          "old_id": "REAL_WF_0001_EV_019",
+          "new_ids": [
+            "REAL_WF_0001_EV_036"
           ]
         }
       ]

@@ -1,0 +1,196 @@
+{
+  "workflow_id": "REAL_WF_0002",
+  "revision": 2,
+  "sessions": [
+    {
+      "reviewer_id": "quyhienln",
+      "reviewer_role": "D1-C annotation/QA",
+      "reviewed_at": "2026-09-17T17:44:58Z",
+      "self_review": false,
+      "decisions": [
+        {
+          "claim_id": "REAL_WF_0002_CL_001",
+          "fingerprint": "6d4d97cd98830bae",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0002_CL_002",
+          "fingerprint": "4fa4656ab589a40f",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0002_CL_003",
+          "fingerprint": "4710e386403e16b4",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0002_CL_004",
+          "fingerprint": "90b1b3b2c569b076",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0002_CL_005",
+          "fingerprint": "4652b77d8eb364cb",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0002_CL_006",
+          "fingerprint": "658fa62cd4923b82",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0002_CL_007",
+          "fingerprint": "18dbc1ae87c0687e",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0002_CL_008",
+          "fingerprint": "72112ec58224526f",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0002_CL_009",
+          "fingerprint": "9bd09244de29dd80",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0002_CL_010",
+          "fingerprint": "ad9a59f6c9c1618e",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0002_CL_011",
+          "fingerprint": "c481d4d50753c98d",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0002_CL_012",
+          "fingerprint": "b63c1a8e01574ae5",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": "Evidence pool flags this as bench B-roll of a detached bracket, not confirmed to be from the on-machine sequence at this step's timestamp; kept as a labeled-component still, image content matches the claim."
+        },
+        {
+          "claim_id": "REAL_WF_0002_CL_013",
+          "fingerprint": "2c62580ce8613f0d",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0002_CL_014",
+          "fingerprint": "cf8108fe930ae8ea",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0002_CL_015",
+          "fingerprint": "ce8d24acd1da695f",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0002_CL_016",
+          "fingerprint": "30a59a1dc25003f3",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0002_CL_017",
+          "fingerprint": "a67ce61b19fc2c56",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0002_CL_018",
+          "fingerprint": "722a647d3b58e685",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0002_CL_019",
+          "fingerprint": "1ecc3e455be5a51f",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0002_CL_020",
+          "fingerprint": "f841c2124bdac548",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0002_CL_021",
+          "fingerprint": "ea4fcc35f157f1e1",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0002_CL_022",
+          "fingerprint": "bada971b93d8b48f",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0002_CL_023",
+          "fingerprint": "e6152e8d74a9cc21",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0002_CL_024",
+          "fingerprint": "04f1cc4e028dbba2",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0002_CL_025",
+          "fingerprint": "b148802dc36a4f36",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0002_CL_026",
+          "fingerprint": "47f4cf3ef48cbd8d",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,535 @@
+{
+  "workflow_id": "REAL_WF_0002",
+  "revision": 2,
+  "authored_by": "claude-code-d1a-draft",
+  "dataset_split": "dev",
+  "title": "Diagnose wear on a Haas SMTC double arm",
+  "language": "en",
+  "created_at": "2026-09-14T00:00:00Z",
+  "source_ids": [
+    "SRC_HAAS_0001",
+    "SRC_HAAS_0002"
+  ],
+  "attribution": {
+    "label": "presenter (SRC_HAAS_0001, unnamed)",
+    "kind": "speaker"
+  },
+  "scope": "Double-arm wear inspection demonstrated in SRC_HAAS_0001; TG0128 (SRC_HAAS_0002) cited for the symptom table, part names and the arm/slide gap spec the video's caption originally mis-stated. The machine model is not stated in the video.",
+  "context": {
+    "manufacturer": "Haas Automation",
+    "subsystem": "side-mount tool changer (SMTC), double arm",
+    "task_type": "maintenance",
+    "symptoms": [
+      "rough tool change",
+      "unusual popping or banging sound during a tool change",
+      "dropped tools"
+    ],
+    "alarm_codes": [
+      "11.103",
+      "11.108",
+      "11.994"
+    ],
+    "components": [
+      "double arm",
+      "alignment key",
+      "V-flange",
+      "arm slide",
+      "retaining finger",
+      "shim washers",
+      "plunger",
+      "adjuster rod",
+      "cambox"
+    ],
+    "provenance": {
+      "manufacturer": {
+        "basis": "source",
+        "note": "Publisher is Haas Automation, Inc."
+      },
+      "machine_family": {
+        "basis": "unknown",
+        "note": "Not stated in the narration, title, or TG0128."
+      },
+      "machine_model": {
+        "basis": "unknown",
+        "note": "Not stated in either source."
+      },
+      "subsystem": {
+        "basis": "source",
+        "note": "Named in the narration (U0001) and TG0128's title."
+      },
+      "task_type": {
+        "basis": "curated",
+        "note": "Team label: diagnostic inspection. Schema 1.0.0 has no separate 'diagnosis' task type."
+      },
+      "symptoms": {
+        "basis": "source",
+        "note": "Stated in the narration (U0004-U0005)."
+      },
+      "alarm_codes": {
+        "basis": "source",
+        "source_ids": [
+          "SRC_HAAS_0002"
+        ],
+        "note": "TG0128 Symptom Table; not mentioned in the video's own narration."
+      },
+      "components": {
+        "basis": "source",
+        "note": "Named in the narration and/or TG0128's exploded-view labels."
+      }
+    }
+  },
+  "steps": [
+    {
+      "title": "Check for visual and audible warning signs",
+      "fields": {
+        "context": [
+          {
+            "text": "The presenter says the double arm will most likely do tens of thousands of tool changes without needing attention, but at some point may show wear that requires attention.",
+            "evidence": [
+              [
+                "SRC_HAAS_0001:U0001",
+                "SRC_HAAS_0001:U0002",
+                "SRC_HAAS_0001:U0003"
+              ]
+            ],
+            "explanation": "The presenter states this at the start of the video."
+          }
+        ],
+        "observation": [
+          {
+            "text": "The presenter says the first sign of trouble is either visual, such as rough tool change, or audible, such as an unusual sound or banging sound when the arm is loading or unloading a tool.",
+            "evidence": [
+              [
+                "SRC_HAAS_0001:U0004",
+                "SRC_HAAS_0001:U0005"
+              ]
+            ],
+            "explanation": "The caption states both warning-sign categories directly."
+          }
+        ]
+      },
+      "questions": []
+    },
+    {
+      "title": "Inspect the arm for dings, nicks and gouges on the alignment key and V-flange",
+      "fields": {
+        "action": [
+          {
+            "text": "The presenter says to inspect the arms for dings, nicks and gouges on the alignment key and V shape of the arm.",
+            "evidence": [
+              [
+                "SRC_HAAS_0001:U0006",
+                "SRC_HAAS_0001:U0007"
+              ]
+            ],
+            "explanation": "The caption gives this as the first inspection step after noticing a warning sign."
+          },
+          {
+            "text": "In the video, a hand points to and touches the forked, V-shaped end of the double arm where a tool holder engages.",
+            "evidence_type": "observed",
+            "attribution": {
+              "label": "D1-A keyframe observation, pending human check",
+              "kind": "model"
+            },
+            "evidence": [
+              {
+                "keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0001/kf_0041220.jpg",
+                "source_id": "SRC_HAAS_0001",
+                "start_ms": 41220,
+                "end_ms": 42220,
+                "observation_note": "Close-up of the double arm's forked black bracket; a hand touches one prong of the V-shaped fork at its tip.",
+                "explanation": "The frame shows the alignment key / V-shape feature the narration is describing at this moment."
+              }
+            ],
+            "explanation": "The narration at the same moment names this feature as the thing to inspect."
+          }
+        ],
+        "condition": [
+          {
+            "text": "The presenter says any of dings, nicks or gouges on the alignment key or V-shape indicate mis-loaded tools, a protruding set screw, or a tool-changer alignment issue.",
+            "evidence": [
+              [
+                "SRC_HAAS_0001:U0007",
+                "SRC_HAAS_0001:U0008"
+              ]
+            ],
+            "explanation": "The caption lists these as what the damage indicates."
+          }
+        ],
+        "outcome": [
+          {
+            "text": "The presenter says that in most cases, if the source of the problem is addressed, any damage can easily be fixed with a stone or a file and the double arm will not need to be replaced.",
+            "evidence": [
+              [
+                "SRC_HAAS_0001:U0008",
+                "SRC_HAAS_0001:U0009"
+              ]
+            ],
+            "explanation": "The caption states this outcome directly."
+          }
+        ]
+      },
+      "questions": [
+        {
+          "target_field": "rationale",
+          "reason": "missing",
+          "question": "What tool or process addresses a protruding set screw once it is identified as the source of arm damage?"
+        }
+      ]
+    },
+    {
+      "title": "Check for end wear indicating incorrect double arm height",
+      "fields": {
+        "observation": [
+          {
+            "text": "The presenter says excessive wear on the end of the double arm indicates the double arm height is set incorrectly.",
+            "evidence": [
+              [
+                "SRC_HAAS_0001:U0010",
+                "SRC_HAAS_0001:U0011"
+              ]
+            ],
+            "explanation": "The caption states this indication directly."
+          },
+          {
+            "text": "The presenter says the double arm moving (raising or lowering) as it engages a tool is also an indication of an alignment or height problem.",
+            "evidence": [
+              [
+                "SRC_HAAS_0001:U0011",
+                "SRC_HAAS_0001:U0012"
+              ]
+            ],
+            "explanation": "The caption states this second indication directly."
+          }
+        ],
+        "rationale": [
+          {
+            "text": "The presenter says a separate video is dedicated to proper alignment and height-changing of the double arm.",
+            "evidence": [
+              [
+                "SRC_HAAS_0001:U0013",
+                "SRC_HAAS_0001:U0014"
+              ]
+            ],
+            "explanation": "The presenter states this as a pointer for the alignment/height procedure, not covered further in this video."
+          }
+        ]
+      },
+      "questions": []
+    },
+    {
+      "title": "Check the locking mechanism if tools are dropping",
+      "fields": {
+        "context": [
+          {
+            "text": "The presenter says that in extreme cases, wear can cause tools to drop.",
+            "evidence": [
+              [
+                "SRC_HAAS_0001:U0014",
+                "SRC_HAAS_0001:U0015"
+              ]
+            ],
+            "explanation": "The caption states this as the extreme-case scenario."
+          }
+        ],
+        "action": [
+          {
+            "text": "The presenter says the first place to look, if tools are dropping, is the tool changer locking mechanism (the finger).",
+            "evidence": [
+              [
+                "SRC_HAAS_0001:U0015",
+                "SRC_HAAS_0001:U0016"
+              ]
+            ],
+            "explanation": "The caption identifies the finger as the first check."
+          },
+          {
+            "text": "In the video, a hand holds a black bracket assembly with several drilled pockets and a spring visible along a track; a forked, V-shaped finger is at one end.",
+            "evidence_type": "observed",
+            "attribution": {
+              "label": "D1-A keyframe observation, pending human check",
+              "kind": "model"
+            },
+            "evidence": [
+              {
+                "keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0001/kf_0115000.jpg",
+                "source_id": "SRC_HAAS_0001",
+                "start_ms": 115000,
+                "end_ms": 116000,
+                "observation_note": "Wider-angle close-up of the same style of forked black bracket assembly as kf_0041220.jpg: visible are 3-4 drilled pockets, a coiled spring along a track, and the forked V-shaped finger at the near end, held in one hand off the machine (bench cutaway shot, not the on-machine sequence).",
+                "explanation": "Corrected in the D1-A keyframe-evidence hardening pass: this is bench B-roll of a detached double-arm bracket, not verified as occurring during the on-machine locking-mechanism check narrated at this timestamp. Kept only as a labeled-component still (shows the finger, drilled pockets and spring clearly) -- it does not establish that this check happened on the machine at this point in the step."
+              }
+            ],
+            "explanation": "Shows the locking-mechanism finger and its drilled-pocket/spring assembly named in the narration; does not show the check being performed on the machine (see per-evidence note)."
+          }
+        ],
+        "acceptance_criteria": [
+          {
+            "text": "The presenter says the finger should prevent the tool from being removed; while there may be a small amount of play, the tool should not be removable by hand.",
+            "evidence": [
+              [
+                "SRC_HAAS_0001:U0016",
+                "SRC_HAAS_0001:U0017"
+              ]
+            ],
+            "explanation": "The caption states this pass/fail check directly."
+          }
+        ]
+      },
+      "questions": []
+    },
+    {
+      "title": "Position the double arm to check the finger-to-tool-holder clearance",
+      "fields": {
+        "action": [
+          {
+            "text": "The presenter says to press 5% rapid to slow things down, then command a tool change and press E-stop when the double arm is at the bottom of its travel.",
+            "evidence": [
+              [
+                "SRC_HAAS_0001:U0018",
+                "SRC_HAAS_0001:U0019",
+                "SRC_HAAS_0001:U0020"
+              ]
+            ],
+            "explanation": "The caption gives this sequence as how to position the arm for the check."
+          },
+          {
+            "text": "In the video, the presenter is shown standing at the open door of a Haas machining center with the double-arm tool changer visible overhead holding two tool holders.",
+            "evidence_type": "observed",
+            "attribution": {
+              "label": "D1-A keyframe observation, pending human check",
+              "kind": "model"
+            },
+            "evidence": [
+              {
+                "keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0001/kf_0124300.jpg",
+                "source_id": "SRC_HAAS_0001",
+                "start_ms": 124300,
+                "end_ms": 125300,
+                "observation_note": "Presenter (name tag reads 'Orville') stands beside an open Haas mill; the double-arm tool changer with two tool holders mounted is visible overhead, above an empty vise on the table.",
+                "explanation": "This frame falls in the window where the narration describes positioning the arm for the clearance check."
+              }
+            ],
+            "explanation": "The frame shows the machine and arm referred to by the narration at this timestamp."
+          }
+        ]
+      },
+      "questions": []
+    },
+    {
+      "title": "Measure the finger-to-flange gap with a feeler gauge",
+      "fields": {
+        "action": [
+          {
+            "text": "The presenter says that with the tool in the arm and the arm in the down position, use a feeler gauge to check the gap between the finger and the V-flange of the tool holder.",
+            "evidence": [
+              [
+                "SRC_HAAS_0001:U0020",
+                "SRC_HAAS_0001:C0021"
+              ]
+            ],
+            "explanation": "The caption states the check directly; U0021's caption text was corrected from an implausible '20,000 meter gap' to '0.020 in (0.51 mm) gap' per the corrections diff, matching the spec TG0128 states below."
+          }
+        ],
+        "acceptance_criteria": [
+          {
+            "text": "The correct space between the slide and the tool holder is between 0.014 in (0.36 mm) and 0.020 in (0.51 mm); for a DM-1 or DT-1 machine, between 0.005 in (0.13 mm) and 0.015 in (0.38 mm).",
+            "attribution": {
+              "label": "TG0128 (SRC_HAAS_0002)",
+              "kind": "document"
+            },
+            "evidence": [
+              [
+                "SRC_HAAS_0002:T0110"
+              ]
+            ],
+            "explanation": "TG0128 states this specification directly under 'Double Arm Tool and Slide Adjustment'; this is the primary source for the gap value the SRC_HAAS_0001 caption was corrected to match."
+          }
+        ],
+        "rationale": [
+          {
+            "text": "TG0128 says shim washers adjust the slide for proper clearance: if the slide is too tight against the tool it may not lock during rotation, and if too loose, tools will rock or fall out during rotation.",
+            "attribution": {
+              "label": "TG0128 (SRC_HAAS_0002)",
+              "kind": "document"
+            },
+            "evidence": [
+              [
+                "SRC_HAAS_0002:T0038"
+              ]
+            ],
+            "explanation": "TG0128 states this as the reason the gap must be within the specified range."
+          }
+        ]
+      },
+      "questions": []
+    },
+    {
+      "title": "Adjust the gap with shim washers if it is out of spec",
+      "fields": {
+        "action": [
+          {
+            "text": "The presenter says the clearance can be adjusted by changing the shim washers between the slide and the actuated arm.",
+            "evidence": [
+              [
+                "SRC_HAAS_0001:C0022"
+              ]
+            ],
+            "explanation": "The caption states this adjustment method directly; cites the corrected cue (raw caption said 'shin washers', corrected per corrections.diff citing TG0128's own part name)."
+          },
+          {
+            "text": "TG0128 says to add or remove 0.01 in (0.25 mm) shim washers, part number 45-0075, until the space is correct, then reassemble the slider assembly with the spring and washer installed and apply Lithium Tacky Grease to the finger, spring and washer.",
+            "attribution": {
+              "label": "TG0128 (SRC_HAAS_0002)",
+              "kind": "document"
+            },
+            "evidence": [
+              [
+                "SRC_HAAS_0002:T0111"
+              ]
+            ],
+            "explanation": "TG0128 gives this as the specific procedure and part number, not stated in the video."
+          }
+        ]
+      },
+      "questions": [
+        {
+          "target_field": "context",
+          "reason": "missing",
+          "question": "Which specific tool changer variant (VMC vs. HMC, DM/DT vs. other) is shown in SRC_HAAS_0001? The gap spec differs by machine family per TG0128."
+        }
+      ]
+    },
+    {
+      "title": "Check the arm's straightness",
+      "fields": {
+        "action": [
+          {
+            "text": "The presenter says to also check the straightness of the arm, done simply with a straightedge.",
+            "evidence": [
+              [
+                "SRC_HAAS_0001:U0023"
+              ]
+            ],
+            "explanation": "The caption states this final check directly."
+          },
+          {
+            "text": "In the video, the presenter holds a red straightedge against the double arm inside the open machine, sighting along it.",
+            "evidence_type": "observed",
+            "attribution": {
+              "label": "D1-A keyframe observation, pending human check",
+              "kind": "model"
+            },
+            "evidence": [
+              {
+                "keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0001/kf_0170000.jpg",
+                "source_id": "SRC_HAAS_0001",
+                "start_ms": 170000,
+                "end_ms": 171000,
+                "observation_note": "Presenter (name tag reads 'Orville') leans into the open machine, holding a flat red straightedge against a metal bar (the double arm) that carries a tool holder at each end; the presenter is looking closely along the straightedge.",
+                "explanation": "The frame is at the exact moment the narration describes the straightedge check."
+              }
+            ],
+            "explanation": "The frame shows the straightedge check the narration is describing at this moment."
+          }
+        ],
+        "rationale": [
+          {
+            "text": "TG0128 says minor burrs or gouges on the double arm can visually be removed with a small file without needing replacement; if the arm is not bent, its alignment should be checked separately.",
+            "attribution": {
+              "label": "TG0128 (SRC_HAAS_0002)",
+              "kind": "document"
+            },
+            "evidence": [
+              [
+                "SRC_HAAS_0002:T0100"
+              ]
+            ],
+            "explanation": "TG0128 explains when a straightness/alignment check applies versus simple visual repair."
+          }
+        ]
+      },
+      "questions": []
+    },
+    {
+      "title": "If a servo alarm appears, use it to identify the failed component",
+      "fields": {
+        "condition": [
+          {
+            "text": "TG0128's Symptom Table lists three servo-related alarms for the double arm: 11.103 (TA-AXIS SERVO ERROR TOO LARGE), 11.108 (TA-AXIS SERVO OVERLOAD), and 11.994 (TA amplifier overload).",
+            "key": "servo_alarm",
+            "attribution": {
+              "label": "TG0128 (SRC_HAAS_0002)",
+              "kind": "document"
+            },
+            "evidence": [
+              [
+                "SRC_HAAS_0002:T0043"
+              ],
+              [
+                "SRC_HAAS_0002:T0044"
+              ],
+              [
+                "SRC_HAAS_0002:T0045"
+              ]
+            ],
+            "explanation": "TG0128's Symptom Table lists these three alarm codes together, each pointing at the same corrective action."
+          }
+        ],
+        "outcome": [
+          {
+            "text": "TG0128 says any of these three alarms indicates the cambox is damaged, and directs testing the cambox per the guide's Cambox Test section.",
+            "attribution": {
+              "label": "TG0128 (SRC_HAAS_0002)",
+              "kind": "document"
+            },
+            "evidence": [
+              [
+                "SRC_HAAS_0002:T0046"
+              ]
+            ],
+            "explanation": "TG0128 states this single corrective action for all three listed alarms."
+          }
+        ]
+      },
+      "questions": []
+    }
+  ],
+  "relations": [
+    {
+      "type": "branch_if",
+      "from_step": 2,
+      "to_step": 9,
+      "condition_keys": [
+        "servo_alarm"
+      ],
+      "claim": {
+        "text": "If one of the three servo alarms (11.103, 11.108, 11.994) is present instead of a visually/audibly diagnosed wear symptom, TG0128 directs testing the cambox rather than inspecting the arm by hand.",
+        "attribution": {
+          "label": "TG0128 (SRC_HAAS_0002)",
+          "kind": "document"
+        },
+        "evidence": [
+          [
+            "SRC_HAAS_0002:T0043"
+          ]
+        ],
+        "explanation": "This branch reflects TG0128's Symptom Table routing an alarm-driven symptom to a different corrective path than the visual/audible checks in steps 1-8."
+      }
+    }
+  ],
+  "revision_base": {
+    "path": "data/workflows/dev/REAL_WF_0002.r1.json",
+    "snapshot_sha256": "c304e59a5fba8b11a82e1564c896576870b76d1d5ba37fa87755e2f15d481f3d"
+  },
+  "supersedes_revision": 1,
+  "change_log": [
+    {
+      "changed_at": "2026-09-18T00:00:00Z",
+      "actor_id": "quyhienln",
+      "reason": "add human source review WP5, every claim checked against its cited source and marked source_checked, no claim text evidence or step content changed. CL_012 review note carries forward the evidence pool's own caveat that this keyframe is bench B-roll not confirmed to be from the on-machine sequence at this step's timestamp",
+      "previous_revision": 1,
+      "id_mapping": []
+    }
+  ]
+}

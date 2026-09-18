@@ -65,8 +65,7 @@ giả nhãn review.
 
 Kiểm: `pytest tests/unit/test_synthetic_kb.py`
 
-## Chưa làm
+## Bộ câu hỏi đi kèm
 
-Bộ 100–150 câu hỏi synthetic có nhãn kỳ vọng (kế hoạch mục 1.5) — giai đoạn kế tiếp,
-sẽ nằm ở `data/eval/synthetic_dev.qa.v0.jsonl` theo đúng schema `EvalQuestion`.
-Nhãn do người soạn vẫn là `draft` cho tới khi có **người khác** kiểm.
+`data/eval/synthetic_dev.qa.v0.jsonl` — 120 câu có nhãn kỳ vọng, sinh từ chính KB này.
+Xem [data/eval/README.md](../eval/README.md).

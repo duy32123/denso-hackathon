@@ -22,6 +22,11 @@ jobs:
           python scripts/build_synthetic_kb.py
           git diff --exit-code data/synthetic_samples
 
+      - name: Bo cau hoi synthetic phai sinh lai giong het ban da commit
+        run: |
+          python scripts/build_synthetic_questions.py
+          git diff --exit-code data/eval/synthetic_dev.qa.v0.jsonl
+
       - name: JSON Schema phai khop models
         run: |
           knowflow-contracts export-json-schema contracts/json-schema

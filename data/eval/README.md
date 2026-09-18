@@ -1,5 +1,9 @@
 # Bộ câu hỏi đánh giá retrieval (WP2)
 
+> Thư mục này có **hai bộ tách rời**. `haas_real_dev.retrieval.v0.jsonl` là dữ liệu
+> **thật** — số đo trên nó mới là kết quả. `synthetic_dev.qa.v0.jsonl` là dữ liệu
+> **mô phỏng** để thử phần mềm (xem cuối trang). Không bao giờ cộng hai mẫu số.
+
 `haas_real_dev.retrieval.v0.jsonl`: 54 câu real/dev, soạn trên bundle
 `BUNDLE_HAAS_SMTC_DEV_e98521a7942a` (`B0_SRC_HAAS_0005` r1 và `REAL_WF_0001` r1).
 Bundle hiện tại `BUNDLE_HAAS_SMTC_DEV_4d433ec6bd90` có thêm `REAL_WF_0002/0003`, nhưng mọi
@@ -110,3 +114,56 @@ API. Khi dùng cache, latency vẫn cộng thời gian API gốc; thời gian đ
 `--no-translation` để đo khi không dịch.
 Kết quả ghi vào `out/eval/<run_id>/report.json` (kèm git commit, index build,
 embedding config và sha256 của bộ câu hỏi) và `rows.jsonl` (từng câu, từng strategy).
+
+
+---
+
+# Bộ câu hỏi synthetic (kế hoạch đội 2, mục 1.5)
+
+`synthetic_dev.qa.v0.jsonl`: **120 câu** trên KB mô phỏng ở
+[data/synthetic_samples/serving](../synthetic_samples/README.md). Sinh bằng
+`python scripts/build_synthetic_questions.py` từ chính KB đó nên gold đúng theo cấu
+trúc; CI sinh lại và so từng byte.
+
+**Số đo trên bộ này không phải kết quả.** Nó để thử phần mềm và chỉnh ngưỡng, báo
+riêng, không cộng vào mẫu số của real/dev. Nhãn đều là `draft` — người soạn không
+được tự kiểm nhãn của chính mình.
+
+| Nhóm | Câu | Kỳ vọng |
+|---|---|---|
+| `tra_loi_duoc` | 46 | `answered`, có gold Step |
+| `thieu_evidence` | 20 | `insufficient_evidence` nhưng retrieval **vẫn phải** tìm ra Step để WP3 từ chối có căn cứ |
+| `khong_co_dap_an` | 12 | KB không có dữ liệu; 4 câu chủ thể có trong KB → `retrieved`, 8 câu chủ thể không có → `insufficient_evidence` |
+| `quy_trinh` | 12 | `answered` + `intent=procedure`, chấm bằng `gold_workflows` |
+| `nguon_mau_thuan` | 9 | `conflicting_sources`, trưng cả hai nguồn |
+| `corpus_tieng_anh` / `viet_hoi_anh` | 8 / 8 | Câu tiếng Anh và câu tiếng Việt trên cùng nội dung tiếng Anh |
+| `thieu_boi_canh` | 3 | `needs_clarification`: `DEMO_TC_A` 10 Nm còn `DEMO_TC_B` 15 Nm |
+| `model_khong_ro` | 2 | **CẦN NGƯỜI CHỐT**: nguồn không nêu model |
+
+62 câu vào mẫu số Recall/MRR (`answered` + `intent=detail`). Câu từ chối, hỏi lại và
+procedure chấm qua `status` và `wf_acc`.
+
+```powershell
+python -m retrieval.importer import data/synthetic_samples/serving --db out/retrieval/synthetic_dev.sqlite --source-type synthetic --split dev
+python -m retrieval.retrieval build --db out/retrieval/synthetic_dev.sqlite --mode synthetic --split dev --embedding none
+python -m retrieval.evaluation run --db out/retrieval/synthetic_dev.sqlite --questions data/eval/synthetic_dev.qa.v0.jsonl --mode synthetic --split dev --strategy lexical
+```
+
+## Quy tắc gán nhãn đã dùng
+
+Ghi ra để người kiểm đối chiếu được, thay vì phải đoán ý người soạn:
+
+- Gold chỉ lấy Step thuộc latest revision, `lifecycle=active`, claim `support_status=supported`
+  và không có conflict. Workflow bị rút và revision cũ **không bao giờ** làm gold.
+- Một unit liệt kê **mọi** Step tương đương — cùng một câu hành động xuất hiện ở nhiều
+  workflow. Tìm được một Step là đủ.
+- Câu có nêu `machine_model` thì gold không được trỏ sang máy khác.
+- Câu hỏi là paraphrase có dấu; corpus viết không dấu. Test chặn việc chép nguyên văn claim.
+- Nhóm `thieu_evidence` chỉ dùng chủ đề **riêng** của nhóm thiếu thông tin, để không có
+  workflow nào khác giải thích hộ — nếu không thì câu "vì sao" đáng lẽ phải trả lời được.
+
+## Điều cần người kiểm quyết định
+
+1. `model_khong_ro` (2 câu): nguồn không nêu model. Coi metadata `null` là "chưa rõ nên
+   hỏi lại" hay "vẫn dùng được" là **quyết định chính sách của đội**, không phải lỗi nhãn.
+2. `khong_co_dap_an`: ranh giới "chủ thể có trong KB" do người soạn phân, cần xác nhận lại.

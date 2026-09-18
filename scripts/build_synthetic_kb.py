@@ -215,6 +215,16 @@ TOPICS_VI = [
     ("can-chinh", "Can chinh mam cap", "mam cap", "chuck"),
 ]
 
+# Chu de RIENG cho cac workflow co y bo trong phan ly do. Khong nhom nao khac
+# duoc dung chung: neu mot workflow khac giai thich ho cung mot cum thi thong tin
+# khong con thieu o muc corpus, va cau hoi "vi sao" dang le phai tra loi duoc.
+TOPICS_MISSING = [
+    ("bom-lam-mat", "Thay bom dung dich lam mat", "bom lam mat", "coolant_pump"),
+    ("voi-phun", "Thong voi phun dung dich", "voi phun", "coolant_nozzle"),
+    ("cua-an-toan", "Chinh cong tac cua an toan", "cua an toan", "safety_door"),
+    ("bang-dieu-khien", "Thay mang phim bang dieu khien", "mang phim", "control_panel"),
+]
+
 TOPICS_EN = [
     ("filter-en", "Replace the tool changer air filter", "air filter", "air_filter"),
     ("sensor-en", "Calibrate the tool position sensor", "position sensor", "position_sensor"),
@@ -448,7 +458,9 @@ def group_missing(rng) -> tuple[list[dict], list[dict], int]:
             ("condition", "Khi nao thi duoc {title}?"), ("acceptance_criteria", "Lam sao biet {title} da dat?"),
             ("acceptance_criteria", "Lam sao biet {title} da dat?"), ("rationale", "Vi sao phai {title}?")]
     for i, (role, question) in enumerate(plan):
-        topic = TOPICS_VI[i % len(TOPICS_VI)]
+        # Ca bo rationale dung chu de rieng => "vi sao" that su khong co dap an trong KB.
+        topic = (TOPICS_MISSING[i % len(TOPICS_MISSING)] if role == "rationale"
+                 else TOPICS_VI[i % len(TOPICS_VI)])
         wf_id = f"SYN_KB_MISS_{i + 1:02d}"
         srcs, wf = build_workflow(
             wf_id, title=f"{topic[1]} (thieu {role})", source_title=f"Ban ghi mo phong: {topic[1]}",
@@ -465,17 +477,28 @@ def group_missing(rng) -> tuple[list[dict], list[dict], int]:
 def group_device(rng) -> tuple[list[dict], list[dict], int]:
     """Nhom 2 -- Khac thiet bi: ten gan nhau, model khac; mot ca metadata null."""
     sources, workflows = [], []
-    for i in range(6):
-        model = MODEL_A if i % 2 == 0 else MODEL_B
-        topic = TOPICS_VI[i % 4]
-        wf_id = f"SYN_KB_DEV_{i + 1:02d}"
-        srcs, wf = build_workflow(
-            wf_id, title=f"{topic[1]} tren {model}", source_title=f"Ban ghi mo phong {model}: {topic[1]}",
-            steps_spec=procedure_steps(topic, rng.randint(5, 8), rng),
-            context=ctx(machine_model=model, subsystem="tool_changer", components=[topic[3]]), rng=rng,
-        )
-        sources += srcs
-        workflows.append(wf)
+    # Cung mot chu de tren ca hai model, khac nhau o dung MOT con so tra loi duoc.
+    # Khong co cho khac nhau nay thi model khong phai du kien quyet dinh, va cau
+    # hoi khong neu model dang le van tra loi duoc -- nhom nay se khong kiem gi ca.
+    i = 0
+    for t_i in range(3):
+        topic = TOPICS_VI[t_i]
+        for model, torque in ((MODEL_A, "10 Nm"), (MODEL_B, "15 Nm")):
+            i += 1
+            wf_id = f"SYN_KB_DEV_{i:02d}"
+            specs = procedure_steps(topic, rng.randint(5, 8), rng)
+            specs.append({
+                "title": f"Siet {topic[2]} dung luc cua {model}",
+                "action": [("speech", f"Nguoi noi cho biet siet {topic[2]} den {torque} tren {model}.",
+                            f"Tren {model} thi minh siet {topic[2]} den {torque}.")],
+            })
+            srcs, wf = build_workflow(
+                wf_id, title=f"{topic[1]} tren {model}",
+                source_title=f"Ban ghi mo phong {model}: {topic[1]}", steps_spec=specs,
+                context=ctx(machine_model=model, subsystem="tool_changer", components=[topic[3]]), rng=rng,
+            )
+            sources += srcs
+            workflows.append(wf)
     topic = TOPICS_VI[4]
     srcs, wf = build_workflow(
         "SYN_KB_DEV_07", title=f"{topic[1]} (khong ro model)",

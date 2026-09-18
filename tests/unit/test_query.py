@@ -109,15 +109,34 @@ def test_untranslated_vietnamese_question_skips_the_gate(real_db):
     assert never.calls == 0 and result["trace"]["relevance"]["gate"] == "skipped"
 
 
+OUT_OF_SCOPE = "How do I calibrate the coolant refractometer?"  # no term shared with the SMTC corpus
+
+
 def test_out_of_scope_question_rejected_before_embedding(real_db):
     embedder = CountingEmbedder()
-    result = ask(real_db, "How do I clean the chip conveyor?", strategy="vector", embedder=embedder)
+    result = ask(real_db, OUT_OF_SCOPE, strategy="vector", embedder=embedder)
     assert result["status"] == "insufficient_evidence" and result["claims"] == []
-    assert result["trace"]["relevance"] == {"term_coverage": 0.0, "unseen_terms": ["clean", "chip", "conveyor"],
+    assert result["trace"]["relevance"] == {"term_coverage": 0.0,
+                                            "unseen_terms": ["calibr", "coolant", "refractomet"],
                                             "min_term_coverage": .10, "gate": "rejected"}
     assert embedder.calls == 0
-    disabled = ask(real_db, "How do I clean the chip conveyor?", min_term_coverage=0)
+    disabled = ask(real_db, OUT_OF_SCOPE, min_term_coverage=0)
     assert disabled["trace"]["relevance"]["gate"] == "passed"
+
+
+def test_one_shared_generic_term_can_carry_an_out_of_scope_question_past_the_gate():
+    """Known limitation, recorded rather than hidden.
+
+    Seen on real/dev when REAL_WF_0002/0003 were reviewed (PR #17): "How do I clean the
+    chip conveyor?" went from coverage 0.00 to 0.27 because "clean" entered the corpus,
+    while "chip" and "conveyor" never did. The 0.10 threshold was chosen on a 2-workflow
+    corpus; the gate is corpus-dependent and WP3 must still refuse what slips through.
+    """
+    docs = [{"tokens": ["clean", "spindl", "taper"]}, {"tokens": ["pocket", "slider", "greas"]},
+            {"tokens": ["arm", "origin", "rais"]}]
+    coverage, unseen = term_coverage(["clean", "chip", "conveyor"], docs)
+    assert unseen == ["chip", "conveyor"]
+    assert coverage > .10  # passes the default gate on one generic word alone
 
 
 class RateLimited(Exception):
@@ -166,3 +185,32 @@ def test_conflict_is_reported_only_when_it_competes_for_top_k(tmp_path):
     assert narrow["status"] == "retrieved" and narrow["conflicts"] == []
     wide = ask(db, "da reset cum den bao", mode="synthetic", strategy="vector", embedder=embedder, top_k=5)
     assert wide["status"] == "conflicting_sources" and len(wide["conflicts"]) == 2
+
+
+REPLACE_POCKET = "What are the steps to replace a damaged tool pocket on a Haas side-mount tool changer?"
+
+
+def test_best_step_routing_resists_one_long_workflow_record(real_db):
+    """Regression seen when REAL_WF_0002/0003 joined the corpus (PR #17).
+
+    Ranking the four workflow records let the longest one (REAL_WF_0003, alarm recovery,
+    3493 tokens) win on incidental words such as "step". Scoring a workflow by its best
+    Step gives BM25 dozens of documents instead of four.
+    """
+    routed = ask(real_db, REPLACE_POCKET)
+    assert routed["selected_workflow"]["workflow_id"] in {"REAL_WF_0001", "B0_SRC_HAAS_0005"}
+    assert routed["trace"]["routing_steps"][routed["selected_workflow"]["workflow_id"]]
+    legacy = ask(real_db, REPLACE_POCKET, workflow_routing="record")
+    assert legacy["selected_workflow"]["workflow_id"] == "REAL_WF_0003"  # the failure being fixed
+    assert "routing_steps" not in legacy["trace"]
+
+
+def test_demo_question_routes_to_the_greasing_step_in_english(real_db):
+    result = ask(real_db, "How do I lubricate the pocket slider?")
+    assert result["status"] == "retrieved"
+    assert GREASE_STEPS & {step["step_id"] for step in result["steps"][:3]}
+
+
+def test_workflow_routing_config_is_validated():
+    with pytest.raises(ValueError):
+        RetrievalConfig(workflow_routing="max")

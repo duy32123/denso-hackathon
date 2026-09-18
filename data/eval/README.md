@@ -6,13 +6,29 @@
 
 `haas_real_dev.retrieval.v0.jsonl`: 54 câu real/dev, soạn trên bundle
 `BUNDLE_HAAS_SMTC_DEV_e98521a7942a` (`B0_SRC_HAAS_0005` r1 và `REAL_WF_0001` r1).
-Bundle hiện tại `BUNDLE_HAAS_SMTC_DEV_4d433ec6bd90` có thêm `REAL_WF_0002/0003`, nhưng mọi
-claim của hai workflow này còn `source_review=pending`, nên corpus real được phục vụ vẫn chỉ
-gồm B0 r2 và REAL_WF_0001 r1. B0 r1 vẫn giữ để tra cứu lịch sử, không phải revision active.
-Khi hai workflow này được review, cần xem lại nhãn: ví dụ Q038
-(alarm 2066) sẽ có quy trình ở `REAL_WF_0003`.
+Từ PR #17 (18/09), bundle `BUNDLE_HAAS_SMTC_DEV_20382d7957b6` có `REAL_WF_0002` r2 và `REAL_WF_0003` r2 đã
+`source_checked`, nên corpus real được phục vụ gồm **B0 r2, REAL_WF_0001 r1, REAL_WF_0002 r2,
+REAL_WF_0003 r2**. B0 r1 và r1 của 0002/0003 vẫn giữ để tra cứu lịch sử, không phải revision
+active. Nhãn **chưa được xem lại** cho corpus này (xem cảnh báo bên dưới), ví dụ
+`HAAS_DEV_Q038` (alarm 2066) giờ có thể có quy trình ở `REAL_WF_0003`.
 Q001–Q038 là bộ gốc; Q039–Q054 là câu phủ định bổ sung (cùng lĩnh vực CNC nhưng KB
 không có), dùng để chỉnh ngưỡng từ chối.
+
+> **Corpus đã đổi (18/09): phần lớn chỗ tụt là lỗi retrieval, không phải do nhãn.** PR #17 đưa
+> `REAL_WF_0002/0003` vào corpus phục vụ (**4 workflow / 38 Step**, trước là 2 / 20). Đo lexical,
+> không dịch, trên cùng bộ câu: 18/54 câu đổi kết quả, `false_retrieved` 7 → 15. Bản ghi trước
+> (PR #18) ghi rằng phần lớn là do nhãn cũ; **nhận định đó sai**. Tách ra thì:
+> - **Routing nghiêng về `REAL_WF_0003`**: các câu thay pocket (Q008, Q013, Q019, Q029) bị đưa
+>   sang quy trình khôi phục sau alarm. Đã sửa một phần bằng `best_step` (xem `retrieval/README.md`);
+>   Q008 và Q013 vẫn sai.
+> - **Cổng liên quan quá lỏng khi corpus lớn**: các câu ngoài phạm vi như băng tải phoi, lọc máy nén
+>   khí, dây đai trục chính, lọc thủy lực máy tiện (Q042, Q044, Q047, Q049, Q053…) giờ có kết quả.
+>   **Chưa sửa**; ngưỡng 0.10 cần hiệu chỉnh lại.
+> - **Nhãn thật sự lỗi thời** có lẽ chỉ vài câu, rõ nhất là `HAAS_DEV_Q038` (alarm 2066), giờ có thể
+>   có quy trình trong `REAL_WF_0003`. `gold_workflows` cũng chưa có Step nào của `REAL_WF_0002/0003`.
+>
+> Evaluator **không tự phát hiện** câu vừa có đáp án (nó chỉ chặn ref sai revision), nên người kiểm
+> vẫn phải xem lại các câu phủ định và `gold_workflows` trên corpus mới trước khi báo bất kỳ số nào.
 
 > **Chưa có người kiểm nhãn gold.** Q032–Q038 giữ lượt AI review (`ai_reviewed`).
 > Q001–Q031 về `draft` sau khi chuyển B0 r1 sang r2; Q039–Q054 vẫn là bản nháp.
@@ -66,7 +82,7 @@ Cả sheet bị từ chối nếu có một dòng lỗi: câu hỏi đã đổi 
 thiếu note, `step_id` không tồn tại, nhãn mâu thuẫn, hoặc người kiểm trùng người soạn.
 Sheet là file tạm trong `out/` (gitignore); bản ghi chính thức là file JSONL, cần commit.
 
-Đặc biệt chốt các câu có ghi chú "CẦN NGƯỜI CHỐT" (Q036, Q038): đó là quyết định
+Đặc biệt chốt các câu có ghi chú "CẦN NGƯỜI CHỐT" (`HAAS_DEV_Q036`, `HAAS_DEV_Q038`): đó là quyết định
 chính sách, không phải lỗi nhãn.
 
 Không tạo câu holdout trước khi khóa pipeline D15; không chỉnh tham số trên holdout.
@@ -84,8 +100,9 @@ Không tạo câu holdout trước khi khóa pipeline D15; không chỉnh tham s
 | `gold_workflows` | Workflow chấp nhận được cho câu `procedure`. |
 | `label` | `draft` / `reviewed`, người gán nhãn, người kiểm, ghi chú. |
 
-Hai workflow hiện tại cùng lấy từ nguồn `SRC_HAAS_0005` và mô tả cùng một quy trình,
-nên mỗi unit có một Step ở mỗi workflow. Nếu đội 1 bỏ một workflow khỏi corpus phục vụ,
+`B0_SRC_HAAS_0005` và `REAL_WF_0001` cùng lấy từ nguồn `SRC_HAAS_0005` và mô tả cùng một
+quy trình, nên mỗi unit hiện có một Step ở mỗi workflow đó. `REAL_WF_0002` (mòn double arm) và
+`REAL_WF_0003` (khôi phục sau alarm) là nguồn khác; nhãn hiện **chưa** liệt kê Step nào của chúng. Nếu đội 1 bỏ một workflow khỏi corpus phục vụ,
 evaluator sẽ báo gold "stale" và cần gán lại.
 
 Gold gắn với `(workflow_id, revision, step_id)`. Khi có revision mới, evaluator dừng
@@ -115,6 +132,67 @@ API. Khi dùng cache, latency vẫn cộng thời gian API gốc; thời gian đ
 Kết quả ghi vào `out/eval/<run_id>/report.json` (kèm git commit, index build,
 embedding config và sha256 của bộ câu hỏi) và `rows.jsonl` (từng câu, từng strategy).
 
+## Đánh giá câu trả lời (WP3)
+
+`retrieval.evaluation answers` chạy **đúng đường phục vụ** (`QAService`, cùng đường mà
+`/v1/ask` dùng) trên chính bộ câu hỏi này, rồi chấm ở mức câu trả lời. Dùng lại
+`expected_status` đã có, nên không cần bộ câu hỏi thứ hai.
+
+```powershell
+.\.venv\Scripts\python.exe -m retrieval.evaluation answers --db out/retrieval/real_dev.sqlite --questions data/eval/haas_real_dev.retrieval.v0.jsonl --mode real --verdict-template <github-user>
+```
+
+Kết quả vào `out/eval/<run_id>/report.json` + `rows.jsonl`, giống lệnh `run`.
+Query embedding và bản dịch dùng chung cache với `run`. Holdout bị chặn: đường phục vụ
+hiện chỉ bật `dev`.
+
+### Hai nhóm chỉ số tách bạch
+
+**Code chứng minh được** — chạy trên mọi câu trả lời, sai là lỗi phần mềm:
+
+| Chỉ số | Nội dung |
+|---|---|
+| `status.accuracy` | `status` so với `expected_status`, kèm confusion matrix theo nhóm |
+| `status.false_answer` | Trả lời khi nguồn không đủ. **Lỗi nguy hiểm nhất**, liệt kê từng câu |
+| `status.false_abstention` | Từ chối câu trả lời được — lỗi mà tỷ lệ abstain cao che mất |
+| `citations.mechanically_valid` | Claim có trong snapshot, đúng revision active, đủ điều kiện, evidence link `supported` và mở được, review flags khớp snapshot, mọi con số trong câu có trong evidence được cite |
+| `grounding.structural` | Tỷ lệ dòng kỹ thuật có citation. Dòng không citation là **chắc chắn** không có căn cứ |
+| `grounding.abstain_with_citations` | Câu từ chối mà vẫn kèm citation |
+| `leakage` | Trộn corpus, ghép nhiều workflow (D-06), khác model đã biết. **Phải bằng 0** |
+| `latency_ms`, `cost` | p50/p95, số lần gọi provider, token do provider báo |
+
+Mã lỗi citation được liệt kê tên (`not_the_active_revision`, `evidence_not_openable`,
+`number_not_in_cited_evidence`, …) để sửa được, không chỉ ra một con số.
+
+**Cần người kiểm** — `null` cho đến khi có file verdict:
+
+| Chỉ số | Mục tiêu plan |
+|---|---|
+| `citation_correctness` | ≥ 90% real/dev — code chứng minh hợp lệ **và** người kiểm xác nhận nguồn hỗ trợ đúng phát biểu gắn nó |
+| `answer_groundedness` | ≥ 90% real/dev |
+| `answers_question` | Câu trả lời có thực sự trả lời câu hỏi |
+
+Lượt kiểm nghĩa bằng LLM trong pipeline **là thứ đang bị đo**, không được tự chấm mình.
+Tỷ lệ mechanical là **sàn**: nó chỉ có thể giảm khi người kiểm vào, không bao giờ tăng.
+
+### Người kiểm câu trả lời cần làm
+
+1. Chạy lệnh trên với `--verdict-template <github-user>` → `out/eval/<run_id>/verdicts.template.jsonl`.
+   Mỗi dòng đã điền sẵn `answer_sha256`, kèm `_answer` và `_citations` để đọc.
+2. Điền `answers_question` (true/false) và `citations_supported` (mỗi citation một boolean:
+   nguồn được cite **có** hỗ trợ đúng phát biểu đó không). Các khóa bắt đầu bằng `_` được bỏ qua.
+3. Chạy lại với `--verdicts <file đã điền>`.
+
+Verdict gắn chặt với `answer_sha256`. Câu trả lời đổi (đổi prompt, model, index, corpus)
+thì verdict cũ thành `stale` và bị loại, không được cộng sang bản mới. Verdict chấm thiếu
+hoặc thừa citation so với câu trả lời thì bị từ chối cả file.
+
+### Chi phí
+
+`--price-input` và `--price-output` (USD trên một triệu token) phải cho **cả hai** thì mới
+tính tiền; thiếu một cái thì `usd_total` là `null`. Không hardcode bảng giá vào repo — giá
+đổi và một con số sai còn tệ hơn không có. Nếu provider không báo token thì token và chi phí
+là `null`, **không phải 0**.
 
 ---
 

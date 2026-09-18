@@ -70,6 +70,9 @@ def provider_schema(model) -> dict:
 class GeminiAnswerModel:
     def __init__(self, model: str = "gemini-3.5-flash-lite", *, timeout_ms: int = 30000):
         self.model, self.timeout_ms, self._client = model, timeout_ms, None
+        # Provider-reported token counts, for the evaluation cost budget (plan section 5).
+        # Never used to steer generation; a missing count stays None rather than 0.
+        self.usage: list[dict] = []
 
     def _call(self, policy, payload, schema):
         try:
@@ -95,6 +98,10 @@ class GeminiAnswerModel:
             if isinstance(exc, TimeoutError) or "timeout" in type(exc).__name__.lower():
                 raise TimeoutError("Answer provider timed out") from None
             raise GenerationError("Answer provider unavailable") from None
+        meta = getattr(response, "usage_metadata", None)
+        self.usage.append({field: getattr(meta, name, None) for field, name in (
+            ("input_tokens", "prompt_token_count"), ("output_tokens", "candidates_token_count"),
+            ("total_tokens", "total_token_count"))})
         try:
             return schema.model_validate_json(response.text or "")
         except (ValidationError, ValueError, TypeError):

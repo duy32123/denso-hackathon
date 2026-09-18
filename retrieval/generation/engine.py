@@ -83,7 +83,7 @@ def checked_candidates(request, result, corpus, access):
     return candidates, unavailable
 
 
-def _numbers(text):
+def numbers(text):
     return set(re.findall(r"(?<!\w)\d+(?:[.,]\d+)*(?:/\d+)?", text))
 
 
@@ -124,7 +124,7 @@ def generate_answer(request: QueryRequest, result: dict, corpus: dict, *,
             selected = [by_id[eid] for eid in statement.evidence_ids]
             literal = " ".join((e["evidence"]["quote"] or "") + " " +
                                (e["evidence"]["observation_note"] or "") for e in selected)
-            if not _numbers(statement.text) <= _numbers(literal):
+            if not numbers(statement.text) <= numbers(literal):
                 raise InvalidGeneration("Number missing from cited evidence")
             cited.append(statement.claim_ref)
             checked_statements.append({"statement": statement.model_dump(mode="json"),

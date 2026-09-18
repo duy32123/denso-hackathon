@@ -30,6 +30,10 @@ def main(argv=None):
             sub.add_argument("--min-cosine", type=float, default=.25)
             sub.add_argument("--intent", choices=("auto", "detail", "procedure"), default="auto")
             sub.add_argument("--min-term-coverage", type=float, default=.10, help="relevance gate; 0 disables it")
+            sub.add_argument("--neighbor-depth", type=int, default=1,
+                             help="follow requires/branch_if/corrects this deep; 0 disables expansion")
+            sub.add_argument("--max-related-steps", type=int, default=5)
+            sub.add_argument("--workflow-routing", choices=("best_step", "record"), default="best_step")
             sub.add_argument("--query-translation", choices=("auto", "never"), default="auto",
                              help="auto: translate Vietnamese questions for vector/hybrid on an English corpus")
             sub.add_argument("--summary", action="store_true", help="show compact hits; omit to include evidence and trace")
@@ -60,12 +64,17 @@ def main(argv=None):
                               config=RetrievalConfig(strategy=args.strategy, top_k=args.top_k,
                                                      candidate_k=args.candidate_k, min_cosine=args.min_cosine,
                                                      intent=args.intent, min_term_coverage=args.min_term_coverage,
-                                                     query_translation=args.query_translation))
+                                                     query_translation=args.query_translation,
+                                                     neighbor_depth=args.neighbor_depth,
+                                                     max_related_steps=args.max_related_steps,
+                                                     workflow_routing=args.workflow_routing))
             if args.summary:
                 result = {key: result[key] for key in (
                     "status", "index_build_id", "selected_workflow", "missing_context", "steps",
                 )} | {
                     "claim_count": len(result["claims"]), "conflict_count": len(result["conflicts"]),
+                    "related_steps": [s["step_id"] for s in result["related_steps"]],
+                    "related_claim_count": len(result["related_claims"]),
                     "latency_ms": result["trace"]["latency_ms"],
                     "translation": (result["trace"].get("query_translation") or {}).get("text"),
                     "relevance": result["trace"].get("relevance"),

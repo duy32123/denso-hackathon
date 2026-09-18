@@ -277,6 +277,23 @@ def test_keyframe_evidence_locator_is_the_frame_instant_not_the_search_window(po
         "for a boundary frame) -- not the 5s caption-cue span"
 
 
+def test_keyframe_evidence_can_pin_an_explicit_id_to_avoid_a_cross_revision_collision(pool):
+    """D-02 (V03 evidence immutability) forbids a reused evidence_id whose content
+    changed between revisions. Legacy (pre-revision_base) drafts have no automatic
+    remap: evidence_id is otherwise assigned purely by first-occurrence position, so
+    a legacy revision that changes an earlier claim's evidence count/order would
+    silently reuse an already-published ID for now-different content. Letting the
+    draft pin its own evidence_id for this one citation is the escape hatch: it
+    lands the new content on a fresh, never-before-used ID instead.
+    """
+    d = tiny_draft(evidence=[{"keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0005/kf_0142700.jpg",
+                               "source_id": "SRC_HAAS_0005", "start_ms": 142680, "end_ms": 147840,
+                               "observation_note": "x", "evidence_id": "REAL_WF_9998_EV_099"}])
+    snap = cw.compile_draft(d, pool)
+    assert snap["evidence"][0]["evidence_id"] == "REAL_WF_9998_EV_099"
+    assert snap["claims"][0]["evidence_links"][0]["evidence_id"] == "REAL_WF_9998_EV_099"
+
+
 def test_context_value_needs_a_provenance_basis(pool):
     d = tiny_draft()
     d["context"] = {"machine_model": "VM-3"}

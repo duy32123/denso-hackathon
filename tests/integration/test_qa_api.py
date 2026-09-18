@@ -165,7 +165,12 @@ def test_citation_cannot_switch_revision_build_or_corpus(setup_api):
     with TestClient(create_app(service)) as client:
         answer = client.post("/v1/ask", json=question()).json()
         path, params = evidence_path(answer)
-        assert client.get(path.replace('/1/', '/999/'), params=params).status_code == 404
+        # Swap the revision segment itself: the cited workflow may be at any revision,
+        # and a string replace of "/1/" silently left an r2 path valid (200, not 404).
+        parts = path.split("/")  # ["", "v1", "evidence", workflow_id, revision, evidence_id]
+        assert parts[4] != "999"
+        parts[4] = "999"
+        assert client.get("/".join(parts), params=params).status_code == 404
         assert client.get(path, params={**params, "index_build_id": "invented"}).status_code == 404
         assert client.get(path, params={**params, "mode": "synthetic"}).status_code == 422
         assert client.get(path, params={**params, "dataset_split": "holdout"}).status_code == 422

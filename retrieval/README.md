@@ -124,6 +124,15 @@ record build trả `noop` và không gọi embedding lại.
   bị chặn; lấy đầu thấp vì từ chối oan không cứu lại được. Không dùng cosine làm cổng: câu
   cùng lĩnh vực mà KB không có vẫn đạt cosine cao hơn câu trả lời được. Câu dùng toàn từ chung
   ("level the machine") vẫn lọt, WP3 phải từ chối. Cần chỉnh lại khi corpus lớn hơn.
+  **Đã xảy ra (18/09):** sau khi `REAL_WF_0002/0003` vào corpus phục vụ (PR #17, 4 workflow,
+  38 Step), câu ngoài phạm vi "How do I clean the chip conveyor?" tăng từ 0.00 lên 0.27 chỉ vì
+  một từ chung "clean"; "chip" và "conveyor" vẫn không có trong KB. Ngưỡng 0.10 phụ thuộc cỡ
+  corpus và **cần hiệu chỉnh lại** trên nhãn đã được người kiểm.
+- **Lỗi routing đã biết (18/09, chưa sửa):** cũng từ PR #17, câu demo "How do I lubricate the
+  pocket slider?" bị lexical đưa sang `REAL_WF_0003` (khôi phục sau alarm, điểm 1.14) thay vì
+  `REAL_WF_0001` (0.41) / B0 (0.39). Câu hỏi dùng "lubricate"; `REAL_WF_0003` có đúng chữ đó
+  ("lubricate … slider cap") còn Step đúng lại ghi "grease". Hybrid chưa đo được (hết quota
+  Gemini). Test tương ứng đang `xfail(strict=True)` để `main` xanh mà lỗi không bị giấu.
 - Vector: `gemini-embedding-001`, 768 chiều mặc định, chuẩn hóa L2 và cosine
   chính xác trên tập đã lọc. SQLite lưu vector; chưa cần ANN/pgvector cho pilot.
   Tài liệu dùng `RETRIEVAL_DOCUMENT`, câu hỏi dùng `RETRIEVAL_QUERY` theo

@@ -2,13 +2,21 @@
 
 `haas_real_dev.retrieval.v0.jsonl`: 54 câu real/dev, soạn trên bundle
 `BUNDLE_HAAS_SMTC_DEV_e98521a7942a` (`B0_SRC_HAAS_0005` r1 và `REAL_WF_0001` r1).
-Bundle hiện tại `BUNDLE_HAAS_SMTC_DEV_4d433ec6bd90` có thêm `REAL_WF_0002/0003`, nhưng mọi
-claim của hai workflow này còn `source_review=pending`, nên corpus real được phục vụ vẫn chỉ
-gồm B0 r2 và REAL_WF_0001 r1. B0 r1 vẫn giữ để tra cứu lịch sử, không phải revision active.
-Khi hai workflow này được review, cần xem lại nhãn: ví dụ Q038
-(alarm 2066) sẽ có quy trình ở `REAL_WF_0003`.
+Từ PR #17 (18/09), bundle `BUNDLE_HAAS_SMTC_DEV_20382d7957b6` có `REAL_WF_0002` r2 và `REAL_WF_0003` r2 đã
+`source_checked`, nên corpus real được phục vụ gồm **B0 r2, REAL_WF_0001 r1, REAL_WF_0002 r2,
+REAL_WF_0003 r2**. B0 r1 và r1 của 0002/0003 vẫn giữ để tra cứu lịch sử, không phải revision
+active. Nhãn **chưa được xem lại** cho corpus này (xem cảnh báo bên dưới), ví dụ
+`HAAS_DEV_Q038` (alarm 2066) giờ có thể có quy trình ở `REAL_WF_0003`.
 Q001–Q038 là bộ gốc; Q039–Q054 là câu phủ định bổ sung (cùng lĩnh vực CNC nhưng KB
 không có), dùng để chỉnh ngưỡng từ chối.
+
+> **Corpus đã đổi, nhãn chưa theo kịp (18/09).** PR #17 review xong `REAL_WF_0002/0003` nên
+> corpus phục vụ giờ là **4 workflow / 38 Step** (trước là 2 / 20). Nhãn của bộ này vẫn soạn cho
+> corpus cũ: `gold_workflows` chỉ có B0 và `REAL_WF_0001`, và nhiều câu phủ định Q039–Q054 có thể
+> đã có đáp án. Đo lexical, không dịch, trên cùng bộ câu: `false_retrieved` 7 → 15, `wf_acc`
+> 0.613 → 0.484, status 0.648 → 0.537. Phần lớn là do nhãn cũ, không phải retrieval kém đi.
+> Evaluator **không tự phát hiện** câu vừa có đáp án (nó chỉ chặn ref sai revision), nên người kiểm
+> phải xem lại cả câu phủ định và `gold_workflows` trên corpus mới trước khi báo bất kỳ số nào.
 
 > **Chưa có người kiểm nhãn gold.** Q032–Q038 giữ lượt AI review (`ai_reviewed`).
 > Q001–Q031 về `draft` sau khi chuyển B0 r1 sang r2; Q039–Q054 vẫn là bản nháp.
@@ -62,7 +70,7 @@ Cả sheet bị từ chối nếu có một dòng lỗi: câu hỏi đã đổi 
 thiếu note, `step_id` không tồn tại, nhãn mâu thuẫn, hoặc người kiểm trùng người soạn.
 Sheet là file tạm trong `out/` (gitignore); bản ghi chính thức là file JSONL, cần commit.
 
-Đặc biệt chốt các câu có ghi chú "CẦN NGƯỜI CHỐT" (Q036, Q038): đó là quyết định
+Đặc biệt chốt các câu có ghi chú "CẦN NGƯỜI CHỐT" (`HAAS_DEV_Q036`, `HAAS_DEV_Q038`): đó là quyết định
 chính sách, không phải lỗi nhãn.
 
 Không tạo câu holdout trước khi khóa pipeline D15; không chỉnh tham số trên holdout.
@@ -80,8 +88,9 @@ Không tạo câu holdout trước khi khóa pipeline D15; không chỉnh tham s
 | `gold_workflows` | Workflow chấp nhận được cho câu `procedure`. |
 | `label` | `draft` / `reviewed`, người gán nhãn, người kiểm, ghi chú. |
 
-Hai workflow hiện tại cùng lấy từ nguồn `SRC_HAAS_0005` và mô tả cùng một quy trình,
-nên mỗi unit có một Step ở mỗi workflow. Nếu đội 1 bỏ một workflow khỏi corpus phục vụ,
+`B0_SRC_HAAS_0005` và `REAL_WF_0001` cùng lấy từ nguồn `SRC_HAAS_0005` và mô tả cùng một
+quy trình, nên mỗi unit hiện có một Step ở mỗi workflow đó. `REAL_WF_0002` (mòn double arm) và
+`REAL_WF_0003` (khôi phục sau alarm) là nguồn khác; nhãn hiện **chưa** liệt kê Step nào của chúng. Nếu đội 1 bỏ một workflow khỏi corpus phục vụ,
 evaluator sẽ báo gold "stale" và cần gán lại.
 
 Gold gắn với `(workflow_id, revision, step_id)`. Khi có revision mới, evaluator dừng

@@ -1,0 +1,647 @@
+{
+  "workflow_id": "REAL_WF_0003",
+  "revision": 2,
+  "authored_by": "claude-code-d1a-draft",
+  "dataset_split": "dev",
+  "title": "Recover a Haas SMTC after a tool changer alarm",
+  "language": "en",
+  "created_at": "2026-09-14T00:00:00Z",
+  "source_ids": [
+    "SRC_HAAS_0003",
+    "SRC_HAAS_0004"
+  ],
+  "attribution": {
+    "label": "Andrew (presenter)",
+    "kind": "speaker"
+  },
+  "scope": "Tool changer recovery (automatic and manual) demonstrated in SRC_HAAS_0003. SRC_HAAS_0004's written manual-recovery how-to is cited for the exact button names in step 5, since the video's own narration names controls more loosely; SRC_HAAS_0004's 7-step procedure is word-for-word identical to TG0128's 'MANUAL RECOVERY HOW TO' section (SRC_HAAS_0002), so TG0128 is deliberately not also cited here to avoid presenting the same guide text twice as independent corroboration. The machine model is not stated.",
+  "context": {
+    "manufacturer": "Haas Automation",
+    "subsystem": "side-mount tool changer (SMTC)",
+    "task_type": "maintenance",
+    "symptoms": [
+      "tool changer alarm",
+      "2066 tool changer home position fault"
+    ],
+    "alarm_codes": [
+      "2066"
+    ],
+    "components": [
+      "double arm",
+      "carousel",
+      "tool pocket",
+      "drawbar",
+      "plunger"
+    ],
+    "provenance": {
+      "manufacturer": {
+        "basis": "source",
+        "note": "Publisher is Haas Automation, Inc."
+      },
+      "machine_family": {
+        "basis": "unknown",
+        "note": "Not stated in the narration or title."
+      },
+      "machine_model": {
+        "basis": "unknown",
+        "note": "Not stated in either source."
+      },
+      "subsystem": {
+        "basis": "source",
+        "note": "Named in the narration (U0003) and in both source titles."
+      },
+      "task_type": {
+        "basis": "curated",
+        "note": "Team label: alarm recovery. Schema 1.0.0 has no separate 'recovery' task type."
+      },
+      "symptoms": {
+        "basis": "source",
+        "note": "Stated in the narration (U0001) and shown on-screen (2066 alarm keyframe)."
+      },
+      "alarm_codes": {
+        "basis": "source",
+        "note": "Stated in the narration (U0012) and shown on-screen."
+      },
+      "components": {
+        "basis": "source",
+        "note": "Named in the narration and/or SRC_HAAS_0004's control list."
+      }
+    }
+  },
+  "steps": [
+    {
+      "title": "Recognize a tool changer alarm and press RECOVER",
+      "fields": {
+        "context": [
+          {
+            "text": "The presenter says a tool changer alarm has occurred and that Haas calls the fix 'tool changer recovery'.",
+            "evidence": [
+              [
+                "SRC_HAAS_0003:C0001",
+                "SRC_HAAS_0003:C0002",
+                "SRC_HAAS_0003:U0003"
+              ]
+            ],
+            "explanation": "The presenter states this at the start of the video; cites the corrected cues (raw caption said 'tool changes' / 'Hoss', corrected per corrections.diff citing the publisher's own name)."
+          }
+        ],
+        "action": [
+          {
+            "text": "The presenter says tool changer recovery on a Haas always starts with the RECOVER button.",
+            "evidence": [
+              [
+                "SRC_HAAS_0003:U0004",
+                "SRC_HAAS_0003:U0005"
+              ]
+            ],
+            "explanation": "The caption states this as the one thing to remember before anything else."
+          }
+        ],
+        "rationale": [
+          {
+            "text": "The presenter says there are differences in the recovery process between machine configurations, but the basics of recovery always stay the same.",
+            "evidence": [
+              [
+                "SRC_HAAS_0003:U0006",
+                "SRC_HAAS_0003:U0007"
+              ]
+            ],
+            "explanation": "The caption states this generalization directly."
+          }
+        ],
+        "outcome": [
+          {
+            "text": "The presenter says that either the machine puts the tools back where they came from (automatic mode) or the tools are manually removed from the double arm (manual mode); either way, once the tools are taken care of, the arm and tool pocket are returned to their home positions.",
+            "evidence": [
+              [
+                "SRC_HAAS_0003:U0007",
+                "SRC_HAAS_0003:U0008",
+                "SRC_HAAS_0003:U0009",
+                "SRC_HAAS_0003:U0010"
+              ]
+            ],
+            "explanation": "The caption describes this shared end-state for both recovery paths."
+          }
+        ]
+      },
+      "questions": []
+    },
+    {
+      "title": "Check the alarm page for guidance",
+      "fields": {
+        "observation": [
+          {
+            "text": "The presenter says they have a 2066 tool changer fault alarm and that some software versions show it immediately while others only show it when an action such as starting the spindle is attempted; either way, the control only allows recovering the tool changer at this point.",
+            "evidence": [
+              [
+                "SRC_HAAS_0003:U0012",
+                "SRC_HAAS_0003:U0013",
+                "SRC_HAAS_0003:U0014",
+                "SRC_HAAS_0003:U0015"
+              ]
+            ],
+            "explanation": "The caption states this directly after showing the alarm."
+          },
+          {
+            "text": "The alarm screen displays '2066 TOOL CHANGER HOME POSITION FAULT' in a red banner, with an 'AUTOMATIC RECOVERY' label in the top right of the screen.",
+            "evidence_type": "observed",
+            "attribution": {
+              "label": "D1-A keyframe observation, pending human check",
+              "kind": "model"
+            },
+            "evidence": [
+              {
+                "keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0003/kf_0065500.jpg",
+                "source_id": "SRC_HAAS_0003",
+                "start_ms": 65500,
+                "end_ms": 66500,
+                "observation_note": "Close-up of the control screen: a red banner reads '2066 TOOL CHANGER HOME POSITION FAULT'; top right shows a Haas logo and the text 'AUTOMATIC RECOVERY'.",
+                "explanation": "The frame is at the moment the narration describes viewing the 2066 alarm."
+              },
+              [
+                "SRC_HAAS_0003:U0012"
+              ]
+            ],
+            "explanation": "The frame shows the exact alarm text the narration names verbally at the same moment ('this 2066 tool changer fault alarm')."
+          }
+        ],
+        "action": [
+          {
+            "text": "The presenter says to go to the alarms page to see what it says: the tool changer is not in a safe position and recovery needs to be pressed.",
+            "evidence": [
+              [
+                "SRC_HAAS_0003:U0016",
+                "SRC_HAAS_0003:U0017",
+                "SRC_HAAS_0003:U0018"
+              ]
+            ],
+            "explanation": "The caption states the alarm page's message and the next action directly."
+          }
+        ]
+      },
+      "questions": []
+    },
+    {
+      "title": "Restore the tool changer and start automatic recovery",
+      "fields": {
+        "action": [
+          {
+            "text": "The presenter says that pressing RECOVER gives the option to restore the tool changer or recover a tap; they press F1 to restore the tool changer, then press RESET, then press A to start automatic recovery.",
+            "evidence": [
+              [
+                "SRC_HAAS_0003:U0018",
+                "SRC_HAAS_0003:U0019",
+                "SRC_HAAS_0003:U0020"
+              ]
+            ],
+            "explanation": "The caption states this exact button sequence."
+          },
+          {
+            "text": "The control screen shows a 'Tool Changer Recovery' page with Carousel and Double Arm status fields and the options '(A) Automatic recovery' and '(E) Exit recovery'.",
+            "evidence_type": "observed",
+            "attribution": {
+              "label": "D1-A keyframe observation, pending human check",
+              "kind": "model"
+            },
+            "evidence": [
+              {
+                "keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0003/kf_0116500.jpg",
+                "source_id": "SRC_HAAS_0003",
+                "start_ms": 116500,
+                "end_ms": 117500,
+                "observation_note": "Control screen titled 'Tool Changer Recovery' with 'Carousel' and 'Double Arm' status panels and a 'Tool Changer Status Summary' listing '(A) Automatic recovery' and '(E) Exit recovery'; presenter's hand is on the keypad.",
+                "explanation": "The frame falls within the window where the narration describes reaching the automatic-recovery option."
+              }
+            ],
+            "explanation": "The frame shows the exact screen and options the narration describes navigating."
+          }
+        ],
+        "outcome": [
+          {
+            "text": "The presenter says the double arm returns the tools to where they came from, tool changer recovery is complete, and they press E to exit; the presenter calls this 'pretty easy'.",
+            "evidence": [
+              [
+                "SRC_HAAS_0003:C0021",
+                "SRC_HAAS_0003:U0022"
+              ]
+            ],
+            "explanation": "The caption states this outcome and the presenter's own assessment directly; cites the corrected cue (raw caption said 'told change', corrected per corrections.diff)."
+          },
+          {
+            "text": "The control screen shows a 'Tool Changer Status Summary' reading 'Tool changer recovery completed. Press \"E\" to exit.', with the Carousel and Double Arm status fields both reading OK.",
+            "evidence_type": "observed",
+            "attribution": {
+              "label": "D1-A keyframe observation, pending human check",
+              "kind": "model"
+            },
+            "evidence": [
+              {
+                "keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0003/kf_0123000.jpg",
+                "source_id": "SRC_HAAS_0003",
+                "start_ms": 123000,
+                "end_ms": 124000,
+                "observation_note": "Same control screen as kf_0116500.jpg, now showing 'Carousel status ok' and 'Double arm status ok' under 'Tool Changer Status Summary:', with the text 'Tool changer recovery completed. Press \"E\" to exit.' below.",
+                "explanation": "The frame is at the exact moment the narration describes recovery completing."
+              }
+            ],
+            "explanation": "The frame shows the exact completion message the narration is describing at this moment."
+          }
+        ]
+      },
+      "questions": []
+    },
+    {
+      "title": "If automatic recovery fails, engage manual recovery",
+      "fields": {
+        "condition": [
+          {
+            "text": "The presenter says it is unusual for automatic recovery not to work, but if it doesn't, the machine kicks into manual recovery mode.",
+            "key": "auto_recovery_fails",
+            "evidence": [
+              [
+                "SRC_HAAS_0003:U0023",
+                "SRC_HAAS_0003:U0024"
+              ]
+            ],
+            "explanation": "The caption states this as the trigger for switching to manual recovery."
+          }
+        ],
+        "action": [
+          {
+            "text": "The presenter says that on an older machine, one is probably already familiar with manual recovery, and to press M to engage it.",
+            "evidence": [
+              [
+                "SRC_HAAS_0003:U0024",
+                "SRC_HAAS_0003:U0025",
+                "SRC_HAAS_0003:U0026"
+              ]
+            ],
+            "explanation": "The caption states this directly."
+          }
+        ]
+      },
+      "questions": []
+    },
+    {
+      "title": "Use the manual recovery screen to move the tool changer components",
+      "fields": {
+        "observation": [
+          {
+            "text": "The presenter says there is a lot going on this screen, but basically it is where the tool changer is manually controlled: rotate the arm back and forth, lift the pocket up and down, actuate the drawbar, and so forth.",
+            "evidence": [
+              [
+                "SRC_HAAS_0003:U0026",
+                "SRC_HAAS_0003:U0027",
+                "SRC_HAAS_0003:U0028"
+              ]
+            ],
+            "explanation": "The caption describes the manual recovery screen's controls in general terms."
+          },
+          {
+            "text": "The control screen shows a 'TOOL CHANGER RECOVERY' page with 'Carousel', 'Spindle', and 'Double arm' status fields, with 'Carousel pocket' and 'Double arm' both reading 'OFF POSITION'.",
+            "evidence_type": "observed",
+            "attribution": {
+              "label": "D1-A keyframe observation, pending human check",
+              "kind": "model"
+            },
+            "evidence": [
+              {
+                "keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0003/kf_0157000.jpg",
+                "source_id": "SRC_HAAS_0003",
+                "start_ms": 157000,
+                "end_ms": 158000,
+                "observation_note": "Screen titled 'TOOL CHANGER RECOVERY' showing 'Carousel: POCKET 23', 'Spindle: TOOL 2', 'Carousel pocket: OFF POSITION' and 'Double arm: OFF POSITION', with a 'Manual tool changer operation' help text below listing ATC REV/TOOL RELEASE/UP-DOWN/ORIENT SPINDLE/LF-RT ARROW commands.",
+                "explanation": "The frame is at the moment the narration describes entering the manual recovery screen, before the arm reaches origin."
+              }
+            ],
+            "explanation": "The frame shows the manual recovery screen the narration is describing at this moment, at its initial 'OFF POSITION' state."
+          }
+        ],
+        "action": [
+          {
+            "text": "Push [ATC FWD] or [ATC REV] to turn the double arm. Push the [UP] or [DOWN] cursor arrows to raise or lower the tool pocket. Push [ORIENT SPINDLE] to reset the spindle orientation and lock it. Push the [LEFT] or [RIGHT] cursor arrows to turn the carousel left or right. Push the [TOOL RELEASE] button to trigger the tool clamp/unclamp.",
+            "attribution": {
+              "label": "Haas manual-recovery how-to (SRC_HAAS_0004)",
+              "kind": "document"
+            },
+            "evidence": [
+              [
+                "SRC_HAAS_0004:T0007"
+              ]
+            ],
+            "explanation": "SRC_HAAS_0004 names these specific buttons; the video's narration describes the same controls only in general terms ('rotate the arm', 'lift the pocket')."
+          }
+        ],
+        "context": [
+          {
+            "text": "The presenter says the on-screen notification tells them to remove all the tools, then rotate the arm in the reverse direction to its origin position.",
+            "evidence": [
+              [
+                "SRC_HAAS_0003:U0029",
+                "SRC_HAAS_0003:U0030"
+              ]
+            ],
+            "explanation": "The caption states the notification's instruction directly."
+          }
+        ]
+      },
+      "questions": [
+        {
+          "target_field": "rationale",
+          "reason": "missing",
+          "question": "Why must all tools be removed from the arm before it can be rotated back to origin, rather than rotating with tools still loaded?"
+        }
+      ]
+    },
+    {
+      "title": "Remove the tools from the double arm one at a time",
+      "fields": {
+        "action": [
+          {
+            "text": "The presenter says the arm is in a position to reach one of the tools, puts on work gloves, presses the plunger, and gives the tool a firm pull to remove it.",
+            "evidence": [
+              [
+                "SRC_HAAS_0003:U0031",
+                "SRC_HAAS_0003:U0032",
+                "SRC_HAAS_0003:U0033"
+              ]
+            ],
+            "explanation": "The caption states this sequence directly."
+          },
+          {
+            "text": "The presenter then hits TC reverse to rotate the arm as close as possible to reach the second tool, presses the plunger again, and removes that tool too.",
+            "evidence": [
+              [
+                "SRC_HAAS_0003:U0035",
+                "SRC_HAAS_0003:U0036",
+                "SRC_HAAS_0003:U0037"
+              ]
+            ],
+            "explanation": "The caption states this second removal directly."
+          },
+          {
+            "text": "In the video, a gloved hand presses near a small cylindrical fitting at the base of a tool holder mounted in the double arm.",
+            "evidence_type": "observed",
+            "attribution": {
+              "label": "D1-A keyframe observation, pending human check",
+              "kind": "model"
+            },
+            "evidence": [
+              {
+                "keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0003/kf_0190000.jpg",
+                "source_id": "SRC_HAAS_0003",
+                "start_ms": 190000,
+                "end_ms": 191000,
+                "observation_note": "Close-up, desaturated lighting: a gloved hand presses near a small cylindrical fitting at the base of a conical tool holder mounted in a dark double-arm bracket.",
+                "explanation": "The frame falls within the window where the narration describes pressing the plunger to remove the first tool."
+              }
+            ],
+            "explanation": "The frame shows a gloved hand at the tool holder the narration describes working on at this moment."
+          }
+        ],
+        "condition": [
+          {
+            "text": "The presenter says a tool can only be removed by depressing the plunger; otherwise it is really difficult and something is probably going to break.",
+            "evidence": [
+              [
+                "SRC_HAAS_0003:U0033",
+                "SRC_HAAS_0003:U0034"
+              ]
+            ],
+            "explanation": "The caption states this warning directly, repeated when removing the second tool (U0037-U0038)."
+          }
+        ]
+      },
+      "questions": []
+    },
+    {
+      "title": "Rotate the arm to origin and raise the pocket",
+      "fields": {
+        "action": [
+          {
+            "text": "The presenter says they continue rotating the arm until it reaches the origin position.",
+            "evidence": [
+              [
+                "SRC_HAAS_0003:U0038",
+                "SRC_HAAS_0003:U0039"
+              ]
+            ],
+            "explanation": "The caption states this directly."
+          },
+          {
+            "text": "The presenter says the notification tells them the arm is at origin and asks them to raise the pocket up, which they do by pressing the up arrow.",
+            "evidence": [
+              [
+                "SRC_HAAS_0003:U0039",
+                "SRC_HAAS_0003:U0040"
+              ]
+            ],
+            "explanation": "The caption states this notification and the action taken directly."
+          },
+          {
+            "text": "The control screen shows a 'Manual tool changer operation' help page listing control commands (ATC REV, TOOL RELEASE, UP/DOWN arrow, ORIENT SPINDLE, LF/RT arrow), a 'Suggested next action: Raise pocket up' box, and the status 'Arm at ORIGIN'.",
+            "evidence_type": "observed",
+            "attribution": {
+              "label": "D1-A keyframe observation, pending human check",
+              "kind": "model"
+            },
+            "evidence": [
+              {
+                "keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0003/kf_0242900.jpg",
+                "source_id": "SRC_HAAS_0003",
+                "start_ms": 242900,
+                "end_ms": 243900,
+                "observation_note": "Screen titled 'Manual tool changer operation' listing commands (ATC REV, TOOL RELEASE, UP/DOWN arrow, ORIENT SPINDLE, LF/RT arrow, KEY JOG Z PLUS); a highlighted box reads 'Suggested next action: Raise pocket up'; below it reads 'Arm at ORIGIN'.",
+                "explanation": "The frame is at the exact moment the narration says the notification asks to raise the pocket, with the arm already at origin."
+              }
+            ],
+            "explanation": "The frame shows the exact on-screen instruction and status the narration is describing."
+          }
+        ],
+        "outcome": [
+          {
+            "text": "The presenter says the screen then tells them no manual recovery action is required, and it is time to press E to exit; tool changer recovery is complete.",
+            "evidence": [
+              [
+                "SRC_HAAS_0003:U0040",
+                "SRC_HAAS_0003:C0041"
+              ]
+            ],
+            "explanation": "The caption states this final confirmation directly; cites the corrected cue (raw caption said 'total change your', corrected per corrections.diff)."
+          }
+        ]
+      },
+      "questions": []
+    },
+    {
+      "title": "Verify the recovered tools and update the tool table",
+      "fields": {
+        "action": [
+          {
+            "text": "The presenter says they like to check which tools were removed by going to the active tool window, pressing MDI; the window shows the two tools that were just in the arm.",
+            "evidence": [
+              [
+                "SRC_HAAS_0003:U0042",
+                "SRC_HAAS_0003:U0043"
+              ]
+            ],
+            "explanation": "The caption states this verification step directly."
+          },
+          {
+            "text": "The presenter says they can now update the tool table.",
+            "evidence": [
+              [
+                "SRC_HAAS_0003:U0043",
+                "SRC_HAAS_0003:U0044"
+              ]
+            ],
+            "explanation": "The caption states this final action directly."
+          },
+          {
+            "text": "The control screen shows an 'ACTIVE TOOL' panel identifying the current tool and pocket, with the presenter pointing at it. The exact tool and pocket numbers shown are not spoken aloud in the narration.",
+            "evidence_type": "observed",
+            "attribution": {
+              "label": "D1-A keyframe observation, pending human check",
+              "kind": "model"
+            },
+            "evidence": [
+              {
+                "keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0003/kf_0258000.jpg",
+                "source_id": "SRC_HAAS_0003",
+                "start_ms": 258000,
+                "end_ms": 259000,
+                "observation_note": "Control screen showing 'MAIN SPINDLE', 'POSITION: MACHINE' and 'ACTIVE TOOL' panels side by side; the 'ACTIVE TOOL' box reads 'T2 - P23 T4' with an end-mill icon below it; the presenter's finger points directly at this box.",
+                "explanation": "The frame is at the moment the narration describes the active tool window telling them the tools that were in the arm."
+              }
+            ],
+            "explanation": "The frame shows the exact screen the narration is describing at this moment."
+          }
+        ],
+        "rationale": [
+          {
+            "text": "The presenter recaps two key things to remember: press the recover button to start the tool changer recovery process, and don't rush through the screens, read the information carefully.",
+            "evidence": [
+              [
+                "SRC_HAAS_0003:U0044",
+                "SRC_HAAS_0003:U0045",
+                "SRC_HAAS_0003:U0046",
+                "SRC_HAAS_0003:U0047"
+              ]
+            ],
+            "explanation": "The caption states this recap directly."
+          }
+        ]
+      },
+      "questions": []
+    },
+    {
+      "title": "Escalate when recovery doesn't fix it, and maintain the tool changer to prevent faults",
+      "fields": {
+        "condition": [
+          {
+            "text": "The presenter says the recovery process just covered handles most common tool changer faults, but there are times when the recover button will not fix the problem, such as fluctuating air pressure or poor tool maintenance.",
+            "evidence": [
+              [
+                "SRC_HAAS_0003:U0047",
+                "SRC_HAAS_0003:U0048",
+                "SRC_HAAS_0003:U0049"
+              ]
+            ],
+            "explanation": "The caption states this limitation directly."
+          }
+        ],
+        "outcome": [
+          {
+            "text": "The presenter says that in those cases, the viewer should talk to their Haas Factory Outlet so they can help with the specific problem.",
+            "evidence": [
+              [
+                "SRC_HAAS_0003:U0049",
+                "SRC_HAAS_0003:U0050"
+              ]
+            ],
+            "explanation": "The caption states this escalation path directly."
+          }
+        ],
+        "acceptance_criteria": [
+          {
+            "text": "The presenter lists ways to keep the tool changer running well: provide the correct air pressure and air volume to the machine.",
+            "evidence": [
+              [
+                "SRC_HAAS_0003:U0052"
+              ]
+            ],
+            "explanation": "The caption states this maintenance item directly."
+          },
+          {
+            "text": "The presenter says to periodically lubricate the double arm V-grooves, plungers and slider cap, and to use the correct pull studs.",
+            "evidence": [
+              [
+                "SRC_HAAS_0003:U0053"
+              ]
+            ],
+            "explanation": "The caption states this maintenance item directly."
+          },
+          {
+            "text": "The presenter says to keep pull studs greased and monitor their condition, and not to use tool holders with worn or damaged tapers.",
+            "evidence": [
+              [
+                "SRC_HAAS_0003:U0054"
+              ]
+            ],
+            "explanation": "The caption states this maintenance item directly."
+          },
+          {
+            "text": "The presenter says to keep tool holders and the spindle taper clean.",
+            "evidence": [
+              [
+                "SRC_HAAS_0003:U0055"
+              ]
+            ],
+            "explanation": "The caption states this maintenance item directly."
+          }
+        ]
+      },
+      "questions": [
+        {
+          "target_field": "rationale",
+          "reason": "missing",
+          "question": "What air pressure or volume range counts as 'correct' for the tool changer, and what testing procedure detects 'fluctuating' air pressure as the root cause of a fault?"
+        }
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "type": "branch_if",
+      "from_step": 3,
+      "to_step": 4,
+      "condition_keys": [
+        "auto_recovery_fails"
+      ],
+      "claim": {
+        "text": "If automatic recovery does not succeed, the presenter says the machine kicks into manual recovery mode instead of completing the automatic path.",
+        "evidence": [
+          [
+            "SRC_HAAS_0003:U0023",
+            "SRC_HAAS_0003:U0024"
+          ]
+        ],
+        "explanation": "This branch reflects the presenter's own framing of automatic recovery (step 3) as the default path, with manual recovery (step 4 onward) reached only when it fails."
+      }
+    }
+  ],
+  "revision_base": {
+    "path": "data/workflows/dev/REAL_WF_0003.r1.json",
+    "snapshot_sha256": "988331182c7c8f675867a6a0697b29878ac8ad3650358cdbad2beaf4023e1e09"
+  },
+  "supersedes_revision": 1,
+  "change_log": [
+    {
+      "changed_at": "2026-09-18T00:00:00Z",
+      "actor_id": "quyhienln",
+      "reason": "add human source review WP5, every claim checked against its cited source and marked source_checked, no claim text evidence or step content changed. CL_012 review note carries forward the evidence pool's own caveat that this keyframe is bench B-roll not confirmed to be from the on-machine sequence at this step's timestamp",
+      "previous_revision": 1,
+      "id_mapping": []
+    }
+  ]
+}

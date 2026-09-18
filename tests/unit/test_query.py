@@ -89,12 +89,6 @@ def test_term_coverage_weights_rare_terms():
     assert content_terms("What steps should I use for the pocket?") == ["pocket"]
 
 
-@pytest.mark.xfail(strict=True, reason=(
-    "Known D2-A regression since REAL_WF_0002/0003 joined the served corpus (PR #17): lexical "
-    "workflow routing sends the demo question to REAL_WF_0003 (alarm recovery, 1.14) over "
-    "REAL_WF_0001 (0.41) and B0 (0.39). The query says 'lubricate'; REAL_WF_0003 contains "
-    "'lubricate ... slider cap', while the right Steps say 'grease'. Hybrid is unmeasured. "
-    "strict=True: when routing is fixed this test turns red, so remove this marker then."))
 def test_translated_vietnamese_question_searches_english_corpus(real_db):
     translator = StubTranslator({VI_GREASE: "How do I lubricate the pocket slider?"})
     result = ask(real_db, VI_GREASE, translator=translator)
@@ -191,3 +185,32 @@ def test_conflict_is_reported_only_when_it_competes_for_top_k(tmp_path):
     assert narrow["status"] == "retrieved" and narrow["conflicts"] == []
     wide = ask(db, "da reset cum den bao", mode="synthetic", strategy="vector", embedder=embedder, top_k=5)
     assert wide["status"] == "conflicting_sources" and len(wide["conflicts"]) == 2
+
+
+REPLACE_POCKET = "What are the steps to replace a damaged tool pocket on a Haas side-mount tool changer?"
+
+
+def test_best_step_routing_resists_one_long_workflow_record(real_db):
+    """Regression seen when REAL_WF_0002/0003 joined the corpus (PR #17).
+
+    Ranking the four workflow records let the longest one (REAL_WF_0003, alarm recovery,
+    3493 tokens) win on incidental words such as "step". Scoring a workflow by its best
+    Step gives BM25 dozens of documents instead of four.
+    """
+    routed = ask(real_db, REPLACE_POCKET)
+    assert routed["selected_workflow"]["workflow_id"] in {"REAL_WF_0001", "B0_SRC_HAAS_0005"}
+    assert routed["trace"]["routing_steps"][routed["selected_workflow"]["workflow_id"]]
+    legacy = ask(real_db, REPLACE_POCKET, workflow_routing="record")
+    assert legacy["selected_workflow"]["workflow_id"] == "REAL_WF_0003"  # the failure being fixed
+    assert "routing_steps" not in legacy["trace"]
+
+
+def test_demo_question_routes_to_the_greasing_step_in_english(real_db):
+    result = ask(real_db, "How do I lubricate the pocket slider?")
+    assert result["status"] == "retrieved"
+    assert GREASE_STEPS & {step["step_id"] for step in result["steps"][:3]}
+
+
+def test_workflow_routing_config_is_validated():
+    with pytest.raises(ValueError):
+        RetrievalConfig(workflow_routing="max")

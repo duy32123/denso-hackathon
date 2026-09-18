@@ -353,13 +353,14 @@ def run_evaluation(db: str | Path, questions_path: str | Path, *, mode: str, spl
                    rrf_k: int = 60, min_term_coverage: float = .10, embedder: Embedder | None = None,
                    query_cache: str | Path | None = None, translator: Translator | None = None,
                    translation_cache: str | Path | None = None, translate: bool = True,
-                   allow_holdout: bool = False) -> tuple[dict, list[dict]]:
+                   allow_holdout: bool = False, workflow_routing: str = "best_step") -> tuple[dict, list[dict]]:
     """Run every question under every strategy against the SAME active index."""
     if split == "holdout" and not allow_holdout:
         raise EvaluationError("Holdout is evaluated once, after the D15 lock; pass allow_holdout explicitly")
     strategies = list(dict.fromkeys(strategies))
     settings = dict(top_k=top_k, candidate_k=candidate_k, min_cosine=min_cosine, rrf_k=rrf_k,
-                    min_term_coverage=min_term_coverage, query_translation="auto" if translate else "never")
+                    min_term_coverage=min_term_coverage, query_translation="auto" if translate else "never",
+                    workflow_routing=workflow_routing)
     for strategy in strategies:
         RetrievalConfig(strategy=strategy, **settings)  # reject bad config before any work
     questions, questions_sha256 = load_questions(questions_path)

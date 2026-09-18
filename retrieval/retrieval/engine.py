@@ -44,6 +44,11 @@ class RetrievalConfig:
     # Depth 1 is the conservative starting point, not a measured optimum.
     neighbor_depth: int = 1
     max_related_steps: int = 5
+    # "best_step" scores a workflow by its best assertable Step across the filtered corpus;
+    # "record" ranks the workflow-level records. best_step was >= record on every lexical
+    # metric on real/dev with both the 2- and 4-workflow corpora (2026-09-18, labels not
+    # human-checked); hybrid is unmeasured. Not a tuned optimum.
+    workflow_routing: str = "best_step"
 
     def __post_init__(self):
         if self.strategy not in ("lexical", "vector", "hybrid"):
@@ -56,6 +61,8 @@ class RetrievalConfig:
             raise ValueError("Invalid min_term_coverage or query_translation")
         if not 0 <= self.neighbor_depth <= 3 or not 0 <= self.max_related_steps <= 20:
             raise ValueError("Require 0 <= neighbor_depth <= 3 and 0 <= max_related_steps <= 20")
+        if self.workflow_routing not in ("record", "best_step"):
+            raise ValueError("workflow_routing must be record or best_step")
 
 
 def retrieve(db: str | Path, request: QueryRequest, *, config: RetrievalConfig | None = None,
@@ -180,7 +187,23 @@ def retrieve(db: str | Path, request: QueryRequest, *, config: RetrievalConfig |
                  "score": h["score"], "lexical_score": h["lexical_score"], "vector_score": h["vector_score"]}
                 for h in items]
 
-    workflows = ranked([d for d in docs if d["record"]["record_type"] == "workflow"])
+    if config.workflow_routing == "best_step":
+        # Score each workflow by its best-matching assertable Step across the filtered corpus.
+        # Ranking the workflow records directly gives BM25 only one document per workflow,
+        # so IDF is decided by a handful of documents and the longest record wins by
+        # containing incidental words ("step", "lubricate"). Steps give dozens of documents.
+        workflow_docs = {d["record"]["workflow_id"]: d for d in docs if d["record"]["record_type"] == "workflow"}
+        best: dict[str, dict] = {}
+        routing_steps: dict[str, str] = {}
+        for hit in ranked([d for d in docs if d["record"]["record_type"] == "step" and d["purpose"] == "answer"]):
+            workflow_id = hit["doc"]["record"]["workflow_id"]
+            if workflow_id not in best and workflow_id in workflow_docs:
+                best[workflow_id] = {**hit, "doc": workflow_docs[workflow_id]}
+                routing_steps[workflow_id] = hit["doc"]["record"]["step_id"]
+        workflows = sorted(best.values(), key=lambda h: -h["score"])
+        result["trace"]["routing_steps"] = routing_steps
+    else:
+        workflows = ranked([d for d in docs if d["record"]["record_type"] == "workflow"])
     result["trace"]["workflow_ranking"] = rank_trace(workflows)
     seen = set()
     for hit in workflows:

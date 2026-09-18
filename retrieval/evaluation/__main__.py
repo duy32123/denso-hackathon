@@ -37,6 +37,8 @@ def main(argv=None):
     run.add_argument("--no-translation", action="store_true",
                      help="search Vietnamese questions untranslated (relevance gate is then skipped for them)")
     run.add_argument("--allow-holdout", action="store_true", help="only after the D15 pipeline lock")
+    run.add_argument("--workflow-routing", choices=("best_step", "record"), default="best_step",
+                     help="how the single workflow is chosen before Step ranking")
     run.add_argument("--json", action="store_true", help="print the full report instead of the table")
     answers = commands.add_parser("answers", help="score the served /v1/ask answers (WP3)")
     answers.add_argument("--db", required=True)
@@ -82,7 +84,7 @@ def main(argv=None):
                 min_cosine=args.min_cosine, rrf_k=args.rrf_k, allow_holdout=args.allow_holdout,
                 query_cache=None if args.no_query_cache else args.query_cache,
                 min_term_coverage=args.min_term_coverage, translate=not args.no_translation,
-                translation_cache=args.translation_cache,
+                translation_cache=args.translation_cache, workflow_routing=args.workflow_routing,
             )
             target = write_run(report, rows, args.out)
             print(json.dumps(report, ensure_ascii=False, indent=2) if args.json else format_summary(report))

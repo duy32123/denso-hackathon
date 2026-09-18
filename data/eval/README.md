@@ -10,13 +10,21 @@ active. Nhãn **chưa được xem lại** cho corpus này (xem cảnh báo bên
 Q001–Q038 là bộ gốc; Q039–Q054 là câu phủ định bổ sung (cùng lĩnh vực CNC nhưng KB
 không có), dùng để chỉnh ngưỡng từ chối.
 
-> **Corpus đã đổi, nhãn chưa theo kịp (18/09).** PR #17 review xong `REAL_WF_0002/0003` nên
-> corpus phục vụ giờ là **4 workflow / 38 Step** (trước là 2 / 20). Nhãn của bộ này vẫn soạn cho
-> corpus cũ: `gold_workflows` chỉ có B0 và `REAL_WF_0001`, và nhiều câu phủ định Q039–Q054 có thể
-> đã có đáp án. Đo lexical, không dịch, trên cùng bộ câu: `false_retrieved` 7 → 15, `wf_acc`
-> 0.613 → 0.484, status 0.648 → 0.537. Phần lớn là do nhãn cũ, không phải retrieval kém đi.
+> **Corpus đã đổi (18/09): phần lớn chỗ tụt là lỗi retrieval, không phải do nhãn.** PR #17 đưa
+> `REAL_WF_0002/0003` vào corpus phục vụ (**4 workflow / 38 Step**, trước là 2 / 20). Đo lexical,
+> không dịch, trên cùng bộ câu: 18/54 câu đổi kết quả, `false_retrieved` 7 → 15. Bản ghi trước
+> (PR #18) ghi rằng phần lớn là do nhãn cũ; **nhận định đó sai**. Tách ra thì:
+> - **Routing nghiêng về `REAL_WF_0003`**: các câu thay pocket (Q008, Q013, Q019, Q029) bị đưa
+>   sang quy trình khôi phục sau alarm. Đã sửa một phần bằng `best_step` (xem `retrieval/README.md`);
+>   Q008 và Q013 vẫn sai.
+> - **Cổng liên quan quá lỏng khi corpus lớn**: các câu ngoài phạm vi như băng tải phoi, lọc máy nén
+>   khí, dây đai trục chính, lọc thủy lực máy tiện (Q042, Q044, Q047, Q049, Q053…) giờ có kết quả.
+>   **Chưa sửa**; ngưỡng 0.10 cần hiệu chỉnh lại.
+> - **Nhãn thật sự lỗi thời** có lẽ chỉ vài câu, rõ nhất là `HAAS_DEV_Q038` (alarm 2066), giờ có thể
+>   có quy trình trong `REAL_WF_0003`. `gold_workflows` cũng chưa có Step nào của `REAL_WF_0002/0003`.
+>
 > Evaluator **không tự phát hiện** câu vừa có đáp án (nó chỉ chặn ref sai revision), nên người kiểm
-> phải xem lại cả câu phủ định và `gold_workflows` trên corpus mới trước khi báo bất kỳ số nào.
+> vẫn phải xem lại các câu phủ định và `gold_workflows` trên corpus mới trước khi báo bất kỳ số nào.
 
 > **Chưa có người kiểm nhãn gold.** Q032–Q038 giữ lượt AI review (`ai_reviewed`).
 > Q001–Q031 về `draft` sau khi chuyển B0 r1 sang r2; Q039–Q054 vẫn là bản nháp.

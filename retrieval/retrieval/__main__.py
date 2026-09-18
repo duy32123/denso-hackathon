@@ -33,6 +33,7 @@ def main(argv=None):
             sub.add_argument("--neighbor-depth", type=int, default=1,
                              help="follow requires/branch_if/corrects this deep; 0 disables expansion")
             sub.add_argument("--max-related-steps", type=int, default=5)
+            sub.add_argument("--workflow-routing", choices=("best_step", "record"), default="best_step")
             sub.add_argument("--query-translation", choices=("auto", "never"), default="auto",
                              help="auto: translate Vietnamese questions for vector/hybrid on an English corpus")
             sub.add_argument("--summary", action="store_true", help="show compact hits; omit to include evidence and trace")
@@ -65,7 +66,8 @@ def main(argv=None):
                                                      intent=args.intent, min_term_coverage=args.min_term_coverage,
                                                      query_translation=args.query_translation,
                                                      neighbor_depth=args.neighbor_depth,
-                                                     max_related_steps=args.max_related_steps))
+                                                     max_related_steps=args.max_related_steps,
+                                                     workflow_routing=args.workflow_routing))
             if args.summary:
                 result = {key: result[key] for key in (
                     "status", "index_build_id", "selected_workflow", "missing_context", "steps",

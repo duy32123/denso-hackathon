@@ -39,6 +39,33 @@
     <div id="workflow-relations"></div>
     <div id="workflow-questions"></div>
   </section>
+  <section class="browser" aria-labelledby="feedback-heading">
+    <h2 id="feedback-heading">Bổ sung phần còn thiếu</h2>
+    <p class="muted">Phản hồi được lưu thành một <strong>revision mới</strong> qua service của đội 1.
+      Có phản hồi không đồng nghĩa đã kiểm nguồn, càng không phải chuyên gia xác nhận.
+      Danh tính người trả lời do người dùng tự khai, hệ thống <strong>chưa xác thực</strong>.</p>
+    <p id="feedback-state" role="status" aria-live="polite">Chọn một workflow ở trên để bổ sung.</p>
+    <div id="feedback-form" hidden>
+      <div class="context">
+        <label>Câu hỏi còn mở <select id="feedback-question"><option value="">— không gắn câu hỏi nào —</option></select></label>
+        <label>Bước <select id="feedback-step"></select></label>
+        <label>Trường <select id="feedback-field"></select></label>
+      </div>
+      <div class="context">
+        <label>Người trả lời <input id="feedback-actor" placeholder="tài khoản của bạn"></label>
+        <label>Tên hiển thị <input id="feedback-label" placeholder="họ tên"></label>
+        <label>Vai trò thật <input id="feedback-role" placeholder="ví dụ: kỹ thuật viên bảo trì"></label>
+      </div>
+      <label>Nguyên văn phản hồi
+        <textarea id="feedback-text" rows="3" maxlength="4000" placeholder="Ghi đúng lời người trả lời; không tóm tắt."></textarea></label>
+      <div class="browser-controls">
+        <button type="button" id="feedback-preview">Xem trước thay đổi</button>
+        <button type="button" id="feedback-save" disabled>Lưu revision mới</button>
+      </div>
+      <p id="feedback-message" role="status" aria-live="polite"></p>
+      <div id="feedback-diff"></div>
+    </div>
+  </section>
   <section class="browser" aria-labelledby="history-heading">
     <h2 id="history-heading">Lịch sử revision</h2>
     <div id="workflow-history">Chọn một workflow để xem lịch sử.</div>
@@ -49,4 +76,5 @@
 </main>
 <script src="/static/app.js" defer></script>
 <script src="/static/viewer.js" defer></script>
+<script src="/static/feedback.js" defer></script>
 </html>

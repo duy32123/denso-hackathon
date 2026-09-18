@@ -25,6 +25,7 @@
     for (const id of areas) el(id).replaceChildren();
     el('workflow-status').textContent = '';
     el('workflow-history').textContent = 'Chọn một workflow để xem lịch sử.';
+    document.dispatchEvent(new CustomEvent('workflow-cleared'));
   }
   async function loadCatalog() {
     const token = ++catalogGeneration, mode = el('mode').value;
@@ -162,6 +163,8 @@
       if (token !== viewGeneration || queryToken !== generation) return;
       renderWorkflow(data, mode, build, options);
       el('workflow-status').textContent = `Đang xem ${ref.workflow_id} r${ref.revision} · chỉ đọc`;
+      // Man Bo sung doc tu day de khong giu mot ban sao trang thai thu hai.
+      document.dispatchEvent(new CustomEvent('workflow-shown', {detail: {ref, mode, build, data}}));
       if (!options.keepHistory) {
         const path = `/v1/workflows/${encodeURIComponent(ref.workflow_id)}/${ref.revision}/history?${params(mode, build)}`;
         try {

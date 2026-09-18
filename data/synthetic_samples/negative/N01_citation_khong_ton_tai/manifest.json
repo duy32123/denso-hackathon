@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "bundle_id": "BUNDLE_negative/N01_citation_khong_ton_tai",
+  "source_type": "synthetic",
+  "dataset_split": "dev",
+  "created_at": "2026-09-08T00:00:00Z",
+  "files": [
+    {
+      "path": "sources.jsonl",
+      "sha256": "d06374de04137ccd88dcd553b60948b04b01bf5e0066bbdd09334751f9744e5d",
+      "record_count": 1
+    },
+    {
+      "path": "workflows.jsonl",
+      "sha256": "8064cf04f550b410a1658cc7eea0b0c7839a7a5ff034836bcd229412ca89668f",
+      "record_count": 1
+    }
+  ],
+  "producer": {
+    "team": "team_2",
+    "pipeline_version": "synthetic-kb-1.0.0"
+  }
+}

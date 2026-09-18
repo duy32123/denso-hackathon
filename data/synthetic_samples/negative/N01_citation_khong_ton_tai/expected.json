@@ -1,0 +1,11 @@
+{
+  "bundle_id": "N01_citation_khong_ton_tai",
+  "title": "Citation tro toi evidence khong ton tai",
+  "purpose": "Chan citation bia: evidence_links khong duoc tro ra ngoai snapshot.",
+  "validator": {
+    "outcome": "reject",
+    "expected_error_codes": [
+      "V03"
+    ]
+  }
+}

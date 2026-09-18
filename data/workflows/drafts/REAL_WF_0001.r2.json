@@ -1094,7 +1094,7 @@
       },
       "evidence_links": [
         {
-          "evidence_id": "REAL_WF_0001_EV_019",
+          "evidence_id": "REAL_WF_0001_EV_036",
           "support_status": "supported",
           "explanation": "Corrected in the D1-A keyframe-evidence hardening pass: the frame shows a hand gripping a cylindrical roller on the part; component identity (cam follower) and the spins-freely check were previously attributed to this still from the narration alone and are removed from the visual claim."
         },
@@ -1887,7 +1887,7 @@
       "parent_evidence_ids": []
     },
     {
-      "evidence_id": "REAL_WF_0001_EV_019",
+      "evidence_id": "REAL_WF_0001_EV_036",
       "source_id": "SRC_HAAS_0005",
       "modality": "visual",
       "locator": {
@@ -2245,6 +2245,12 @@
           "old_id": "REAL_WF_0001_CL_021",
           "new_ids": [
             "REAL_WF_0001_CL_021"
+          ]
+        },
+        {
+          "old_id": "REAL_WF_0001_EV_019",
+          "new_ids": [
+            "REAL_WF_0001_EV_036"
           ]
         }
       ]

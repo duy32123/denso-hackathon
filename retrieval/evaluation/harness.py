@@ -280,12 +280,12 @@ def _evaluate_one(db, q: EvalQuestion, mode: str, split: str, config: RetrievalC
     return row
 
 
-def _mean(values) -> float | None:
+def mean(values) -> float | None:
     values = [float(v) for v in values]
     return round(sum(values) / len(values), 4) if values else None
 
 
-def _percentile(values: list[float], q: float) -> float | None:
+def percentile(values: list[float], q: float) -> float | None:
     ordered = sorted(values)
     return ordered[max(0, math.ceil(q * len(ordered)) - 1)] if ordered else None
 
@@ -294,8 +294,8 @@ def _groups(rows: list[dict], field: str, k: int) -> dict:
     result = {}
     for value in sorted({r[field] for r in rows}):
         group = [r for r in rows if r[field] == value]
-        result[value] = {"questions": len(group), "status_accuracy": _mean(r["status_ok"] for r in group),
-                         f"recall_at_{k}": _mean(r["recall"] for r in group if r["scored"])}
+        result[value] = {"questions": len(group), "status_accuracy": mean(r["status_ok"] for r in group),
+                         f"recall_at_{k}": mean(r["recall"] for r in group if r["scored"])}
     return result
 
 
@@ -309,18 +309,18 @@ def summarize(rows: list[dict], k: int) -> dict:
         "questions": len(rows),
         "retrieval": {
             "questions": len(scored),
-            f"recall_at_{k}": _mean(r["recall"] for r in scored),
-            f"mrr_at_{k}": _mean(r["reciprocal_rank"] for r in scored),
-            "hit_at_1": _mean(r["first_relevant_rank"] == 1 for r in scored),
-            "answer_coverage": _mean(r["status"] == "retrieved" for r in scored),
+            f"recall_at_{k}": mean(r["recall"] for r in scored),
+            f"mrr_at_{k}": mean(r["reciprocal_rank"] for r in scored),
+            "hit_at_1": mean(r["first_relevant_rank"] == 1 for r in scored),
+            "answer_coverage": mean(r["status"] == "retrieved" for r in scored),
             "incomplete_recall": [r["question_id"] for r in scored if r["recall"] < 1],
         },
         "workflow_selection": {
-            "questions": len(routed), "accuracy": _mean(r["workflow_ok"] for r in routed),
+            "questions": len(routed), "accuracy": mean(r["workflow_ok"] for r in routed),
             "selected": dict(Counter(r["selected_workflow"][0] for r in rows if r["selected_workflow"])),
         },
         "status": {
-            "accuracy": _mean(r["status_ok"] for r in rows),
+            "accuracy": mean(r["status_ok"] for r in rows),
             "confusion": {expected: dict(counts) for expected, counts in sorted(confusion.items())},
             "false_retrieved": [r["question_id"] for r in rows
                                 if r["status"] == "retrieved" and r["expected_retrieval_status"] != "retrieved"],
@@ -330,13 +330,13 @@ def summarize(rows: list[dict], k: int) -> dict:
         },
         "by_category": _groups(rows, "category", k),
         "by_language": _groups(rows, "language", k),
-        "latency_ms": {"p50": _percentile([r["latency_ms"] for r in rows], .5),
-                       "p95": _percentile([r["latency_ms"] for r in rows], .95)},
+        "latency_ms": {"p50": percentile([r["latency_ms"] for r in rows], .5),
+                       "p95": percentile([r["latency_ms"] for r in rows], .95)},
         "embedding_calls": sum(r["embedding_calls"] for r in rows),
     }
 
 
-def _git() -> dict:
+def git_state() -> dict:
     def run(*args: str) -> str | None:
         try:
             out = subprocess.run(["git", *args], cwd=REPO_ROOT, capture_output=True, text=True, timeout=10)
@@ -353,13 +353,14 @@ def run_evaluation(db: str | Path, questions_path: str | Path, *, mode: str, spl
                    rrf_k: int = 60, min_term_coverage: float = .10, embedder: Embedder | None = None,
                    query_cache: str | Path | None = None, translator: Translator | None = None,
                    translation_cache: str | Path | None = None, translate: bool = True,
-                   allow_holdout: bool = False) -> tuple[dict, list[dict]]:
+                   allow_holdout: bool = False, workflow_routing: str = "best_step") -> tuple[dict, list[dict]]:
     """Run every question under every strategy against the SAME active index."""
     if split == "holdout" and not allow_holdout:
         raise EvaluationError("Holdout is evaluated once, after the D15 lock; pass allow_holdout explicitly")
     strategies = list(dict.fromkeys(strategies))
     settings = dict(top_k=top_k, candidate_k=candidate_k, min_cosine=min_cosine, rrf_k=rrf_k,
-                    min_term_coverage=min_term_coverage, query_translation="auto" if translate else "never")
+                    min_term_coverage=min_term_coverage, query_translation="auto" if translate else "never",
+                    workflow_routing=workflow_routing)
     for strategy in strategies:
         RetrievalConfig(strategy=strategy, **settings)  # reject bad config before any work
     questions, questions_sha256 = load_questions(questions_path)
@@ -402,7 +403,7 @@ def run_evaluation(db: str | Path, questions_path: str | Path, *, mode: str, spl
     report = {
         "run_id": f"EVAL_{created:%Y%m%dT%H%M%SZ}_"
                   + digest([questions_sha256, manifest["index_build_id"], config])[:8],
-        "created_at": created.isoformat(timespec="seconds"), "git": _git(), "db": str(db),
+        "created_at": created.isoformat(timespec="seconds"), "git": git_state(), "db": str(db),
         "source_type": mode, "dataset_split": split,
         "index_build_id": manifest["index_build_id"], "record_build_id": manifest["record_build_id"],
         "embedding": manifest["embedding"],

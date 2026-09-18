@@ -16,6 +16,16 @@ from .context import context_gate, resolve_context
 from .query import GeminiTranslator, Translator, content_terms, looks_vietnamese, term_coverage
 from .ranking import fold, rank
 
+# WP2 step 5. Which relation makes a neighbouring Step part of a correct answer, and
+# which end of that relation the matched Step sits on:
+#   requires   -- `to` needs `from`, so a matched `to` pulls in its prerequisite.
+#   branch_if  -- reaching `to` is gated by the condition on the edge from `from`.
+#   corrects   -- `to` corrects `from`, so a matched `from` must not be served alone.
+# `observed_next` and `repeated_step` are deliberately absent: order in the source is
+# not a dependency (Schema 1.0.0, section 6: "khong suy requires tu thu tu thoi gian"),
+# and a repetition adds no condition the answer would otherwise miss.
+DEPENDENCY_RELATIONS = {"requires": "to", "branch_if": "to", "corrects": "from"}
+
 
 @dataclass(frozen=True)
 class RetrievalConfig:
@@ -30,6 +40,15 @@ class RetrievalConfig:
     # cannot be recovered downstream. Recalibrate when the corpus grows.
     min_term_coverage: float = .10
     query_translation: str = "auto"
+    # Neighbour expansion is additive: it never changes `steps`, `claims` or `status`.
+    # Depth 1 is the conservative starting point, not a measured optimum.
+    neighbor_depth: int = 1
+    max_related_steps: int = 5
+    # "best_step" scores a workflow by its best assertable Step across the filtered corpus;
+    # "record" ranks the workflow-level records. best_step was >= record on every lexical
+    # metric on real/dev with both the 2- and 4-workflow corpora (2026-09-18, labels not
+    # human-checked); hybrid is unmeasured. Not a tuned optimum.
+    workflow_routing: str = "best_step"
 
     def __post_init__(self):
         if self.strategy not in ("lexical", "vector", "hybrid"):
@@ -40,6 +59,10 @@ class RetrievalConfig:
             raise ValueError("Invalid min_cosine or intent")
         if not 0 <= self.min_term_coverage <= 1 or self.query_translation not in ("auto", "never"):
             raise ValueError("Invalid min_term_coverage or query_translation")
+        if not 0 <= self.neighbor_depth <= 3 or not 0 <= self.max_related_steps <= 20:
+            raise ValueError("Require 0 <= neighbor_depth <= 3 and 0 <= max_related_steps <= 20")
+        if self.workflow_routing not in ("record", "best_step"):
+            raise ValueError("workflow_routing must be record or best_step")
 
 
 def retrieve(db: str | Path, request: QueryRequest, *, config: RetrievalConfig | None = None,
@@ -63,7 +86,8 @@ def retrieve(db: str | Path, request: QueryRequest, *, config: RetrievalConfig |
         "dataset_split": str(request.dataset_split), "context": context.model_dump(mode="json"),
         "missing_context": [], "selected_workflow": None, "workflow_candidates": [],
         "steps": [], "claims": [], "conflicts": [], "blocked_claims": [], "questions": [],
-        "relations": [], "evidence_openability_checked": False,
+        "relations": [], "related_steps": [], "related_claims": [],
+        "evidence_openability_checked": False,
         "trace": {"config": asdict(config), "intent": intent, "detected_context": detected,
                   "filters": [], "workflow_ranking": [], "step_ranking": [],
                   "embedding_calls": 0, "cache": "disabled"},
@@ -163,7 +187,23 @@ def retrieve(db: str | Path, request: QueryRequest, *, config: RetrievalConfig |
                  "score": h["score"], "lexical_score": h["lexical_score"], "vector_score": h["vector_score"]}
                 for h in items]
 
-    workflows = ranked([d for d in docs if d["record"]["record_type"] == "workflow"])
+    if config.workflow_routing == "best_step":
+        # Score each workflow by its best-matching assertable Step across the filtered corpus.
+        # Ranking the workflow records directly gives BM25 only one document per workflow,
+        # so IDF is decided by a handful of documents and the longest record wins by
+        # containing incidental words ("step", "lubricate"). Steps give dozens of documents.
+        workflow_docs = {d["record"]["workflow_id"]: d for d in docs if d["record"]["record_type"] == "workflow"}
+        best: dict[str, dict] = {}
+        routing_steps: dict[str, str] = {}
+        for hit in ranked([d for d in docs if d["record"]["record_type"] == "step" and d["purpose"] == "answer"]):
+            workflow_id = hit["doc"]["record"]["workflow_id"]
+            if workflow_id not in best and workflow_id in workflow_docs:
+                best[workflow_id] = {**hit, "doc": workflow_docs[workflow_id]}
+                routing_steps[workflow_id] = hit["doc"]["record"]["step_id"]
+        workflows = sorted(best.values(), key=lambda h: -h["score"])
+        result["trace"]["routing_steps"] = routing_steps
+    else:
+        workflows = ranked([d for d in docs if d["record"]["record_type"] == "workflow"])
     result["trace"]["workflow_ranking"] = rank_trace(workflows)
     seen = set()
     for hit in workflows:
@@ -227,6 +267,75 @@ def retrieve(db: str | Path, request: QueryRequest, *, config: RetrievalConfig |
         reasons = claim_blockers(claim, wf, mode=QueryMode(request.mode), is_latest_indexed_revision=True)
         if not reasons:
             result["claims"].append(package(wf, hit.claim_id, hit.matched_step_ids, hit.score, "answer_candidate"))
+    # WP2 step 5: the Steps a correct answer depends on -- a prerequisite, the branch point
+    # whose condition gates a matched Step, a later Step that corrects one. They travel in
+    # their own keys: `steps`, `claims` and `status` are untouched, so a neighbour can never
+    # turn an unanswerable question into an answered one, and each neighbour claim is
+    # re-checked against its OWN review flags instead of inheriting the matched Step's.
+    eligible_steps = {d["record"]["step_id"]: d["record"] for d in within_workflow if d["purpose"] == "answer"}
+    matched_ids = {s["step_id"] for s in result["steps"]}
+    related: dict[str, dict] = {}
+    unavailable: set[str] = set()
+    frontier, reached = set(matched_ids), set(matched_ids)
+    for depth in range(1, config.neighbor_depth + 1):
+        found: dict[str, list] = {}
+        for rel in wf.relations:
+            anchor_end = DEPENDENCY_RELATIONS.get(str(rel.relation_type))
+            if anchor_end is None:
+                continue
+            anchor, other = ((rel.to_step_id, rel.from_step_id) if anchor_end == "to"
+                             else (rel.from_step_id, rel.to_step_id))
+            if anchor not in frontier or other in reached:
+                continue
+            if other not in eligible_steps:
+                # Present in the workflow but not in the filtered corpus. Say so; a
+                # dependency that silently vanishes is exactly what must not happen.
+                unavailable.add(other)
+                continue
+            found.setdefault(other, []).append(rel)
+        if not found:
+            break
+        for step_id, relations in found.items():
+            related[step_id] = {"depth": depth, "relations": relations}
+        reached |= set(found)
+        frontier = set(found)
+    order = {s.step_id: s.display_order for s in wf.steps}
+    # Nearest dependency first, then source order; deterministic under the cap.
+    ranked_related = sorted(related, key=lambda sid: (related[sid]["depth"], order.get(sid, 0), sid))
+    chosen = set(ranked_related[:config.max_related_steps])
+    # A claim already offered as an answer candidate is not repeated here: one claim, one
+    # purpose, so WP3 cannot read the same evidence as both the answer and its context.
+    packaged_related = {c["claim_ref"]["entity_id"] for c in result["claims"]}
+    for step_id in sorted(chosen, key=lambda sid: order.get(sid, 0)):
+        record, info = eligible_steps[step_id], related[step_id]
+        step = next(s for s in wf.steps if s.step_id == step_id)
+        result["related_steps"].append({
+            "workflow_id": wf.workflow_id, "revision": wf.revision, "step_id": step_id,
+            "display_order": step.display_order, "title": step.title,
+            "fields": step.fields.model_dump(mode="json"), "claim_ids": record["claim_ids"],
+            "depth": info["depth"],
+            "via": [{"relation_id": r.relation_id, "relation_type": str(r.relation_type),
+                     "from_step_id": r.from_step_id, "to_step_id": r.to_step_id,
+                     "condition_claim_ids": r.condition_claim_ids} for r in info["relations"]],
+        })
+        # The condition of a branch_if lives on the edge, not in the Step: without it the
+        # neighbour reads as an unconditional instruction.
+        condition_ids = [cid for r in info["relations"] for cid in r.condition_claim_ids]
+        for cid in list(record["claim_ids"]) + condition_ids:
+            if cid in packaged_related:
+                continue
+            claim = next((c for c in wf.claims if c.claim_id == cid), None)
+            if claim is None or claim_blockers(claim, wf, mode=QueryMode(request.mode),
+                                               is_latest_indexed_revision=True):
+                continue  # already listed in blocked_claims; never asserted from here
+            packaged_related.add(cid)
+            # No score: these were not ranked against the question, they were reached.
+            result["related_claims"].append(package(wf, cid, [step_id], None, "context_only"))
+    result["trace"]["neighbors"] = {
+        "depth": config.neighbor_depth, "relations": sorted(DEPENDENCY_RELATIONS),
+        "unavailable_step_ids": sorted(unavailable),
+        "truncated_step_ids": sorted(set(ranked_related) - chosen),
+    }
     # Separate lookup across the SAME filtered corpus, so conflicts cannot disappear
     # merely because they were excluded from assertable search text.
     # Conflict diagnostics compete with assertable steps of the same filtered corpus and are

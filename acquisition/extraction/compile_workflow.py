@@ -154,7 +154,13 @@ class _Compiler:
         key = ("keyframe", uri, frame_ms)  # normalized path -- two spellings of the same file must dedupe
         if key in self._evidence_ids:
             return self._evidence_ids[key]
-        eid = self._nested("EV", len(self.evidence) + 1)
+        pinned = ref.get("evidence_id")
+        if pinned is not None:
+            if pinned in {ev["evidence_id"] for ev in self.evidence}:
+                raise DraftError(f"evidence_id already used in this compile: {pinned}")
+            eid = pinned
+        else:
+            eid = self._nested("EV", len(self.evidence) + 1)
         self.evidence.append({
             "evidence_id": eid,
             "source_id": ref["source_id"],

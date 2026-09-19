@@ -216,3 +216,32 @@ def test_provider_failure_not_mislabeled_as_no_evidence(prepared):
             raise GenerationError("provider unavailable")
     with pytest.raises(GenerationError):
         generate(prepared, Offline())
+
+
+@pytest.mark.parametrize("question,expected", [
+    ("Cách tháo nắp che?", "vi"),
+    ("cach thao nap che nhu the nao", "vi"),     # tieng Viet khong dau
+    ("How is the cover removed?", "en"),
+])
+def test_answer_language_is_decided_by_code_and_sent_to_both_calls(prepared, question, expected):
+    """Ca luot soan lan luot kiem nhan CUNG mot answer_language do code tinh.
+
+    Truoc day moi luot tu doan tu cau hoi: cau hoi tieng Viet tren evidence tieng Anh thi
+    luot soan viet tieng Anh, luot kiem bat sai ngon ngu va vut ca cau tra loi dung.
+    """
+    request, result, corpus = prepared
+    model = StubModel()
+    generate_answer(request.model_copy(update={"question": question}), result, corpus,
+                    model=model, access=EvidenceAccess(REPO_ROOT))
+    calls = dict(model.calls)
+    assert calls["draft"]["answer_language"] == expected
+    assert calls["verify"]["answer_language"] == expected
+
+
+def test_prompts_name_the_supplied_language_instead_of_guessing():
+    from retrieval.generation.gemini import DRAFT_POLICY, PROMPT_VERSION, VERIFY_POLICY
+
+    assert "answer_language" in DRAFT_POLICY and "answer_language" in VERIFY_POLICY
+    assert "language of the question" not in DRAFT_POLICY
+    # Cau truc prompt doi thi verdict cu cua nguoi kiem khong con dung cho cau tra loi moi.
+    assert PROMPT_VERSION == "grounded-qa-2"

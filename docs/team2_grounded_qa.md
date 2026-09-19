@@ -79,8 +79,11 @@ mở. Giữ caption nội bộ pilot theo `Source.access_note`; không phân ph�
 4. Lượt kiểm nghĩa chỉ nhận claim/evidence **đã cite cho từng statement**, không
    được dùng claim lân cận để cứu một citation sai. Nếu có statement không đạt, toàn
    bộ câu trả lời chuyển `insufficient_evidence`. Không tự fallback ra kiến thức chung.
-5. Prompt yêu cầu cùng ngôn ngữ câu hỏi nhưng thực tế chưa bảo đảm trả tiếng Việt;
-   người dùng chọn demo bằng tiếng Anh và tạm hoãn lỗi này. Claim/quote gốc không dịch.
+5. Ngôn ngữ câu trả lời do **code** quyết định (`looks_vietnamese`) rồi truyền
+   `answer_language` xuống **cả** lượt soạn lẫn lượt kiểm (prompt `grounded-qa-2`). Trước đó
+   mỗi lượt tự đoán: câu hỏi tiếng Việt trên evidence tiếng Anh thì lượt soạn hay viết tiếng
+   Anh, lượt kiểm bắt "sai ngôn ngữ" và vứt cả câu trả lời đúng. Đã kiểm bằng model giả;
+   **chưa kiểm lại với Gemini thật**. Claim/quote gốc không dịch.
    Chỉ source_checked phải ghi “Theo nguồn (chưa có xác nhận kỹ thuật)” (hoặc tương đương
    tiếng Anh); synthetic luôn ghi dữ liệu mô phỏng. Không tự nâng technical review.
 6. Index đổi khi đang trả lời → 503 để thử lại; không trả answer từ build stale.

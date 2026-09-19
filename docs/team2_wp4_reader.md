@@ -2,7 +2,7 @@
 
 Phần tiếp theo của `docs/03_Plan_doi_2_Synthetic_KB_RAG_LLM.docx`, mục 3 / WP4.
 Không sửa Schema 1.0.0, không ghi KB/review và không tự đổi index khi xem bản cũ.
-Lỗi ngôn ngữ đầu ra được tạm hoãn theo quyết định người dùng; demo hiện dùng câu hỏi tiếng Anh.
+Ngôn ngữ câu trả lời nay do code quyết định (xem mục 5 của [grounded QA](team2_grounded_qa.md)); **chưa kiểm lại với Gemini thật**, nên demo vẫn nên chuẩn bị sẵn câu hỏi tiếng Anh làm phương án dự phòng.
 
 ## Đã triển khai
 

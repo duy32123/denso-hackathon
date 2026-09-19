@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "bundle_id": "BUNDLE_SYN_KB_DEV",
+  "source_type": "synthetic",
+  "dataset_split": "dev",
+  "created_at": "2026-09-08T00:00:00Z",
+  "files": [
+    {
+      "path": "sources.jsonl",
+      "sha256": "2c3e3f555287e712057ea3f0a6705c54c097a03ace65563ce1f16d0de66b9708",
+      "record_count": 45
+    },
+    {
+      "path": "workflows.jsonl",
+      "sha256": "bc032e899d9791fa6e9012f48944c4e4e55ab868c00700ac7d46e36bd6516057",
+      "record_count": 42
+    }
+  ],
+  "producer": {
+    "team": "team_2",
+    "pipeline_version": "synthetic-kb-1.0.0"
+  }
+}

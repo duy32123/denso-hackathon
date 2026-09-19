@@ -1,0 +1,11 @@
+{
+  "bundle_id": "N04_review_gia",
+  "title": "Nhan review khong co ReviewEvent",
+  "purpose": "Fixture synthetic phai giu pending; khong duoc tu nhan da kiem nguon.",
+  "validator": {
+    "outcome": "reject",
+    "expected_error_codes": [
+      "V07"
+    ]
+  }
+}

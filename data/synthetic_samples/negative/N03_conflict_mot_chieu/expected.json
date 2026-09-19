@@ -1,0 +1,11 @@
+{
+  "bundle_id": "N03_conflict_mot_chieu",
+  "title": "conflicts_with khong doi xung",
+  "purpose": "Mot phia bi giau conflict thi cau tra loi se khang dinh mot chieu.",
+  "validator": {
+    "outcome": "reject",
+    "expected_error_codes": [
+      "V07"
+    ]
+  }
+}

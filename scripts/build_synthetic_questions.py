@@ -309,9 +309,15 @@ class Builder:
                 continue
             seen.add((topic[0], model))
             # Nhieu workflow cung mo ta mot quy trinh tren cung model: chap nhan bat ky ban nao.
-            acceptable = [{"workflow_id": o["workflow_id"], "revision": o["revision"]}
-                          for o in self.active
-                          if topic[1] in o["title"] and o["context"]["machine_model"] == model]
+            same = [o for o in self.active
+                    if topic[1] in o["title"] and o["context"]["machine_model"] == model]
+            # Chi hoi khi MOI ung vien deu sach. Neu retrieval chon trung ban co nguon mau
+            # thuan hay claim thieu can cu thi tu choi moi la dung, nen nhan "answered"
+            # se phat mot cau tra loi dung.
+            if any(c["conflicts_with"] or c["support_status"] != "supported"
+                   for o in same for c in o["claims"]):
+                continue
+            acceptable = [{"workflow_id": o["workflow_id"], "revision": o["revision"]} for o in same]
             self.add(question=f"Quy trình {topic[1].lower()} trên {model} gồm những bước nào?",
                      category="quy_trinh", intent="procedure", expected_status="answered",
                      retrieval_status="retrieved",

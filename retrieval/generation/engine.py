@@ -104,7 +104,12 @@ def generate_answer(request: QueryRequest, result: dict, corpus: dict, *,
     procedure = result["trace"]["intent"] == "procedure"
     if not candidates or (procedure and (unavailable or result["trace"].get("omitted_step_ids"))):
         return fallback(request, result, unresolved=unavailable)
-    payload = {"question": request.question, "context": result["context"], "mode": request.mode,
+    # Ngon ngu cau tra loi do CODE quyet dinh, mot lan, roi dua xuong ca hai luot goi.
+    # Truoc day moi luot tu doan: cau hoi tieng Viet + evidence tieng Anh thi luot soan
+    # hay viet tieng Anh, luot kiem lai bat "sai ngon ngu" va vut ca cau tra loi dung.
+    answer_language = "vi" if looks_vietnamese(request.question) else "en"
+    payload = {"question": request.question, "answer_language": answer_language,
+               "context": result["context"], "mode": request.mode,
                "intent": result["trace"]["intent"], "workflow": result["selected_workflow"],
                "steps": result["steps"], "relations": result["relations"], "questions": result["questions"],
                "candidates": list(candidates.values())}
@@ -135,7 +140,8 @@ def generate_answer(request: QueryRequest, result: dict, corpus: dict, *,
                 raise InvalidGeneration("Incomplete procedure")
         # Do NOT show the verifier unrelated claims that could rescue an invalid citation.
         verification = Verification.model_validate(model.verify({
-            "question": request.question, "context": result["context"], "intent": payload["intent"],
+            "question": request.question, "answer_language": answer_language,
+            "context": result["context"], "intent": payload["intent"],
             "steps": result["steps"], "relations": result["relations"], "questions": result["questions"],
             "statements": checked_statements,
         }))
@@ -144,7 +150,7 @@ def generate_answer(request: QueryRequest, result: dict, corpus: dict, *,
             raise InvalidGeneration("Semantic check failed")
     except (InvalidGeneration, ValidationError):
         return fallback(request, result, unresolved=cited + unavailable)
-    vi = looks_vietnamese(request.question)
+    vi = answer_language == "vi"
     lines, citations = [], []
     for statement in draft.statements:
         claim = candidates[ref_key(statement.claim_ref)]["claim"]

@@ -10,6 +10,7 @@ from retrieval.retrieval.engine import RetrievalConfig, retrieve
 
 from .engine import generate_answer
 from .browse import WorkflowBrowser
+from .feedback import FeedbackRequest, FeedbackService, FeedbackUnavailable
 from .evidence import EvidenceAccess, external_url
 from .gemini import GeminiAnswerModel
 
@@ -25,12 +26,14 @@ class EvidenceNotFound(ValueError):
 class QAService:
     def __init__(self, databases: dict[tuple[str, str], Path], *, repo_root: Path,
                  config: RetrievalConfig | None = None, model_factory=GeminiAnswerModel,
-                 retriever=retrieve):
+                 retriever=retrieve, feedback: FeedbackService | None = None):
         self.databases = {key: Path(path).resolve() for key, path in databases.items()}
         self.config = config or RetrievalConfig()
         self.access = EvidenceAccess(repo_root)
         self.model_factory, self.retriever = model_factory, retriever
         self.browser = WorkflowBrowser(self.database)
+        # None = chua co service ghi cua doi 1. Khong co duong nao khac de ghi KB.
+        self.feedback = feedback
 
     def database(self, mode: str, split: str) -> Path:
         # Pilot only: holdout remains locked even if accidentally configured.
@@ -105,3 +108,19 @@ class QAService:
                             "scope": c.scope.model_dump(mode="json"),
                             "conflicts_with": c.conflicts_with} for c in linked]}
         return data, view
+
+    # --- WP4 feedback: doi 1 so huu viec ghi; day chi la duong goi sang ---------
+
+    def _writer(self) -> FeedbackService:
+        if self.feedback is None:
+            raise FeedbackUnavailable(
+                "Service ghi phan hoi cua doi 1 (D1-B / WP6) chua duoc cau hinh.")
+        return self.feedback
+
+    def feedback_preview(self, request: FeedbackRequest) -> dict:
+        self.database(request.mode, request.dataset_split)
+        return self._writer().preview(request)
+
+    def feedback_submit(self, request: FeedbackRequest) -> dict:
+        self.database(request.mode, request.dataset_split)
+        return self._writer().submit(request)

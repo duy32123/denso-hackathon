@@ -82,14 +82,46 @@ Browser test kiểm phần mềm bằng model giả, không chứng minh chất 
 Không cần API key để kiểm các màn đọc. Lượt triển khai WP4 này không gọi lại Gemini,
 không rebuild DB phục vụ và không sửa snapshot r1/r2 hay nhãn review/gold.
 
-## Chưa làm: feedback và G2
+## Màn Bổ sung — chạy trên stub, chưa đóng G2
 
-Theo plan, **D1-B / WP6 sở hữu service ghi feedback và revision**; repo hiện mới có
-CLI compile/review/promote và cơ chế revision sửa evidence. Chưa có service ghi feedback
-để UI gọi, nên không dựng nút “lưu” giả hay ghi trực tiếp từ đội 2 vào kho chuẩn.
+**D1-B / WP6 sở hữu service ghi feedback và revision.** Repo mới có CLI compile/review/
+promote, chưa có service để UI gọi. Đội 2 vì vậy dựng sẵn đường gọi và giao diện, nhưng
+**không** ghi thẳng vào kho chuẩn và **không** có nút lưu giả.
 
-Phần tiếp theo cần chốt/triển khai với D1-B: nhận `base_revision`, danh tính/vai trò
-người trả lời và nguyên văn phản hồi; preview; trả conflict nếu base đã thay đổi;
-tạo `expert_answer` Source và revision mới qua service; claim mới chờ review, không tự
-`expert_validated`; Question answered/resolved đúng quy trình. Sau đó đội 2 nối UI
-với service và kiểm import/reindex/hỏi lại. **Chưa tuyên bố hoàn tất vòng feedback G2.**
+Đề xuất contract đã gửi đội 1: [team2_feedback_contract.md](team2_feedback_contract.md).
+
+Đã có:
+
+- `POST /v1/feedback/preview` và `POST /v1/feedback/submit` đúng hai lời gọi trong contract.
+- `retrieval/generation/feedback.py`: `FeedbackService` protocol + `StubFeedbackService`.
+  Stub đọc snapshot **thật** để dựng bản xem trước đúng, nhưng không có đường nào ghi;
+  `submit` báo 503 trừ khi `allow_submit=True` — cờ đó chỉ dùng trong test, không đọc từ env.
+- Màn Bổ sung: chọn câu hỏi còn mở (tự điền step/field), nguyên văn phản hồi, người trả
+  lời + vai trò, khối xem trước, nút Lưu.
+- **Nút Lưu bật theo dữ liệu, không theo cờ cứng**: preview trả `simulated=true` thì nút
+  vẫn tắt kèm lý do. Chỉ service thật mới bật được nút.
+- Bản xem trước hiện rõ claim mới là `source_review=pending` / `technical_review=not_requested`,
+  và ghi "danh tính người trả lời chưa được xác thực" — có phản hồi không phải là đã kiểm.
+- **Ca lỗi thứ 5/5** của kế hoạch mục 3: `base_revision` cũ trả **409** kèm revision mới
+  nhất, UI buộc tải lại, không ghi đè.
+
+Chạy thử:
+
+```powershell
+$env:KNOWFLOW_FEEDBACK_STUB = "1"
+.\.venv\Scripts\python.exe -m retrieval.api
+Remove-Item Env:\KNOWFLOW_FEEDBACK_STUB
+```
+
+Mặc định **tắt**. Không bật stub thì cả hai endpoint trả 503 `feedback_unavailable`.
+
+Kiểm: `tests/integration/test_feedback.py` (8 ca, mọi đường đều assert database không
+đổi một byte). Ca giao diện nằm trong `tests/end_to_end/test_wp4_browser_ui.py`, cần
+Windows + Edge — **chưa chạy được trên máy Linux hiện tại**.
+
+### Còn lại để đóng G2
+
+Stub **không phải** G2. Vòng phản hồi chỉ đóng khi: đội 1 chốt contract và làm service →
+đội 2 thay stub bằng adapter thật → chạy trọn vòng phản hồi → revision mới → import →
+reindex → hỏi lại ra câu trả lời mới, citation mở được, bản cũ vẫn mở bằng `index_build_id`
+cũ. Trước khi có đủ chuỗi đó, **không được tuyên bố hoàn tất vòng feedback**.

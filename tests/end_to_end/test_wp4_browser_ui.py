@@ -19,6 +19,8 @@ import pytest
 from conftest import FIXTURE_ROOT, REPO_ROOT, read_bundle, write_bundle
 from retrieval.api.app import create_app
 from retrieval.generation.models import AnswerDraft, Verification
+from retrieval.generation.browse import WorkflowBrowser
+from retrieval.generation.feedback import StubFeedbackService
 from retrieval.generation.service import QAService
 from retrieval.importer import import_bundle
 from retrieval.indexing.search_index import build_index
@@ -94,6 +96,8 @@ def test_english_demo_auto_evidence_fields_revision_history_and_mode_switch(tmp_
     build_index(synthetic, mode="synthetic", split="dev")
     service = QAService({("real", "dev"): real, ("synthetic", "dev"): synthetic}, repo_root=REPO_ROOT,
                         config=RetrievalConfig(strategy="lexical"), model_factory=Model)
+    # Ban gia lap: du de dung man Bo sung, va `submit` van bao 503 nhu that.
+    service.feedback = StubFeedbackService(WorkflowBrowser(service.database))
     sock = socket.socket(); sock.bind(("127.0.0.1", 0))
     port = sock.getsockname()[1]
     server = uvicorn.Server(uvicorn.Config(create_app(service), log_level="error"))
@@ -145,6 +149,19 @@ def test_english_demo_auto_evidence_fields_revision_history_and_mode_switch(tmp_
         screenshot = tmp_path / "wp4-browser.png"
         screenshot.write_bytes(base64.b64decode(page.call("Page.captureScreenshot", {"captureBeyondViewport": True})["data"]))
         print(f"browser_screenshot={screenshot.as_posix()}")
+        # Man Bo sung. Stub chay duoc preview, nhung nut Luu PHAI van tat: chua co
+        # service ghi cua doi 1 thi khong duoc co nut luu gia.
+        page.wait("!document.querySelector('#feedback-form').hidden")
+        page.evaluate("document.querySelector('#feedback-actor').value = 'dpv137'")
+        page.evaluate("document.querySelector('#feedback-label').value = 'Nguoi thu nghiem'")
+        page.evaluate("document.querySelector('#feedback-role').value = 'ky thuat vien bao tri'")
+        page.evaluate("document.querySelector('#feedback-text').value = 'Thao nap che truoc de nhin duoc duong day tin hieu.'")
+        page.evaluate("document.querySelector('#feedback-preview').click()")
+        page.wait("document.querySelector('#feedback-diff').textContent.includes('revision')")
+        assert page.evaluate("document.querySelector('#feedback-save').disabled")
+        assert "mô phỏng" in page.evaluate("document.querySelector('#feedback-message').textContent")
+        assert "pending" in page.evaluate("document.querySelector('#feedback-diff').textContent")
+
         page.evaluate("[...document.querySelectorAll('#workflow-history button')].find(x => x.textContent === 'Xem r1').click()")
         page.wait("document.querySelector('#workflow-status').textContent.includes('B0_SRC_HAAS_0005 r1 ·')")
         page.evaluate("document.querySelector('[data-claim-id=\"B0_SRC_HAAS_0005_CL_020\"] button').click()")

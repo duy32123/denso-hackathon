@@ -14,7 +14,10 @@ from starlette.middleware.trustedhost import TrustedHostMiddleware
 
 from knowflow_contracts.models import AnswerResponse, QueryRequest
 from retrieval.generation.gemini import GeminiAnswerModel
-from retrieval.generation.browse import WorkflowNotFound
+from retrieval.generation.browse import WorkflowBrowser, WorkflowNotFound
+from retrieval.generation.feedback import (
+    FeedbackConflict, FeedbackRequest, FeedbackUnavailable, StubFeedbackService,
+)
 from retrieval.generation.models import GenerationError
 from retrieval.generation.service import EvidenceNotFound, NamespaceUnavailable, QAService
 from retrieval.indexing.embeddings import EmbeddingError
@@ -40,9 +43,14 @@ def service_from_env():
     if os.getenv("KNOWFLOW_SYNTHETIC_DEV_DB"):
         databases[("synthetic", "dev")] = db_path(os.environ["KNOWFLOW_SYNTHETIC_DEV_DB"])
     model = os.getenv("KNOWFLOW_ANSWER_MODEL", "gemini-3.5-flash-lite")
-    return QAService(databases, repo_root=root,
-                     config=RetrievalConfig(strategy=os.getenv("KNOWFLOW_RETRIEVAL_STRATEGY", "hybrid")),
-                     model_factory=lambda: GeminiAnswerModel(model))
+    service = QAService(databases, repo_root=root,
+                        config=RetrievalConfig(strategy=os.getenv("KNOWFLOW_RETRIEVAL_STRATEGY", "hybrid")),
+                        model_factory=lambda: GeminiAnswerModel(model))
+    # Mac dinh TAT. Stub chi de dung man Bo sung truoc khi D1-B co service ghi;
+    # no khong bao gio ghi vao kho chuan va `submit` van bao 503.
+    if os.getenv("KNOWFLOW_FEEDBACK_STUB") == "1":
+        service.feedback = StubFeedbackService(WorkflowBrowser(service.database))
+    return service
 
 
 def create_app(service: QAService | None = None, *, timeout_seconds: float = 90, max_in_flight: int = 2):
@@ -70,6 +78,16 @@ def create_app(service: QAService | None = None, *, timeout_seconds: float = 90,
     @app.exception_handler(WorkflowNotFound)
     async def workflow_not_found(request, exc):
         return error(404, "workflow_not_found", "Không tìm thấy workflow trong phiên bản và index này.")
+
+    @app.exception_handler(FeedbackUnavailable)
+    async def feedback_unavailable(request, exc):
+        return error(503, "feedback_unavailable", str(exc))
+
+    @app.exception_handler(FeedbackConflict)
+    async def feedback_conflict(request, exc):
+        return JSONResponse(status_code=409, content={"error": {
+            "code": "base_revision_conflict", "message": str(exc),
+            "latest_revision": exc.latest_revision, "base_revision": exc.base_revision}})
 
     @app.exception_handler(Exception)
     async def unexpected(request, exc):
@@ -149,6 +167,16 @@ def create_app(service: QAService | None = None, *, timeout_seconds: float = 90,
 
     static = Path(__file__).parent / "static"
     app.mount("/static", StaticFiles(directory=static), name="static")
+
+    @app.post("/v1/feedback/preview")
+    def feedback_preview(request: FeedbackRequest):
+        """Xem truoc thay doi. Khong ghi gi, khong doi active index."""
+        return service.feedback_preview(request)
+
+    @app.post("/v1/feedback/submit")
+    def feedback_submit(request: FeedbackRequest):
+        """Ghi qua service cua doi 1. Chua co service thi 503, khong luu gia."""
+        return service.feedback_submit(request)
 
     @app.get("/", include_in_schema=False)
     def home():

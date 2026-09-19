@@ -62,6 +62,7 @@ Biến môi trường (đặt trước khi chạy server):
 | `KNOWFLOW_RETRIEVAL_STRATEGY` | `hybrid`; `lexical` dùng được index không vector, nhưng không tự dịch query |
 | `KNOWFLOW_ANSWER_MODEL` | `gemini-3.5-flash-lite`; không nhận model từ HTTP request |
 | `KNOWFLOW_REPO_ROOT` | Thư mục chạy; nơi đọc `.env` và keyframe |
+| `KNOWFLOW_FEEDBACK_STUB` | Mặc định tắt. `1` bật bản gia lập của màn Bổ sung; không bật thì `/v1/feedback/*` trả 503. Stub không bao giờ ghi vào kho chuẩn |
 
 API chỉ mở localhost; chưa có authentication/deployment công khai. Không bật CORS
 mở. Giữ caption nội bộ pilot theo `Source.access_note`; không phân phối rộng corpus.

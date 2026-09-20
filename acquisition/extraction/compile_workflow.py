@@ -46,6 +46,7 @@ import json
 import sys
 import tempfile
 from pathlib import Path
+from typing import Any
 
 from knowflow_contracts import derive_support_status
 from knowflow_contracts.enums import FIELD_ROLES
@@ -158,6 +159,13 @@ class _Compiler:
 
         cid = self._nested("CL", len(self.claims) + 1)
         attribution = {"actor_id": None, **self.draft.get("attribution", {}), **spec.get("attribution", {})}
+        if evidence_type == "inferred":
+            attribution["kind"] = "model"
+
+        derived_status = derive_support_status(links).value if links else "insufficient"
+        if evidence_type == "inferred" and derived_status == "supported":
+            derived_status = "ambiguous"
+
         claim = {
             "claim_id": cid,
             "text": spec["text"],
@@ -166,7 +174,7 @@ class _Compiler:
             "attribution": {"actor_id": attribution.get("actor_id"), "label": attribution.get("label"), "kind": attribution["kind"]},
             "scope": {"level": "case", "description": spec.get("scope", self.draft["scope"])},
             "evidence_links": links,
-            "support_status": derive_support_status(links).value,
+            "support_status": derived_status,
             "source_review": "pending",
             "technical_review": "not_requested",
             "conflicts_with": [],
@@ -214,7 +222,8 @@ class _Compiler:
 
     def compile(self) -> dict:
         d = self.draft
-        steps, questions = [], []
+        steps: list[dict[str, Any]] = []
+        questions: list[dict[str, Any]] = []
         for n, step in enumerate(d["steps"], start=1):
             step_id = self._nested("ST", n)
             steps.append({"step_id": step_id, "display_order": n, "title": step["title"], "fields": self._fields(step)})
@@ -225,9 +234,9 @@ class _Compiler:
                     "target_field": q["target_field"],
                     "reason": q["reason"],
                     "question": q["question"],
-                    "status": "open",
-                    "answer_source_ids": [],
-                    "resolution_note": None,
+                    "status": q.get("status", "open"),
+                    "answer_source_ids": q.get("answer_source_ids", []),
+                    "resolution_note": q.get("resolution_note"),
                 })
 
         relations = []
@@ -284,7 +293,7 @@ def check_snapshot(snapshot: dict, split: str = "dev") -> exporter.ExportResult:
         snap_dir.mkdir()
         write_snapshot(snapshot, snap_dir)
         return exporter.export_bundle(
-            split=split, sources_path=cfg["sources"], snapshot_dir=snap_dir,
+            split=split, sources_path=Path(str(cfg["sources"])), snapshot_dir=snap_dir,
             out_dir=Path(tmp) / "bundle", bundle_prefix="DRAFT_CHECK", check_only=True,
         )
 

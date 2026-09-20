@@ -10,19 +10,20 @@ import copy
 import json
 import shutil
 from pathlib import Path
+from typing import Any
 
 import pytest
-
-from acquisition.export import exporter as ex
 from knowflow_contracts import validate_bundle
 
-FIXED_CLOCK = lambda: "2026-09-12T00:00:00Z"  # noqa: E731
+from acquisition.export import exporter as ex
+
+FIXED_CLOCK = lambda: "2026-09-12T00:00:00Z"
 WF_ID = "REAL_WF_0001"
 
 
 def minimal_workflow(revision: int = 1, claim_text: str = "The presenter says to press E-stop once the pocket is in position.") -> dict:
     """Smallest real workflow on SRC_HAAS_0005 that passes V01-V10."""
-    prov = {k: {"basis": "unknown", "source_ids": [], "note": None} for k in (
+    prov: dict[str, Any] = {k: {"basis": "unknown", "source_ids": [], "note": None} for k in (
         "manufacturer", "machine_family", "machine_model", "subsystem", "task_type",
         "symptoms", "alarm_codes", "components")}
     missing = {"state": "missing", "claim_ids": []}
@@ -71,7 +72,7 @@ def minimal_workflow(revision: int = 1, claim_text: str = "The presenter says to
 def workspace(tmp_path: Path) -> dict:
     """A copy of the real dev bundle + an empty snapshot store, so tests never touch the repo."""
     out = tmp_path / "bundle"
-    shutil.copytree(ex.SPLITS["dev"]["out"], out)
+    shutil.copytree(Path(str(ex.SPLITS["dev"]["out"])), out)
     snapshots = tmp_path / "workflows"
     snapshots.mkdir()
     return {"out": out, "snapshots": snapshots, "sources": ex.SPLITS["dev"]["sources"]}

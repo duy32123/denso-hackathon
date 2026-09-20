@@ -12,9 +12,9 @@ from dataclasses import replace
 from pathlib import Path
 
 import pytest
+from knowflow_contracts import validate_bundle
 
 from acquisition.extraction import evidence_pool as ep
-from knowflow_contracts import validate_bundle
 
 
 @pytest.fixture(scope="module")

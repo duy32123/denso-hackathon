@@ -9,17 +9,17 @@ it into official Schema 1.0.0 delivery artifacts:
 """
 from __future__ import annotations
 
-from dataclasses import dataclass, field
-from datetime import datetime, timezone
 import hashlib
 import json
 import logging
-from pathlib import Path
 import re
 import shutil
 import sys
 import tempfile
-from typing import Any, Dict, List, Optional
+from dataclasses import dataclass, field
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
 
 # Resolve paths
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -35,8 +35,8 @@ try:
     from knowflow_contracts import validate_bundle
     from knowflow_contracts.issues import Report
 except ImportError:
-    validate_bundle = None
-    Report = None
+    validate_bundle = None  # type: ignore[assignment]
+    Report = None  # type: ignore[assignment, misc]
 
 logger = logging.getLogger("extraction_exporter")
 
@@ -52,10 +52,10 @@ class ExportSummary:
     sources_path: Path
     workflows_path: Path
     lineage_path: Path
-    checksums: Dict[str, str] = field(default_factory=dict)
-    counts: Dict[str, int] = field(default_factory=dict)
+    checksums: dict[str, str] = field(default_factory=dict)
+    counts: dict[str, int] = field(default_factory=dict)
     validation_ok: bool = True
-    issues: List[str] = field(default_factory=list)
+    issues: list[str] = field(default_factory=list)
 
 
 def sha256_bytes(data: bytes) -> str:
@@ -78,7 +78,7 @@ def _utc_now_rfc3339() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def _to_jsonl_bytes(records: List[Dict[str, Any]]) -> bytes:
+def _to_jsonl_bytes(records: list[dict[str, Any]]) -> bytes:
     """Encodes a list of records into deterministic JSONL bytes (sorted keys, LF ending)."""
     return "".join(
         json.dumps(r, ensure_ascii=False, sort_keys=True) + "\n"
@@ -86,7 +86,7 @@ def _to_jsonl_bytes(records: List[Dict[str, Any]]) -> bytes:
     ).encode("utf-8")
 
 
-def _ensure_context_provenance(context: Dict[str, Any], source_id: str) -> Dict[str, Any]:
+def _ensure_context_provenance(context: dict[str, Any], source_id: str) -> dict[str, Any]:
     """Ensures that all context fields have a valid provenance basis for compiler."""
     prov = context.get("provenance")
     if not isinstance(prov, dict):
@@ -146,7 +146,7 @@ def _sanitize_evidence_spans(evidence_list: list) -> list:
     return new_ev
 
 
-def _ensure_source_fields(source_record: Dict[str, Any]) -> Dict[str, Any]:
+def _ensure_source_fields(source_record: dict[str, Any]) -> dict[str, Any]:
     """Ensures source record contains all fields required by Source(Strict) model."""
     src = dict(source_record)
     src.setdefault("source_type", "real")
@@ -179,9 +179,9 @@ def _ensure_source_fields(source_record: Dict[str, Any]) -> Dict[str, Any]:
 
 def export_schema_v1_bundle(
     bundle: WorkflowBundle,
-    source_record: Dict[str, Any],
+    source_record: dict[str, Any],
     out_dir: Path,
-    pipeline_lineage: Optional[Dict[str, Any]] = None,
+    pipeline_lineage: dict[str, Any] | None = None,
     compile_snapshot: bool = True,
 ) -> ExportSummary:
     """Exports a validated WorkflowBundle into a Schema 1.0.0 hand-off bundle directory.
@@ -216,7 +216,7 @@ def export_schema_v1_bundle(
     for st in draft_dict.get("steps", []):
         raw_f = st.get("fields", {})
         if isinstance(raw_f, dict):
-            for _role, f_val in raw_f.items():
+            for f_val in raw_f.values():
                 if isinstance(f_val, dict):
                     for c in f_val.get("claims", []):
                         c["evidence"] = _sanitize_evidence_spans(c.get("evidence", []))
@@ -313,7 +313,7 @@ def export_schema_v1_bundle(
 
     # 4. Atomic export & validation using temporary staging directory
     validation_ok = True
-    issue_messages: List[str] = []
+    issue_messages: list[str] = []
 
     with tempfile.TemporaryDirectory(prefix="knowflow-bundle-") as tmp_dir_str:
         staging_dir = Path(tmp_dir_str)
@@ -403,7 +403,7 @@ def export_schema_v1_bundle(
     )
 
 
-def verify_bundle_integrity(bundle_dir: Path) -> Dict[str, Any]:
+def verify_bundle_integrity(bundle_dir: Path) -> dict[str, Any]:
     """Verifies that all files in bundle (manifest.json, sources.jsonl, workflows.jsonl, lineage.json)
     are present, their SHA-256 hashes are strictly synchronized across files, and
     the bundle passes knowflow_contracts.validate_bundle without any warnings or errors.
@@ -414,7 +414,7 @@ def verify_bundle_integrity(bundle_dir: Path) -> Dict[str, Any]:
     workflows_path = bundle_dir / "workflows.jsonl"
     lineage_path = bundle_dir / "lineage.json"
 
-    result: Dict[str, Any] = {
+    result: dict[str, Any] = {
         "bundle_dir": str(bundle_dir),
         "files_exist": False,
         "manifest_sync": False,

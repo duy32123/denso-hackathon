@@ -9,10 +9,12 @@ Provides a unified interface for multiple LLM providers:
 """
 from __future__ import annotations
 
-from abc import ABC, abstractmethod
 import logging
 import os
-from typing import Any, Dict, Optional, Type
+from abc import ABC, abstractmethod
+from pathlib import Path
+from typing import Any
+
 from pydantic import BaseModel
 
 logger = logging.getLogger("llm_adapters")
@@ -25,7 +27,7 @@ for noisy_name in ("google", "google_genai", "google.genai", "urllib3", "httpx",
 class BaseLLMAdapter(ABC):
     """Abstract Base Class for LLM Adapters."""
 
-    def __init__(self, model: str, api_key: Optional[str] = None, temperature: float = 0.1):
+    def __init__(self, model: str, api_key: str | None = None, temperature: float = 0.1):
         self.model = model
         self.api_key = api_key
         self.temperature = temperature
@@ -34,23 +36,23 @@ class BaseLLMAdapter(ABC):
     def generate_structured_output(
         self,
         prompt: str,
-        schema_class: Optional[Type[BaseModel]] = None,
-        system_instruction: Optional[str] = None,
+        schema_class: type[BaseModel] | None = None,
+        system_instruction: str | None = None,
+        image_paths: list[Path] | None = None,
     ) -> str:
-        """Generates structured JSON output from LLM for the given prompt.
+        """Generates structured JSON output from LLM for the given prompt and optional images.
 
         Returns:
             str: Raw JSON text response from the model.
         """
-        pass
 
 
 class GeminiAdapter(BaseLLMAdapter):
     """Adapter for Google Gemini API using google-genai SDK (with google.generativeai fallback)."""
 
-    DEFAULT_MODEL = "gemini-3.6-flash"
+    DEFAULT_MODEL = "gemini-3-flash-preview"
 
-    def __init__(self, model: Optional[str] = None, api_key: Optional[str] = None, temperature: float = 0.1):
+    def __init__(self, model: str | None = None, api_key: str | None = None, temperature: float = 0.1):
         resolved_key = api_key or os.getenv("GEMINI_API_KEY") or os.getenv("LLM_API_KEY") or os.getenv("GOOGLE_API_KEY")
         if not resolved_key:
             raise ValueError(
@@ -61,10 +63,25 @@ class GeminiAdapter(BaseLLMAdapter):
     def generate_structured_output(
         self,
         prompt: str,
-        schema_class: Optional[Type[BaseModel]] = None,
-        system_instruction: Optional[str] = None,
+        schema_class: type[BaseModel] | None = None,
+        system_instruction: str | None = None,
+        image_paths: list[Path] | None = None,
     ) -> str:
         sys_inst = system_instruction or "You are a precise technical data extraction engine that outputs valid JSON only."
+
+        # Load images if provided
+        media_parts = []
+        if image_paths:
+            try:
+                from PIL import Image
+                for p in image_paths:
+                    p_resolved = Path(p)
+                    if p_resolved.is_file():
+                        media_parts.append(Image.open(p_resolved))
+            except ImportError:
+                logger.warning("Thư viện 'pillow' (PIL) chưa được nạp. Bỏ qua ảnh đầu vào.")
+
+        contents: Any = media_parts + [prompt] if media_parts else prompt
 
         try:
             # Ưu tiên SDK mới nhất: google-genai
@@ -74,7 +91,7 @@ class GeminiAdapter(BaseLLMAdapter):
             client = genai.Client(api_key=self.api_key)
             response = client.models.generate_content(
                 model=self.model,
-                contents=prompt,
+                contents=contents,
                 config=types.GenerateContentConfig(
                     system_instruction=sys_inst,
                     response_mime_type="application/json",
@@ -92,7 +109,7 @@ class GeminiAdapter(BaseLLMAdapter):
                 system_instruction=sys_inst,
                 generation_config={"response_mime_type": "application/json", "temperature": self.temperature},
             )
-            legacy_response = model_obj.generate_content(prompt)
+            legacy_response = model_obj.generate_content(contents)
             raw_text = legacy_response.text
 
         if not raw_text:
@@ -101,15 +118,15 @@ class GeminiAdapter(BaseLLMAdapter):
 
 
 class OpenAIAdapter(BaseLLMAdapter):
-    """Adapter for OpenAI and OpenAI-compatible endpoints (DeepSeek, Groq, local Ollama)."""
+    """Adapter for OpenAI and OpenAI-compatible endpoints (GPT-4o, DeepSeek, Groq, local Ollama)."""
 
     DEFAULT_MODEL = "gpt-4o"
 
     def __init__(
         self,
-        model: Optional[str] = None,
-        api_key: Optional[str] = None,
-        base_url: Optional[str] = None,
+        model: str | None = None,
+        api_key: str | None = None,
+        base_url: str | None = None,
         temperature: float = 0.1,
     ):
         resolved_key = (
@@ -129,8 +146,9 @@ class OpenAIAdapter(BaseLLMAdapter):
     def generate_structured_output(
         self,
         prompt: str,
-        schema_class: Optional[Type[BaseModel]] = None,
-        system_instruction: Optional[str] = None,
+        schema_class: type[BaseModel] | None = None,
+        system_instruction: str | None = None,
+        image_paths: list[Path] | None = None,
     ) -> str:
         try:
             from openai import OpenAI
@@ -140,9 +158,26 @@ class OpenAIAdapter(BaseLLMAdapter):
         sys_inst = system_instruction or "You are a precise technical data extraction engine that outputs valid JSON only."
         client = OpenAI(api_key=self.api_key, base_url=self.base_url)
 
+        user_content: Any
+        if image_paths:
+            import base64
+            user_content = [{"type": "text", "text": prompt}]
+            for p in image_paths:
+                p_path = Path(p)
+                if p_path.is_file():
+                    ext = p_path.suffix.lstrip(".").lower()
+                    mime = "image/jpeg" if ext in ("jpg", "jpeg") else f"image/{ext}"
+                    b64 = base64.b64encode(p_path.read_bytes()).decode("utf-8")
+                    user_content.append({
+                        "type": "image_url",
+                        "image_url": {"url": f"data:{mime};base64,{b64}"},
+                    })
+        else:
+            user_content = prompt
+
         messages: Any = [
             {"role": "system", "content": sys_inst},
-            {"role": "user", "content": prompt},
+            {"role": "user", "content": user_content},
         ]
 
         response = client.chat.completions.create(
@@ -163,14 +198,15 @@ class LiteLLMAdapter(BaseLLMAdapter):
 
     DEFAULT_MODEL = "gpt-4o"
 
-    def __init__(self, model: Optional[str] = None, api_key: Optional[str] = None, temperature: float = 0.1):
+    def __init__(self, model: str | None = None, api_key: str | None = None, temperature: float = 0.1):
         super().__init__(model=model or self.DEFAULT_MODEL, api_key=api_key, temperature=temperature)
 
     def generate_structured_output(
         self,
         prompt: str,
-        schema_class: Optional[Type[BaseModel]] = None,
-        system_instruction: Optional[str] = None,
+        schema_class: type[BaseModel] | None = None,
+        system_instruction: str | None = None,
+        image_paths: list[Path] | None = None,
     ) -> str:
         try:
             import litellm
@@ -183,7 +219,7 @@ class LiteLLMAdapter(BaseLLMAdapter):
             {"role": "user", "content": prompt},
         ]
 
-        kwargs: Dict[str, Any] = {
+        kwargs: dict[str, Any] = {
             "model": self.model,
             "messages": messages,
             "response_format": {"type": "json_object"},
@@ -200,10 +236,10 @@ class LiteLLMAdapter(BaseLLMAdapter):
 
 
 def get_llm_adapter(
-    provider: Optional[str] = None,
-    model: Optional[str] = None,
-    api_key: Optional[str] = None,
-    base_url: Optional[str] = None,
+    provider: str | None = None,
+    model: str | None = None,
+    api_key: str | None = None,
+    base_url: str | None = None,
     temperature: float = 0.1,
 ) -> BaseLLMAdapter:
     """Factory function: resolves the appropriate LLM adapter.

@@ -8,7 +8,6 @@ from __future__ import annotations
 
 import copy
 import json
-from pathlib import Path
 
 import pytest
 
@@ -16,7 +15,7 @@ from acquisition.extraction import compile_workflow as cw
 from acquisition.extraction import review as rv
 
 DRAFT_PATH = cw.REPO_ROOT / "acquisition" / "extraction" / "drafts" / "REAL_WF_0001.r1.draft.json"
-FIXED = lambda: "2026-09-12T09:00:00Z"  # noqa: E731
+FIXED = lambda: "2026-09-12T09:00:00Z"
 REVIEWER = {"reviewer_id": "d1c-reviewer", "reviewer_role": "D1-C annotation/QA"}
 
 

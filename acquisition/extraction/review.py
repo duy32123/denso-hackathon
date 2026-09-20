@@ -197,7 +197,7 @@ def session_from_sheet(
 ) -> dict:
     if not reviewer_id.strip() or not reviewer_role.strip():
         raise ReviewError("reviewer_id and reviewer_role are required: a review must say who checked")
-    self_review = bool(author) and author is not None and reviewer_id.strip().casefold() == author.strip().casefold()
+    self_review = bool(author) and reviewer_id.strip().casefold() == author.strip().casefold()
     if self_review and not allow_self_review:
         raise ReviewError(f"{reviewer_id} authored this draft; the source check must be done by someone else")
 
@@ -377,7 +377,7 @@ def _load_draft_snapshot(draft_path: str) -> tuple[dict, dict]:
 
 
 def _sources(split: str) -> dict[str, dict]:
-    path = Path(str(exporter.SPLITS[split]["sources"]))
+    path = exporter.SPLITS[split]["sources"]
     return {r["source_id"]: r for r in map(json.loads, path.read_text(encoding="utf-8").splitlines()) if r}
 
 

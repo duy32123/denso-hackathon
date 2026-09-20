@@ -2,7 +2,7 @@
 name = "knowflow-contracts"
 version = "1.0.0"
 description = "Hop dong du lieu KnowFlow AI (Schema 1.0.0): models, validator V01-V10, fixtures"
-requires-python = ">=3.11"
+requires-python = ">=3.10"
 dependencies = [
     "pydantic>=2.7,<3",
     "python-dotenv>=1.0",
@@ -48,3 +48,18 @@ packages = ["contracts/schema/knowflow_contracts", "retrieval"]
 testpaths = ["tests"]
 pythonpath = ["contracts/schema", "."]
 addopts = "-q"
+
+[tool.ruff]
+target-version = "py310"
+line-length = 120
+
+[tool.ruff.lint]
+ignore = [
+    "BLE001",  # blind exception catching in CLI/orchestrator
+    "S110",    # try-except-pass
+]
+
+[tool.mypy]
+python_version = "3.10"
+ignore_missing_imports = true
+mypy_path = ["contracts/schema", "."]

@@ -6,6 +6,8 @@ Ba quyet dinh nay chot ngay 2026-09-09; xem contracts/CHANGELOG.md.
 from __future__ import annotations
 
 import pytest
+from pydantic import ValidationError
+
 from knowflow_contracts import (
     ClaimHit,
     IndexBuild,
@@ -18,7 +20,7 @@ from knowflow_contracts import (
     validate_bundle,
 )
 from knowflow_contracts.models import Source, Workflow
-from pydantic import ValidationError
+
 
 # --- D-03: ngon ngu ----------------------------------------------------------
 

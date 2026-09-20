@@ -50,7 +50,6 @@ import json
 import sys
 import tempfile
 from pathlib import Path
-from typing import Any
 
 from knowflow_contracts import derive_support_status
 from knowflow_contracts.enums import FIELD_ROLES
@@ -366,7 +365,7 @@ def check_snapshot(snapshot: dict, split: str = "dev", *, source_records: list[d
                 encoding="utf-8", newline="\n",
             )
         return exporter.export_bundle(
-            split=split, sources_path=Path(str(sources_path)), snapshot_dir=snap_dir,
+            split=split, sources_path=sources_path, snapshot_dir=snap_dir,
             out_dir=Path(tmp) / "bundle", bundle_prefix="DRAFT_CHECK", check_only=True,
         )
 

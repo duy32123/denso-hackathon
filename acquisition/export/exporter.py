@@ -41,17 +41,17 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+
+from pydantic import ValidationError
 
 from knowflow_contracts import snapshot_content_hash, validate_bundle
 from knowflow_contracts.issues import Report
 from knowflow_contracts.models import Workflow
-from pydantic import ValidationError
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 PIPELINE_VERSION = "d1b-exporter-0.1.0"
 
-SPLITS: dict[str, dict[str, Any]] = {
+SPLITS = {
     "dev": {
         "sources": REPO_ROOT / "data" / "sources" / "haas_pilot_sources.jsonl",
         "snapshots": REPO_ROOT / "data" / "workflows" / "dev",
@@ -161,12 +161,7 @@ def check_published_snapshots(snapshots: list[dict], out_dir: Path) -> None:
             wf = Workflow.model_validate(record)
         except ValidationError:
             # The staging validator reports the exact V01 errors and rejects the bundle.
-            wf_id = record.get("workflow_id")
-            rev = record.get("revision")
-            if isinstance(wf_id, str) and isinstance(rev, int):
-                malformed.add((wf_id, rev))
-            else:
-                malformed.add((str(wf_id), int(rev or 0)))
+            malformed.add((record.get("workflow_id"), record.get("revision")))
             continue
         incoming[wf.key] = snapshot_content_hash(wf)
 
@@ -208,14 +203,14 @@ def export_bundle(
 
     previous = _read_manifest(out_dir)
     unchanged = previous is not None and previous.get("files") == files and previous.get("dataset_split") == split
-    if unchanged and previous is not None:
+    if unchanged:
         bundle_id, created_at = previous["bundle_id"], previous["created_at"]
     else:
         digest = _sha256(sources_body + b"\x00" + workflows_body)
         bundle_id, created_at = f"{bundle_prefix}_{digest[:12]}", clock()
 
     # An unchanged bundle keeps its original producer too: it is the same bundle.
-    producer = previous["producer"] if (unchanged and previous is not None) else {"team": "team_1", "pipeline_version": PIPELINE_VERSION}
+    producer = previous["producer"] if unchanged else {"team": "team_1", "pipeline_version": PIPELINE_VERSION}
     manifest = {
         "schema_version": "1.0.0",
         "bundle_id": bundle_id,
@@ -265,10 +260,10 @@ def main(argv: list[str] | None = None) -> int:
     try:
         result = export_bundle(
             split=args.split,
-            sources_path=Path(str(cfg["sources"])),
-            snapshot_dir=Path(str(cfg["snapshots"])),
-            out_dir=Path(str(cfg["out"])),
-            bundle_prefix=str(cfg["bundle_prefix"]),
+            sources_path=cfg["sources"],
+            snapshot_dir=cfg["snapshots"],
+            out_dir=cfg["out"],
+            bundle_prefix=cfg["bundle_prefix"],
             check_only=args.check,
         )
     except ExportError as exc:

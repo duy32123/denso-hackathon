@@ -116,7 +116,7 @@ def create_app(service: QAService | None = None, *, timeout_seconds: float = 90,
         task.add_done_callback(finished)
         try:
             return await asyncio.wait_for(asyncio.shield(task), timeout_seconds)
-        except (TimeoutError, asyncio.TimeoutError):
+        except TimeoutError:
             return error(504, "query_timeout", "Hết thời gian xử lý; vui lòng thử lại sau.")
         except (RetrievalError, sqlite3.Error, OSError, ValidationError):
             return error(503, "index_unavailable", "Index chưa sẵn sàng hoặc vừa thay đổi; kiểm tra import/build.")

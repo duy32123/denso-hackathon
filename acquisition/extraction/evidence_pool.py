@@ -33,7 +33,6 @@ import json
 import sys
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Any
 
 from knowflow_contracts.models import Evidence
 
@@ -264,7 +263,7 @@ def write_pool(pool: dict[str, list[Candidate]], out_dir: Path = POOL_DIR) -> Pa
                 )
 
     out_dir.mkdir(parents=True, exist_ok=True)
-    manifest: dict[str, Any] = {
+    manifest = {
         "pool_version": POOL_VERSION,
         "note": "Evidence candidates, not Schema 1.0.0 entities. IDs are ordinals within the hashed inputs below.",
         "sources": {},
@@ -289,7 +288,7 @@ def write_pool(pool: dict[str, list[Candidate]], out_dir: Path = POOL_DIR) -> Pa
 def load_pool(out_dir: Path = POOL_DIR) -> dict[str, Candidate]:
     manifest = json.loads((out_dir / "manifest.json").read_text(encoding="utf-8"))
     index: dict[str, Candidate] = {}
-    for entry in manifest["sources"].values():
+    for sid, entry in manifest["sources"].items():
         body = (out_dir / entry["file"]).read_bytes()
         if _sha256(body) != entry["sha256"]:
             raise PoolError(f"{entry['file']}: checksum does not match the pool manifest")

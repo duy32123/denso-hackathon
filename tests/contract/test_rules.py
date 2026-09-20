@@ -9,6 +9,7 @@ from __future__ import annotations
 import copy
 
 import pytest
+
 from knowflow_contracts import validate_bundle
 
 

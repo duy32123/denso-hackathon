@@ -6,12 +6,8 @@ import json
 from pathlib import Path
 
 import pytest
-from knowflow_contracts import (
-    answer_qualifier,
-    claim_blockers,
-    derive_support_status,
-    is_assertable,
-)
+
+from knowflow_contracts import answer_qualifier, claim_blockers, derive_support_status, is_assertable
 from knowflow_contracts.enums import QueryMode, SupportStatus
 from knowflow_contracts.models import Claim, Workflow
 

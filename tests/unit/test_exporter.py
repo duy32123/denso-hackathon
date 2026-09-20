@@ -10,20 +10,19 @@ import copy
 import hashlib
 import json
 from pathlib import Path
-from typing import Any
 
 import pytest
-from knowflow_contracts import validate_bundle
 
 from acquisition.export import exporter as ex
+from knowflow_contracts import validate_bundle
 
-FIXED_CLOCK = lambda: "2026-09-12T00:00:00Z"
+FIXED_CLOCK = lambda: "2026-09-12T00:00:00Z"  # noqa: E731
 WF_ID = "REAL_WF_0001"
 
 
 def minimal_workflow(revision: int = 1, claim_text: str = "The presenter says to press E-stop once the pocket is in position.") -> dict:
     """Smallest real workflow on SRC_HAAS_0005 that passes V01-V10."""
-    prov: dict[str, Any] = {k: {"basis": "unknown", "source_ids": [], "note": None} for k in (
+    prov = {k: {"basis": "unknown", "source_ids": [], "note": None} for k in (
         "manufacturer", "machine_family", "machine_model", "subsystem", "task_type",
         "symptoms", "alarm_codes", "components")}
     missing = {"state": "missing", "claim_ids": []}
@@ -70,6 +69,7 @@ def minimal_workflow(revision: int = 1, claim_text: str = "The presenter says to
 
 @pytest.fixture
 def workspace(tmp_path: Path) -> dict:
+    """Isolated D1-A source-only bundle, independent of locally promoted workflows."""
     out = tmp_path / "bundle"
     out.mkdir()
     sources_bytes = ex.SPLITS["dev"]["sources"].read_bytes()

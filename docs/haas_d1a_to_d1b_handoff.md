@@ -220,3 +220,52 @@ pytest -q
 # recompute a checksum to spot-check section 15:
 python -c "import hashlib;print(hashlib.sha256(open('data/sources/haas_pilot_sources.jsonl','rb').read()).hexdigest())"
 ```
+
+## 17. WP2 second pass (2026-09-14) — new for D1-B/D1-C
+
+A second, full line-by-line re-read of all 3 dev transcripts plus a keyframe-coverage
+review (branch `team1/pilot-workflows-0001-0003`) found and fixed more caption artifacts
+of the same kind as the original gap-spec fix, and added 11 new keyframes. Full detail in
+`docs/haas_d1a_quality_report.md`'s "Second QC pass" section. Two things D1-B/D1-C should
+know:
+
+1. **The evidence pool changed.** `SRC_HAAS_0001`, `SRC_HAAS_0003` and `SRC_HAAS_0005` each
+   gained new `C####` corrected-cue candidates. This does **not** renumber any existing
+   `U####` candidate (positional, tied to array index) — any workflow already citing raw
+   cues from these sources is unaffected. `REAL_WF_0001` (already reviewed/exported) was
+   not touched.
+2. **5 new SRC_HAAS_0005 keyframes are unwired media**, not yet cited by any claim:
+   `kf_0028000.jpg` (E-stop press), `kf_0065000.jpg` (removing a tool from the carousel),
+   `kf_0076000.jpg` (marking the disc for reinstallation), `kf_0158000.jpg` (applying
+   grease to the pocket slider), `kf_0222000.jpg` (reinstalling with a pneumatic tool near
+   the numbered carousel). `REAL_WF_0001` is already reviewed and exported, so
+   incorporating these means a revision 2 (new `observed` claims, re-review, re-export) —
+   left for D1-B/D1-C to decide, not done here.
+
+## 18. Keyframe evidence hardening (2026-09-14) — corrective pass, new for D1-B/D1-C
+
+A corrective pass (branch `team1/d1a-keyframe-evidence-hardening`) found that several
+keyframes were visually related to their claims but did not actually prove them — selected
+by transcript-cue proximity rather than by reading the pixels. Full diagnosis, method,
+calibration and per-frame verdicts: `docs/keyframe_evidence_review.md`,
+`docs/keyframe_selection_method.md`, `docs/keyframe_calibration_report.md`,
+`docs/keyframe_capability_audit.md`. Structured ledgers:
+`data/keyframes/keyframe_candidates.jsonl`, `keyframe_selections.jsonl`,
+`keyframe_replacements.jsonl`, `keyframe_review.jsonl`.
+
+**Changed evidence artifacts, all 20 keyframes re-audited:**
+
+| Artifact | Change | Where |
+|---|---|---|
+| `REAL_WF_0002_CL_017` visual evidence (`kf_0146100.jpg`) | **Removed.** No feeler gauge exists anywhere in the surrounding 8.75s window (dense-resampled, 36 frames); the step's transcript claim is now its only evidence. `kf_0146100.jpg` stays committed but is unwired. | `acquisition/extraction/drafts/REAL_WF_0002.r1.draft.json` (not yet exported — safe to edit in place) |
+| `REAL_WF_0002_CL_012` evidence explanation (`kf_0115000.jpg`) | **Reworded.** Frame kept (claim text was already accurate); explanation stopped citing narration proximity as the reason and now states plainly it's bench B-roll, not the on-machine moment. | same draft |
+| `REAL_WF_0001_CL_021` (`kf_0142700.jpg`) | **New revision.** `REAL_WF_0001.r2` (`supersedes_revision: 1`) reworks the claim to stop naming an unverifiable "cam follower" identity and an unprovable rotation from a still. r1 stays untouched and published; its review status for this one claim correctly goes stale on recompile (2 other pre-existing claims unaffected). **r2 is not promoted or exported** — it needs the same D1-C human source-review step r1 went through before it can supersede r1 in `data/workflows/dev/`. | `acquisition/extraction/drafts/REAL_WF_0001.r2.draft.json`, `data/workflows/drafts/REAL_WF_0001.r2.json` |
+| `SRC_HAAS_0005_KF_0011800` inventory note | **Corrected**, no evidence affected (unwired). | `acquisition/preprocessing/haas_d1a_media_inventory.jsonl` |
+| `compile_workflow.py` keyframe-evidence path | **Bug fix.** Filename-derived timestamp → inventory-verified (path lookup + content-hash check) timestamp; fabricated multi-second locator span → 1ms locator at the real frame instant (schema V04 forbids zero-width). Recompiling **every** existing draft with a keyframe changes that evidence's `locator` shape (not its content or claim text) — expected, not a regression; `data/workflows/drafts/*.json` were regenerated accordingly. `data/workflows/dev/REAL_WF_0001.r1.json` (the only exported/published snapshot with visual evidence) is untouched. | `acquisition/extraction/compile_workflow.py`, new `acquisition/preprocessing/keyframes.py` |
+
+**Action needed from D1-B/D1-C:** (1) a human reviewer should read `keyframe_review.jsonl`
+and fill in `human_signoff` — every row currently has `reviewer_kind: "ai_vision_review"`
+and `human_signoff: null`, since this pass's judgments were made by Claude Opus 5 reading
+the pixels, not by a person; (2) `REAL_WF_0001.r2` needs the normal D1-C source-review +
+promotion flow before it can supersede r1 in `dev/`; (3) `REAL_WF_0002.r1.draft.json`'s
+edits should be folded into its first D1-C review rather than reviewed twice.

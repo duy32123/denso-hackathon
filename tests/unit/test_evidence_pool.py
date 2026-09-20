@@ -70,8 +70,15 @@ def test_corrected_cue_is_human_and_keeps_its_caption_parent(index):
     assert "20,000 meter" in index["SRC_HAAS_0001:U0021"].text, "raw caption must be kept verbatim"
 
 
-def test_unchanged_transcripts_produce_no_corrected_candidates(pool):
-    assert not [c for c in pool["SRC_HAAS_0003"] + pool["SRC_HAAS_0005"] if c.kind == "C"]
+def test_corrected_candidate_count_matches_differing_cues(pool):
+    """Every C-candidate corresponds to exactly one cue whose text actually changed
+    -- the pool must not invent corrections, and must not miss any either."""
+    for sid in ("SRC_HAAS_0001", "SRC_HAAS_0003", "SRC_HAAS_0005"):
+        raw = json.loads((ep.TRANSCRIPTS_DIR / sid / "raw.json").read_text(encoding="utf-8"))["utterances"]
+        corrected = json.loads((ep.TRANSCRIPTS_DIR / sid / "corrected.json").read_text(encoding="utf-8"))["utterances"]
+        expected = sum(1 for r, c in zip(raw, corrected) if r["text"] != c["text"])
+        actual = sum(1 for c in pool[sid] if c.kind == "C")
+        assert actual == expected, sid
 
 
 def test_guides_become_line_candidates(pool):

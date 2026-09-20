@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="vi">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KnowFlow — hỏi đáp có nguồn</title>
+<link rel="stylesheet" href="/static/style.css">
+<main>
+  <h1>KnowFlow · pilot</h1>
+  <p>Tra cứu theo nguồn đã kiểm. Không thay thế hướng dẫn an toàn của nhà sản xuất hoặc người có chuyên môn.</p>
+  <form id="ask">
+    <label>Corpus <select id="mode"><option value="real">Nguồn thực · dev</option><option value="synthetic">Dữ liệu mô phỏng · dev</option></select></label>
+    <p id="banner" role="status"></p>
+    <div class="context">
+      <label>Nhà sản xuất <input id="manufacturer" value="Haas"></label>
+      <label>Phân hệ <input id="subsystem" value="SMTC"></label>
+      <label>Model máy (nếu biết) <input id="machine_model" placeholder="Không tự suy đoán"></label>
+    </div>
+    <label>Câu mẫu demo (tiếng Anh)
+      <select id="demo-question"><option value="grease">How is the pocket slider lubricated?</option><option value="grade">Which grease grade / NLGI?</option><option value="model">Can this procedure be used on a VF-2?</option></select>
+    </label>
+    <label>Câu hỏi <textarea id="question" required maxlength="4000" rows="3">How is the pocket slider lubricated?</textarea></label>
+    <button id="submit">Hỏi</button>
+  </form>
+  <p id="status" role="status" aria-live="polite"></p>
+  <div class="results">
+    <div class="main-column">
+    <section aria-label="Câu trả lời"><h2>Câu trả lời</h2><p id="answer"></p><p id="missing"></p><p id="unresolved"></p><small id="build"></small><div id="citations"></div></section>
+  <section class="browser" aria-labelledby="workflow-heading">
+    <h2 id="workflow-heading">Workflow · field · claim</h2>
+    <p class="muted">Chế độ đọc. Review nguồn không đồng nghĩa xác nhận kỹ thuật. Không tự ghép thao tác giữa các workflow.</p>
+    <div class="browser-controls">
+      <label>Workflow trong index của corpus đang chọn <select id="workflow-select"><option value="">Đang tải…</option></select></label>
+      <button type="button" id="refresh-workflows">Tải lại danh sách</button>
+    </div>
+    <p id="catalog-status" role="status"></p>
+    <p id="workflow-status" role="status" aria-live="polite"></p>
+    <div id="workflow-meta"></div>
+    <div id="workflow-steps"></div>
+    <div id="workflow-relations"></div>
+    <div id="workflow-questions"></div>
+  </section>
+  <section class="browser" aria-labelledby="feedback-heading">
+    <h2 id="feedback-heading">Bổ sung phần còn thiếu</h2>
+    <p class="muted">Phản hồi được lưu thành một <strong>revision mới</strong> qua service của đội 1.
+      Có phản hồi không đồng nghĩa đã kiểm nguồn, càng không phải chuyên gia xác nhận.
+      Danh tính người trả lời do người dùng tự khai, hệ thống <strong>chưa xác thực</strong>.</p>
+    <p id="feedback-state" role="status" aria-live="polite">Chọn một workflow ở trên để bổ sung.</p>
+    <div id="feedback-form" hidden>
+      <div class="context">
+        <label>Câu hỏi còn mở <select id="feedback-question"><option value="">— không gắn câu hỏi nào —</option></select></label>
+        <label>Bước <select id="feedback-step"></select></label>
+        <label>Trường <select id="feedback-field"></select></label>
+      </div>
+      <div class="context">
+        <label>Người trả lời <input id="feedback-actor" placeholder="tài khoản của bạn"></label>
+        <label>Tên hiển thị <input id="feedback-label" placeholder="họ tên"></label>
+        <label>Vai trò thật <input id="feedback-role" placeholder="ví dụ: kỹ thuật viên bảo trì"></label>
+      </div>
+      <label>Nguyên văn phản hồi
+        <textarea id="feedback-text" rows="3" maxlength="4000" placeholder="Ghi đúng lời người trả lời; không tóm tắt."></textarea></label>
+      <div class="browser-controls">
+        <button type="button" id="feedback-preview">Xem trước thay đổi</button>
+        <button type="button" id="feedback-save" disabled>Lưu revision mới</button>
+      </div>
+      <p id="feedback-message" role="status" aria-live="polite"></p>
+      <div id="feedback-diff"></div>
+    </div>
+  </section>
+  <section class="browser" aria-labelledby="history-heading">
+    <h2 id="history-heading">Lịch sử revision</h2>
+    <div id="workflow-history">Chọn một workflow để xem lịch sử.</div>
+  </section>
+    </div>
+    <section class="evidence-panel" aria-label="Bằng chứng"><h2>Bằng chứng gốc</h2><div id="evidence" aria-live="polite">Chọn một citation để đọc đoạn gốc hoặc xem keyframe.</div></section>
+  </div>
+</main>
+<script src="/static/app.js" defer></script>
+<script src="/static/viewer.js" defer></script>
+<script src="/static/feedback.js" defer></script>
+</html>

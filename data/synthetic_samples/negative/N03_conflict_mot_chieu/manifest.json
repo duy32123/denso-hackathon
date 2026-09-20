@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "bundle_id": "BUNDLE_negative/N03_conflict_mot_chieu",
+  "source_type": "synthetic",
+  "dataset_split": "dev",
+  "created_at": "2026-09-08T00:00:00Z",
+  "files": [
+    {
+      "path": "sources.jsonl",
+      "sha256": "68be0b13367f2dd0d13a298081c594669d6d2e5946d9ef6f5fa5f9d796d1b406",
+      "record_count": 1
+    },
+    {
+      "path": "workflows.jsonl",
+      "sha256": "db48d990260c899da2cfdb62bf455550e4f0934ca6c9dc210465240507c16e40",
+      "record_count": 1
+    }
+  ],
+  "producer": {
+    "team": "team_2",
+    "pipeline_version": "synthetic-kb-1.0.0"
+  }
+}

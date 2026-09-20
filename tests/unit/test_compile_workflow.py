@@ -14,6 +14,9 @@ from acquisition.extraction import evidence_pool as ep
 
 DRAFT = cw.REPO_ROOT / "acquisition" / "extraction" / "drafts" / "REAL_WF_0001.r1.draft.json"
 SNAPSHOT = cw.DRAFT_OUT / "REAL_WF_0001.r1.json"
+DRAFTS_DIR = cw.REPO_ROOT / "acquisition" / "extraction" / "drafts"
+DEV_SOURCES = cw.REPO_ROOT / "data" / "sources" / "haas_pilot_sources.jsonl"
+DEV_WORKFLOWS_DIR = cw.REPO_ROOT / "data" / "workflows" / "dev"
 
 
 @pytest.fixture(scope="module")
@@ -46,9 +49,12 @@ def tiny_draft(**claim) -> dict:
 # --- REAL_WF_0001 ------------------------------------------------------------------
 
 
-def test_committed_snapshot_is_exactly_the_compiled_draft(draft, pool, tmp_path):
+@pytest.mark.parametrize("draft_path", sorted(DRAFTS_DIR.glob("*.r*.draft.json")), ids=lambda p: p.stem)
+def test_committed_snapshot_is_exactly_the_compiled_draft(draft_path, pool, tmp_path):
+    draft = json.loads(draft_path.read_text(encoding="utf-8"))
+    snapshot_path = cw.DRAFT_OUT / f"{draft['workflow_id']}.r{draft['revision']}.json"
     path = cw.write_snapshot(cw.compile_draft(draft, pool), tmp_path)
-    assert path.read_bytes() == SNAPSHOT.read_bytes(), "edit the draft and recompile; never hand-edit the snapshot"
+    assert path.read_bytes() == snapshot_path.read_bytes(), "edit the draft and recompile; never hand-edit the snapshot"
 
 
 def test_snapshot_passes_the_contract_validator_without_warnings(snapshot):
@@ -58,9 +64,13 @@ def test_snapshot_passes_the_contract_validator_without_warnings(snapshot):
 
 
 def test_every_speech_quote_is_verbatim_caption_text(snapshot, pool):
+    # REAL_WF_0001 cites only raw (kind="U") SRC_HAAS_0005 cues; a corrected cue at
+    # the same start_ms (a correction never moves timestamps) would collide in this
+    # start_ms-keyed lookup otherwise, since corrections were added after this
+    # workflow was authored.
     by_window = {}
     for c in pool.values():
-        if c.source_id == "SRC_HAAS_0005":
+        if c.source_id == "SRC_HAAS_0005" and c.kind == "U":
             by_window[c.start_ms] = c
     for ev in snapshot["evidence"]:
         if ev["modality"] != "speech":
@@ -161,11 +171,151 @@ def test_unknown_field_name_is_refused(pool):
         cw.compile_draft(d, pool)
 
 
+# --- keyframe evidence trusts the media inventory, not the filename ----------------
+
+
+def _fake_repo(tmp_path, keyframe_rel: str, jpg_bytes: bytes, inventory_row: dict | None):
+    """A self-contained fake REPO_ROOT with one keyframe file and its own inventory --
+    exercises _keyframe_evidence without depending on the real committed media inventory.
+    """
+    kf_path = tmp_path / keyframe_rel
+    kf_path.parent.mkdir(parents=True, exist_ok=True)
+    kf_path.write_bytes(jpg_bytes)
+    inv_path = tmp_path / "acquisition/preprocessing/haas_d1a_media_inventory.jsonl"
+    inv_path.parent.mkdir(parents=True, exist_ok=True)
+    rows = [inventory_row] if inventory_row is not None else []
+    inv_path.write_text("\n".join(json.dumps(r) for r in rows) + ("\n" if rows else ""), encoding="utf-8")
+    return kf_path
+
+
+def test_keyframe_evidence_is_rejected_when_file_bytes_do_not_match_the_inventory_hash(pool, tmp_path, monkeypatch):
+    """A keyframe file can be silently overwritten while its artifact_id/filename stay
+    the same. The compiler must catch that by content hash, not trust the filename. Fully
+    self-contained: a fake repo whose own inventory row's hash deliberately does not match
+    the file's real bytes -- must not depend on the real committed inventory to pass.
+    """
+    rel = "acquisition/preprocessing/keyframes/SRC_HAAS_0005/kf_0142700.jpg"
+    _fake_repo(tmp_path, rel, b"tampered bytes", {
+        "storage_uri": rel, "artifact_type": "keyframe", "source_id": "SRC_HAAS_0005",
+        "original_start_ms": 142700, "content_sha256": "0" * 64,
+    })
+    monkeypatch.setattr(cw, "REPO_ROOT", tmp_path)
+
+    d = tiny_draft(evidence=[{"keyframe": rel, "source_id": "SRC_HAAS_0005",
+                               "start_ms": 142680, "end_ms": 147840, "observation_note": "x"}])
+    with pytest.raises(cw.DraftError, match="content_sha256"):
+        cw.compile_draft(d, pool)
+
+
+def test_two_spellings_of_the_same_keyframe_path_dedupe_to_one_evidence_record(pool):
+    """The inventory lookup normalizes the path (Path(...).as_posix()) before comparing;
+    the dedup key must use that same normalized form, not the raw ref string, or two
+    claims spelling the same file differently would wastefully mint two Evidence rows
+    for one frame.
+    """
+    rel = "acquisition/preprocessing/keyframes/SRC_HAAS_0005/kf_0142700.jpg"
+    d = tiny_draft(evidence=[{"keyframe": rel, "source_id": "SRC_HAAS_0005",
+                               "start_ms": 142680, "end_ms": 147840, "observation_note": "x"}])
+    d["steps"][0]["fields"]["condition"] = [
+        {"text": "y", "evidence": [{"keyframe": f"./{rel}",
+                                     "source_id": "SRC_HAAS_0005", "start_ms": 142680, "end_ms": 147840,
+                                     "observation_note": "x"}], "explanation": "y"}
+    ]
+    snap = cw.compile_draft(d, pool)
+    assert len(snap["evidence"]) == 1
+    assert {l["evidence_id"] for c in snap["claims"] for l in c["evidence_links"]} == {snap["evidence"][0]["evidence_id"]}
+
+
+def test_keyframe_locator_never_exceeds_its_sources_stated_duration(pool, tmp_path, monkeypatch):
+    """A frame extracted right at (or ffprobe-PTS-rounded up to) a source's stated
+    duration must not produce a locator whose end_ms exceeds duration_ms -- schema V04
+    would reject otherwise-correct evidence for a boundary frame.
+    """
+    rel = "acquisition/preprocessing/keyframes/FAKE/kf_last.jpg"
+    duration_ms = 5000
+    import hashlib
+    _fake_repo(tmp_path, rel, b"x", {
+        "storage_uri": rel, "artifact_type": "keyframe", "source_id": "SRC_HAAS_0005",
+        "original_start_ms": duration_ms, "content_sha256": hashlib.sha256(b"x").hexdigest(),
+    })
+    monkeypatch.setattr(cw, "REPO_ROOT", tmp_path)
+    d = tiny_draft(evidence=[{"keyframe": rel, "source_id": "SRC_HAAS_0005",
+                               "start_ms": duration_ms - 100, "end_ms": duration_ms + 100,
+                               "observation_note": "x"}])
+    snap = cw.compile_draft(d, pool)
+    locator = snap["evidence"][0]["locator"]
+    assert locator["end_ms"] <= duration_ms, \
+        f"locator end_ms={locator['end_ms']} must not exceed the frame's own timestamp={duration_ms}"
+
+
+def test_keyframe_not_in_the_inventory_is_refused_even_with_a_valid_file(pool, tmp_path, monkeypatch):
+    """No lineage, no evidence -- a file that merely exists on disk with the right name
+    is not enough; it must be a recorded, hash-verified artifact.
+    """
+    rel = "acquisition/preprocessing/keyframes/SRC_HAAS_0005/kf_0142700.jpg"
+    _fake_repo(tmp_path, rel, b"some bytes", inventory_row=None)
+    monkeypatch.setattr(cw, "REPO_ROOT", tmp_path)
+
+    d = tiny_draft(evidence=[{"keyframe": rel, "source_id": "SRC_HAAS_0005",
+                               "start_ms": 142680, "end_ms": 147840, "observation_note": "x"}])
+    with pytest.raises(cw.DraftError, match="not recorded in the media inventory"):
+        cw.compile_draft(d, pool)
+
+
+def test_keyframe_evidence_locator_is_the_frame_instant_not_the_search_window(pool):
+    """A still frame is an instant; the draft's start_ms/end_ms is only the search
+    window used to sanity-check the frame falls in the right place, not the locator.
+    """
+    d = tiny_draft(evidence=[{"keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0005/kf_0142700.jpg",
+                               "source_id": "SRC_HAAS_0005", "start_ms": 142680, "end_ms": 147840,
+                               "observation_note": "x"}])
+    snap = cw.compile_draft(d, pool)
+    locator = snap["evidence"][0]["locator"]
+    assert (locator["start_ms"], locator["end_ms"]) == (142699, 142700), \
+        "1ms window ending at the frame's own timestamp (schema V04 forbids a zero-width " \
+        "locator, and ending here rather than starting here avoids exceeding duration_ms " \
+        "for a boundary frame) -- not the 5s caption-cue span"
+
+
+def test_keyframe_evidence_can_pin_an_explicit_id_to_avoid_a_cross_revision_collision(pool):
+    """D-02 (V03 evidence immutability) forbids a reused evidence_id whose content
+    changed between revisions. Legacy (pre-revision_base) drafts have no automatic
+    remap: evidence_id is otherwise assigned purely by first-occurrence position, so
+    a legacy revision that changes an earlier claim's evidence count/order would
+    silently reuse an already-published ID for now-different content. Letting the
+    draft pin its own evidence_id for this one citation is the escape hatch: it
+    lands the new content on a fresh, never-before-used ID instead.
+    """
+    d = tiny_draft(evidence=[{"keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0005/kf_0142700.jpg",
+                               "source_id": "SRC_HAAS_0005", "start_ms": 142680, "end_ms": 147840,
+                               "observation_note": "x", "evidence_id": "REAL_WF_9998_EV_099"}])
+    snap = cw.compile_draft(d, pool)
+    assert snap["evidence"][0]["evidence_id"] == "REAL_WF_9998_EV_099"
+    assert snap["claims"][0]["evidence_links"][0]["evidence_id"] == "REAL_WF_9998_EV_099"
+
+
 def test_context_value_needs_a_provenance_basis(pool):
     d = tiny_draft()
     d["context"] = {"machine_model": "VM-3"}
     with pytest.raises(cw.DraftError, match="no provenance basis"):
         cw.compile_draft(d, pool)
+
+
+def test_every_dev_pilot_video_has_a_reviewed_workflow():
+    """Team 1 plan Week-1 gate: 3 pilot videos, each with a knowledge-unit workflow."""
+    pilot_video_ids = set()
+    for line in DEV_SOURCES.read_text(encoding="utf-8").splitlines():
+        source = json.loads(line)
+        if source["source_kind"] == "official_service_video":
+            pilot_video_ids.add(source["source_id"])
+
+    covered = set()
+    for path in DEV_WORKFLOWS_DIR.glob("*.r*.json"):
+        snapshot = json.loads(path.read_text(encoding="utf-8"))
+        covered.update(snapshot["source_ids"])
+
+    missing = pilot_video_ids - covered
+    assert not missing, f"pilot video(s) with no dev workflow: {sorted(missing)}"
 
 
 def test_relation_condition_must_point_at_a_condition_claim(pool):

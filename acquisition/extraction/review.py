@@ -352,7 +352,7 @@ def promote(
         )
 
     merged = merge_reviews(snapshot, record)
-    result = cw.check_snapshot(merged, draft["dataset_split"])
+    result = cw.check_draft_snapshot(draft, merged)
     if not result.report.ok:
         raise ReviewError("reviewed snapshot fails validation:\n  " + "\n  ".join(str(i) for i in result.report.errors))
     path = cw.write_snapshot(merged, workflows_root / draft["dataset_split"])

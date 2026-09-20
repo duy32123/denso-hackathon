@@ -40,7 +40,7 @@ except ImportError:
 
 logger = logging.getLogger("extraction_exporter")
 
-PIPELINE_VERSION = "d1b-extraction-exporter-0.1.0"
+PIPELINE_VERSION = "d1b-extraction-exporter-0.2.0"
 
 
 @dataclass
@@ -116,27 +116,23 @@ def _ensure_context_provenance(context: dict[str, Any], source_id: str) -> dict[
 
 
 def _sanitize_evidence_spans(evidence_list: list) -> list:
-    """Ensures each candidate span is strictly consecutive.
-    If a list contains non-consecutive candidate IDs (e.g. U0024 and U0026),
-    splits them into separate single-candidate spans [[U0024], [U0026]].
-    """
+    """Split gaps without adding citations or hiding invalid IDs/duplicate ordinals."""
     new_ev = []
     for item in evidence_list:
         if isinstance(item, list):
-            ords = []
-            is_valid_id = True
-            for x in item:
-                m = re.search(r":U(\d+)$", str(x))
-                if m:
-                    ords.append(int(m.group(1)))
-                else:
-                    is_valid_id = False
-                    break
-            if is_valid_id and len(ords) > 1:
-                is_consec = all(ords[i] + 1 == ords[i + 1] for i in range(len(ords) - 1))
-                if not is_consec:
-                    for x in item:
-                        new_ev.append([x])
+            matches = [re.fullmatch(r"(.+):[UC](\d+)", x) if isinstance(x, str) else None for x in item]
+            if item and all(matches):
+                sources = {m[1] for m in matches}
+                ords = [int(m[2]) for m in matches]
+                # Cross-source spans and duplicate ordinals must still fail compilation.
+                if len(sources) == 1 and len(set(ords)) == len(ords):
+                    group = [item[0]]
+                    for previous, ordinal, candidate_id in zip(ords, ords[1:], item[1:]):
+                        if ordinal != previous + 1:
+                            new_ev.append(group)
+                            group = []
+                        group.append(candidate_id)
+                    new_ev.append(group)
                     continue
             new_ev.append(item)
         elif isinstance(item, str):
@@ -144,6 +140,30 @@ def _sanitize_evidence_spans(evidence_list: list) -> list:
         else:
             new_ev.append(item)
     return new_ev
+
+
+def prepare_draft(bundle: WorkflowBundle, source_record: dict[str, Any]) -> dict[str, Any]:
+    """Build the same compiler-ready draft for disk, review, and export."""
+    draft = bundle.to_draft_dict()
+    source_id = source_record["source_id"]
+    if not draft.get("source_ids"):
+        draft["source_ids"] = [source_id]
+    draft["context"] = _ensure_context_provenance(draft.get("context", {}), source_id)
+
+    claims = list(draft.get("claims", []))
+    for step in draft.get("steps", []):
+        for field_value in step.get("fields", {}).values():
+            claims.extend(field_value if isinstance(field_value, list) else field_value.get("claims", []))
+    claims.extend(relation["claim"] for relation in draft.get("relations", []) if relation.get("claim"))
+    for claim in claims:
+        claim["evidence"] = _sanitize_evidence_spans(claim.get("evidence", []))
+        if isinstance(claim.get("scope"), dict):
+            claim["scope"] = claim["scope"].get("description", "")
+        if claim.get("evidence_type") == "inferred":
+            claim.setdefault("attribution", {})["kind"] = "model"
+            if claim.get("support_status") == "supported":
+                claim["support_status"] = "ambiguous"
+    return draft
 
 
 def _ensure_source_fields(source_record: dict[str, Any]) -> dict[str, Any]:
@@ -195,81 +215,17 @@ def export_schema_v1_bundle(
     out_dir = Path(out_dir).resolve()
     logger.debug(f"Khởi tạo tiến trình xuất Bundle Schema 1.0.0 tại: {out_dir}")
 
+    if validate_bundle is None:
+        raise RuntimeError("Không thể xuất bundle: thiếu validator knowflow_contracts.")
+    if not compile_snapshot:
+        raise ValueError("Xuất bundle yêu cầu compile_snapshot=True; không hỗ trợ snapshot fallback.")
+
     source_record = _ensure_source_fields(source_record)
-    source_id = source_record.get("source_id", bundle.source_ids[0] if bundle.source_ids else "SRC_UNKNOWN")
 
     # 1. Prepare Workflow Snapshot
-    draft_dict = bundle.to_draft_dict()
-
-    # Ensure root metadata needed by compiler
-    if "scope" not in draft_dict or not isinstance(draft_dict["scope"], str):
-        draft_dict["scope"] = f"Procedure described in {bundle.workflow_id}"
-    if "attribution" not in draft_dict:
-        presenter = source_record.get("presenter") or "Technician"
-        draft_dict["attribution"] = {"label": presenter, "kind": "speaker"}
-    if "source_ids" not in draft_dict or not draft_dict["source_ids"]:
-        draft_dict["source_ids"] = [source_id]
-
-    draft_dict["context"] = _ensure_context_provenance(draft_dict.get("context", {}), source_id)
-
-    # Sanitize evidence spans in all claims so candidate IDs in each span are consecutive
-    for st in draft_dict.get("steps", []):
-        raw_f = st.get("fields", {})
-        if isinstance(raw_f, dict):
-            for f_val in raw_f.values():
-                if isinstance(f_val, dict):
-                    for c in f_val.get("claims", []):
-                        c["evidence"] = _sanitize_evidence_spans(c.get("evidence", []))
-                        # Avoid rule V06 warnings on inferred claims
-                        if c.get("evidence_type") == "inferred":
-                            attr = c.get("attribution")
-                            if not isinstance(attr, dict):
-                                attr = {}
-                                c["attribution"] = attr
-                            attr["kind"] = "model"
-                            if c.get("support_status") == "supported":
-                                c["support_status"] = "ambiguous"
-
-    workflow_snapshot = None
-
-    if compile_snapshot:
-        try:
-            from acquisition.extraction.compile_workflow import compile_draft
-            logger.debug("Đang biên dịch draft sang snapshot hoàn chỉnh qua compile_draft...")
-            workflow_snapshot = compile_draft(draft_dict)
-            logger.debug(
-                f"Biên dịch snapshot thành công: {len(workflow_snapshot.get('steps', []))} steps, "
-                f"{len(workflow_snapshot.get('claims', []))} claims."
-            )
-        except Exception as compile_err:
-            logger.warning(
-                f"Không thể biên dịch qua compile_draft ({compile_err}). "
-                "Sử dụng cấu trúc workflow trực tiếp."
-            )
-
-    if workflow_snapshot is None:
-        # Fallback: Chuẩn hóa draft sang dạng snapshot tối thiểu
-        workflow_snapshot = {
-            "schema_version": "1.0.0",
-            "workflow_id": bundle.workflow_id,
-            "revision": bundle.revision,
-            "source_type": str(bundle.source_type),
-            "dataset_split": str(bundle.dataset_split),
-            "title": bundle.title,
-            "language": bundle.language,
-            "created_at": bundle.created_at or _utc_now_rfc3339(),
-            "supersedes_revision": None,
-            "lifecycle": "active",
-            "source_ids": bundle.source_ids or [source_id],
-            "context": draft_dict.get("context", {}),
-            "steps": draft_dict.get("steps", []),
-            "claims": draft_dict.get("claims", []),
-            "evidence": draft_dict.get("evidence", []),
-            "relations": draft_dict.get("relations", []),
-            "questions": draft_dict.get("questions", []),
-            "review_events": [],
-            "change_log": [],
-        }
+    from acquisition.extraction.compile_workflow import compile_draft
+    draft_dict = prepare_draft(bundle, source_record)
+    workflow_snapshot = compile_draft(draft_dict)
 
     # 2. Serialize sources.jsonl and workflows.jsonl
     sources_records = [source_record]
@@ -337,9 +293,7 @@ def export_schema_v1_bundle(
             if validation_ok:
                 logger.debug("✅ Kiểm thực bundle thành công (0 lỗi Schema 1.0.0).")
             else:
-                logger.error(f"❌ Bundle có {len(report.errors)} lỗi hợp đồng.")
-        else:
-            logger.debug("Bỏ qua kiểm thực knowflow_contracts (chưa nạp module).")
+                raise ValueError("Bundle không hợp lệ; không ghi đầu ra:\n" + "\n".join(issue_messages))
 
         # 5. Build Lineage and Integrity Log
         lineage_record = {

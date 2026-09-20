@@ -507,7 +507,7 @@ class WorkflowBundle(FlexibleModel):
                         if isinstance(claim.get("scope"), dict):
                             claim["scope"] = claim["scope"].get("description", "")
                         ev = claim.get("evidence")
-                        if isinstance(ev, list) and ev and isinstance(ev[0], str):
+                        if isinstance(ev, list) and ev and all(isinstance(ref, str) for ref in ev):
                             claim["evidence"] = [ev]
                     fields_dict[role] = f_clean
                 step["fields"] = fields_dict
@@ -518,7 +518,7 @@ class WorkflowBundle(FlexibleModel):
                             if isinstance(claim.get("scope"), dict):
                                 claim["scope"] = claim["scope"].get("description", "")
                             ev = claim.get("evidence")
-                            if isinstance(ev, list) and ev and isinstance(ev[0], str):
+                            if isinstance(ev, list) and ev and all(isinstance(ref, str) for ref in ev):
                                 claim["evidence"] = [ev]
         return data
 

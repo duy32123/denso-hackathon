@@ -1,0 +1,32 @@
+{
+  "generator_version": "synthetic-kb-1.0.0",
+  "template_version": "syn-templates-1",
+  "seed": 20260918,
+  "schema_version": "1.0.0",
+  "source_type": "synthetic",
+  "dataset_split": "dev",
+  "note": "Du lieu MO PHONG. Khong dung ket qua tren bo nay lam bang chung he thong hieu video.",
+  "serving": {
+    "bundle_id": "BUNDLE_SYN_KB_DEV",
+    "workflow_ids": 40,
+    "workflow_records": 42,
+    "sources": 45,
+    "steps_total": 296,
+    "steps_min": 5,
+    "steps_max": 9
+  },
+  "coverage": {
+    "thieu_thong_tin": 8,
+    "khac_thiet_bi": 7,
+    "nguon_phien_ban": 7,
+    "quan_he_buoc": 7,
+    "ngon_ngu_tim_kiem": 7,
+    "evidence": 4
+  },
+  "negative_bundles": [
+    "N01_citation_khong_ton_tai",
+    "N02_claim_mo_coi",
+    "N03_conflict_mot_chieu",
+    "N04_review_gia"
+  ]
+}

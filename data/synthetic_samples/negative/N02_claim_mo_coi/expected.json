@@ -1,0 +1,11 @@
+{
+  "bundle_id": "N02_claim_mo_coi",
+  "title": "Claim khong duoc FieldRef nao tham chieu",
+  "purpose": "Claim mo coi se khong bao gio hien ra tren UI nhung van vao index.",
+  "validator": {
+    "outcome": "reject",
+    "expected_error_codes": [
+      "V05"
+    ]
+  }
+}

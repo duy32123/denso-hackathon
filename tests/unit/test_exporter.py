@@ -7,8 +7,8 @@ in place.
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
-import shutil
 from pathlib import Path
 from typing import Any
 
@@ -70,9 +70,22 @@ def minimal_workflow(revision: int = 1, claim_text: str = "The presenter says to
 
 @pytest.fixture
 def workspace(tmp_path: Path) -> dict:
-    """A copy of the real dev bundle + an empty snapshot store, so tests never touch the repo."""
     out = tmp_path / "bundle"
-    shutil.copytree(Path(str(ex.SPLITS["dev"]["out"])), out)
+    out.mkdir()
+    sources_bytes = ex.SPLITS["dev"]["sources"].read_bytes()
+    (out / "sources.jsonl").write_bytes(sources_bytes)
+    (out / "workflows.jsonl").write_bytes(b"")
+    manifest = {
+        "schema_version": "1.0.0", "bundle_id": "BUNDLE_HAAS_D1A_SMTC_DEV_PILOT",
+        "source_type": "real", "dataset_split": "dev", "created_at": FIXED_CLOCK(),
+        "files": [
+            {"path": "sources.jsonl", "sha256": hashlib.sha256(sources_bytes).hexdigest(),
+             "record_count": len(sources_bytes.splitlines())},
+            {"path": "workflows.jsonl", "sha256": hashlib.sha256(b"").hexdigest(), "record_count": 0},
+        ],
+        "producer": {"team": "team_1", "pipeline_version": "d1a-haas-smtc-pilot-0.1.0"},
+    }
+    (out / "manifest.json").write_text(json.dumps(manifest) + "\n", encoding="utf-8", newline="\n")
     snapshots = tmp_path / "workflows"
     snapshots.mkdir()
     return {"out": out, "snapshots": snapshots, "sources": ex.SPLITS["dev"]["sources"]}

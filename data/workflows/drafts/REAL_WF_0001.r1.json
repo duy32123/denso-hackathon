@@ -1891,8 +1891,8 @@
       "source_id": "SRC_HAAS_0005",
       "modality": "visual",
       "locator": {
-        "start_ms": 142680,
-        "end_ms": 147840,
+        "start_ms": 142699,
+        "end_ms": 142700,
         "page": null,
         "text_span": null
       },

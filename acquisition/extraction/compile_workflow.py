@@ -12,6 +12,10 @@ A draft says what the source supports, never how it is identified:
 The same draft format is the target output of the B0 baseline, so manual and
 model extraction are compiled, validated and compared the same way.
 
+New evidence-only revisions pin a prior snapshot with ``revision_base`` and
+preserve published evidence IDs. Changed steps/claims need a separate identity
+migration. See ``docs/b0_wf0005_r2_review.md`` for the draft fields and review flow.
+
 Draft shape (JSON)::
 
     {
@@ -53,6 +57,8 @@ from knowflow_contracts.enums import FIELD_ROLES
 
 from acquisition.export import exporter
 from acquisition.extraction import evidence_pool as ep
+from acquisition.extraction import revisions
+from acquisition.preprocessing import keyframes as kf
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 DRAFT_OUT = REPO_ROOT / "data" / "workflows" / "drafts"
@@ -77,6 +83,11 @@ class _Compiler:
         self.evidence: list[dict] = []
         self._evidence_ids: dict[tuple, str] = {}
         self._claim_keys: dict[str, dict] = {}
+        # Loaded once (not per keyframe reference) and resolved against this module's
+        # REPO_ROOT -- not keyframes.py's own default -- so a test (or a caller) that
+        # points REPO_ROOT elsewhere gets a fully isolated inventory, never a silent
+        # fallback to the real committed one.
+        self._media_inventory = kf.load_inventory(REPO_ROOT / "acquisition" / "preprocessing" / "haas_d1a_media_inventory.jsonl")
 
     # --- ids -------------------------------------------------------------------
 
@@ -115,21 +126,53 @@ class _Compiler:
         path = REPO_ROOT / ref["keyframe"]
         if not path.is_file():
             raise DraftError(f"keyframe not found: {ref['keyframe']}")
-        frame_ms = int(path.stem.split("_")[-1])
+
+        # Never trust the filename for identity or timestamp -- a file can be
+        # overwritten in place while keeping its name. The media inventory,
+        # verified by content hash, is the only source of truth for both.
+        uri = Path(ref["keyframe"]).as_posix()
+        row = self._media_inventory.get(uri)
+        if row is None:
+            raise DraftError(
+                f"{path.name}: not recorded in the media inventory (no lineage) -- add a row to "
+                "acquisition/preprocessing/haas_d1a_media_inventory.jsonl for this exact file "
+                "(storage_uri, content_sha256, original_start_ms) before citing it as evidence"
+            )
+        actual_hash = kf.sha256_of(path)
+        if actual_hash != row["content_sha256"]:
+            raise DraftError(
+                f"{path.name}: file content does not match its inventory content_sha256 "
+                f"(got {actual_hash[:12]}, inventory says {row['content_sha256'][:12]}) -- "
+                "possible silent overwrite; add a new artifact file + inventory row instead of "
+                "replacing this file's bytes in place"
+            )
+        frame_ms = row["original_start_ms"]
         if not ref["start_ms"] <= frame_ms < ref["end_ms"]:
             raise DraftError(f"{path.name}: frame at {frame_ms} ms is outside [{ref['start_ms']}, {ref['end_ms']})")
         if not ref.get("observation_note"):
             raise DraftError(f"{path.name}: visual evidence needs an observation_note describing only what is visible")
 
-        key = ("keyframe", ref["keyframe"], ref["start_ms"], ref["end_ms"])
+        key = ("keyframe", uri, frame_ms)  # normalized path -- two spellings of the same file must dedupe
         if key in self._evidence_ids:
             return self._evidence_ids[key]
-        eid = self._nested("EV", len(self.evidence) + 1)
+        pinned = ref.get("evidence_id")
+        if pinned is not None:
+            if pinned in {ev["evidence_id"] for ev in self.evidence}:
+                raise DraftError(f"evidence_id already used in this compile: {pinned}")
+            eid = pinned
+        else:
+            eid = self._nested("EV", len(self.evidence) + 1)
         self.evidence.append({
             "evidence_id": eid,
             "source_id": ref["source_id"],
             "modality": "visual",
-            "locator": {"start_ms": ref["start_ms"], "end_ms": ref["end_ms"], "page": None, "text_span": None},
+            # A still frame is an instant, not the transcript-derived search window
+            # (ref start_ms/end_ms) it was found within. V04 requires start_ms < end_ms
+            # AND end_ms <= the source's duration_ms; ending the window *at* frame_ms
+            # (rather than starting there) means end_ms can only exceed duration_ms if
+            # frame_ms itself genuinely does -- a real error, not a boundary artifact.
+            "locator": {"start_ms": max(0, frame_ms - 1), "end_ms": frame_ms if frame_ms > 0 else 1,
+                        "page": None, "text_span": None},
             "quote": None,
             "observation_note": ref["observation_note"],
             "asset_uri": ref["keyframe"],
@@ -196,10 +239,19 @@ class _Compiler:
             value = step.get("fields", {}).get(role, "missing")
             if value == "missing":
                 fields[role] = {"state": "missing", "claim_ids": []}
-            elif isinstance(value, list):
-                fields[role] = {"state": "present", "claim_ids": [self._claim(c, role) for c in value]}
             else:
-                fields[role] = {"state": value["state"], "claim_ids": [self._claim(c, role) for c in value["claims"]]}
+                state = "present" if isinstance(value, list) else value["state"]
+                specs = value if isinstance(value, list) else value["claims"]
+                claim_ids = []
+                for n, spec in enumerate(specs, 1):
+                    try:
+                        claim_ids.append(self._claim(spec, role))
+                    except (DraftError, ep.PoolError) as exc:
+                        raise DraftError(
+                            f"step {step['title']!r}, field {role}, claim {n} "
+                            f"({spec.get('text', '')!r}), evidence={spec.get('evidence')!r}: {exc}"
+                        ) from exc
+                fields[role] = {"state": state, "claim_ids": claim_ids}
         return fields
 
     def _context(self) -> dict:
@@ -281,21 +333,65 @@ class _Compiler:
         }
 
 
+def revision_base(draft: dict) -> dict | None:
+    try:
+        return revisions.load_base(draft, REPO_ROOT)
+    except revisions.RevisionError as exc:
+        raise DraftError(str(exc)) from None
+
+
 def compile_draft(draft: dict, pool: dict[str, ep.Candidate] | None = None) -> dict:
-    return _Compiler(draft, pool if pool is not None else ep.load_pool()).compile()
+    legacy = type(draft.get("revision")) is int and draft["revision"] > 1 and "revision_base" not in draft
+    base = None if legacy else revision_base(draft)
+    snapshot = _Compiler(draft, pool if pool is not None else ep.load_pool()).compile()
+    try:
+        if legacy:
+            revisions.legacy_replay_base(snapshot, REPO_ROOT)
+        elif base is not None:
+            snapshot = revisions.preserve_evidence_ids(snapshot, base)
+    except revisions.RevisionError as exc:
+        raise DraftError(str(exc)) from None
+    return snapshot
 
 
-def check_snapshot(snapshot: dict, split: str = "dev") -> exporter.ExportResult:
-    """Validate the snapshot inside a would-be bundle with the real Source file. Writes nothing."""
+def check_snapshot(snapshot: dict, split: str = "dev", *, source_records: list[dict] | None = None,
+                   previous_snapshots: list[dict] | None = None) -> exporter.ExportResult:
+    """Validate using supplied Sources or the canonical split, without publishing files."""
     cfg = exporter.SPLITS[split]
     with tempfile.TemporaryDirectory(prefix="draft-check-") as tmp:
         snap_dir = Path(tmp) / "snapshots"
         snap_dir.mkdir()
+        for previous in previous_snapshots or []:
+            if (previous["workflow_id"], previous["revision"]) == (snapshot["workflow_id"], snapshot["revision"]):
+                raise DraftError("Previous snapshot must not overwrite the revision being checked")
+            write_snapshot(previous, snap_dir)
         write_snapshot(snapshot, snap_dir)
+        sources_path = cfg["sources"]
+        if source_records is not None:
+            sources_path = Path(tmp) / "sources.jsonl"
+            sources_path.write_text(
+                "".join(json.dumps(source, ensure_ascii=False) + "\n" for source in source_records),
+                encoding="utf-8", newline="\n",
+            )
         return exporter.export_bundle(
-            split=split, sources_path=Path(str(cfg["sources"])), snapshot_dir=snap_dir,
+            split=split, sources_path=Path(str(sources_path)), snapshot_dir=snap_dir,
             out_dir=Path(tmp) / "bundle", bundle_prefix="DRAFT_CHECK", check_only=True,
         )
+
+
+def check_draft_snapshot(draft: dict, snapshot: dict) -> exporter.ExportResult:
+    """Run shared validation over base + candidate together, including D-02/V03."""
+    if draft["revision"] > 1 and "revision_base" not in draft:
+        # Compare the fresh unreviewed compile, even when validating a reviewed
+        # candidate during promotion. ReviewEvents do not change draft identity.
+        try:
+            compiled = _Compiler(draft, ep.load_pool()).compile()
+            base = revisions.legacy_replay_base(compiled, REPO_ROOT)
+        except revisions.RevisionError as exc:
+            raise DraftError(str(exc)) from None
+    else:
+        base = revision_base(draft)
+    return check_snapshot(snapshot, draft["dataset_split"], previous_snapshots=[base] if base else [])
 
 
 def write_snapshot(snapshot: dict, out_dir: Path = DRAFT_OUT) -> Path:
@@ -319,7 +415,7 @@ def main(argv: list[str] | None = None) -> int:
         print(f"error: {exc}", file=sys.stderr)
         return 1
 
-    result = check_snapshot(snapshot, draft["dataset_split"])
+    result = check_draft_snapshot(draft, snapshot)
     for issue in result.report.issues:
         if issue.severity == "error" or args.verbose:
             print(f"  {issue}")

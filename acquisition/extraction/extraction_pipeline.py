@@ -1,8 +1,7 @@
 """Extraction Pipeline for KnowFlow AI (Schema 1.0.0).
 
-Reads transcript and metadata, queries OpenAI LLM API (v1+), validates the response
-using Pydantic models from schema_v1.py (FieldRef, StepRecord, WorkflowBundle),
-and saves the validated draft to `data/workflows/drafts/`.
+Reads transcript and metadata, calls an LLM or reuses a saved draft, then
+normalizes, compiles and contract-validates the output before reporting success.
 """
 from __future__ import annotations
 

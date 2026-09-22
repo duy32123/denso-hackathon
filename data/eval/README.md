@@ -4,15 +4,21 @@
 > **thật** — số đo trên nó mới là kết quả. `synthetic_dev.qa.v0.jsonl` là dữ liệu
 > **mô phỏng** để thử phần mềm (xem cuối trang). Không bao giờ cộng hai mẫu số.
 
-`haas_real_dev.retrieval.v0.jsonl`: 54 câu real/dev, soạn trên bundle
-`BUNDLE_HAAS_SMTC_DEV_e98521a7942a` (`B0_SRC_HAAS_0005` r1 và `REAL_WF_0001` r1).
-Từ PR #17 (18/09), bundle `BUNDLE_HAAS_SMTC_DEV_20382d7957b6` có `REAL_WF_0002` r2 và `REAL_WF_0003` r2 đã
-`source_checked`, nên corpus real được phục vụ gồm **B0 r2, REAL_WF_0001 r1, REAL_WF_0002 r2,
-REAL_WF_0003 r2**. B0 r1 và r1 của 0002/0003 vẫn giữ để tra cứu lịch sử, không phải revision
-active. Nhãn **chưa được xem lại** cho corpus này (xem cảnh báo bên dưới), ví dụ
-`HAAS_DEV_Q038` (alarm 2066) giờ có thể có quy trình ở `REAL_WF_0003`.
-Q001–Q038 là bộ gốc; Q039–Q054 là câu phủ định bổ sung (cùng lĩnh vực CNC nhưng KB
+`haas_real_dev.retrieval.v0.jsonl`: **52 câu real/dev, toàn bộ đã được người kiểm**
+(`duy32123`, 2026-09-22). Soạn ban đầu 54 câu trên bundle
+`BUNDLE_HAAS_SMTC_DEV_e98521a7942a`; `Q036` và `Q038` bị drop khi kiểm.
+Corpus phục vụ hiện tại là `BUNDLE_HAAS_SMTC_DEV_20382d7957b6`: **B0 r2, REAL_WF_0001 r1,
+REAL_WF_0002 r2, REAL_WF_0003 r2**. B0 r1 và r1 của 0002/0003 vẫn giữ để tra cứu lịch sử,
+không phải revision active.
+Q001–Q035, Q037 là bộ gốc; Q039–Q054 là câu phủ định bổ sung (cùng lĩnh vực CNC nhưng KB
 không có), dùng để chỉnh ngưỡng từ chối.
+
+Lượt kiểm và lý do từng quyết định: [gold review worklist](../../docs/gold_review_worklist_real_dev.md).
+
+> **Giới hạn phải nêu kèm mọi con số.** Bộ câu hỏi chỉ phủ **20/38 Step** của corpus phục
+> vụ: `REAL_WF_0002` và `REAL_WF_0003` **không có câu hỏi nào** nhắm tới, vì bộ này soạn khi
+> corpus mới có hai workflow thay hốc dao. 18 Step của hai workflow đó hiện chỉ đóng vai
+> nhiễu. Mẫu số Recall/MRR là **27 câu**, không phải 52.
 
 > **Corpus đã đổi (18/09): phần lớn chỗ tụt là lỗi retrieval, không phải do nhãn.** PR #17 đưa
 > `REAL_WF_0002/0003` vào corpus phục vụ (**4 workflow / 38 Step**, trước là 2 / 20). Đo lexical,
@@ -24,16 +30,23 @@ không có), dùng để chỉnh ngưỡng từ chối.
 > - **Cổng liên quan quá lỏng khi corpus lớn**: các câu ngoài phạm vi như băng tải phoi, lọc máy nén
 >   khí, dây đai trục chính, lọc thủy lực máy tiện (Q042, Q044, Q047, Q049, Q053…) giờ có kết quả.
 >   **Chưa sửa**; ngưỡng 0.10 cần hiệu chỉnh lại.
-> - **Nhãn thật sự lỗi thời** có lẽ chỉ vài câu, rõ nhất là `HAAS_DEV_Q038` (alarm 2066), giờ có thể
->   có quy trình trong `REAL_WF_0003`. `gold_workflows` cũng chưa có Step nào của `REAL_WF_0002/0003`.
+> - **Nhãn thật sự lỗi thời**: lượt kiểm 22/09 xác nhận **đúng một câu** — `HAAS_DEV_Q038`
+>   (alarm 2066), nay đã drop. Lo ngại "gold thiếu Step của `REAL_WF_0002/0003`" **không xảy
+>   ra**: cả 31 câu có gold đều hỏi về thay hốc dao, không câu nào thuộc địa hạt hai workflow
+>   đó. Vấn đề thật là ngược lại — hai workflow ấy **không có câu hỏi nào** (xem giới hạn
+>   20/38 Step ở đầu trang).
 >
-> Evaluator **không tự phát hiện** câu vừa có đáp án (nó chỉ chặn ref sai revision), nên người kiểm
-> vẫn phải xem lại các câu phủ định và `gold_workflows` trên corpus mới trước khi báo bất kỳ số nào.
+> Evaluator **không tự phát hiện** câu vừa có đáp án (nó chỉ chặn ref sai revision), nên việc
+> rà lại phải làm bằng người — đã làm ngày 22/09.
+>
+> **Thứ tự việc:** kiểm nhãn phải xong **trước** khi hiệu chỉnh ngưỡng cổng liên quan. Nếu
+> chỉnh trên nhãn cũ, `Q038` bị tính là dương tính giả và sẽ kéo ngưỡng lên, làm hệ thống từ
+> chối oan. Sau lượt kiểm, `false_retrieved` còn **14 câu** và đều là lỗi ngưỡng thật.
 
-> **Chưa có người kiểm nhãn gold.** Q032–Q038 giữ lượt AI review (`ai_reviewed`).
-> Q001–Q031 về `draft` sau khi chuyển B0 r1 sang r2; Q039–Q054 vẫn là bản nháp.
-> Số đo chỉ dùng để debug pipeline,
-> **không báo cáo như kết quả**. Evaluator in cảnh báo này cho đến khi mọi câu được người kiểm.
+> **Đã có người kiểm (2026-09-22).** 52/52 câu `status=reviewed`, `reviewed_by=duy32123`.
+> Người soạn nhãn là `claude-draft` (AI) nên người kiểm không trùng người soạn. Không câu nào
+> bị `fix`: **không có nhãn nào bị sửa cho khớp kết quả engine**. Evaluator đã thôi in cảnh
+> báo "not human-checked", nên số đo được phép báo cáo — kèm giới hạn 20/38 Step ở trên.
 
 Bảo trì ref ngày 2026-09-15: đối chiếu xác nhận toàn bộ Step, nội dung/ID Claim và
 context của B0 không đổi giữa r1/r2; chỉ cửa sổ evidence của CL_020 được mở rộng.
@@ -82,8 +95,13 @@ Cả sheet bị từ chối nếu có một dòng lỗi: câu hỏi đã đổi 
 thiếu note, `step_id` không tồn tại, nhãn mâu thuẫn, hoặc người kiểm trùng người soạn.
 Sheet là file tạm trong `out/` (gitignore); bản ghi chính thức là file JSONL, cần commit.
 
-Đặc biệt chốt các câu có ghi chú "CẦN NGƯỜI CHỐT" (`HAAS_DEV_Q036`, `HAAS_DEV_Q038`): đó là quyết định
-chính sách, không phải lỗi nhãn.
+Hai câu từng ghi "CẦN NGƯỜI CHỐT" (`HAAS_DEV_Q036`, `HAAS_DEV_Q038`) đã được xử lý trong
+lượt kiểm 22/09: cả hai bị drop, lý do ghi ở
+[worklist](../../docs/gold_review_worklist_real_dev.md).
+
+**Chính sách đã chốt kèm theo:** metadata model rỗng (`machine_model = null`) ⇒ **trả lời kèm
+phạm vi nguồn**, không hỏi lại. Không áp cho ca mâu thuẫn model (`Q037`), ca đó vẫn
+`needs_clarification`.
 
 Không tạo câu holdout trước khi khóa pipeline D15; không chỉnh tham số trên holdout.
 
@@ -216,7 +234,7 @@ riêng, không cộng vào mẫu số của real/dev. Nhãn đều là `draft` �
 | `nguon_mau_thuan` | 9 | `conflicting_sources`, trưng cả hai nguồn |
 | `corpus_tieng_anh` / `viet_hoi_anh` | 8 / 8 | Câu tiếng Anh và câu tiếng Việt trên cùng nội dung tiếng Anh |
 | `thieu_boi_canh` | 3 | `needs_clarification`: `DEMO_TC_A` 10 Nm còn `DEMO_TC_B` 15 Nm |
-| `model_khong_ro` | 2 | **CẦN NGƯỜI CHỐT**: nguồn không nêu model |
+| `model_khong_ro` | 2 | Chính sách đã chốt 22/09: `null` ⇒ trả lời kèm phạm vi. Bộ này **sinh từ generator**, cần sửa `scripts/build_synthetic_questions.py` chứ không sửa JSONL |
 
 62 câu vào mẫu số Recall/MRR (`answered` + `intent=detail`). Câu từ chối, hỏi lại và
 procedure chấm qua `status` và `wf_acc`.

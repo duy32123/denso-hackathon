@@ -29,7 +29,7 @@ def main(argv=None):
             sub.add_argument("--candidate-k", type=int, default=20)
             sub.add_argument("--min-cosine", type=float, default=.25)
             sub.add_argument("--intent", choices=("auto", "detail", "procedure"), default="auto")
-            sub.add_argument("--min-term-coverage", type=float, default=.10, help="relevance gate; 0 disables it")
+            sub.add_argument("--min-term-coverage", type=float, default=.20, help="relevance gate; 0 disables it")
             sub.add_argument("--neighbor-depth", type=int, default=1,
                              help="follow requires/branch_if/corrects this deep; 0 disables expansion")
             sub.add_argument("--max-related-steps", type=int, default=5)

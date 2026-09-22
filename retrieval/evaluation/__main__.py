@@ -27,7 +27,7 @@ def main(argv=None):
     run.add_argument("--candidate-k", type=int, default=20)
     run.add_argument("--min-cosine", type=float, default=.25)
     run.add_argument("--rrf-k", type=int, default=60)
-    run.add_argument("--min-term-coverage", type=float, default=.10, help="relevance gate; 0 disables it")
+    run.add_argument("--min-term-coverage", type=float, default=.20, help="relevance gate; 0 disables it")
     run.add_argument("--out", default="out/eval", help="run folder with report.json and rows.jsonl")
     run.add_argument("--query-cache", default="out/eval/query_embeddings.jsonl",
                      help="reuse query embeddings across runs (keyed by embedding config + text)")
@@ -50,7 +50,7 @@ def main(argv=None):
     answers.add_argument("--candidate-k", type=int, default=20)
     answers.add_argument("--min-cosine", type=float, default=.25)
     answers.add_argument("--rrf-k", type=int, default=60)
-    answers.add_argument("--min-term-coverage", type=float, default=.10)
+    answers.add_argument("--min-term-coverage", type=float, default=.20)
     answers.add_argument("--model", default=os.getenv("KNOWFLOW_ANSWER_MODEL", "gemini-3.5-flash-lite"))
     answers.add_argument("--out", default="out/eval")
     answers.add_argument("--query-cache", default="out/eval/query_embeddings.jsonl")

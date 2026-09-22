@@ -38,7 +38,7 @@ class RetrievalConfig:
     # Chosen on real/dev (labels not human-checked, 2026-09-15): any value in 0.10-0.15 rejected
     # 0/31 answerable and 13/19 out-of-scope questions; the low end, since a false rejection
     # cannot be recovered downstream. Recalibrate when the corpus grows.
-    min_term_coverage: float = .10
+    min_term_coverage: float = .20
     query_translation: str = "auto"
     # Neighbour expansion is additive: it never changes `steps`, `claims` or `status`.
     # Depth 1 is the conservative starting point, not a measured optimum.

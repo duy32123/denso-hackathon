@@ -350,7 +350,7 @@ def git_state() -> dict:
 
 def run_evaluation(db: str | Path, questions_path: str | Path, *, mode: str, split: str,
                    strategies=STRATEGIES, top_k: int = 5, candidate_k: int = 20, min_cosine: float = .25,
-                   rrf_k: int = 60, min_term_coverage: float = .10, embedder: Embedder | None = None,
+                   rrf_k: int = 60, min_term_coverage: float = .20, embedder: Embedder | None = None,
                    query_cache: str | Path | None = None, translator: Translator | None = None,
                    translation_cache: str | Path | None = None, translate: bool = True,
                    allow_holdout: bool = False, workflow_routing: str = "best_step") -> tuple[dict, list[dict]]:

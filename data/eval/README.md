@@ -198,7 +198,7 @@ là `null`, **không phải 0**.
 
 # Bộ câu hỏi synthetic (kế hoạch đội 2, mục 1.5)
 
-`synthetic_dev.qa.v0.jsonl`: **120 câu** trên KB mô phỏng ở
+`synthetic_dev.qa.v0.jsonl`: **116 câu** trên KB mô phỏng ở
 [data/synthetic_samples/serving](../synthetic_samples/README.md). Sinh bằng
 `python scripts/build_synthetic_questions.py` từ chính KB đó nên gold đúng theo cấu
 trúc; CI sinh lại và so từng byte.
@@ -212,7 +212,7 @@ riêng, không cộng vào mẫu số của real/dev. Nhãn đều là `draft` �
 | `tra_loi_duoc` | 46 | `answered`, có gold Step |
 | `thieu_evidence` | 20 | `insufficient_evidence` nhưng retrieval **vẫn phải** tìm ra Step để WP3 từ chối có căn cứ |
 | `khong_co_dap_an` | 12 | KB không có dữ liệu; 4 câu chủ thể có trong KB → `retrieved`, 8 câu chủ thể không có → `insufficient_evidence` |
-| `quy_trinh` | 12 | `answered` + `intent=procedure`, chấm bằng `gold_workflows` |
+| `quy_trinh` | 8 | `answered` + `intent=procedure`, chấm bằng `gold_workflows`; chỉ hỏi khi mọi workflow ứng viên đều sạch |
 | `nguon_mau_thuan` | 9 | `conflicting_sources`, trưng cả hai nguồn |
 | `corpus_tieng_anh` / `viet_hoi_anh` | 8 / 8 | Câu tiếng Anh và câu tiếng Việt trên cùng nội dung tiếng Anh |
 | `thieu_boi_canh` | 3 | `needs_clarification`: `DEMO_TC_A` 10 Nm còn `DEMO_TC_B` 15 Nm |
@@ -239,6 +239,13 @@ Ghi ra để người kiểm đối chiếu được, thay vì phải đoán ý 
 - Câu hỏi là paraphrase có dấu; corpus viết không dấu. Test chặn việc chép nguyên văn claim.
 - Nhóm `thieu_evidence` chỉ dùng chủ đề **riêng** của nhóm thiếu thông tin, để không có
   workflow nào khác giải thích hộ — nếu không thì câu "vì sao" đáng lẽ phải trả lời được.
+- `quy_trinh` chỉ hỏi cặp (chủ đề, model) mà **mọi** workflow khớp đều không có conflict
+  và mọi claim `supported`. Nếu retrieval chọn trúng bản có nguồn mâu thuẫn thì từ chối
+  mới là đúng, nên nhãn `answered` ở đó sẽ phạt câu trả lời đúng.
+- Các bước của một workflow theo thứ tự hợp lý (ngắt nguồn → đánh dấu → tháo → … →
+  chạy thử) và luôn có bước làm đúng việc tên chủ đề nói. Trước bản này các bước bị xáo
+  trộn và không bước nào "bôi trơn" trong quy trình "bôi trơn", nên người kiểm (và cả
+  model) chấm đúng là câu trả lời không trả lời câu hỏi.
 
 ## Điều cần người kiểm quyết định
 

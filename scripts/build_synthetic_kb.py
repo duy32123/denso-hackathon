@@ -278,6 +278,15 @@ RATIONALES_EN = [
 ]
 
 
+# Thu tu thao tac hop ly cho mot quy trinh (chi so vao ACTIONS_*; None = buoc cot loi
+# cua chu de). Khong sap lai chinh ACTIONS_*: bo cau hoi song ngu tham chieu theo chi so.
+# Truoc day cac buoc bi xao tron (ngat nguon nam cuoi, danh dau sau khi da lap lai) va
+# khong buoc nao lam dung viec ten chu de noi, nen cau "quy trinh X gom nhung buoc nao"
+# khong co cau tra loi dung trong chinh KB.
+STEP_ORDER_VI = (6, 7, 0, 1, 2, None, 3, 4, 5)
+STEP_ORDER_EN = (0, 1, None, 2, 3)
+
+
 def say_vi(text: str) -> str:
     return "Roi, minh " + text + "."
 
@@ -287,19 +296,22 @@ def state_vi(text: str) -> str:
 
 
 def procedure_steps(topic, n_steps: int, rng: random.Random, *, omit=(), language="vi") -> list[dict]:
-    """Sinh 5-12 buoc cho mot chu de. `omit` la cac role co y bo trong."""
+    """Sinh toi da n_steps buoc theo STEP_ORDER_*, luon co buoc cot loi cua chu de.
+
+    `omit` la cac role co y bo trong. Hanh dong khong lap trong cung workflow (hai buoc
+    trung tieu de lam nhan gold khong phan biet duoc), nen so buoc bi chan boi so hanh
+    dong co san + 1: mot quy trinh that khong tu lap lai chinh no.
+    """
     _, title, comp, _slug = topic
     acts = ACTIONS_EN if language == "en" else ACTIONS_VI
     rats = RATIONALES_EN if language == "en" else RATIONALES_VI
-    # Lay hanh dong khong lap trong cung workflow: hai buoc trung het tieu de lam
-    # nhan gold khong phan biet duoc. Khi het von tu thi ghi ro day la lan lam lai.
-    order = rng.sample(range(len(acts)), k=min(n_steps, len(acts)))
+    picked = set(rng.sample(range(len(acts)), k=min(n_steps - 1, len(acts))))
+    order = [i for i in (STEP_ORDER_EN if language == "en" else STEP_ORDER_VI)
+             if i is None or i in picked]
+    core = title[0].lower() + title[1:]       # vd "boi tron con truot hoc dao"
     specs: list[dict] = []
-    for i in range(1, n_steps + 1):
-        pick = order[(i - 1) % len(order)]
-        act = acts[pick].format(comp=comp)
-        if i > len(order):
-            act = f"{act} (lan lam lai thu {(i - 1) // len(order) + 1})"
+    for i, pick in enumerate(order, start=1):
+        act = core if pick is None else acts[pick].format(comp=comp)
         if language == "en":
             spec = {
                 "title": act[0].upper() + act[1:],
@@ -487,8 +499,11 @@ def group_device(rng) -> tuple[list[dict], list[dict], int]:
             i += 1
             wf_id = f"SYN_KB_DEV_{i:02d}"
             specs = procedure_steps(topic, rng.randint(5, 8), rng)
-            specs.append({
-                "title": f"Siet {topic[2]} dung luc cua {model}",
+            # Siet dung luc truoc khi chay thu, khong phai sau: quy trinh phai doc duoc theo thu tu.
+            run_i = next((k for k, sp in enumerate(specs) if sp["title"].startswith("Cho may chay")),
+                         len(specs))
+            specs.insert(run_i, {
+                "title": f"Siet {topic[2]} den {torque} tren {model}",
                 "action": [("speech", f"Nguoi noi cho biet siet {topic[2]} den {torque} tren {model}.",
                             f"Tren {model} thi minh siet {topic[2]} den {torque}.")],
             })

@@ -14,3 +14,6 @@ out/
 
 # Phieu review tam cua D1-C; ban ghi chinh thuc la *.review.json
 acquisition/extraction/reviews/*.sheet.csv
+
+# Khoa ghi cua service phan hoi (WP6); chi ton tai trong luc submit dang chay
+data/workflows/.feedback.*.lock

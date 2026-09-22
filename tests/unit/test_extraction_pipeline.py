@@ -7,25 +7,10 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Optional, Type
+
 import pytest
 from pydantic import BaseModel
 
-from acquisition.extraction.schema_v1 import (
-    FieldRole,
-    FieldState,
-    MANDATORY_FIELD_ROLES,
-    QuestionRecord,
-    StepRecord,
-    WorkflowBundle,
-    create_empty_step,
-)
-from acquisition.extraction.llm_adapters import (
-    BaseLLMAdapter,
-    GeminiAdapter,
-    OpenAIAdapter,
-    get_llm_adapter,
-)
 from acquisition.extraction.exporter import (
     _ensure_context_provenance,
     _sanitize_evidence_spans,
@@ -33,7 +18,21 @@ from acquisition.extraction.exporter import (
     verify_bundle_integrity,
 )
 from acquisition.extraction.extraction_pipeline import run_extraction_pipeline
-
+from acquisition.extraction.llm_adapters import (
+    BaseLLMAdapter,
+    GeminiAdapter,
+    OpenAIAdapter,
+    get_llm_adapter,
+)
+from acquisition.extraction.schema_v1 import (
+    MANDATORY_FIELD_ROLES,
+    FieldRole,
+    FieldState,
+    QuestionRecord,
+    StepRecord,
+    WorkflowBundle,
+    create_empty_step,
+)
 
 # ==============================================================================
 # 1. Tests for schema_v1.py
@@ -163,8 +162,9 @@ class MockAdapter(BaseLLMAdapter):
     def generate_structured_output(
         self,
         prompt: str,
-        schema_class: Optional[Type[BaseModel]] = None,
-        system_instruction: Optional[str] = None,
+        schema_class: type[BaseModel] | None = None,
+        system_instruction: str | None = None,
+        image_paths: list[Path] | None = None,
     ) -> str:
         return self.response_text
 
@@ -199,7 +199,7 @@ def test_get_llm_adapter_factory(monkeypatch):
     assert isinstance(openai_ad, OpenAIAdapter)
 
     # Heuristics based on model name
-    by_model_gem = get_llm_adapter(model="gemini-2.5-flash")
+    by_model_gem = get_llm_adapter(model="gemini-3.6-flash")
     assert isinstance(by_model_gem, GeminiAdapter)
 
     by_model_gpt = get_llm_adapter(model="gpt-4o-mini")
@@ -324,16 +324,71 @@ def test_export_bundle_and_verify_integrity(tmp_path: Path):
 
 
 # ==============================================================================
-# 4. Tests for extraction_pipeline.py dry run
+# 4. Tests for extraction_pipeline.py dry run & anti-hallucination
 # ==============================================================================
 
 def test_pipeline_dry_run():
     """Checks that the extraction pipeline runs in dry-run mode without external API calls."""
     bundle = run_extraction_pipeline(
         source_id="SRC_HAAS_0005",
+        baseline="b0",
         dry_run=True,
         export_bundle=False,
     )
     assert bundle.workflow_id == "B0_SRC_HAAS_0005"
     assert len(bundle.steps) == 1
     assert bundle.steps[0].display_order == 1
+
+
+def test_pipeline_multimodal_b1_b2_dry_run():
+    """Checks that baselines B1 and B2 load keyframes and configure workflow ID accordingly."""
+    bundle_b1 = run_extraction_pipeline(
+        source_id="SRC_HAAS_0005",
+        baseline="b1",
+        dry_run=True,
+        export_bundle=False,
+    )
+    assert bundle_b1.workflow_id == "B1_SRC_HAAS_0005"
+
+    bundle_b2 = run_extraction_pipeline(
+        source_id="SRC_HAAS_0005",
+        baseline="b2",
+        dry_run=True,
+        export_bundle=False,
+    )
+    assert bundle_b2.workflow_id == "B2_SRC_HAAS_0005"
+
+
+def test_claim_support_status_ungrounded_mapping():
+    """Checks that 'ungrounded' is strictly coerced to 'insufficient' in ClaimRecord."""
+    from knowflow_contracts.enums import SupportStatus
+
+    from acquisition.extraction.schema_v1 import ClaimRecord
+
+    # Explicit 'ungrounded' string input
+    c1 = ClaimRecord(
+        text="Operator verifies gap with feeler gauge",
+        support_status="ungrounded",  # type: ignore[arg-type]
+    )
+    assert c1.support_status == SupportStatus.INSUFFICIENT
+
+    # Missing evidence also forces insufficient
+    c2 = ClaimRecord(
+        text="Spindle rotates clockwise",
+        evidence=[],
+    )
+    assert c2.support_status == SupportStatus.INSUFFICIENT
+
+
+def test_auto_generate_questions_for_missing_fields():
+    """Verifies that StepRecord auto-generates open questions for any missing or ambiguous field."""
+    step = create_empty_step("ST_001", 1, "Verify pocket alignment")
+    # All 7 roles are initialized as MISSING by default
+    assert len(step.questions) == 7
+    question_targets = {q.target_field for q in step.questions}
+    assert question_targets == set(MANDATORY_FIELD_ROLES)
+    for q in step.questions:
+        assert q.status == "open"
+        assert q.reason == "missing"
+        assert "Verify pocket alignment" in q.question
+

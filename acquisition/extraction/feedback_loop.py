@@ -7,6 +7,14 @@ Enables the A2 feedback loop:
 4. Creates new atomic Claim & Evidence records linked to the new Source.
 5. Advances workflow revision from N to N+1, setting `supersedes_revision=N` and logging the audit trail in `change_log`.
 6. Validates the resulting snapshot against Schema 1.0.0.
+
+Nhận phản hồi **không phải** là đã kiểm nguồn, càng không phải chuyên gia đã xác
+nhận đúng kỹ thuật. Hệ thống chưa có đăng nhập: tên và vai trò người trả lời là
+tự khai. Vì vậy claim sinh ra ở đây luôn `source_review=pending` và
+`technical_review=not_requested`, và module này không bao giờ tự sinh ReviewEvent.
+Muốn nâng lên `source_checked` / `expert_validated` thì phải qua
+`acquisition.extraction.review`, có người kiểm thật và ReviewEvent nằm trong
+chính revision đó (V07). Xem docs/team2_feedback_contract.md mục 3.
 """
 from __future__ import annotations
 
@@ -15,8 +23,9 @@ import copy
 import hashlib
 import json
 import logging
+import re
 import sys
-from collections.abc import Callable
+from collections.abc import Callable, Iterable
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -27,17 +36,16 @@ try:
 except Exception:
     pass
 
+from knowflow_contracts import derive_support_status
 from knowflow_contracts.enums import (
     AttributionKind,
     EvidenceKind,
     FieldState,
     Modality,
     QuestionStatus,
-    ReviewDecision,
-    ReviewDimension,
-    ReviewTargetType,
     ScopeLevel,
     SourceKind,
+    SourceReview,
     SourceType,
     SupportStatus,
     TechnicalReview,
@@ -60,6 +68,55 @@ def _sha256(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
+def _next_sequence_id(workflow_id: str, kind: str, existing_ids: Iterable[str]) -> str:
+    """Cap ID moi = so thu tu lon nhat da dung + 1.
+
+    Khong dung `len(...) + 1`: mot ban ghi bi bo di la ID moi trung ngay vao ID cu
+    voi noi dung khac, tuc vi pham D-02 (evidence bat bien trong mot workflow_id)
+    va bi V03 chan. Loi nay da xay ra o REAL_WF_0001.r2 (PR #16). Cung quy uoc voi
+    `revisions.preserve_evidence_ids`.
+    """
+    pattern = re.compile(re.escape(workflow_id) + rf"_{kind}_(\d+)$")
+    highest = max(
+        (int(match[1]) for eid in existing_ids if (match := pattern.fullmatch(eid))),
+        default=0,
+    )
+    return f"{workflow_id}_{kind}_{highest + 1:03d}"
+
+
+def collect_reserved_ids(
+    workflow_id: str,
+    repo_root: Path = REPO_ROOT,
+) -> set[str]:
+    """Gom moi evidence/claim ID da duoc cap cho workflow nay tren dia.
+
+    Snapshot goc chi thay revision cua chinh no, nhung D-02 rang buoc tren ca
+    `workflow_id`: mot ID da dung o revision khac -- ke ca ban draft chua promote --
+    khong duoc tro sang noi dung khac. Vi du that: `REAL_WF_0001.r1` co ID cao nhat
+    la EV_035, nhung draft r2 da cap EV_036 cho mot keyframe.
+    """
+    reserved: set[str] = set()
+    for path in sorted((repo_root / "data" / "workflows").rglob(f"{workflow_id}.r*.json")):
+        try:
+            snapshot = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            logger.warning(f"Bỏ qua {path.name}: không đọc được để thu ID đã cấp.")
+            continue
+        reserved.update(ev.get("evidence_id", "") for ev in snapshot.get("evidence", []))
+        reserved.update(cl.get("claim_id", "") for cl in snapshot.get("claims", []))
+    reserved.discard("")
+    return reserved
+
+
+def feedback_asset_uri(source_id: str) -> str:
+    """Duong dan tuong doi tu goc repo toi tep luu nguyen van phan hoi.
+
+    V02: nguon real bat buoc co `url` hoac `asset_uri`, khong chi `raw_text`.
+    Phan hoi khong co URL cong khai nen duoc ghi thanh tep trong repo.
+    """
+    return f"acquisition/feedback/{source_id}.json"
+
+
 def create_expert_answer_source(
     answer_text: str,
     expert_name: str,
@@ -69,7 +126,12 @@ def create_expert_answer_source(
     access_note: str | None = "Expert clarification via KnowFlow AI feedback loop",
     clock: Callable[[], str] = _utc_now,
 ) -> dict[str, Any]:
-    """Creates a validated Schema 1.0.0 Source record of kind `expert_answer`."""
+    """Creates a validated Schema 1.0.0 Source record of kind `expert_answer`.
+
+    `presenter` / `presenter_role` la **tu khai**: he thong chua co dang nhap nen
+    khong duoc coi day la danh tinh da xac thuc. `asset_uri` tro toi tep phan hoi
+    do `write_feedback_asset` ghi; thieu no thi V02 tu choi ca bundle.
+    """
     raw_text = answer_text.strip()
     if not raw_text:
         raise ValueError("Câu trả lời của chuyên gia (answer_text) không được để trống.")
@@ -85,10 +147,10 @@ def create_expert_answer_source(
         "source_kind": SourceKind.EXPERT_ANSWER.value,
         "title": f"Expert clarification by {expert_name}",
         "url": None,
-        "asset_uri": None,
+        "asset_uri": feedback_asset_uri(sid),
         "language": language,
         "duration_ms": None,
-        "publisher": "Haas Service & Operations Expert Network",
+        "publisher": None,
         "presenter": expert_name.strip(),
         "presenter_role": expert_role.strip(),
         "published_at": None,
@@ -104,6 +166,40 @@ def create_expert_answer_source(
     return validated.model_dump(mode="json")
 
 
+def write_feedback_asset(
+    source_record: dict[str, Any],
+    repo_root: Path = REPO_ROOT,
+) -> Path:
+    """Ghi nguyen van phan hoi ra tep ma `Source.asset_uri` dang tro toi.
+
+    Goi truoc khi export: `asset_uri` tro vao tep khong ton tai thi citation mo
+    khong duoc, va doi 2 phai tu choi bao thu.
+    """
+    asset_uri = source_record.get("asset_uri")
+    if not asset_uri:
+        raise ValueError(f"Source {source_record.get('source_id')} khong co asset_uri de ghi.")
+    target = repo_root / asset_uri
+    target.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "source_id": source_record["source_id"],
+        "source_kind": source_record["source_kind"],
+        "language": source_record["language"],
+        "presenter": source_record["presenter"],
+        "presenter_role": source_record["presenter_role"],
+        "presenter_authenticated": False,
+        "retrieved_at": source_record["retrieved_at"],
+        "content_sha256": source_record["content_sha256"],
+        "raw_text": source_record["raw_text"],
+    }
+    target.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+    logger.info(f"✅ Đã ghi nguyên văn phản hồi: {asset_uri}")
+    return target
+
+
 def apply_expert_feedback(
     snapshot: dict[str, Any],
     target_question_id: str,
@@ -112,7 +208,9 @@ def apply_expert_feedback(
     answer_text: str,
     target_step_id: str | None = None,
     target_field_role: str | None = None,
-    resolution_status: str = "resolved",
+    resolution_status: str = "answered",
+    reserved_ids: Iterable[str] | None = None,
+    answer_language: str | None = None,
     clock: Callable[[], str] = _utc_now,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     """Applies expert answer to a workflow snapshot:
@@ -120,6 +218,18 @@ def apply_expert_feedback(
     - Transitions question status to 'answered' or 'resolved'.
     - Bumps revision to N+1 with supersedes_revision and change_log entry.
     - Adds new Evidence and Claim to the target step field.
+
+    Claim moi luon `pending` / `not_requested` va khong kem ReviewEvent, du
+    `resolution_status` la gi. Trang thai cua Question va trang thai review cua
+    claim la hai thu khac nhau: `resolved` chi noi cau hoi da duoc xu ly, khong
+    noi rang co nguoi da doi chieu nguon hay xac nhan dung ky thuat.
+
+    `reserved_ids`: ID da cap o cac revision khac cua chinh workflow nay (xem
+    `collect_reserved_ids`). Truyen vao de ID moi khong dam vao ID da phat hanh.
+
+    `answer_language`: ngon ngu **thuc te** cua phan hoi (D-03). Mac dinh lay theo
+    workflow, nhung mot cau tra loi tieng Viet tren workflow tieng Anh la mot nguon
+    tieng Viet -- ghi 'en' cho no la khai sai ngon ngu nguon.
     """
     if resolution_status not in ("answered", "resolved"):
         raise ValueError(f"resolution_status phải là 'answered' hoặc 'resolved', nhận được '{resolution_status}'")
@@ -145,7 +255,7 @@ def apply_expert_feedback(
         answer_text=answer_text,
         expert_name=expert_name,
         expert_role=expert_role,
-        language=snapshot.get("language", "en"),
+        language=answer_language or snapshot.get("language", "en"),
         clock=clock,
     )
     src_id = source_record["source_id"]
@@ -170,7 +280,12 @@ def apply_expert_feedback(
             q["resolution_note"] = f"Clarified by {expert_name} ({expert_role}): {answer_text.strip()}"
 
     # 5. Create new Evidence record
-    new_ev_id = f"{new_wf['workflow_id']}_EV_{len(new_wf.get('evidence', [])) + 1:03d}"
+    reserved = set(reserved_ids or ())
+    new_ev_id = _next_sequence_id(
+        new_wf["workflow_id"],
+        "EV",
+        reserved | {ev["evidence_id"] for ev in new_wf.get("evidence", [])},
+    )
     evidence_record = {
         "evidence_id": new_ev_id,
         "source_id": src_id,
@@ -191,12 +306,18 @@ def apply_expert_feedback(
     new_wf.setdefault("evidence", []).append(validated_ev.model_dump(mode="json"))
 
     # 6. Create new Claim record
-    new_cl_id = f"{new_wf['workflow_id']}_CL_{len(new_wf.get('claims', [])) + 1:03d}"
-    tech_decision = (
-        TechnicalReview.EXPERT_VALIDATED.value
-        if resolution_status == "resolved"
-        else TechnicalReview.PENDING.value
+    new_cl_id = _next_sequence_id(
+        new_wf["workflow_id"],
+        "CL",
+        reserved | {cl["claim_id"] for cl in new_wf.get("claims", [])},
     )
+    evidence_links = [
+        {
+            "evidence_id": new_ev_id,
+            "support_status": SupportStatus.SUPPORTED.value,
+            "explanation": f"Expert clarification by {expert_name} ({expert_role})",
+        }
+    ]
     claim_record = {
         "claim_id": new_cl_id,
         "text": answer_text.strip(),
@@ -211,16 +332,14 @@ def apply_expert_feedback(
             "level": ScopeLevel.CASE.value,
             "description": f"Clarified by {expert_name} for question {target_question_id}",
         },
-        "evidence_links": [
-            {
-                "evidence_id": new_ev_id,
-                "support_status": SupportStatus.SUPPORTED.value,
-                "explanation": f"Expert clarification by {expert_name} ({expert_role})",
-            }
-        ],
-        "support_status": SupportStatus.SUPPORTED.value,
-        "source_review": "source_checked" if resolution_status == "resolved" else "pending",
-        "technical_review": tech_decision,
+        "evidence_links": evidence_links,
+        # D-01: khong ai duoc tu dat support_status bang tay.
+        "support_status": derive_support_status(evidence_links).value,
+        # Co phan hoi KHONG phai la da kiem nguon, cang khong phai chuyen gia da
+        # xac nhan. Nang len phai qua `acquisition.extraction.review`, co nguoi
+        # kiem that va ReviewEvent trong chinh revision do (V07).
+        "source_review": SourceReview.PENDING.value,
+        "technical_review": TechnicalReview.NOT_REQUESTED.value,
         "conflicts_with": [],
         "supersedes_claim_ids": [],
     }
@@ -241,27 +360,21 @@ def apply_expert_feedback(
     if not step_found:
         raise ValueError(f"Không tìm thấy step '{step_id}' trong workflow.")
 
-    # 8. Add ReviewEvent if resolved
-    if resolution_status == "resolved":
-        new_rv_id = f"{new_wf['workflow_id']}_RV_{len(new_wf.get('review_events', [])) + 1:03d}"
-        rev_event = {
-            "review_id": new_rv_id,
-            "target_type": ReviewTargetType.CLAIM.value,
-            "target_id": new_cl_id,
-            "dimension": ReviewDimension.TECHNICAL.value,
-            "decision": ReviewDecision.EXPERT_VALIDATED.value,
-            "reviewer_id": expert_name,
-            "reviewer_role": expert_role,
-            "reviewed_at": clock(),
-            "note": f"Validated expert clarification for question {target_question_id}",
-        }
-        new_wf.setdefault("review_events", []).append(rev_event)
+    # 8. KHONG sinh ReviewEvent o day.
+    # He thong chua co dang nhap: `expert_name` / `expert_role` la chu nguoi dung
+    # tu go vao. Tu sinh ReviewEvent decision=expert_validated tu o text do la
+    # bien mot loi khai thanh "chuyen gia da xac nhan" (bat bien so 3 cua du an).
+    # Review that di qua `acquisition.extraction.review` voi nguoi kiem thuc su.
 
     # 9. Append change_log (Schema 1.0.0 ChangeEvent)
     change_entry = {
         "changed_at": clock(),
         "actor_id": expert_name,
-        "reason": f"Resolved question {target_question_id} ({role_name}) via expert answer from {expert_name}",
+        "reason": (
+            f"Answered question {target_question_id} ({role_name}) from a self-reported "
+            f"response by {expert_name} ({expert_role}); identity not authenticated, "
+            "claim left pending source review"
+        ),
         "previous_revision": base_rev,
         "id_mapping": [],
     }
@@ -302,7 +415,16 @@ def main():
     parser.add_argument("--expert-role", type=str, required=True, help="Vai trò chuyên gia (vd: Haas Senior Certified Technician)")
     parser.add_argument("--target-step", type=str, default=None, help="Mã bước (nếu câu hỏi chưa liên kết step_id)")
     parser.add_argument("--target-field", type=str, default=None, help="Tên vai trò trường (rationale, condition, ...)")
-    parser.add_argument("--status", choices=["answered", "resolved"], default="resolved", help="Trạng thái câu hỏi sau khi nạp")
+    parser.add_argument(
+        "--status",
+        choices=["answered", "resolved"],
+        default="answered",
+        help=(
+            "Trạng thái câu hỏi sau khi nạp. Mặc định 'answered'; chuyển 'resolved' là "
+            "bước riêng sau khi nội dung đã được người kiểm (contract mục 3.6). "
+            "Cả hai đều KHÔNG đổi trạng thái review của claim."
+        ),
+    )
     parser.add_argument("--out-dir", type=Path, default=None, help="Thư mục lưu snapshot mới (mặc định lưu cùng thư mục với file gốc)")
 
     args = parser.parse_args()
@@ -317,7 +439,11 @@ def main():
         target_step_id=args.target_step,
         target_field_role=args.target_field,
         resolution_status=args.status,
+        reserved_ids=collect_reserved_ids(snapshot_data["workflow_id"]),
     )
+
+    # Save the verbatim response where Source.asset_uri points (V02)
+    asset_path = write_feedback_asset(source_record)
 
     # Save new source record
     append_source_to_catalog(source_record)
@@ -329,8 +455,12 @@ def main():
 
     print("✅ Hoàn tất Feedback Loop!")
     print(f"   - Source mới:      {source_record['source_id']}")
+    print(f"   - Nguyên văn:      {asset_path.relative_to(REPO_ROOT)}")
     print(f"   - Workflow mới:    {out_file.name} (Revision {new_snapshot['revision']}, supersedes r{new_snapshot['supersedes_revision']})")
     print(f"   - Câu hỏi {args.question_id} đã chuyển trạng thái: {args.status}")
+    print("   - Claim mới:       source_review=pending, technical_review=not_requested.")
+    print("     Danh tính người trả lời là tự khai, chưa xác thực. Cần người kiểm nguồn")
+    print("     (acquisition.extraction.review) trước khi promote và export.")
 
 
 if __name__ == "__main__":

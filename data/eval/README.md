@@ -15,7 +15,10 @@ không có), dùng để chỉnh ngưỡng từ chối.
 
 Lượt kiểm và lý do từng quyết định: [gold review worklist](../../docs/gold_review_worklist_real_dev.md).
 Số đo đầu tiên được phép báo cáo: [kết quả retrieval real/dev](../../docs/retrieval_eval_real_dev.md)
-(hybrid Recall@5 **0.926** đạt ngưỡng ≥0.85; nhóm từ chối **0.381** trượt xa ngưỡng ≥0.90).
+— hybrid Recall@5 **0.926** (ngưỡng kế hoạch ≥0.85), nhóm từ chối **12/21** sau khi hiệu
+chỉnh cổng liên quan từ 0.10 lên **0.20**. Lưu ý ngưỡng ≥0.90 của kế hoạch là chỉ số **tầng
+câu trả lời** (`expected_status`, đo bằng `evaluation answers`), không phải con số tầng
+retrieval ở đây.
 
 > **Giới hạn phải nêu kèm mọi con số.** Bộ câu hỏi chỉ phủ **20/38 Step** của corpus phục
 > vụ: `REAL_WF_0002` và `REAL_WF_0003` **không có câu hỏi nào** nhắm tới, vì bộ này soạn khi

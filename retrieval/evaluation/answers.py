@@ -343,7 +343,7 @@ def summarize_answers(rows: list[dict], *, price: dict | None = None) -> dict:
 
 def evaluate_answers(db: str | Path, questions_path: str | Path, *, mode: str, split: str,
                      strategy: str = "hybrid", top_k: int = 5, candidate_k: int = 20,
-                     min_cosine: float = .25, rrf_k: int = 60, min_term_coverage: float = .10,
+                     min_cosine: float = .25, rrf_k: int = 60, min_term_coverage: float = .20,
                      translate: bool = True, embedder: Embedder | None = None,
                      query_cache: str | Path | None = None, translator: Translator | None = None,
                      translation_cache: str | Path | None = None, model_factory=GeminiAnswerModel,

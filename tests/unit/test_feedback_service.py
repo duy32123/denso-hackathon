@@ -73,10 +73,24 @@ def test_preview_does_not_touch_the_canonical_store():
 
 
 def test_preview_is_repeatable():
-    """Goi hai lan cho cung ket qua: khong co bo dem ID hay trang thai an."""
-    first = preview(_request())
-    second = preview(_request())
-    assert first == second
+    """Goi hai lan cho cung ket qua: khong co bo dem ID hay trang thai an.
+
+    Bo `change_log.changed_at` khoi phep so sanh: no la dong ho treo tuong, chinh
+    xac toi giay. Hai lan goi vat qua ranh gioi giay thi khac nhau ma khong noi len
+    dieu gi ve tinh lap lai -- ban dau test nay so sanh ca no nen thinh thoang do.
+    """
+    def stable(result: dict) -> dict:
+        trimmed = {**result, "change_log": {**result["change_log"]}}
+        trimmed["change_log"].pop("changed_at")
+        return trimmed
+
+    first, second = preview(_request()), preview(_request())
+
+    assert stable(first) == stable(second)
+    # ID phai on dinh: day moi la thu test nay giu.
+    assert first["new_claims"][0]["claim_id"] == second["new_claims"][0]["claim_id"]
+    assert first["new_evidence"][0]["evidence_id"] == second["new_evidence"][0]["evidence_id"]
+    assert first["source"]["source_id"] == second["source"]["source_id"]
 
 
 # --- noi dung ban xem truoc ----------------------------------------------------

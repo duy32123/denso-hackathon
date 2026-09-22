@@ -116,9 +116,12 @@ def test_out_of_scope_question_rejected_before_embedding(real_db):
     embedder = CountingEmbedder()
     result = ask(real_db, OUT_OF_SCOPE, strategy="vector", embedder=embedder)
     assert result["status"] == "insufficient_evidence" and result["claims"] == []
+    # Nguong lay tu RetrievalConfig, khong hardcode: no duoc hieu chinh tren nhan
+    # da kiem (xem docs/retrieval_eval_real_dev.md) nen se con doi.
     assert result["trace"]["relevance"] == {"term_coverage": 0.0,
                                             "unseen_terms": ["calibr", "coolant", "refractomet"],
-                                            "min_term_coverage": .10, "gate": "rejected"}
+                                            "min_term_coverage": RetrievalConfig().min_term_coverage,
+                                            "gate": "rejected"}
     assert embedder.calls == 0
     disabled = ask(real_db, OUT_OF_SCOPE, min_term_coverage=0)
     assert disabled["trace"]["relevance"]["gate"] == "passed"

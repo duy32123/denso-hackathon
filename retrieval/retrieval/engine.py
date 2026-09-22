@@ -15,6 +15,7 @@ from retrieval.indexing.search_index import RetrievalError, read_corpus, require
 from .context import context_gate, resolve_context
 from .query import GeminiTranslator, Translator, content_terms, looks_vietnamese, term_coverage
 from .ranking import fold, rank
+from .relevance import claim_relevance
 
 # WP2 step 5. Which relation makes a neighbouring Step part of a correct answer, and
 # which end of that relation the matched Step sits on:
@@ -35,10 +36,10 @@ class RetrievalConfig:
     rrf_k: int = 60
     min_cosine: float = .25
     intent: str = "auto"
-    # Chosen on real/dev (labels not human-checked, 2026-09-15): any value in 0.10-0.15 rejected
-    # 0/31 answerable and 13/19 out-of-scope questions; the low end, since a false rejection
-    # cannot be recovered downstream. Recalibrate when the corpus grows.
+    # Coverage measures one claim/heading (one workflow for procedures).
+    # The old corpus-IDF gate remains an explicit evaluation baseline.
     min_term_coverage: float = .20
+    relevance_policy: str = "claim_coherence"
     query_translation: str = "auto"
     # Neighbour expansion is additive: it never changes `steps`, `claims` or `status`.
     # Depth 1 is the conservative starting point, not a measured optimum.
@@ -63,6 +64,8 @@ class RetrievalConfig:
             raise ValueError("Require 0 <= neighbor_depth <= 3 and 0 <= max_related_steps <= 20")
         if self.workflow_routing not in ("record", "best_step"):
             raise ValueError("workflow_routing must be record or best_step")
+        if self.relevance_policy not in ("claim_coherence", "legacy_corpus"):
+            raise ValueError("relevance_policy must be claim_coherence or legacy_corpus")
 
 
 def retrieve(db: str | Path, request: QueryRequest, *, config: RetrievalConfig | None = None,
@@ -151,11 +154,22 @@ def retrieve(db: str | Path, request: QueryRequest, *, config: RetrievalConfig |
     # Coverage counts conflict diagnostics too: a question about a contested fact must reach
     # the conflict lookup instead of being rejected as out of scope.
     step_docs = [d for d in docs if d["record"]["record_type"] == "step"]
-    coverage, unseen = term_coverage(content_terms(lexical_text, stem=english_corpus), step_docs)
+    terms = content_terms(lexical_text, stem=english_corpus)
+    coverage, unseen = term_coverage(terms, step_docs)
     gate = ("skipped" if vietnamese and translation is None
             else "rejected" if coverage < config.min_term_coverage else "passed")
     result["trace"]["relevance"] = {"term_coverage": round(coverage, 4), "unseen_terms": unseen,
                                     "min_term_coverage": config.min_term_coverage, "gate": gate}
+    if config.relevance_policy == "claim_coherence":
+        relevance = claim_relevance(terms, step_docs, corpus["workflows"], stem=english_corpus,
+                                    intent=intent, threshold=config.min_term_coverage, context=context)
+        relevance["corpus_term_coverage"] = round(coverage, 4)
+        if vietnamese and translation is None:
+            relevance["gate"] = "skipped"
+        elif config.min_term_coverage == 0:
+            relevance["gate"] = "passed"  # opt-out also disables the match-count rule
+        result["trace"]["relevance"] = relevance
+        gate = relevance["gate"]
     if gate == "rejected":
         return finish("insufficient_evidence")  # before any embedding call
     query_vector = None

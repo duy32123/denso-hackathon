@@ -348,13 +348,14 @@ def evaluate_answers(db: str | Path, questions_path: str | Path, *, mode: str, s
                      query_cache: str | Path | None = None, translator: Translator | None = None,
                      translation_cache: str | Path | None = None, model_factory=GeminiAnswerModel,
                      model_name: str | None = None, verdicts_path: str | Path | None = None,
-                     price: dict | None = None, repo_root: Path = REPO_ROOT) -> tuple[dict, list[dict]]:
+                     price: dict | None = None, repo_root: Path = REPO_ROOT,
+                     relevance_policy: str = "claim_coherence") -> tuple[dict, list[dict]]:
     """Ask every question through the served QA path and score the answers."""
     if split != "dev":
         raise EvaluationError("QAService serves dev only; holdout stays locked until the D15 lock is lifted")
     config = RetrievalConfig(strategy=strategy, top_k=top_k, candidate_k=candidate_k, min_cosine=min_cosine,
                              rrf_k=rrf_k, min_term_coverage=min_term_coverage,
-                             query_translation="auto" if translate else "never")
+                             query_translation="auto" if translate else "never", relevance_policy=relevance_policy)
     questions, questions_sha256 = load_questions(questions_path)
     wrong = [q.question_id for q in questions if (q.source_type, q.dataset_split) != (mode, split)]
     if wrong:

@@ -30,6 +30,8 @@ def main(argv=None):
             sub.add_argument("--min-cosine", type=float, default=.25)
             sub.add_argument("--intent", choices=("auto", "detail", "procedure"), default="auto")
             sub.add_argument("--min-term-coverage", type=float, default=.20, help="relevance gate; 0 disables it")
+            sub.add_argument("--relevance-policy", choices=("claim_coherence", "legacy_corpus"),
+                             default="claim_coherence", help="legacy_corpus retains the old corpus-IDF gate")
             sub.add_argument("--neighbor-depth", type=int, default=1,
                              help="follow requires/branch_if/corrects this deep; 0 disables expansion")
             sub.add_argument("--max-related-steps", type=int, default=5)
@@ -64,6 +66,7 @@ def main(argv=None):
                               config=RetrievalConfig(strategy=args.strategy, top_k=args.top_k,
                                                      candidate_k=args.candidate_k, min_cosine=args.min_cosine,
                                                      intent=args.intent, min_term_coverage=args.min_term_coverage,
+                                                     relevance_policy=args.relevance_policy,
                                                      query_translation=args.query_translation,
                                                      neighbor_depth=args.neighbor_depth,
                                                      max_related_steps=args.max_related_steps,

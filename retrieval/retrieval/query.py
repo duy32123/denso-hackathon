@@ -1,9 +1,9 @@
 """Query preparation for lexical search and the relevance gate.
 
 Translation lets a Vietnamese question SEARCH an English corpus; answers and citations
-always come from the original snapshot (contract D-03). Term coverage asks whether the
-question's content terms occur anywhere in the eligible corpus: a KB that never mentions
-"coolant" cannot support an answer about coolant, however close the embeddings are.
+always come from the original snapshot (contract D-03). The corpus-wide IDF coverage
+function is retained as a diagnostic/legacy baseline. The default claim-coherence
+prefilter lives in relevance.py and requires terms to occur together in eligible content.
 """
 
 from __future__ import annotations

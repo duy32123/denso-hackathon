@@ -4,6 +4,8 @@
 > 14 câu draft. [Bản sửa subsystem và phép đo đối chứng](retrieval_smtc_alias_fix.md)
 > ghi kết quả mới cùng hồi quy Q046; không dùng các số dưới đây như số đo của mã hiện tại.
 
+> Kết quả mới nhất cho cổng liên quan: [claim-coherence và đối chứng cache-only](retrieval_relevance_gate.md).
+
 **Số đo đầu tiên được phép báo cáo.** Trước ngày này evaluator in cảnh báo
 `not human-checked` và kế hoạch cấm báo cáo. Nhãn gold đã được người kiểm
 (52/52, `reviewed_by=duy32123`), xem [worklist](gold_review_worklist_real_dev.md).

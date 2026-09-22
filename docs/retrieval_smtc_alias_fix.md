@@ -1,5 +1,9 @@
 # Sửa alias subsystem SMTC — 2026-09-22
 
+> Báo cáo này giữ kết quả tại mốc sửa alias, trước khi đổi cổng liên quan.
+> [Bản sửa cổng và phép đo đối chứng tiếp theo](retrieval_relevance_gate.md) xử lý hồi quy
+> Q046 và kiểm tra lại Q067; không dùng các bảng dưới đây như số đo của cổng hiện tại.
+
 Đã sửa lỗi loại `REAL_WF_0002` trước khi xếp hạng. Đây là lỗi so khớp metadata,
 không phải bằng chứng rằng phải thay nguồn video hoặc tự điền model máy còn thiếu.
 

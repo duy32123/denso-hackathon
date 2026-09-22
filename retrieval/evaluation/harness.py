@@ -268,6 +268,7 @@ def _evaluate_one(db, q: EvalQuestion, mode: str, split: str, config: RetrievalC
         "missing_context": result["missing_context"],
         "translation": (result["trace"].get("query_translation") or {}).get("text"),
         "term_coverage": relevance.get("term_coverage"), "relevance_gate": relevance.get("gate"),
+        "relevance": relevance,
         "claim_count": len(result["claims"]), "conflict_count": len(result["conflicts"]),
         "latency_ms": round(result["trace"]["latency_ms"] + reused_ms, 2),
         "engine_latency_ms": result["trace"]["latency_ms"], "embedding_reused": reused_ms > 0,
@@ -353,14 +354,15 @@ def run_evaluation(db: str | Path, questions_path: str | Path, *, mode: str, spl
                    rrf_k: int = 60, min_term_coverage: float = .20, embedder: Embedder | None = None,
                    query_cache: str | Path | None = None, translator: Translator | None = None,
                    translation_cache: str | Path | None = None, translate: bool = True,
-                   allow_holdout: bool = False, workflow_routing: str = "best_step") -> tuple[dict, list[dict]]:
+                   allow_holdout: bool = False, workflow_routing: str = "best_step",
+                   relevance_policy: str = "claim_coherence") -> tuple[dict, list[dict]]:
     """Run every question under every strategy against the SAME active index."""
     if split == "holdout" and not allow_holdout:
         raise EvaluationError("Holdout is evaluated once, after the D15 lock; pass allow_holdout explicitly")
     strategies = list(dict.fromkeys(strategies))
     settings = dict(top_k=top_k, candidate_k=candidate_k, min_cosine=min_cosine, rrf_k=rrf_k,
                     min_term_coverage=min_term_coverage, query_translation="auto" if translate else "never",
-                    workflow_routing=workflow_routing)
+                    workflow_routing=workflow_routing, relevance_policy=relevance_policy)
     for strategy in strategies:
         RetrievalConfig(strategy=strategy, **settings)  # reject bad config before any work
     questions, questions_sha256 = load_questions(questions_path)

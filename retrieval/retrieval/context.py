@@ -7,6 +7,13 @@ from knowflow_contracts.models import QueryContext, Workflow
 from .ranking import fold
 
 SCALAR_FIELDS = ("manufacturer", "machine_family", "machine_model", "subsystem", "task_type")
+# Controlled subsystem aliases, including the component-qualified label in TG0128.
+# This changes identity comparison only: "double arm" stays in snapshots/search text.
+# Do not use substring matching or discard arbitrary qualifiers (e.g. umbrella SMTC).
+SMTC_ALIASES = frozenset({
+    "smtc", "sidemounttoolchanger", "sidemounttoolchangersmtc",
+    "smtcdoublearm", "sidemounttoolchangerdoublearm", "sidemounttoolchangersmtcdoublearm",
+})
 # VF/VM/UMC are unambiguous even as "VF 2"; short prefixes must touch the number
 # ("ST-10", "EC400") so that "DC 24 V" or "st 2" are not read as machine models.
 MODEL_PATTERN = re.compile(r"\b(?:vf|vm|umc)[- ]?\d+(?:ss|y|l)?\b|\b(?:st|ds|dt|dm|ec|tm)-?\d+(?:ss|y|l)?\b"
@@ -22,7 +29,7 @@ def normal(field: str, value: str) -> str:
     value = re.sub(r"[^a-z0-9]", "", fold(value))
     if field == "manufacturer" and value in ("haas", "haasautomation", "haasautomationinc"):
         return "haas"
-    if field == "subsystem" and value in ("smtc", "sidemounttoolchanger", "sidemounttoolchangersmtc"):
+    if field == "subsystem" and value in SMTC_ALIASES:
         return "smtc"
     return value
 

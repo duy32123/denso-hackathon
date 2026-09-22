@@ -1,9 +1,55 @@
-"""Conservative identity cues from question text: machine models and alarm codes."""
+"""Conservative identity cues, controlled subsystem aliases and hard context gates."""
 
 import pytest
 
-from knowflow_contracts.models import QueryContext
-from retrieval.retrieval.context import resolve_context
+from knowflow_contracts.models import QueryContext, Workflow
+from retrieval.retrieval.context import context_gate, normal, resolve_context
+
+
+DOUBLE_ARM_SUBSYSTEM = "side-mount tool changer (SMTC), double arm"
+
+
+@pytest.fixture
+def double_arm_workflow(f01):
+    workflow = Workflow.model_validate(f01["workflows"][0])
+    return workflow.model_copy(update={
+        "context": workflow.context.model_copy(update={"subsystem": DOUBLE_ARM_SUBSYSTEM, "machine_model": None}),
+    })
+
+
+@pytest.mark.parametrize("alias", [
+    "SMTC", "Side Mount Tool Changer", "side-mount tool changer (SMTC)",
+    "SMTC, double arm", "side-mount tool changer, double arm", DOUBLE_ARM_SUBSYSTEM,
+])
+def test_smtc_component_qualified_alias(alias, double_arm_workflow):
+    assert normal("subsystem", alias) == "smtc"
+    assert context_gate(double_arm_workflow, QueryContext(subsystem=alias)) == ([], [])
+    # Resolving identity never edits the source metadata.
+    assert double_arm_workflow.context.subsystem == DOUBLE_ARM_SUBSYSTEM
+
+
+@pytest.mark.parametrize("subsystem", [
+    "umbrella tool changer", "umbrella SMTC", "double arm",
+    "SMTC unknown variant", "side-mount tool changer (SMTC), umbrella",
+])
+def test_smtc_alias_does_not_swallow_other_subsystems(subsystem, double_arm_workflow):
+    assert normal("subsystem", subsystem) != "smtc"
+    assert context_gate(double_arm_workflow, QueryContext(subsystem=subsystem)) == (["subsystem"], [])
+
+
+@pytest.mark.parametrize("provided", [QueryContext(), QueryContext(subsystem="SMTC")])
+def test_full_smtc_label_and_acronym_are_not_conflicting(provided, double_arm_workflow):
+    context, conflicts, _ = resolve_context(
+        f"Inspect the {DOUBLE_ARM_SUBSYSTEM}", provided, [double_arm_workflow],
+    )
+    assert conflicts == []
+    assert context_gate(double_arm_workflow, context) == ([], [])
+
+
+def test_smtc_alias_keeps_missing_model_guard(double_arm_workflow):
+    assert context_gate(double_arm_workflow, QueryContext(subsystem="SMTC", machine_model="VF-2")) == (
+        [], ["machine_model"],
+    )
 
 
 def resolve(question):

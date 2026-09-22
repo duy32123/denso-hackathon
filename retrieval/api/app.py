@@ -16,7 +16,8 @@ from knowflow_contracts.models import AnswerResponse, QueryRequest
 from retrieval.generation.gemini import GeminiAnswerModel
 from retrieval.generation.browse import WorkflowBrowser, WorkflowNotFound
 from retrieval.generation.feedback import (
-    FeedbackConflict, FeedbackRequest, FeedbackUnavailable, StubFeedbackService,
+    FeedbackBusy, FeedbackConflict, FeedbackInvalid, FeedbackRequest, FeedbackUnavailable,
+    RealFeedbackService, StubFeedbackService,
 )
 from retrieval.generation.models import GenerationError
 from retrieval.generation.service import EvidenceNotFound, NamespaceUnavailable, QAService
@@ -46,10 +47,13 @@ def service_from_env():
     service = QAService(databases, repo_root=root,
                         config=RetrievalConfig(strategy=os.getenv("KNOWFLOW_RETRIEVAL_STRATEGY", "hybrid")),
                         model_factory=lambda: GeminiAnswerModel(model))
-    # Mac dinh TAT. Stub chi de dung man Bo sung truoc khi D1-B co service ghi;
-    # no khong bao gio ghi vao kho chuan va `submit` van bao 503.
+    # Doi 1 (D1-B / WP6) co service ghi that tu 2026-09-22 (PR #34): mac dinh bat.
+    # KNOWFLOW_FEEDBACK_STUB=1 doi sang ban gia lap KHONG BAO GIO ghi -- dung khi
+    # tap duot UI hoac demo ma chua muon dinh vao kho chuan.
     if os.getenv("KNOWFLOW_FEEDBACK_STUB") == "1":
         service.feedback = StubFeedbackService(WorkflowBrowser(service.database))
+    else:
+        service.feedback = RealFeedbackService()
     return service
 
 
@@ -88,6 +92,15 @@ def create_app(service: QAService | None = None, *, timeout_seconds: float = 90,
         return JSONResponse(status_code=409, content={"error": {
             "code": "base_revision_conflict", "message": str(exc),
             "latest_revision": exc.latest_revision, "base_revision": exc.base_revision}})
+
+    @app.exception_handler(FeedbackInvalid)
+    async def feedback_invalid(request, exc):
+        return JSONResponse(status_code=422, content={"error": {
+            "code": "feedback_invalid", "message": str(exc), "errors": exc.errors}})
+
+    @app.exception_handler(FeedbackBusy)
+    async def feedback_busy(request, exc):
+        return error(429, "feedback_busy", str(exc))
 
     @app.exception_handler(Exception)
     async def unexpected(request, exc):

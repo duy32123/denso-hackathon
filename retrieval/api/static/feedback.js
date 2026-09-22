@@ -130,6 +130,12 @@
         say('feedback-message',
           'Bản mô phỏng: service ghi của đội 1 chưa có nên không lưu được. ' +
           'Xem docs/team2_feedback_contract.md.');
+      } else if (data.validation && !data.validation.ok) {
+        // Preview cho thay ban se ghi khong qua validator chung (V0x): bao truoc
+        // khi con doc duoc, khong de nguoi dung bam Luu roi moi nhan loi 422.
+        el('feedback-save').disabled = true;
+        say('feedback-message',
+          'Bản này sẽ không lưu được: ' + data.validation.errors.join('; '));
       } else {
         el('feedback-save').disabled = false;
         say('feedback-message', 'Đọc kỹ bản xem trước rồi mới lưu.');

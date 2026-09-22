@@ -1,5 +1,9 @@
 # Kết quả retrieval trên real/dev — 2026-09-22
 
+> **Mốc lịch sử trên 52 câu, trước bản sửa alias SMTC.** File câu hỏi sau đó đã có thêm
+> 14 câu draft. [Bản sửa subsystem và phép đo đối chứng](retrieval_smtc_alias_fix.md)
+> ghi kết quả mới cùng hồi quy Q046; không dùng các số dưới đây như số đo của mã hiện tại.
+
 **Số đo đầu tiên được phép báo cáo.** Trước ngày này evaluator in cảnh báo
 `not human-checked` và kế hoạch cấm báo cáo. Nhãn gold đã được người kiểm
 (52/52, `reviewed_by=duy32123`), xem [worklist](gold_review_worklist_real_dev.md).

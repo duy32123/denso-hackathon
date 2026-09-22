@@ -173,6 +173,11 @@ record build trả `noop` và không gọi embedding lại.
   `needs_clarification`. Nhận diện tên/model và alarm từ câu hỏi bằng luật bảo thủ;
   tên máy ngoài mẫu nhận diện cần truyền `--machine-model` rõ ràng.
 - Alias có kiểm soát: `Haas`/`Haas Automation`, `SMTC`/`side-mount tool changer`.
+  Từ 22/09, nhận cả các cách viết SMTC có hậu tố `double arm` trong allowlist
+  (gồm `side-mount tool changer (SMTC), double arm` của `REAL_WF_0002`). Chỉ chuẩn hóa
+  để so sánh subsystem; không sửa snapshot, điền model hay bỏ mọi hậu tố tùy ý.
+  Lỗi này từng loại workflow đúng **trước khi xếp hạng**; xem
+  [bản sửa và phép đo đối chứng](../docs/retrieval_smtc_alias_fix.md), gồm cả hồi quy Q046.
   Mã alarm so khớp chính xác, không gộp `2066` với `2067` hoặc `20.66`.
   `--component` và `--symptom` là search hints; không dùng chúng để nới hard filters.
 - `claim_blockers` được dùng trước khi dựng nội dung để xếp hạng và kiểm lại trước
@@ -229,8 +234,9 @@ adapter/SDK và output vector hash, không khẳng định pin được hash tr�
 `retrieval.evaluation` chạy lexical, vector và hybrid trên cùng index và cùng filter
 policy, tính Recall@k, MRR@k, Hit@1, độ chính xác chọn workflow và status (gồm cả
 câu phải từ chối). Bộ câu hỏi, quy tắc tính và cách kiểm nhãn: xem
-[data/eval/README.md](../data/eval/README.md). Nhãn gold hiện mới được AI kiểm
-(`ai_reviewed`), chưa có người kiểm; report giữ cảnh báo cho đến khi có người kiểm.
+[data/eval/README.md](../data/eval/README.md). File real/dev hiện có 52 nhãn `reviewed`
+và 14 nhãn `draft` (Q055–Q068). Số đo gộp vẫn có cảnh báo, chỉ dùng chẩn đoán;
+không tự nâng nhãn draft thành human-reviewed.
 
 ```powershell
 .\.venv\Scripts\python.exe -m retrieval.evaluation run --db out/retrieval/real_dev.sqlite --questions data/eval/haas_real_dev.retrieval.v0.jsonl --mode real --split dev

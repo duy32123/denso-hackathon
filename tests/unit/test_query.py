@@ -217,3 +217,49 @@ def test_demo_question_routes_to_the_greasing_step_in_english(real_db):
 def test_workflow_routing_config_is_validated():
     with pytest.raises(ValueError):
         RetrievalConfig(workflow_routing="max")
+
+
+@pytest.mark.parametrize("question,intent,step_ids", [
+    ("What visual or audible signs indicate a problem with the SMTC double arm, and what damage occurs "
+     "on the alignment key or V-flange?", "detail", {"REAL_WF_0002_ST_001", "REAL_WF_0002_ST_002"}),
+    ("What does excessive wear on the SMTC double arm suggest regarding height, and what motion symptom "
+     "occurs when the double arm engages with the tool?", "detail", {"REAL_WF_0002_ST_003"}),
+    ("What measuring tool is specified for the SMTC double arm clearance inspection?",
+     "detail", {"REAL_WF_0002_ST_006"}),
+    ("What part number and thickness are specified for the shim washer in the double arm adjustment?",
+     "detail", {"REAL_WF_0002_ST_007"}),
+    ("Summarize the SMTC double arm wear diagnosis procedure, including mechanical inspection and servo alarms.",
+     "procedure", {f"REAL_WF_0002_ST_{i:03}" for i in range(1, 10)}),
+])
+def test_smtc_context_keeps_double_arm_workflow_eligible(real_db, question, intent, step_ids):
+    """Q055-058/060 regression: the right workflow was removed BEFORE ranking.
+
+    English lexical probes keep this regression offline; the 66-question hybrid
+    measurement uses the original questions and real cached Gemini vectors separately.
+    """
+    result = retrieve(real_db, QueryRequest(
+        question=question, context=QueryContext(manufacturer="Haas", subsystem="SMTC"),
+        mode="real", dataset_split="dev",
+    ), config=RetrievalConfig(strategy="lexical", intent=intent, query_translation="never"))
+    gate = next(row for row in result["trace"]["filters"] if row["workflow_id"] == "REAL_WF_0002")
+    assert gate["mismatches"] == [] and gate["unknown_context"] == []
+    assert result["status"] == "retrieved"
+    assert result["selected_workflow"]["workflow_id"] == "REAL_WF_0002"
+    assert step_ids <= {step["step_id"] for step in result["steps"]}
+
+
+def test_alarm_table_lookup_reaches_double_arm_workflow(real_db):
+    """Q059: alarm metadata exists, but the subsystem gate used to hide it."""
+    question = ("Trong bảng triệu chứng của TG0128, các alarm 11.103, 11.108 và 11.994 "
+                "được liên hệ với bộ phận nào và mục tài liệu nào?")
+    translator = StubTranslator({question:
+        "In the TG0128 symptom table, what component and document section are associated "
+        "with alarms 11.103, 11.108 and 11.994?"})
+    result = retrieve(real_db, QueryRequest(
+        question=question, context=QueryContext(manufacturer="Haas", subsystem="SMTC"),
+        mode="real", dataset_split="dev",
+    ), config=RetrievalConfig(strategy="lexical"), translator=translator)
+    assert translator.calls == 1
+    assert result["status"] == "retrieved" and result["missing_context"] == []
+    assert result["selected_workflow"]["workflow_id"] == "REAL_WF_0002"
+    assert result["steps"][0]["step_id"] == "REAL_WF_0002_ST_009"

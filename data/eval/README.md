@@ -4,8 +4,11 @@
 > **thật** — số đo trên nó mới là kết quả. `synthetic_dev.qa.v0.jsonl` là dữ liệu
 > **mô phỏng** để thử phần mềm (xem cuối trang). Không bao giờ cộng hai mẫu số.
 
-`haas_real_dev.retrieval.v0.jsonl`: **52 câu real/dev, toàn bộ đã được người kiểm**
-(`duy32123`, 2026-09-22). Soạn ban đầu 54 câu trên bundle
+`haas_real_dev.retrieval.v0.jsonl`: **66 câu real/dev: 52 `reviewed`, 14 `draft`**.
+52 câu cũ được người kiểm (`duy32123`, 2026-09-22); Q055–Q068 mới bổ sung vẫn giữ
+trạng thái draft trong file, nên phép đo gộp chỉ dùng chẩn đoán, chưa phải kết quả công bố.
+Xem [bản sửa alias SMTC và phép đo đối chứng](../../docs/retrieval_smtc_alias_fix.md).
+Phần số đo/lượt kiểm bên dưới ghi lại **mốc 52 câu**. Soạn ban đầu 54 câu trên bundle
 `BUNDLE_HAAS_SMTC_DEV_e98521a7942a`; `Q036` và `Q038` bị drop khi kiểm.
 Corpus phục vụ hiện tại là `BUNDLE_HAAS_SMTC_DEV_20382d7957b6`: **B0 r2, REAL_WF_0001 r1,
 REAL_WF_0002 r2, REAL_WF_0003 r2**. B0 r1 và r1 của 0002/0003 vẫn giữ để tra cứu lịch sử,
@@ -20,7 +23,7 @@ chỉnh cổng liên quan từ 0.10 lên **0.20**. Lưu ý ngưỡng ≥0.90 c�
 câu trả lời** (`expected_status`, đo bằng `evaluation answers`), không phải con số tầng
 retrieval ở đây.
 
-> **Giới hạn phải nêu kèm mọi con số.** Bộ câu hỏi chỉ phủ **20/38 Step** của corpus phục
+> **Giới hạn của mốc 52 câu phải nêu kèm số đo lịch sử.** Bộ câu hỏi khi đó chỉ phủ **20/38 Step** của corpus phục
 > vụ: `REAL_WF_0002` và `REAL_WF_0003` **không có câu hỏi nào** nhắm tới, vì bộ này soạn khi
 > corpus mới có hai workflow thay hốc dao. 18 Step của hai workflow đó hiện chỉ đóng vai
 > nhiễu. Mẫu số Recall/MRR là **27 câu**, không phải 52.

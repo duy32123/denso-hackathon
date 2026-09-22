@@ -28,6 +28,7 @@ def main(argv=None):
     run.add_argument("--min-cosine", type=float, default=.25)
     run.add_argument("--rrf-k", type=int, default=60)
     run.add_argument("--min-term-coverage", type=float, default=.20, help="relevance gate; 0 disables it")
+    run.add_argument("--relevance-policy", choices=("claim_coherence", "legacy_corpus"), default="claim_coherence")
     run.add_argument("--out", default="out/eval", help="run folder with report.json and rows.jsonl")
     run.add_argument("--query-cache", default="out/eval/query_embeddings.jsonl",
                      help="reuse query embeddings across runs (keyed by embedding config + text)")
@@ -46,6 +47,7 @@ def main(argv=None):
     answers.add_argument("--mode", choices=("real", "synthetic"), required=True)
     answers.add_argument("--split", choices=("dev",), default="dev", help="the served path is dev only")
     answers.add_argument("--strategy", choices=STRATEGIES, default="hybrid")
+    answers.add_argument("--relevance-policy", choices=("claim_coherence", "legacy_corpus"), default="claim_coherence")
     answers.add_argument("--top-k", type=int, default=5)
     answers.add_argument("--candidate-k", type=int, default=20)
     answers.add_argument("--min-cosine", type=float, default=.25)
@@ -85,6 +87,7 @@ def main(argv=None):
                 query_cache=None if args.no_query_cache else args.query_cache,
                 min_term_coverage=args.min_term_coverage, translate=not args.no_translation,
                 translation_cache=args.translation_cache, workflow_routing=args.workflow_routing,
+                relevance_policy=args.relevance_policy,
             )
             target = write_run(report, rows, args.out)
             print(json.dumps(report, ensure_ascii=False, indent=2) if args.json else format_summary(report))
@@ -100,6 +103,7 @@ def main(argv=None):
                 args.db, args.questions, mode=args.mode, split=args.split, strategy=args.strategy,
                 top_k=args.top_k, candidate_k=args.candidate_k, min_cosine=args.min_cosine,
                 rrf_k=args.rrf_k, min_term_coverage=args.min_term_coverage,
+                relevance_policy=args.relevance_policy,
                 translate=not args.no_translation, model_name=args.model,
                 model_factory=lambda: GeminiAnswerModel(args.model),
                 query_cache=None if args.no_query_cache else args.query_cache,

@@ -116,18 +116,21 @@ record build trả `noop` và không gọi embedding lại.
   lexical và cổng liên quan dùng bản dịch, vector dùng câu gốc, claim/citation luôn lấy từ
   snapshot gốc (D-03). Bản dịch ghi ở `trace.query_translation`. Lexical-only không tự dịch;
   `--query-translation never` tắt dịch.
-- Cổng liên quan (`--min-term-coverage`, mặc định 0.10): tỷ lệ từ nội dung của câu hỏi
-  (trọng số IDF) có trong corpus đủ điều kiện sau bộ lọc context. Dưới ngưỡng thì trả
-  `insufficient_evidence` trước khi gọi embedding. Câu tiếng Việt chưa dịch được thì bỏ qua
-  cổng (`gate=skipped`) thay vì từ chối oan. Ngưỡng chọn trên real/dev (nhãn chưa người kiểm,
-  15/09): mọi giá trị 0.10–0.15 cho 0/31 câu trả lời được bị loại và 13/19 câu ngoài phạm vi
-  bị chặn; lấy đầu thấp vì từ chối oan không cứu lại được. Không dùng cosine làm cổng: câu
-  cùng lĩnh vực mà KB không có vẫn đạt cosine cao hơn câu trả lời được. Câu dùng toàn từ chung
-  ("level the machine") vẫn lọt, WP3 phải từ chối. Cần chỉnh lại khi corpus lớn hơn.
-  **Đã xảy ra (18/09):** sau khi `REAL_WF_0002/0003` vào corpus phục vụ (PR #17, 4 workflow,
-  38 Step), câu ngoài phạm vi "How do I clean the chip conveyor?" tăng từ 0.00 lên 0.27 chỉ vì
-  một từ chung "clean"; "chip" và "conveyor" vẫn không có trong KB. Ngưỡng 0.10 phụ thuộc cỡ
-  corpus và **cần hiệu chỉnh lại** trên nhãn đã được người kiểm.
+- Cổng liên quan mặc định `claim_coherence`: câu `detail` cần từ nội dung cùng xuất hiện
+  trong **tiêu đề Step + một claim đủ điều kiện**; câu `procedure` được trải qua nhiều Step
+  của **một workflow**, tách nội dung trả lời khỏi nội dung cảnh báo conflict. Không gom từ
+  rời rạc khắp corpus hoặc dùng metadata/scope thay cho nội dung claim.
+  Cần ít nhất **2 từ khớp** (1 nếu truy vấn chỉ còn 1 từ) và tỷ lệ khớp ≥ **0.20**
+  (`--min-term-coverage`). Trước khi tính, bỏ từ context đã được hard filter kiểm và từ
+  nền xuất hiện trong >75% Step đủ điều kiện khi có nhiều workflow; không bỏ số/mã theo
+  tần suất, không bỏ từ lạ khỏi mẫu số. Alias `slider`/`slide` chỉ áp dụng ở cổng tiếng Anh.
+  Không đạt thì trả `insufficient_evidence` trước khi gọi embedding. Truy vấn tiếng Việt
+  chạy không dịch bỏ qua cổng (`gate=skipped`); lỗi dịch/API vẫn là lỗi, không giả thành
+  kết quả từ chối. `trace.relevance` ghi policy, từ khớp, claim tham chiếu và coverage cũ
+  để đối chiếu. Qua cổng **không chứng minh** nguồn trả lời đủ câu hỏi.
+  `--relevance-policy legacy_corpus` giữ cổng IDF/toàn corpus để chạy đối chứng;
+  `--min-term-coverage 0` tắt cả điều kiện tỷ lệ lẫn số từ khớp. Xem
+  [phép đo và giới hạn trên real/dev](../docs/retrieval_relevance_gate.md).
 - **Chọn workflow theo Step khớp tốt nhất (`--workflow-routing best_step`, mặc định từ 18/09).**
   Trước đây BM25 xếp hạng thẳng các bản ghi cấp workflow, tức chỉ có một tài liệu cho mỗi
   workflow. Khi corpus lên 4 workflow (PR #17), bản ghi dài nhất (`REAL_WF_0003`, 3493 token,

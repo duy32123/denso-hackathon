@@ -8,6 +8,7 @@
 52 câu cũ được người kiểm (`duy32123`, 2026-09-22); Q055–Q068 mới bổ sung vẫn giữ
 trạng thái draft trong file, nên phép đo gộp chỉ dùng chẩn đoán, chưa phải kết quả công bố.
 Xem [bản sửa alias SMTC và phép đo đối chứng](../../docs/retrieval_smtc_alias_fix.md).
+Kết quả cổng liên quan mới nhất: [claim-coherence, đối chứng cùng mẫu số](../../docs/retrieval_relevance_gate.md).
 Phần số đo/lượt kiểm bên dưới ghi lại **mốc 52 câu**. Soạn ban đầu 54 câu trên bundle
 `BUNDLE_HAAS_SMTC_DEV_e98521a7942a`; `Q036` và `Q038` bị drop khi kiểm.
 Corpus phục vụ hiện tại là `BUNDLE_HAAS_SMTC_DEV_20382d7957b6`: **B0 r2, REAL_WF_0001 r1,
@@ -153,10 +154,22 @@ Mặc định chạy cả `lexical`, `vector`, `hybrid` trên cùng index, cùng
 cùng bản dịch câu hỏi. Query embedding và bản dịch được cache ở
 `out/eval/query_embeddings.jsonl` và `out/eval/query_translations.jsonl` (khóa theo cấu hình
 model và nguyên văn câu), nên chạy lại hoặc thử ngưỡng khác (`--min-term-coverage`) không tốn
-API. Khi dùng cache, latency vẫn cộng thời gian API gốc; thời gian đợi 429 không được tính.
+API nếu đã có đủ cache; cache thiếu vẫn gọi provider. Khi dùng cache, latency vẫn cộng
+thời gian API gốc; thời gian đợi 429 không được tính.
 `--no-translation` để đo khi không dịch.
 Kết quả ghi vào `out/eval/<run_id>/report.json` (kèm git commit, index build,
 embedding config và sha256 của bộ câu hỏi) và `rows.jsonl` (từng câu, từng strategy).
+
+Đối chứng riêng cổng cũ/mới **chỉ dùng cache, không gọi API**, ghi rõ câu thiếu cache và
+so sánh trên cùng tập câu hoàn tất ở cả hai policy:
+
+```powershell
+.\.venv\Scripts\python.exe -m scripts.compare_relevance_gates
+```
+
+`run` và `answers` cũng nhận `--relevance-policy claim_coherence` (mặc định) hoặc
+`--relevance-policy legacy_corpus`. Số đo trộn nhãn draft chỉ dùng chẩn đoán; script
+đối chứng tách riêng nhóm `reviewed_only`.
 
 ## Đánh giá câu trả lời (WP3)
 

@@ -118,7 +118,9 @@ def test_out_of_scope_question_rejected_before_embedding(real_db):
     assert result["status"] == "insufficient_evidence" and result["claims"] == []
     # Nguong lay tu RetrievalConfig, khong hardcode: no duoc hieu chinh tren nhan
     # da kiem (xem docs/retrieval_eval_real_dev.md) nen se con doi.
-    assert result["trace"]["relevance"] == {"term_coverage": 0.0,
+    relevance = result["trace"]["relevance"]
+    assert {key: relevance[key] for key in ("term_coverage", "unseen_terms", "min_term_coverage", "gate")} == {
+                                            "term_coverage": 0.0,
                                             "unseen_terms": ["calibr", "coolant", "refractomet"],
                                             "min_term_coverage": RetrievalConfig().min_term_coverage,
                                             "gate": "rejected"}
@@ -217,6 +219,41 @@ def test_demo_question_routes_to_the_greasing_step_in_english(real_db):
 def test_workflow_routing_config_is_validated():
     with pytest.raises(ValueError):
         RetrievalConfig(workflow_routing="max")
+
+
+def test_relevance_policy_is_validated():
+    with pytest.raises(ValueError):
+        RetrievalConfig(relevance_policy="unknown")
+
+
+@pytest.mark.parametrize("strategy", ["lexical", "vector", "hybrid"])
+@pytest.mark.parametrize("question", [
+    "How to measure spindle runout with a dial indicator?",
+    "How can a dial indicator measure spindle runout?",
+    "How to clean the chip conveyor periodically?",
+])
+def test_unrelated_claim_matches_do_not_pass_relevance_gate(real_db, question, strategy):
+    embedder = CountingEmbedder()
+    result = ask(real_db, question, strategy=strategy, embedder=embedder)
+    assert result["status"] == "insufficient_evidence"
+    assert result["claims"] == [] and result["selected_workflow"] is None
+    assert result["trace"]["relevance"]["gate"] == "rejected"
+    assert embedder.calls == 0
+
+
+def test_recovery_limitations_reach_retrieval_without_lowering_the_threshold(real_db):
+    question = "Does RECOVER resolve every SMTC fault? What limitations and support contact does the source mention?"
+    previous = ask(real_db, question, relevance_policy="legacy_corpus")
+    current = ask(real_db, question)
+    assert previous["status"] == "insufficient_evidence"
+    assert current["status"] == "retrieved"
+    assert current["selected_workflow"]["workflow_id"] == "REAL_WF_0003"
+    assert "REAL_WF_0003_ST_009" in {s["step_id"] for s in current["steps"]}
+
+
+def test_slide_slider_variation_does_not_reject_lubrication_question(real_db):
+    result = ask(real_db, "Where do I lubricate the tool pocket slide guides?")
+    assert result["status"] == "retrieved"
 
 
 @pytest.mark.parametrize("question,intent,step_ids", [

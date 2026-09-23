@@ -143,6 +143,9 @@ def test_english_demo_auto_evidence_fields_revision_history_and_mode_switch(tmp_
         assert "Attribution:" in page.evaluate("document.querySelector('#evidence').textContent")
         assert "Scope:" in page.evaluate("document.querySelector('#evidence').textContent")
         assert page.evaluate("document.querySelectorAll('.state-missing').length") > 0
+        # Man Bo sung ngay duoi da hien trang thai ghi that; panel cau hoi khong
+        # duoc lap lai thong bao "chua bat" cu, sai voi RealFeedbackService mac dinh.
+        assert "Chưa bật gửi feedback" not in page.evaluate("document.querySelector('#workflow-questions').textContent")
         page.evaluate("document.querySelector('[data-claim-id=\"B0_SRC_HAAS_0005_CL_020\"]').closest('details').open = true; document.querySelector('[data-claim-id=\"B0_SRC_HAAS_0005_CL_020\"]').closest('details').parentElement.open = true; document.querySelector('[data-claim-id=\"B0_SRC_HAAS_0005_CL_020\"]').scrollIntoView({block:'center'})")
         assert page.evaluate("document.querySelector('.evidence-panel').getBoundingClientRect().top >= 0 && document.querySelector('.evidence-panel').getBoundingClientRect().bottom <= innerHeight")
         page.evaluate("window.scrollTo(0, 0)")

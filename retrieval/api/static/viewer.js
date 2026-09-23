@@ -108,7 +108,6 @@
       questions.append(item);
     }
     if (!wf.questions.length) questions.append(node('p', 'Chưa có Question records. Các field missing vẫn được giữ nguyên ở trên.'));
-    questions.append(node('p', 'Chưa bật gửi feedback/lưu revision: cần service ghi của đội 1. Màn hình này không ghi trực tiếp vào KB và không tự đánh dấu chuyên gia xác nhận.'));
     el('workflow-questions').append(questions);
   }
   function renderHistory(data, mode) {

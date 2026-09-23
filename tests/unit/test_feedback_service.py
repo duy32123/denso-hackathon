@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+from datetime import datetime, timezone
 from pathlib import Path
 
 import pytest
@@ -148,8 +149,21 @@ def test_preview_question_moves_from_open_to_answered():
     assert transition["created_by_this_change"] is False
 
 
-def test_preview_matches_what_plan_would_write():
-    """Ban xem truoc va ban that di qua cung mot ham, khong the lech nhau."""
+def test_preview_matches_what_plan_would_write(monkeypatch):
+    """Ban xem truoc va ban that di qua cung mot ham, khong the lech nhau.
+
+    plan_feedback(request) va preview(request) la hai lan goi rieng, moi lan
+    tu doc dong ho that qua _utc_now(); tung flake khi hai lan goi bac qua
+    ranh gioi giay (vd '...T11:43:02Z' != '...T11:43:01Z'). Khoa dong ho ve
+    mot moc co dinh de phep so sanh khong con phu thuoc thoi diem chay that."""
+    frozen = datetime(2026, 9, 23, 0, 0, 0, tzinfo=timezone.utc)
+
+    class FrozenDatetime(datetime):
+        @classmethod
+        def now(cls, tz=None):
+            return frozen
+
+    monkeypatch.setattr("acquisition.extraction.feedback_loop.datetime", FrozenDatetime)
     request = _request()
     plan = plan_feedback(request)
     result = preview(request)

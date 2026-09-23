@@ -253,16 +253,18 @@ import lại, reindex và hỏi lại cho ra câu trả lời mới có citation
 để thông báo nói rõ "holdout khoá tới sau D15" thay vì báo lỗi schema khó hiểu. Còn lại
 hai model trùng trường và trùng nghĩa.
 
-## 7. Thứ tự — trạng thái 2026-09-22
+## 7. Thứ tự — trạng thái 2026-09-23
 
 1. ✅ Đội 1 chốt bản này, trả lời 6 câu ở mục 5.
 2. ✅ `preview` — không ghi gì, có validator chạy trước.
 3. ✅ `submit` + validate + export bundle, có khoá và hoàn tác.
-4. ⬜ **Đội 2 thay stub bằng adapter thật**, chạy thử trọn vòng trên `REAL_WF_0001`.
-   Có 6 Question đang mở để chọn; `REAL_WF_0001_Q_001` (rationale của `ST_001` —
-   "vì sao ngắt khí nén ở bước này") là ca đã dùng để kiểm thử.
-5. ⬜ Hai đội cùng chạy: phản hồi → revision mới → import → reindex → hỏi lại → citation mở
-   đúng bản mới, bản cũ vẫn mở được bằng `index_build_id` cũ. Đó mới là G2.
+4. ✅ **Đội 2 thay stub bằng adapter thật** (`retrieval/generation/feedback.py:RealFeedbackService`,
+   mặc định từ commit `6179a36`; `KNOWFLOW_FEEDBACK_STUB=1` mới dùng lại stub).
+   `REAL_WF_0001_Q_001` (rationale của `ST_001` — "vì sao ngắt khí nén ở bước này") là ca đã dùng để kiểm thử.
+5. ✅ Hai đội cùng chạy: phản hồi → revision mới → import → reindex → hỏi lại → citation mở
+   đúng bản mới, bản cũ vẫn mở được bằng `index_build_id` cũ. Vòng này được khoá lại bằng
+   `tests/integration/test_feedback_real.py` (submit → import_bundle → build_index → QAService
+   thấy revision/claim/question mới, bản cũ giữ nguyên byte). Đó là G2.
 
 Nhắc cho bước 4–5: sau `submit`, câu trả lời **chưa** đổi cho tới khi đội 2 import và build
 lại index (`reindex_required: true`). Và claim mới vẫn `pending`, nên ở `mode=real` nó chưa

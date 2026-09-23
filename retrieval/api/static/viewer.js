@@ -144,7 +144,8 @@
       if (entry.unresolved_conflicts.length) card.append(node('p', `Conflict chưa giải quyết: ${entry.unresolved_conflicts.join(', ')}`));
       const log = details('Change log và người kiểm');
       for (const event of entry.change_log) {
-        log.append(node('p', `${event.actor_id} · ${event.changed_at}: ${event.reason}`));
+        // Contract muc 5.1: khong co dang nhap, nen actor_id luon la loi tu khai.
+        log.append(node('p', `${event.actor_id} (tự khai, chưa xác thực) · ${event.changed_at}: ${event.reason}`));
         for (const mapping of event.id_mapping) log.append(node('p', `${mapping.old_id} → ${mapping.new_ids.join(', ') || '(không có ID thay thế)'}`));
       }
       for (const event of entry.review_events) log.append(node('p', `${event.target_id} · ${event.dimension}: ${event.decision} · ${event.reviewer_id} (${event.reviewer_role}) · ${event.reviewed_at}${event.note ? '\n' + event.note : ''}`));

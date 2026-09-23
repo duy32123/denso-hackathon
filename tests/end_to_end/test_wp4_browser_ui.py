@@ -137,6 +137,8 @@ def test_english_demo_auto_evidence_fields_revision_history_and_mode_switch(tmp_
         assert page.evaluate("document.querySelectorAll('#citations button').length") > 0
         page.evaluate("const picker = document.querySelector('#workflow-select'); picker.value = [...picker.options].find(x => x.textContent.startsWith('B0_SRC_HAAS_0005')).value; picker.dispatchEvent(new Event('change'))")
         page.wait("document.querySelector('#workflow-status').textContent.includes('B0_SRC_HAAS_0005 r2 ·') && document.querySelector('#workflow-history').textContent.includes('EV_033')")
+        # Contract muc 5.1: nguoi ghi revision la loi tu khai, lich su khong duoc trinh bay nhu da xac thuc.
+        assert "codex (tự khai, chưa xác thực)" in page.evaluate("document.querySelector('#workflow-history').textContent")
         page.evaluate("document.querySelector('[data-claim-id=\"B0_SRC_HAAS_0005_CL_020\"] button').click()")
         page.wait("document.querySelector('#evidence').textContent.includes('B0_SRC_HAAS_0005_EV_033')")
         assert "apply some grease" in page.evaluate("document.querySelector('#evidence blockquote').textContent")

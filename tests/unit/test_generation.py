@@ -311,6 +311,40 @@ def test_answer_language_is_decided_by_code_and_sent_to_both_calls(prepared, que
     assert calls["verify"]["answer_language"] == expected
 
 
+def language_case(prepared, question, text):
+    request, result, corpus = prepared
+    model = StubModel(lambda draft: draft["statements"][0].update(text=text))
+    answer = generate_answer(request.model_copy(update={"question": question}), result, corpus,
+                             model=model, access=EvidenceAccess(REPO_ROOT))
+    return answer, [name for name, _ in model.calls]
+
+
+def test_a_clearly_english_statement_for_a_vietnamese_question_fails_closed(prepared):
+    """The verifier prompt says a wrong-language answer is not an answer, but a rule only the LLM enforces let a
+    pasted English claim through on real/dev (Q058). Code now refuses it before the semantic judge."""
+    answer, calls = language_case(prepared, "Cách tháo nắp che?", "The speaker says to remove the cover by hand, "
+                                  "and then the arm is released.")
+    assert answer.status == "insufficient_evidence" and not answer.citations
+    assert calls == ["draft"]
+
+
+def test_vietnamese_letters_in_an_english_answer_fail_closed(prepared):
+    answer, calls = language_case(prepared, "How is the cover removed?", "Tháo nắp che bằng tay.")
+    assert answer.status == "insufficient_evidence" and calls == ["draft"]
+
+
+@pytest.mark.parametrize("question,text", [
+    ("Cách tháo nắp che?", "Chot khoa dang o vi tri chua khoa truoc khi bat dau."),   # unaccented Vietnamese is valid
+    ("Cách tháo nắp che?", "Tháo nắp che bằng tay trước khi xoay."),
+    ("Cách tháo nắp che?", "Nguồn nêu rằng dùng thước lá to check the gap of the finger."),   # quotes English terms
+    ("How is the cover removed?", "Remove the cover by hand."),
+    ("Cách tháo nắp che?", "Remove the cover"),   # too little English to be sure: the check is deliberately one-sided
+])
+def test_the_language_check_never_rejects_text_it_cannot_be_sure_about(prepared, question, text):
+    answer, calls = language_case(prepared, question, text)
+    assert answer.status == "answered" and calls == ["draft", "verify"]
+
+
 def test_prompts_name_the_supplied_language_instead_of_guessing():
     from retrieval.generation.gemini import DRAFT_POLICY, PROMPT_VERSION, VERIFY_POLICY
 

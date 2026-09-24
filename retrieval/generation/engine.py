@@ -5,6 +5,7 @@ entailment. The model check is additional protection, NEVER human review.
 """
 
 import re
+import unicodedata
 
 from pydantic import ValidationError
 
@@ -12,7 +13,7 @@ from knowflow_contracts.eligibility import claim_blockers
 from knowflow_contracts.enums import QueryMode
 from knowflow_contracts.models import AnswerResponse, Citation, EntityRef, QueryRequest
 from retrieval.indexing.search_index import RetrievalError
-from retrieval.retrieval.query import looks_vietnamese
+from retrieval.retrieval.query import VI_LETTERS, looks_vietnamese
 
 from .evidence import EvidenceAccess
 from .models import AnswerDraft, AnswerModel, InvalidGeneration, Verification
@@ -87,6 +88,25 @@ def numbers(text):
     return set(re.findall(r"(?<!\w)\d+(?:[.,]\d+)*(?:/\d+)?", text))
 
 
+ENGLISH_WORDS = frozenset({"the", "of", "and", "is", "are", "to", "that", "with", "from", "until", "when",
+                           "before", "after", "says", "for", "or"})
+
+
+def in_wrong_language(text: str, answer_language: str) -> bool:
+    """True only when a statement is unmistakably not in the language the code chose for the answer.
+
+    One-sided on purpose. `looks_vietnamese` is tuned to spot Vietnamese questions and says no to a lot of valid
+    unaccented Vietnamese, so "does not look Vietnamese" is not evidence of a wrong answer. Only two cases are
+    certain: an English answer containing Vietnamese-specific letters, and a Vietnamese answer with none that is
+    plainly English (three distinct function words). Anything ambiguous is left to the semantic check.
+    """
+    lowered = unicodedata.normalize("NFC", text).casefold()
+    has_vietnamese_letters = any(char in VI_LETTERS for char in lowered)
+    if answer_language == "en":
+        return has_vietnamese_letters
+    return not has_vietnamese_letters and len(set(re.findall(r"[a-z]+", lowered)) & ENGLISH_WORDS) >= 3
+
+
 def generate_answer(request: QueryRequest, result: dict, corpus: dict, *,
                     model: AnswerModel, access: EvidenceAccess) -> AnswerResponse:
     manifest = corpus["index_manifest"]
@@ -122,6 +142,8 @@ def generate_answer(request: QueryRequest, result: dict, corpus: dict, *,
             item = candidates.get(ref_key(statement.claim_ref))
             if item is None or not statement.text.strip():
                 raise InvalidGeneration("Unapproved claim reference")
+            if in_wrong_language(statement.text, answer_language):
+                raise InvalidGeneration("Statement not in the answer language")
             by_id = {e["evidence"]["evidence_id"]: e for e in item["evidence"]}
             if (len(set(statement.evidence_ids)) != len(statement.evidence_ids)
                     or not set(statement.evidence_ids) <= by_id.keys()):

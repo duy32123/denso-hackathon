@@ -12,7 +12,7 @@ phương án dự phòng. Không đoạn nào được diễn như thể một t
 | 3. Hỏi phần còn thiếu | ✅ | Khóa Gemini |
 | 4. Phản hồi → revision mới | ✅ ghi được, **có điều kiện** | Service D1-B (#34) + adapter (#35). Không làm trên `REAL_WF_0001` — xem đoạn 4 |
 | 5. Hỏi lại, thử sai model | ⚠️ | Câu hỏi lại **chưa thể** ra câu trả lời mới: chưa có công cụ source-review claim sinh từ phản hồi |
-| 6. Kết quả thật và giới hạn | ✅ số retrieval | Nhãn real/dev đã người kiểm (52/52). Chưa có số đo câu trả lời/citation |
+| 6. Kết quả thật và giới hạn | ✅ | Retrieval: nhãn real/dev đã người kiểm. Câu trả lời: lượt chấm đầu tiên ở PR #43 (chờ merge) |
 
 Ngày 23/09 đã chạy thử vòng phản hồi trên **một bản sao repo** (không đụng kho thật):
 `preview` → `submit` ra revision mới đúng như contract. Hai điều phát hiện được ghi ở
@@ -155,9 +155,12 @@ tiền đề cũ không còn đúng, nên không có nhãn để dẫn.
 - **Retrieval trên real/dev** (52 câu, nhãn đã người kiểm, [chi tiết](retrieval_relevance_gate.md)):
   hybrid Recall@5 **25/27** câu có đáp án (0.926), `false_retrieved` 0. Đây là **dev dùng
   để chỉnh cổng**, không phải holdout. Nói số đúng / tổng.
-- **Chưa có số đo câu trả lời và citation trên dữ liệu thật** (mục tiêu ≥90% của kế hoạch).
-  Có đường đo (`evaluation answers`) tách phần code chứng minh được khỏi phần cần người
-  chấm, nhưng chưa chạy trên real.
+- **Câu trả lời trên real/dev** (lượt chấm đầu tiên, PR #43, prompt `grounded-qa-2`):
+  trả lời **24/41** câu trả lời được — **17 câu bị từ chối oan**; không trả lời bừa câu nào
+  (0 `false_answer`); citation đúng **37/40** theo người chấm. Phải nói cả ba số cùng lúc:
+  độ chính xác cao chỉ đúng trên 24 câu hệ thống chọn trả lời, không phải độ phủ.
+  Người chấm chấp nhận nguyên bộ đề xuất do AI soạn; kết quả dao động giữa các lượt.
+  Nếu đã đo lại sau bản sửa bước kiểm (`grounded-qa-3`) thì dùng số mới, ghi rõ lượt nào.
 
 **Không được:** dùng số trên bộ synthetic làm bằng chứng hệ thống hiểu video. Bộ synthetic
 chỉ để thử phần mềm; nếu nhắc tới thì phải nói đúng như vậy.

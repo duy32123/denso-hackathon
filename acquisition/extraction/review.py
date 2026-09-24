@@ -28,6 +28,9 @@ Usage (from the repo root)::
         acquisition/extraction/reviews/REAL_WF_0001.r1.sheet.csv --reviewer-id <github-user> --reviewer-role "D1-C annotation/QA"
     python -m acquisition.extraction.review status  acquisition/extraction/drafts/REAL_WF_0001.r1.draft.json
     python -m acquisition.extraction.review promote acquisition/extraction/drafts/REAL_WF_0001.r1.draft.json
+
+A published snapshot with no draft behind it (one written by feedback) goes through
+the same four commands; ``promote`` then writes r+1 and leaves the snapshot as published.
 """
 from __future__ import annotations
 
@@ -310,9 +313,15 @@ def merge_reviews(snapshot: dict, record: dict) -> dict:
         raise ReviewError(f"claims changed after review, re-check them: {', '.join(stale)}")
 
     merged = copy.deepcopy(snapshot)
+    merged["review_events"] = _apply_decisions(merged, valid)
+    return merged
+
+
+def _apply_decisions(merged: dict, valid: list[tuple[dict, dict]], first: int = 1) -> list[dict]:
+    """Sets each decided claim's review state in `merged`; returns the new ReviewEvents."""
     claims = {c["claim_id"]: c for c in merged["claims"]}
     events = []
-    for n, (session, d) in enumerate(valid, start=1):
+    for n, (session, d) in enumerate(valid, start=first):
         events.append({
             "review_id": f"{merged['workflow_id']}_RV_{n:03d}",
             "target_type": "claim",
@@ -326,8 +335,7 @@ def merge_reviews(snapshot: dict, record: dict) -> dict:
         })
         key = "source_review" if d["dimension"] == "source" else "technical_review"
         claims[d["claim_id"]][key] = d["decision"]  # later sessions override earlier ones
-    merged["review_events"] = events
-    return merged
+    return events
 
 
 def promote(
@@ -355,8 +363,58 @@ def promote(
     result = cw.check_draft_snapshot(draft, merged)
     if not result.report.ok:
         raise ReviewError("reviewed snapshot fails validation:\n  " + "\n  ".join(str(i) for i in result.report.errors))
-    path = cw.write_snapshot(merged, workflows_root / draft["dataset_split"])
-    return path, status
+    return _publish(merged, workflows_root), status
+
+
+def _publish(snapshot: dict, workflows_root: Path) -> Path:
+    # A published revision is immutable (D-02); feedback may have taken this number first (#44).
+    target = workflows_root / snapshot["dataset_split"] / f"{snapshot['workflow_id']}.r{snapshot['revision']}.json"
+    if target.exists():
+        raise ReviewError(
+            f"{snapshot['workflow_id']}@r{snapshot['revision']} is already published ({_show(target)}); "
+            "move the draft to the next free revision, or review the latest published one"
+        )
+    return cw.write_snapshot(snapshot, target.parent)
+
+
+def promote_snapshot(
+    snapshot_path: Path,
+    *,
+    allow_incomplete: bool = False,
+    reviews_dir: Path = REVIEWS_DIR,
+    workflows_root: Path = WORKFLOWS_ROOT,
+    clock: Callable[[], str] = _utc_now,
+) -> tuple[Path, dict]:
+    """Review of a published snapshot (e.g. one written by feedback, which has no draft).
+
+    rN stays as published; its review record becomes r(N+1) with the new ReviewEvents
+    appended after the ones rN already carries (#44).
+    """
+    snapshot = json.loads(snapshot_path.read_text(encoding="utf-8"))
+    wf, rev = snapshot["workflow_id"], snapshot["revision"]
+    record = load_record(wf, rev, reviews_dir)
+    status = review_status(snapshot, record)
+    valid, _ = _valid_decisions(snapshot, record)  # a published snapshot never changes, so nothing is stale
+    if not valid:
+        raise ReviewError(f"no review recorded for {wf}@r{rev}; run sheet and apply first")
+    states = {c["claim_id"]: c["source_review"] for c in snapshot["claims"]}
+    open_items = [c for c in status["pending"] if states[c] == "pending"] + status["rejected"]
+    if open_items and not allow_incomplete:
+        raise ReviewError(f"still pending or rejected: {', '.join(open_items)} (or pass --allow-incomplete)")
+
+    new = copy.deepcopy(snapshot)
+    new.update(revision=rev + 1, supersedes_revision=rev, created_at=clock())
+    new["review_events"] = snapshot["review_events"] + _apply_decisions(new, valid, len(snapshot["review_events"]) + 1)
+    reviewers = sorted({s["reviewer_id"] for s, _ in valid})
+    decided = sorted({d["claim_id"] for _, d in valid})
+    new["change_log"] = snapshot["change_log"] + [{
+        "changed_at": new["created_at"], "actor_id": ", ".join(reviewers), "previous_revision": rev, "id_mapping": [],
+        "reason": f"source review of r{rev}: {', '.join(decided)}",
+    }]
+    report = cw.check_snapshot(new).report
+    if not report.ok:
+        raise ReviewError("reviewed snapshot fails validation:\n  " + "\n  ".join(str(i) for i in report.errors))
+    return _publish(new, workflows_root), status
 
 
 # --- CLI -------------------------------------------------------------------------
@@ -371,9 +429,17 @@ def _show(path: Path) -> str:
 # arguments) so tests can point it at a temporary directory.
 
 
+def _is_published(data: dict) -> bool:
+    return "schema_version" in data  # compiled snapshot; drafts never carry it
+
+
 def _load_draft_snapshot(draft_path: str) -> tuple[dict, dict]:
-    draft = json.loads(Path(draft_path).read_text(encoding="utf-8"))
-    return draft, cw.compile_draft(draft)
+    data = json.loads(Path(draft_path).read_text(encoding="utf-8"))
+    if _is_published(data):
+        # No draft behind it (feedback): whoever made the last change authored the new claims.
+        author = data["change_log"][-1]["actor_id"] if data["change_log"] else None
+        return {"dataset_split": data["dataset_split"], "authored_by": author}, data
+    return data, cw.compile_draft(data)
 
 
 def _sources(split: str) -> dict[str, dict]:
@@ -416,7 +482,9 @@ def _cmd_status(args) -> int:
 
 
 def _cmd_promote(args) -> int:
-    path, status = promote(Path(args.draft), allow_incomplete=args.allow_incomplete,
+    source = Path(args.draft)
+    publish = promote_snapshot if _is_published(json.loads(source.read_text(encoding="utf-8"))) else promote
+    path, status = publish(source, allow_incomplete=args.allow_incomplete,
                            reviews_dir=REVIEWS_DIR, workflows_root=WORKFLOWS_ROOT)
     print(f"promoted -> {_show(path)} ({status['source_checked']}/{status['claims']} source_checked). "
           "Next: python -m acquisition.export.exporter --split dev --check")

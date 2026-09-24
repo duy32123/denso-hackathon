@@ -199,8 +199,12 @@ report (`475db91`) là merge cục bộ của hai nhánh đó. Không có lỗi 
   không có chữ "mounting" — nên claim nói quá nguồn và hai citation bị đánh `false`. Lỗi nằm ở claim của B0, không
   phải ở model (`REAL_WF_0001_CL_015` chỉ nói "move the pocket up and down freely"). Tổng cộng **5 citation `false`**:
   Q005, Q021 (claim nói quá nguồn) và Q007, Q010, Q066 (câu gộp nội dung của claim bên cạnh mà bước kiểm của
-  pipeline vẫn cho qua). Ghi trong `note` của verdict. Hai mục vẫn **chưa được kiểm độc lập**: keyframe của Q064
-  và ngôn ngữ trả lời của Q058 (giữ `true` như bộ đề xuất).
+  pipeline vẫn cho qua). Ghi trong `note` của verdict. Hai mục còn lại đã được xử lý: **Q064** — người kiểm mở keyframe
+  `kf_0123000.jpg` và xác nhận hai trạng thái Carousel/Double arm đều đọc OK. **Q058** — nội dung khớp đúng TG0128
+  (mã 45-0075, 0.01 in / 0.25 mm) nhưng câu trả lời là **tiếng Anh cho câu hỏi tiếng Việt**, lỗi của pipeline mà bước
+  kiểm bằng model bỏ sót; giữ `true` vì nội dung trả lời đúng câu hỏi (chấm chặt theo quy tắc ngôn ngữ thì
+  `answers_question` là 23/24 = 0.958, còn hai chỉ số citation không đổi). Cổng kiểm bằng code cho lỗi này nằm ở
+  PR #51, chưa nằm trong mã đã chạy lượt này.
 - **Đây là dev, không phải holdout**, và pipeline được sửa dựa trên việc phát lại chính các câu dev này.
 - **Kết quả dao động giữa các lượt chạy.** Bước kiểm của model không tất định dù temperature 0: Q002, Q003,
   Q007 từ chối ở một lượt và trả lời ở lượt kế; Q004, Q011, Q024, Q027 thì ngược lại.
@@ -229,5 +233,7 @@ Chấm điểm bằng `rescore`, không dùng `answers --verdicts` (lệnh đó 
       screws". Chưa sửa ở đây vì đó là dữ liệu corpus có checksum.
 - [ ] Giảm 17 câu từ chối oan bằng thay đổi prompt hoặc thiết kế trả lời, rồi đo lại trên tập độc lập,
       không phải trên chính các câu dev này.
-- [ ] Kiểm độc lập 2 mục còn lại của lượt verdict này (keyframe Q064, ngôn ngữ trả lời Q058).
+- [x] Kiểm nốt hai mục của lượt verdict này: keyframe Q064 (xác nhận OK); ngôn ngữ trả lời Q058 (ghi nhận, cổng
+      kiểm bằng code ở PR #51).
+- [ ] Merge PR #51 (từ chối bằng code câu trả lời sai ngôn ngữ rõ ràng) rồi đo lại; các số trên mô tả mã trước PR đó.
 - [ ] Quét lại ngưỡng cổng liên quan trên đủ 66 câu, vì nó phụ thuộc cỡ corpus.

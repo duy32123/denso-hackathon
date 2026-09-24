@@ -181,22 +181,26 @@ report (`475db91`) là merge cục bộ của hai nhánh đó. Không có lỗi 
 | Trả lời khi nguồn không đủ (`false_answer`) | **0** |
 | Câu phải từ chối / hỏi lại, xử lý đúng | 24/24 và 1/1 |
 | Citation hợp lệ theo code, leakage | 40/40, 0 |
-| `citation_correctness` (người kiểm) | **0.925** (37/40) |
-| `answer_groundedness` (người kiểm) | **0.955** |
+| `citation_correctness` (người kiểm) | **0.875** (35/40) |
+| `answer_groundedness` (người kiểm) | **0.872** |
 | `answers_question` (người kiểm) | 24/24 |
 | Chi phí | 83 lần gọi, 848.796 token vào, 18.806 ra; không tính USD vì chưa nhập bảng giá |
 
 **Giới hạn phải nêu kèm mọi con số ở trên:**
 
 - **Đây là độ chính xác trên 24 câu hệ thống chọn trả lời, không phải độ phủ.** 17 câu trả lời được đã bị
-  từ chối. Tài liệu đang nói hai cách về ngưỡng ≥0.90: nếu là status accuracy (như
-  [data/eval/README.md](../data/eval/README.md) ghi ở phần retrieval) thì **chưa đạt** (0.742); nếu là
-  `citation_correctness` / `answer_groundedness` (như bảng chỉ số tầng câu trả lời) thì đạt trên tập con
-  đã trả lời (0.925 / 0.955). Cần đội chốt ngưỡng nào áp dụng.
-- **Người kiểm `quyhienln` chấp nhận nguyên bộ đề xuất do AI soạn** ("accept all"), ghi trong `note` của
-  verdict. Bộ đó gồm 3 citation đánh `false` (Q007, Q010, Q066: câu gộp nội dung của claim bên cạnh mà bước kiểm
-  của pipeline vẫn cho qua) và 4 mục được đánh dấu cần tự kiểm nhưng **chưa được kiểm độc lập**: âm thanh của
-  Q005/Q021, keyframe của Q064, ngôn ngữ trả lời của Q058.
+  từ chối. **Ngưỡng ≥0.90 chưa đạt theo cả hai cách đọc.** Tài liệu nói hai cách về ngưỡng này: nếu là status
+  accuracy (như [data/eval/README.md](../data/eval/README.md) ghi ở phần retrieval) thì 0.742; nếu là
+  `citation_correctness` / `answer_groundedness` (như bảng chỉ số tầng câu trả lời) thì 0.875 / 0.872 ngay trên
+  tập con đã trả lời. Vẫn cần đội chốt ngưỡng nào áp dụng, nhưng kết luận "chưa đạt" không đổi.
+- **Người kiểm `quyhienln` nhận bộ đề xuất do AI soạn rồi đổi hai citation sau khi nghe lại video.** Lượt chấm
+  đầu ("accept all") cho 0.925 / 0.955. Q005 và Q021 cite `B0_SRC_HAAS_0005_CL_014` ("gain access to *mounting
+  screws*"); người kiểm nghe SRC_HAAS_0005 ở 1:33–1:47 thì nguồn nói "freely to get to **that screw**" — số ít, và
+  không có chữ "mounting" — nên claim nói quá nguồn và hai citation bị đánh `false`. Lỗi nằm ở claim của B0, không
+  phải ở model (`REAL_WF_0001_CL_015` chỉ nói "move the pocket up and down freely"). Tổng cộng **5 citation `false`**:
+  Q005, Q021 (claim nói quá nguồn) và Q007, Q010, Q066 (câu gộp nội dung của claim bên cạnh mà bước kiểm của
+  pipeline vẫn cho qua). Ghi trong `note` của verdict. Hai mục vẫn **chưa được kiểm độc lập**: keyframe của Q064
+  và ngôn ngữ trả lời của Q058 (giữ `true` như bộ đề xuất).
 - **Đây là dev, không phải holdout**, và pipeline được sửa dựa trên việc phát lại chính các câu dev này.
 - **Kết quả dao động giữa các lượt chạy.** Bước kiểm của model không tất định dù temperature 0: Q002, Q003,
   Q007 từ chối ở một lượt và trả lời ở lượt kế; Q004, Q011, Q024, Q027 thì ngược lại.
@@ -220,8 +224,10 @@ Chấm điểm bằng `rescore`, không dùng `answers --verdicts` (lệnh đó 
       người kiểm `quyhienln` duyệt 2026-09-24 (14 `ok`).
 - [x] Chạy `evaluation answers` và có human verdict cho `citation_correctness` / `answer_groundedness`
       (xem mục trên, kèm giới hạn).
-- [ ] Đội chốt ngưỡng ≥0.90 áp cho chỉ số nào (status accuracy hay citation/groundedness).
+- [ ] Đội chốt ngưỡng ≥0.90 áp cho chỉ số nào (status accuracy hay citation/groundedness); hiện chưa đạt cả hai.
+- [ ] Đội 1 sửa claim `B0_SRC_HAAS_0005_CL_014`: nguồn nói "get to that screw", claim nói "gain access to mounting
+      screws". Chưa sửa ở đây vì đó là dữ liệu corpus có checksum.
 - [ ] Giảm 17 câu từ chối oan bằng thay đổi prompt hoặc thiết kế trả lời, rồi đo lại trên tập độc lập,
       không phải trên chính các câu dev này.
-- [ ] Kiểm độc lập 4 mục chưa kiểm của lượt verdict này (Q005/Q021, Q064, Q058).
+- [ ] Kiểm độc lập 2 mục còn lại của lượt verdict này (keyframe Q064, ngôn ngữ trả lời Q058).
 - [ ] Quét lại ngưỡng cổng liên quan trên đủ 66 câu, vì nó phụ thuộc cỡ corpus.

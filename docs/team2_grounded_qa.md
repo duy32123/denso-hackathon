@@ -75,19 +75,41 @@ mở. Giữ caption nội bộ pilot theo `Source.access_note`; không phân ph�
    thỏa `claim_blockers`; giữ nguyên source/technical review từ snapshot.
 3. Chỉ link `supported` có evidence mở được mới đưa vào generator. ID tự sinh,
    số liệu không nằm trong quote/observation đã cite, citation rỗng, procedure thiếu
-   bước đều bị chặn. Không âm thầm bỏ bước rồi trình bày như quy trình đầy đủ.
+   bước hoặc sai thứ tự đều bị chặn. Không âm thầm bỏ bước rồi trình bày như quy trình đầy đủ.
 4. Lượt kiểm nghĩa chỉ nhận claim/evidence **đã cite cho từng statement**, không
    được dùng claim lân cận để cứu một citation sai. Nếu có statement không đạt, toàn
    bộ câu trả lời chuyển `insufficient_evidence`. Không tự fallback ra kiến thức chung.
 5. Ngôn ngữ câu trả lời do **code** quyết định (`looks_vietnamese`) rồi truyền
-   `answer_language` xuống **cả** lượt soạn lẫn lượt kiểm (prompt `grounded-qa-2`). Trước đó
+   `answer_language` xuống **cả** lượt soạn lẫn lượt kiểm (từ prompt `grounded-qa-2`). Trước đó
    mỗi lượt tự đoán: câu hỏi tiếng Việt trên evidence tiếng Anh thì lượt soạn hay viết tiếng
-   Anh, lượt kiểm bắt "sai ngôn ngữ" và vứt cả câu trả lời đúng. Đã kiểm bằng model giả;
-   **chưa kiểm lại với Gemini thật**. Claim/quote gốc không dịch.
+   Anh, lượt kiểm bắt "sai ngôn ngữ" và vứt cả câu trả lời đúng. Kiểm với Gemini thật ngày
+   19/09 trên synthetic: 18/18 câu trả lời tiếng Việt (bản cũ 9/20), xem #25. Claim/quote gốc
+   không dịch.
    Chỉ source_checked phải ghi “Theo nguồn (chưa có xác nhận kỹ thuật)” (hoặc tương đương
    tiếng Anh); synthetic luôn ghi dữ liệu mô phỏng. Không tự nâng technical review.
 6. Index đổi khi đang trả lời → 503 để thử lại; không trả answer từ build stale.
    Citation cũ vẫn mở đúng snapshot cũ qua `index_build_id`, không tự nhảy latest.
+7. Lượt kiểm nhận **đúng câu trả lời người dùng sẽ đọc** (`answer`, theo thứ tự) và
+   `step_ids` của từng statement (prompt `grounded-qa-3`). Trước đó nó chỉ thấy các mục
+   `{statement, claim, evidence}` rời rạc, nên với câu hỏi quy trình hay trả
+   `answers_question=false` dù mọi statement `supported` và code đã chứng minh đủ bước —
+   lý do nó tự ghi: *"không có câu trả lời để kiểm"*, *"chỉ đưa statement chứ không trả lời
+   trực tiếp"*.
+8. **Thứ tự bước do code chứng minh**, không giao cho lượt kiểm: với câu `procedure`, các
+   statement gắn đúng một Step phải theo `display_order` (claim nối hai Step không xét).
+   Trên Gemini thật, quy trình bị đảo ngược vẫn lọt lượt kiểm 7/8 lần với `grounded-qa-2`.
+
+Đo trên Gemini thật ngày 24/09, **chỉ dữ liệu synthetic**, nhãn draft (số gỡ lỗi, không
+phải kết quả):
+
+| 8 câu `quy_trinh` × 3 lượt | `grounded-qa-2` | `grounded-qa-3` + cổng thứ tự |
+|---|---|---|
+| Quy trình đúng được trả lời | 13/24 | 20/24 |
+| Quy trình bị đảo ngược lọt thành `answered` | 7/8 | **0/8** (chặn trước lượt kiểm) |
+| 20 câu `thieu_evidence` lọt thành `answered` | 0/20 | 0/20 |
+
+4 lần còn lại bị từ chối: draft cite sai evidence ID (cổng code chặn, đúng) và lượt kiểm
+dao động ở câu trả lời dài 25 statement. Cả hai đều là từ chối, không phải trả lời sai.
 
 Adapter gửi schema cấu trúc inline qua `response_json_schema`: endpoint live từ
 chối `additional_properties` do đường `response_schema` của SDK tạo ra, và cũng

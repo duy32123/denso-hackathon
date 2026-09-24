@@ -133,14 +133,27 @@ def generate_answer(request: QueryRequest, result: dict, corpus: dict, *,
                 raise InvalidGeneration("Number missing from cited evidence")
             cited.append(statement.claim_ref)
             checked_statements.append({"statement": statement.model_dump(mode="json"),
+                                       "step_ids": item["matched_step_ids"],
                                        "claim": item["claim"], "evidence": selected})
         if procedure:
             covered = {sid for ref in cited for sid in candidates[ref_key(ref)]["matched_step_ids"]}
             if not {step["step_id"] for step in result["steps"]} <= covered:
                 raise InvalidGeneration("Incomplete procedure")
+            # Thu tu do code chung minh, khong giao cho luot kiem: tren Gemini that, quy trinh
+            # bi dao nguoc van lot luot kiem 7/8 lan (prompt cu) va 3/8 (prompt moi).
+            # Claim noi hai Step (relation) khong mang mot vi tri nen khong xet.
+            order = {step["step_id"]: step["display_order"] for step in result["steps"]}
+            positions = [order[ids[0]] for ids in (candidates[ref_key(ref)]["matched_step_ids"] for ref in cited)
+                         if len(ids) == 1 and ids[0] in order]
+            if positions != sorted(positions):
+                raise InvalidGeneration("Procedure out of order")
         # Do NOT show the verifier unrelated claims that could rescue an invalid citation.
+        # `answer` la dung cau tra loi nguoi dung se doc, theo dung thu tu. Thieu no, luot
+        # kiem chi thay cac muc {statement, claim, evidence} roi rac va hay ket luan "khong
+        # co cau tra loi" cho ca quy trinh day du, dung thu tu, moi cau deu supported.
         verification = Verification.model_validate(model.verify({
             "question": request.question, "answer_language": answer_language,
+            "answer": [statement.text.strip() for statement in draft.statements],
             "context": result["context"], "intent": payload["intent"],
             "steps": result["steps"], "relations": result["relations"], "questions": result["questions"],
             "statements": checked_statements,

@@ -183,7 +183,7 @@ report (`475db91`) là merge cục bộ của hai nhánh đó. Không có lỗi 
 | Citation hợp lệ theo code, leakage | 40/40, 0 |
 | `citation_correctness` (người kiểm) | **0.875** (35/40) |
 | `answer_groundedness` (người kiểm) | **0.872** |
-| `answers_question` (người kiểm) | 24/24 |
+| `answers_question` (người kiểm) | 23/24 (0.958) |
 | Chi phí | 83 lần gọi, 848.796 token vào, 18.806 ra; không tính USD vì chưa nhập bảng giá |
 
 **Giới hạn phải nêu kèm mọi con số ở trên:**
@@ -202,9 +202,12 @@ report (`475db91`) là merge cục bộ của hai nhánh đó. Không có lỗi 
   pipeline vẫn cho qua). Ghi trong `note` của verdict. Hai mục còn lại đã được xử lý: **Q064** — người kiểm mở keyframe
   `kf_0123000.jpg` và xác nhận hai trạng thái Carousel/Double arm đều đọc OK. **Q058** — nội dung khớp đúng TG0128
   (mã 45-0075, 0.01 in / 0.25 mm) nhưng câu trả lời là **tiếng Anh cho câu hỏi tiếng Việt**, lỗi của pipeline mà bước
-  kiểm bằng model bỏ sót; giữ `true` vì nội dung trả lời đúng câu hỏi (chấm chặt theo quy tắc ngôn ngữ thì
-  `answers_question` là 23/24 = 0.958, còn hai chỉ số citation không đổi). Cổng kiểm bằng code cho lỗi này nằm ở
-  PR #51, chưa nằm trong mã đã chạy lượt này.
+  kiểm bằng model bỏ sót. Người kiểm **giao quyết định này cho Claude**, và Claude chọn `answers_question=false`:
+  quy tắc của chính pipeline nói câu trả lời sai ngôn ngữ không phải là câu trả lời, và PR #51 đã đưa đúng quy tắc
+  đó vào code; giữ `true` sẽ tự mâu thuẫn, và với một chỉ số báo cáo thì sai lệch làm số đẹp lên tệ hơn sai lệch làm
+  số xấu đi. Citation của Q058 vẫn `true` vì nội dung được nguồn hỗ trợ đúng, nên hai chỉ số citation không đổi. Đây
+  là verdict do AI quyết theo ủy quyền, không phải do người kiểm chấm; `note` của verdict ghi rõ điều đó. Cổng kiểm
+  bằng code cho lỗi này nằm ở PR #51, chưa nằm trong mã đã chạy lượt này.
 - **Đây là dev, không phải holdout**, và pipeline được sửa dựa trên việc phát lại chính các câu dev này.
 - **Kết quả dao động giữa các lượt chạy.** Bước kiểm của model không tất định dù temperature 0: Q002, Q003,
   Q007 từ chối ở một lượt và trả lời ở lượt kế; Q004, Q011, Q024, Q027 thì ngược lại.
@@ -233,7 +236,8 @@ Chấm điểm bằng `rescore`, không dùng `answers --verdicts` (lệnh đó 
       screws". Chưa sửa ở đây vì đó là dữ liệu corpus có checksum.
 - [ ] Giảm 17 câu từ chối oan bằng thay đổi prompt hoặc thiết kế trả lời, rồi đo lại trên tập độc lập,
       không phải trên chính các câu dev này.
-- [x] Kiểm nốt hai mục của lượt verdict này: keyframe Q064 (xác nhận OK); ngôn ngữ trả lời Q058 (ghi nhận, cổng
-      kiểm bằng code ở PR #51).
+- [x] Kiểm nốt hai mục của lượt verdict này: keyframe Q064 (người kiểm xác nhận OK); ngôn ngữ trả lời Q058
+      (Claude quyết `answers_question=false` theo ủy quyền; cổng kiểm bằng code ở PR #51).
+- [ ] Người kiểm xác nhận lại verdict Q058 do Claude quyết (đổi thành `true` chỉ làm `answers_question` về 24/24).
 - [ ] Merge PR #51 (từ chối bằng code câu trả lời sai ngôn ngữ rõ ràng) rồi đo lại; các số trên mô tả mã trước PR đó.
 - [ ] Quét lại ngưỡng cổng liên quan trên đủ 66 câu, vì nó phụ thuộc cỡ corpus.

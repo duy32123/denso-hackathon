@@ -91,16 +91,15 @@ def test_invalid_draft_fails_closed(prepared, change):
     assert answer.status == "insufficient_evidence" and answer.citations == []
 
 
-def test_evidence_ids_not_linked_to_the_claim_are_dropped_and_never_cited(prepared):
-    """One stray evidence ID used to discard a whole, otherwise valid, multi-statement answer."""
+def test_an_evidence_id_not_linked_to_the_claim_fails_closed(prepared):
+    """A stray id is not noise: on real/dev it was the evidence for extra content the model had merged into a
+    one-claim statement (a 'press E-stop' sentence cited to a claim that never mentions the E-stop). Dropping
+    the id kept the sentence and lost its support, and the verifier, which only sees what is left, passed it."""
     model = StubModel(lambda d: d["statements"][0].update(
         evidence_ids=d["statements"][0]["evidence_ids"] + ["invented"]))
     answer = generate(prepared, model)
-    assert answer.status == "answered"
-    linked = {e["evidence"]["evidence_id"] for e in prepared[1]["claims"][0]["evidence"]}
-    assert set(answer.citations[0].evidence_ids) <= linked and "invented" not in answer.citations[0].evidence_ids
-    verified = dict(model.calls)["verify"]["statements"][0]["evidence"]
-    assert all(e["evidence"]["evidence_id"] in linked for e in verified)
+    assert answer.status == "insufficient_evidence" and not answer.citations
+    assert [name for name, _ in model.calls] == ["draft"]  # rejected by code before the semantic judge
 
 
 def test_duplicate_evidence_ids_still_fail_closed(prepared):

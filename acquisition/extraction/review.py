@@ -355,6 +355,13 @@ def promote(
     result = cw.check_draft_snapshot(draft, merged)
     if not result.report.ok:
         raise ReviewError("reviewed snapshot fails validation:\n  " + "\n  ".join(str(i) for i in result.report.errors))
+    # A published revision is immutable (D-02); feedback may have taken this number first (#44).
+    target = workflows_root / draft["dataset_split"] / f"{snapshot['workflow_id']}.r{snapshot['revision']}.json"
+    if target.exists():
+        raise ReviewError(
+            f"{snapshot['workflow_id']}@r{snapshot['revision']} is already published ({_show(target)}); "
+            f"move the draft to r{snapshot['revision'] + 1} with supersedes_revision={snapshot['revision']}"
+        )
     path = cw.write_snapshot(merged, workflows_root / draft["dataset_split"])
     return path, status
 

@@ -258,6 +258,17 @@ def test_fully_reviewed_draft_is_promoted_for_the_exporter(promote_env, snapshot
     assert cw.check_snapshot(promoted).report.ok
 
 
+def test_promotion_never_overwrites_a_published_revision(promote_env):
+    # #44: a feedback submit can publish rN before an older rN draft is promoted.
+    published = promote_env["workflows_root"] / "dev" / "REAL_WF_0001.r1.json"
+    published.parent.mkdir(parents=True)
+    published.write_text('{"from": "feedback"}\n', encoding="utf-8")
+    with pytest.raises(rv.ReviewError, match="REAL_WF_0001@r1 is already published"):
+        rv.promote(promote_env["draft_path"], allow_incomplete=True,
+                   reviews_dir=promote_env["reviews_dir"], workflows_root=promote_env["workflows_root"])
+    assert published.read_text(encoding="utf-8") == '{"from": "feedback"}\n'
+
+
 def test_allow_incomplete_promotes_with_pending_claims_left_pending(promote_env, snapshot, sources):
     rv.append_session(rv.load_record("REAL_WF_0001", 1, promote_env["reviews_dir"]),
                       session(snapshot, filled(snapshot, sources, only={"REAL_WF_0001_CL_001"})), promote_env["reviews_dir"])

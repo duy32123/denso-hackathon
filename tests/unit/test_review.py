@@ -313,6 +313,70 @@ def test_cli_flow_sheet_apply_status_promote(monkeypatch, tmp_path, capsys):
     assert {p.relative_to(repo_dev): p.read_bytes() for p in repo_dev.rglob("*") if p.is_file()} == before
 
 
+@pytest.fixture
+def feedback_snapshot(monkeypatch, tmp_path) -> Path:
+    """A feedback revision as `feedback_service.submit` publishes it: no draft behind it."""
+    from acquisition.extraction.feedback_loop import apply_expert_feedback
+
+    base = json.loads((cw.REPO_ROOT / "data" / "workflows" / "dev" / "REAL_WF_0003.r2.json").read_text(encoding="utf-8"))
+    new, source = apply_expert_feedback(
+        snapshot=base, target_question_id="REAL_WF_0003_Q_001", expert_name="Tech A", expert_role="technician",
+        answer_text="Because the spindle must be stopped first.", actor_id="tech-a",
+        clock=lambda: "2026-09-24T00:00:00Z",
+    )
+    path = cw.write_snapshot(new, tmp_path / "workflows" / "dev")
+    sources = tmp_path / "sources.jsonl"  # submit appends the feedback Source to the split's store
+    sources.write_text(rv.exporter.SPLITS["dev"]["sources"].read_text(encoding="utf-8")
+                       + json.dumps(source, ensure_ascii=False, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
+    monkeypatch.setitem(rv.exporter.SPLITS["dev"], "sources", sources)
+    monkeypatch.setattr(rv, "REVIEWS_DIR", tmp_path / "reviews")
+    monkeypatch.setattr(rv, "WORKFLOWS_ROOT", tmp_path / "workflows")
+    return path
+
+
+def sheet_checking_last_claim(snapshot_path: Path, tmp_path: Path) -> Path:
+    """`sheet` on the snapshot, then mark only the feedback claim source_checked."""
+    import csv
+
+    assert rv.main(["sheet", str(snapshot_path)]) == 0
+    new_claim = json.loads(snapshot_path.read_text(encoding="utf-8"))["claims"][-1]["claim_id"]
+    sheet = tmp_path / "reviews" / snapshot_path.name.replace(".json", ".sheet.csv")
+    rows = rv.read_sheet(sheet)
+    for row in rows:
+        row["decision"] = "source_checked" if row["claim_id"] == new_claim else ""
+    with sheet.open("w", encoding="utf-8-sig", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=rv.SHEET_COLUMNS)
+        writer.writeheader()
+        writer.writerows(rows)
+    return sheet
+
+
+def test_feedback_claim_is_reviewed_into_the_next_revision(feedback_snapshot, tmp_path):
+    """#44: review a published snapshot directly; the reviewed result is r+1, never r in place."""
+    before = feedback_snapshot.read_bytes()
+    r3 = json.loads(before)
+    new_claim = r3["claims"][-1]["claim_id"]
+
+    sheet = sheet_checking_last_claim(feedback_snapshot, tmp_path)
+    assert rv.main(["apply", str(feedback_snapshot), str(sheet), "--reviewer-id", "d1c", "--reviewer-role", "D1-C"]) == 0
+    assert rv.main(["promote", str(feedback_snapshot)]) == 0
+
+    r4 = json.loads((tmp_path / "workflows" / "dev" / "REAL_WF_0003.r4.json").read_text(encoding="utf-8"))
+    assert feedback_snapshot.read_bytes() == before
+    assert (r4["revision"], r4["supersedes_revision"]) == (4, 3)
+    assert r4["change_log"][:-1] == r3["change_log"] and r4["change_log"][-1]["previous_revision"] == 3
+    assert all(c["source_review"] == "source_checked" for c in r4["claims"])
+    assert r4["review_events"][:-1] == r3["review_events"]
+    assert r4["review_events"][-1]["target_id"] == new_claim
+    assert cw.check_snapshot(r4).report.ok
+
+
+def test_feedback_responder_cannot_source_check_their_own_answer(feedback_snapshot, tmp_path, capsys):
+    sheet = sheet_checking_last_claim(feedback_snapshot, tmp_path)
+    assert rv.main(["apply", str(feedback_snapshot), str(sheet), "--reviewer-id", "tech-a", "--reviewer-role", "x"]) == 1
+    assert "someone else" in capsys.readouterr().err
+
+
 def test_the_committed_draft_has_been_source_checked(snapshot):
     """D1-A keyframe-evidence hardening (2026-09-14): the compiler bug fix that makes a
     keyframe's locator come from the verified media inventory instead of a fabricated

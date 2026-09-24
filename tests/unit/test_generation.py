@@ -317,4 +317,61 @@ def test_prompts_name_the_supplied_language_instead_of_guessing():
     assert "answer_language" in DRAFT_POLICY and "answer_language" in VERIFY_POLICY
     assert "language of the question" not in DRAFT_POLICY
     # Cau truc prompt doi thi verdict cu cua nguoi kiem khong con dung cho cau tra loi moi.
-    assert PROMPT_VERSION == "grounded-qa-2"
+    assert PROMPT_VERSION == "grounded-qa-3"
+
+
+def test_verifier_sees_the_answer_text_in_order_and_each_statements_steps(prepared):
+    """Luot kiem phai thay dung cau tra loi nguoi dung doc, khong chi cac muc roi rac.
+
+    Thieu `answer`, Gemini hay tra answers_question=false cho quy trinh day du, dung thu
+    tu, moi cau supported ("khong co cau tra loi de kiem"). `step_ids` de no doi chieu
+    duoc do phu va thu tu buoc ma code da chung minh.
+    """
+    request, result, corpus = prepared
+    model = StubModel()
+    answer = generate_answer(request, result, corpus, model=model, access=EvidenceAccess(REPO_ROOT))
+    verify = dict(model.calls)["verify"]
+    assert verify["answer"] == [c.answer_span for c in answer.citations]
+    assert [s["statement"]["text"].strip() for s in verify["statements"]] == verify["answer"]
+    item = next(c for c in result["claims"] if c["claim_ref"] == verify["statements"][0]["statement"]["claim_ref"])
+    assert verify["statements"][0]["step_ids"] == item["matched_step_ids"]
+    # Khong mo rong ra claim khong duoc cite (engine.py: khong cuu citation sai bang claim lan can).
+    assert "candidates" not in verify
+
+
+@pytest.fixture
+def procedure(tmp_path):
+    db = tmp_path / "kb.sqlite"
+    import_bundle(FIXTURE_ROOT / "F01_complete", db, source_type="synthetic", split="dev")
+    build_index(db, mode="synthetic", split="dev")
+    request = QueryRequest(question="Quy trình tháo nắp che gồm những bước nào?",
+                           context=QueryContext(machine_model="DEMO_TC_A"), mode="synthetic", dataset_split="dev")
+    result = retrieve(db, request, config=RetrievalConfig(strategy="lexical"))
+    assert result["status"] == "retrieved" and result["trace"]["intent"] == "procedure"
+    return request, result, read_corpus(db, "synthetic", "dev")
+
+
+def one_claim_per_step(payload, reverse):
+    """Draft mot statement cho moi Step, theo display_order hoac nguoc lai."""
+    by_step = {}
+    for item in payload["candidates"]:
+        if len(item["matched_step_ids"]) == 1:
+            by_step.setdefault(item["matched_step_ids"][0], item)
+    steps = sorted(payload["steps"], key=lambda s: s["display_order"], reverse=reverse)
+    return {"status": "answered", "statements": [
+        {"text": by_step[s["step_id"]]["claim"]["text"], "claim_ref": copy.deepcopy(by_step[s["step_id"]]["claim_ref"]),
+         "evidence_ids": [by_step[s["step_id"]]["evidence"][0]["evidence"]["evidence_id"]]} for s in steps]}
+
+
+@pytest.mark.parametrize("reverse,expected", [(False, "answered"), (True, "insufficient_evidence")])
+def test_procedure_order_is_proved_by_code_not_left_to_the_verifier(procedure, reverse, expected):
+    """Luot kiem cua Gemini de lot quy trinh dao nguoc; code phai chan truoc khi goi no."""
+    class Model(StubModel):
+        def draft(self, payload):
+            self.calls.append(("draft", payload))
+            return AnswerDraft.model_validate(one_claim_per_step(payload, reverse))
+
+    model = Model()   # verify cua stub luon noi "dung": neu chan duoc thi la do code
+    answer = generate(procedure, model)
+    assert answer.status == expected
+    assert [name for name, _ in model.calls] == (["draft", "verify"] if not reverse else ["draft"])

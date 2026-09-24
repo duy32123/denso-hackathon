@@ -109,5 +109,6 @@ không dùng metadata/pending claim làm bằng chứng, biên workflow/conflict
 truy vấn ngắn, alias slider/slide và từ chối trước khi gọi embedding ở cả ba strategy.
 
 Đây vẫn là heuristic phụ thuộc corpus. Cần kiểm lại khi thêm nguồn và đánh giá
-riêng trên tập độc lập sau khi khóa pipeline. Các việc D2-A khác — review 14 nhãn
-draft và đo tầng câu trả lời với human verdict — chưa được hoàn tất bởi bản sửa này.
+riêng trên tập độc lập sau khi khóa pipeline. Việc D2-A review 14 nhãn
+draft (Q055–Q068) đã xong ngày 2026-09-24 (`quyhienln`, 14 `ok`); số đo trong trang này vẫn
+là trên tập trước lượt kiểm đó. Việc còn lại: đo tầng câu trả lời với human verdict.

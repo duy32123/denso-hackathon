@@ -212,6 +212,7 @@ def apply_expert_feedback(
     reserved_ids: Iterable[str] | None = None,
     answer_language: str | None = None,
     clock: Callable[[], str] = _utc_now,
+    actor_id: str | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     """Applies expert answer to a workflow snapshot:
     - Creates expert_answer Source record.
@@ -230,6 +231,9 @@ def apply_expert_feedback(
     `answer_language`: ngon ngu **thuc te** cua phan hoi (D-03). Mac dinh lay theo
     workflow, nhung mot cau tra loi tieng Viet tren workflow tieng Anh la mot nguon
     tieng Viet -- ghi 'en' cho no la khai sai ngon ngu nguon.
+
+    `actor_id`: ma nguoi tra loi (tu khai) ghi vao `change_log`. CLI khong co ma
+    nay nen roi ve `expert_name`.
     """
     if resolution_status not in ("answered", "resolved"):
         raise ValueError(f"resolution_status phải là 'answered' hoặc 'resolved', nhận được '{resolution_status}'")
@@ -369,7 +373,7 @@ def apply_expert_feedback(
     # 9. Append change_log (Schema 1.0.0 ChangeEvent)
     change_entry = {
         "changed_at": clock(),
-        "actor_id": expert_name,
+        "actor_id": actor_id or expert_name,
         "reason": (
             f"Answered question {target_question_id} ({role_name}) from a self-reported "
             f"response by {expert_name} ({expert_role}); identity not authenticated, "

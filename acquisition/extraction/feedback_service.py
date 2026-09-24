@@ -49,6 +49,7 @@ from acquisition.extraction.feedback_loop import (
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 LOCK_TIMEOUT_S = 10.0
+LOCK_STALE_S = 300.0
 
 
 # --- loi ----------------------------------------------------------------------
@@ -258,6 +259,7 @@ def plan_feedback(request: FeedbackRequest) -> FeedbackPlan:
             snapshot=latest,
             target_question_id=request.question_id,
             expert_name=request.responder.label,
+            actor_id=request.responder.actor_id,
             expert_role=request.responder.role,
             answer_text=request.answer_text,
             target_step_id=request.step_id,
@@ -268,12 +270,33 @@ def plan_feedback(request: FeedbackRequest) -> FeedbackPlan:
     else:
         new_snapshot, source_record = _apply_without_question(request, latest)
 
+    _refuse_existing_source(source_record, request.dataset_split)
+
     return FeedbackPlan(
         base_snapshot=latest,
         new_snapshot=new_snapshot,
         source_record=source_record,
         warnings=warnings,
     )
+
+
+def _refuse_existing_source(source_record: dict[str, Any], split: str) -> None:
+    """source_id bam theo nguyen van, nen tra loi y het lan hai trung ID voi Source cu.
+
+    Phai chan o day, truoc moi lan ghi: neu de toi submit thi `write_feedback_asset`
+    ghi de tep nguyen van cua Source cu, `_append_source` tu choi, va hoan tac xoa
+    luon tep do -- citation cua revision truoc khong mo duoc nua.
+    """
+    source_id = source_record["source_id"]
+    catalog = SPLITS[split]["sources"].read_text(encoding="utf-8")
+    known = any(
+        json.loads(line)["source_id"] == source_id for line in catalog.splitlines() if line.strip()
+    )
+    if known or (REPO_ROOT / source_record["asset_uri"]).exists():
+        raise FeedbackRejected(
+            f"Đã có nguồn {source_id} với đúng nguyên văn này. Nguồn là bất biến; "
+            "hãy ghi rõ hơn câu trả lời thay vì gửi lại y hệt."
+        )
 
 
 def _collect_warnings(request: FeedbackRequest, latest: dict[str, Any]) -> list[str]:
@@ -340,6 +363,7 @@ def _apply_without_question(
         snapshot=seeded,
         target_question_id=question_id,
         expert_name=request.responder.label,
+        actor_id=request.responder.actor_id,
         expert_role=request.responder.role,
         answer_text=request.answer_text,
         target_step_id=request.step_id,
@@ -427,6 +451,16 @@ def _store_lock(split: str, timeout: float = LOCK_TIMEOUT_S):
             handle = os.open(lock_path, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
             break
         except FileExistsError:
+            # Tien trinh bi kill giua chung khong chay `finally`, de lai khoa mo coi
+            # va moi lan ghi sau deu 429. Khoa qua cu thi coi nhu chet.
+            # ponytail: nguong theo mtime; mot submit chay lau hon LOCK_STALE_S se
+            # bi cuop khoa -- chuyen sang kiem pid song neu dev bundle lon len nhieu.
+            try:
+                if time.time() - lock_path.stat().st_mtime > LOCK_STALE_S:
+                    lock_path.unlink(missing_ok=True)
+                    continue
+            except FileNotFoundError:
+                continue
             if time.monotonic() >= deadline:
                 raise FeedbackBusy(
                     "Một lần ghi phản hồi khác đang chạy. Thử lại sau vài giây."

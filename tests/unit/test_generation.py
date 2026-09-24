@@ -91,6 +91,23 @@ def test_invalid_draft_fails_closed(prepared, change):
     assert answer.status == "insufficient_evidence" and answer.citations == []
 
 
+def test_an_evidence_id_not_linked_to_the_claim_fails_closed(prepared):
+    """A stray id is not noise: on real/dev it was the evidence for extra content the model had merged into a
+    one-claim statement (a 'press E-stop' sentence cited to a claim that never mentions the E-stop). Dropping
+    the id kept the sentence and lost its support, and the verifier, which only sees what is left, passed it."""
+    model = StubModel(lambda d: d["statements"][0].update(
+        evidence_ids=d["statements"][0]["evidence_ids"] + ["invented"]))
+    answer = generate(prepared, model)
+    assert answer.status == "insufficient_evidence" and not answer.citations
+    assert [name for name, _ in model.calls] == ["draft"]  # rejected by code before the semantic judge
+
+
+def test_duplicate_evidence_ids_still_fail_closed(prepared):
+    answer = generate(prepared, StubModel(lambda d: d["statements"][0].update(
+        evidence_ids=d["statements"][0]["evidence_ids"] * 2)))
+    assert answer.status == "insufficient_evidence" and not answer.citations
+
+
 @pytest.mark.parametrize("verification", [
     Verification(answers_question=False, supported=[True]),
     Verification(answers_question=True, supported=[False]),
@@ -208,6 +225,62 @@ def test_retained_text_must_actually_contain_quote(prepared):
     assert not EvidenceAccess(REPO_ROOT).view(ev, src).available
     src = src.model_copy(update={"raw_text": ev.quote})
     assert EvidenceAccess(REPO_ROOT).view(ev, src).available
+
+
+CORRECTED = "so your tool changer s alarm down"
+
+
+def corrected_case(prepared, tmp_path, *, origin="human", source_id=None, transcript_id=None,
+                   utterances=None, write=True):
+    """A speech quote that exists only in the human-corrected transcript, not in Source.raw_text."""
+    corpus = prepared[2]
+    wf = next(iter(corpus["workflows"].values()))
+    ev = next(e for e in wf.evidence if e.quote)
+    src = corpus["sources"][ev.source_id].model_copy(update={
+        "source_type": "real", "raw_text": "so your tool changes alarm down", "duration_ms": 60_000})
+    sid = source_id or ev.source_id
+    src = src.model_copy(update={"source_id": sid})
+    ev = ev.model_copy(update={
+        "source_id": sid, "modality": "speech", "transcript_origin": origin, "quote": CORRECTED,
+        "locator": ev.locator.model_copy(update={"start_ms": 1000, "end_ms": 5000, "page": None, "text_span": None})})
+    if write:
+        import json
+        folder = tmp_path / "acquisition/preprocessing/transcripts" / sid
+        folder.mkdir(parents=True, exist_ok=True)
+        (folder / "corrected.json").write_text(json.dumps({
+            "source_id": transcript_id or sid, "utterances": utterances or [
+                {"start_ms": 0, "end_ms": 6000, "text": "So your tool changer's alarm down"},
+                {"start_ms": 50_000, "end_ms": 60_000, "text": "unrelated closing words"}]}), encoding="utf-8")
+    return EvidenceAccess(tmp_path), ev, src
+
+
+def test_human_corrected_quote_opens_from_the_retained_corrected_transcript(prepared, tmp_path):
+    access, ev, src = corrected_case(prepared, tmp_path)
+    view = access.view(ev, src)
+    assert view.available and view.kind == "retained_transcript"
+
+
+@pytest.mark.parametrize("case", [
+    {"origin": "official_caption"},                                   # only human-origin quotes may differ
+    {"origin": "asr"},
+    {"utterances": [{"start_ms": 50_000, "end_ms": 60_000, "text": "So your tool changer's alarm down"}]},
+    {"write": False},                                                 # no retained corrected transcript
+    {"transcript_id": "SRC_OTHER"},                                   # transcript belongs to another source
+])
+def test_corrected_quote_fails_closed_unless_the_retained_transcript_proves_it(prepared, tmp_path, case):
+    access, ev, src = corrected_case(prepared, tmp_path, **case)
+    assert not access.view(ev, src).available
+
+
+@pytest.mark.parametrize("source_id", ["..", "../transcripts", "a/b", "a\\b", ""])
+def test_corrected_transcript_lookup_cannot_leave_its_root(prepared, tmp_path, source_id):
+    access, ev, src = corrected_case(prepared, tmp_path, write=False)
+    ev, src = ev.model_copy(update={"source_id": source_id}), src.model_copy(update={"source_id": source_id})
+    import json
+    (tmp_path / "acquisition/preprocessing").mkdir(parents=True, exist_ok=True)
+    (tmp_path / "acquisition/preprocessing/corrected.json").write_text(json.dumps({
+        "source_id": source_id, "utterances": [{"start_ms": 0, "end_ms": 6000, "text": CORRECTED}]}), encoding="utf-8")
+    assert not access.view(ev, src).available
 
 
 def test_provider_failure_not_mislabeled_as_no_evidence(prepared):

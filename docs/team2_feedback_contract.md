@@ -177,7 +177,8 @@ Những điểm dưới đây validator **đã** chặn; ghi ra để không ph�
 | Bundle sau khi ghi không qua validator | 422 + danh sách mã V0x trong `.errors` | Không tạo revision; trả nguyên lỗi để sửa |
 | Thiếu `responder.role`, hoặc chỉ toàn khoảng trắng | 422 | Bắt buộc nhập vai trò thật |
 | `confirm_base_revision` ≠ `base_revision` | 422 | Bản xem trước và bản lưu không cùng gốc; tải lại preview |
-| Một lần ghi khác đang chạy | **429** | "Đang bận, thử lại sau vài giây". Không ghi đè |
+| Một lần ghi khác đang chạy | **429** | "Đang bận, thử lại sau vài giây". Không ghi đè. Khoá cũ hơn 5 phút (tiến trình bị kill) tự hết hạn |
+| `answer_text` y hệt một phản hồi đã lưu | 422, báo ngay từ `preview` | `source_id` băm theo nguyên văn nên hai câu y hệt trùng nguồn; người dùng ghi rõ hơn câu trả lời |
 | `mode=synthetic`, hoặc `dataset_split=holdout` | 422 | Không ghi được: KB synthetic là dữ liệu dẫn xuất của đội 2; holdout khoá tới sau D15 |
 | Question đã `answered`/`resolved`, hoặc hỏi về step/field khác | 422 | Câu hỏi không còn mở, hoặc người dùng đính câu trả lời vào sai chỗ |
 

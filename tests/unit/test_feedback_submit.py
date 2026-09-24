@@ -8,7 +8,9 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import shutil
+import time
 from pathlib import Path
 
 import pytest
@@ -272,3 +274,47 @@ def test_submit_writes_nothing_into_the_real_repo(store):
     before = fingerprint()
     submit(_request())
     assert fingerprint() == before
+
+
+# --- trung nguyen van, actor_id, khoa mo coi (review #19) -----------------------
+
+
+def test_identical_answer_text_never_deletes_the_earlier_source_asset(store):
+    """source_id bam theo nguyen van: tra loi y het lan hai phai bi tu choi TU preview,
+    va khong duoc dung vao tep nguyen van cua Source da phat hanh."""
+    first = submit(_request())
+    asset = store / first["asset_path"]
+    before = asset.read_bytes()
+
+    second = _request(
+        base_revision=2,
+        confirm_base_revision=2,
+        step_id="REAL_WF_0001_ST_004",
+        question_id="REAL_WF_0001_Q_002",
+        responder={"actor_id": "other", "label": "Nguoi khac", "role": "van hanh"},
+    )
+    with pytest.raises(FeedbackRejected):
+        preview({k: v for k, v in second.items() if k != "confirm_base_revision"})
+    with pytest.raises(FeedbackRejected):
+        submit(second)
+
+    assert asset.read_bytes() == before
+
+
+def test_change_log_records_the_responder_actor_id_not_the_display_name(store):
+    result = submit(_request())
+
+    snapshot = json.loads((store / result["snapshot_path"]).read_text(encoding="utf-8"))
+    assert snapshot["change_log"][-1]["actor_id"] == "dpv137"
+
+
+def test_a_lock_left_by_a_killed_process_does_not_block_forever(store, monkeypatch):
+    """Tien trinh bi kill giua chung khong chay `finally`: khoa cu phai tu het han."""
+    monkeypatch.setattr(fs, "LOCK_TIMEOUT_S", 0.1)
+    lock = SPLITS["dev"]["snapshots"].parent / ".feedback.dev.lock"
+    lock.write_text("12345\n", encoding="utf-8")
+    old = time.time() - 3600
+    os.utime(lock, (old, old))
+
+    assert submit(_request())["revision"] == 2
+    assert not lock.exists()

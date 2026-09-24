@@ -1,4 +1,4 @@
-"""python -m retrieval.evaluation run | answers | sheet | apply."""
+"""python -m retrieval.evaluation run | answers | rescore | sheet | apply."""
 
 import argparse
 import json
@@ -9,7 +9,7 @@ from pathlib import Path
 
 from retrieval.generation.gemini import GeminiAnswerModel
 
-from .answers import evaluate_answers, format_answer_summary, verdict_template
+from .answers import evaluate_answers, format_answer_summary, rescore_answers, verdict_template
 from .harness import STRATEGIES, format_summary, run_evaluation, write_run
 from .review import apply_sheet, build_sheet, write_sheet
 
@@ -66,6 +66,11 @@ def main(argv=None):
                          help="input token price; cost stays null unless both prices are given")
     answers.add_argument("--price-output", type=float, metavar="USD_PER_MILLION")
     answers.add_argument("--json", action="store_true")
+    rescore = commands.add_parser("rescore", help="grade a finished answers run from its saved rows; no API calls")
+    rescore.add_argument("--run", required=True, help="run folder written by `answers` (report.json + rows.jsonl)")
+    rescore.add_argument("--verdicts", required=True, help="human verdict JSONL pinned to that run's answers")
+    rescore.add_argument("--out", default="out/eval", help="the graded report goes to <out>/<run_id>_scored")
+    rescore.add_argument("--json", action="store_true")
     sheet = commands.add_parser("sheet", help="export a review sheet (CSV) for the gold labels")
     sheet.add_argument("--db", required=True)
     sheet.add_argument("--questions", required=True)
@@ -118,6 +123,12 @@ def main(argv=None):
             print(f"\nreport: {target / 'report.json'}\nrows:   {target / 'rows.jsonl'}")
             if args.verdict_template:
                 print(f"verdicts to fill in: {target / 'verdicts.template.jsonl'}")
+        elif args.command == "rescore":
+            report, rows = rescore_answers(args.run, args.verdicts)
+            target = write_run(report, rows, args.out)
+            print(json.dumps(report, ensure_ascii=False, indent=2) if args.json
+                  else format_answer_summary(report) + f"\nrescored from {report['rescored_from']}")
+            print(f"\nreport: {target / 'report.json'}\nrows:   {target / 'rows.jsonl'}")
         elif args.command == "sheet":
             out = Path(args.out) if args.out else Path("out/eval") / f"{Path(args.questions).stem}.sheet.csv"
             path = write_sheet(build_sheet(args.db, args.questions), out)

@@ -220,7 +220,19 @@ Tỷ lệ mechanical là **sàn**: nó chỉ có thể giảm khi người kiể
    Mỗi dòng đã điền sẵn `answer_sha256`, kèm `_answer` và `_citations` để đọc.
 2. Điền `answers_question` (true/false) và `citations_supported` (mỗi citation một boolean:
    nguồn được cite **có** hỗ trợ đúng phát biểu đó không). Các khóa bắt đầu bằng `_` được bỏ qua.
-3. Chạy lại với `--verdicts <file đã điền>`.
+3. Chấm điểm bằng `rescore` trên chính lượt chạy đã đọc (không gọi API, không sinh lại câu trả lời):
+
+   ```powershell
+   .\.venv\Scripts\python.exe -m retrieval.evaluation rescore --run out/eval/<run_id> --verdicts <file đã điền>
+   ```
+
+   Báo cáo ghi ở `out/eval/<run_id>_scored/`; lượt chạy gốc không bị sửa, và báo cáo giữ nguyên
+   git state cùng thời điểm của lượt chạy gốc vì số đo mô tả đúng mã đó.
+
+Đừng chạy lại `answers --verdicts <file>` để chấm: lệnh đó **sinh lại toàn bộ câu trả lời**, mà câu
+trả lời thay đổi giữa các lượt chạy (bước kiểm của model không tất định dù temperature 0). Verdict
+gắn với hash cũ sẽ thành `stale` hàng loạt và mất thêm một lượt gọi API. `--verdicts` của `answers`
+chỉ hữu ích khi câu trả lời đã cố định (ví dụ trong test).
 
 Verdict gắn chặt với `answer_sha256`. Câu trả lời đổi (đổi prompt, model, index, corpus)
 thì verdict cũ thành `stale` và bị loại, không được cộng sang bản mới. Verdict chấm thiếu

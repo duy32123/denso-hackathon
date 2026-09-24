@@ -4,9 +4,10 @@
 > **thật** — số đo trên nó mới là kết quả. `synthetic_dev.qa.v0.jsonl` là dữ liệu
 > **mô phỏng** để thử phần mềm (xem cuối trang). Không bao giờ cộng hai mẫu số.
 
-`haas_real_dev.retrieval.v0.jsonl`: **66 câu real/dev: 52 `reviewed`, 14 `draft`**.
-52 câu cũ được người kiểm (`duy32123`, 2026-09-22); Q055–Q068 mới bổ sung vẫn giữ
-trạng thái draft trong file, nên phép đo gộp chỉ dùng chẩn đoán, chưa phải kết quả công bố.
+`haas_real_dev.retrieval.v0.jsonl`: **66 câu real/dev, cả 66 `reviewed`**.
+52 câu cũ được người kiểm (`duy32123`, 2026-09-22). Q055–Q068 (phủ `REAL_WF_0002/0003`,
+người soạn `codex-draft`) được người kiểm (`quyhienln`, 2026-09-24): 14 `ok`, không `fix`,
+không `drop`.
 Xem [bản sửa alias SMTC và phép đo đối chứng](../../docs/retrieval_smtc_alias_fix.md).
 Kết quả cổng liên quan mới nhất: [claim-coherence, đối chứng cùng mẫu số](../../docs/retrieval_relevance_gate.md).
 Phần số đo/lượt kiểm bên dưới ghi lại **mốc 52 câu**. Soạn ban đầu 54 câu trên bundle

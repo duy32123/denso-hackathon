@@ -1,7 +1,7 @@
 # Kết quả retrieval trên real/dev — 2026-09-22
 
 > **Mốc lịch sử trên 52 câu, trước bản sửa alias SMTC.** File câu hỏi sau đó đã có thêm
-> 14 câu draft. [Bản sửa subsystem và phép đo đối chứng](retrieval_smtc_alias_fix.md)
+> 14 câu (Q055–Q068, người kiểm duyệt 2026-09-24). [Bản sửa subsystem và phép đo đối chứng](retrieval_smtc_alias_fix.md)
 > ghi kết quả mới cùng hồi quy Q046; không dùng các số dưới đây như số đo của mã hiện tại.
 
 > Kết quả mới nhất cho cổng liên quan: [claim-coherence và đối chứng cache-only](retrieval_relevance_gate.md).
@@ -169,7 +169,8 @@ hai lần và tự retry. Kết quả được cache ở `out/eval/query_embeddi
 
 ## Việc tiếp theo
 
-- [ ] Soạn 10–14 câu cho `WF_0002`/`WF_0003` để bộ câu hỏi phủ hết corpus — rồi quét lại
-      ngưỡng, vì nó phụ thuộc cỡ corpus.
+- [x] Soạn 14 câu cho `WF_0002`/`WF_0003` (Q055–Q068) để bộ câu hỏi phủ hết corpus;
+      người kiểm `quyhienln` duyệt 2026-09-24 (14 `ok`).
+- [ ] Quét lại ngưỡng cổng liên quan trên đủ 66 câu, vì nó phụ thuộc cỡ corpus.
 - [ ] Chạy `evaluation answers` để có chỉ số tầng câu trả lời, nơi ngưỡng ≥0.90 thực sự áp.
 - [ ] Người kiểm điền verdict để có `citation_correctness` / `answer_groundedness`.

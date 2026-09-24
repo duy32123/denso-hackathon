@@ -111,4 +111,5 @@ truy vấn ngắn, alias slider/slide và từ chối trước khi gọi embeddi
 Đây vẫn là heuristic phụ thuộc corpus. Cần kiểm lại khi thêm nguồn và đánh giá
 riêng trên tập độc lập sau khi khóa pipeline. Việc D2-A review 14 nhãn
 draft (Q055–Q068) đã xong ngày 2026-09-24 (`quyhienln`, 14 `ok`); số đo trong trang này vẫn
-là trên tập trước lượt kiểm đó. Việc còn lại: đo tầng câu trả lời với human verdict.
+là trên tập trước lượt kiểm đó. Tầng câu trả lời đã có lượt đo với human verdict (2026-09-24), kèm các
+giới hạn phải nêu theo: xem [kết quả retrieval real/dev](retrieval_eval_real_dev.md).

@@ -167,10 +167,61 @@ Cần `GEMINI_API_KEY` trong `.env`. Lượt đo gốc tốn 44 call embedding +
 hai lần và tự retry. Kết quả được cache ở `out/eval/query_embeddings.jsonl` /
 `query_translations.jsonl`, nên chạy lại hoặc quét ngưỡng khác **không tốn thêm call**.
 
+## Tầng câu trả lời có human verdict — 2026-09-24
+
+Lượt `evaluation answers` đầu tiên trên đủ 66 câu đã kiểm, chấm bằng `rescore`. Run
+`ANS_20260924T075546Z_674db22a` (báo cáo chấm: `..._scored`), hybrid, `gemini-3.5-flash-lite`,
+prompt `grounded-qa-2`. Mã chạy là PR #41 (`23a68fb`) cộng nhãn PR #40 (`1d81ca1`); commit ghi trong
+report (`475db91`) là merge cục bộ của hai nhánh đó. Không có lỗi served, không có verdict stale.
+
+| Chỉ số | Giá trị |
+|---|---|
+| Status accuracy | **0.742** (49/66) |
+| Câu trả lời được: đã trả lời / cần trả lời | **24/41** (0.585); từ chối oan **17** |
+| Trả lời khi nguồn không đủ (`false_answer`) | **0** |
+| Câu phải từ chối / hỏi lại, xử lý đúng | 24/24 và 1/1 |
+| Citation hợp lệ theo code, leakage | 40/40, 0 |
+| `citation_correctness` (người kiểm) | **0.925** (37/40) |
+| `answer_groundedness` (người kiểm) | **0.955** |
+| `answers_question` (người kiểm) | 24/24 |
+| Chi phí | 83 lần gọi, 848.796 token vào, 18.806 ra; không tính USD vì chưa nhập bảng giá |
+
+**Giới hạn phải nêu kèm mọi con số ở trên:**
+
+- **Đây là độ chính xác trên 24 câu hệ thống chọn trả lời, không phải độ phủ.** 17 câu trả lời được đã bị
+  từ chối. Tài liệu đang nói hai cách về ngưỡng ≥0.90: nếu là status accuracy (như
+  [data/eval/README.md](../data/eval/README.md) ghi ở phần retrieval) thì **chưa đạt** (0.742); nếu là
+  `citation_correctness` / `answer_groundedness` (như bảng chỉ số tầng câu trả lời) thì đạt trên tập con
+  đã trả lời (0.925 / 0.955). Cần đội chốt ngưỡng nào áp dụng.
+- **Người kiểm `quyhienln` chấp nhận nguyên bộ đề xuất do AI soạn** ("accept all"), ghi trong `note` của
+  verdict. Bộ đó gồm 3 citation đánh `false` (Q007, Q010, Q066: câu gộp nội dung của claim bên cạnh mà bước kiểm
+  của pipeline vẫn cho qua) và 4 mục được đánh dấu cần tự kiểm nhưng **chưa được kiểm độc lập**: âm thanh của
+  Q005/Q021, keyframe của Q064, ngôn ngữ trả lời của Q058.
+- **Đây là dev, không phải holdout**, và pipeline được sửa dựa trên việc phát lại chính các câu dev này.
+- **Kết quả dao động giữa các lượt chạy.** Bước kiểm của model không tất định dù temperature 0: Q002, Q003,
+  Q007 từ chối ở một lượt và trả lời ở lượt kế; Q004, Q011, Q024, Q027 thì ngược lại.
+
+**17 câu từ chối oan** (Q004, Q009, Q011–Q015, Q018, Q024–Q029, Q059, Q060, Q068). Nguyên nhân đã xác định
+khi phát lại: bước kiểm trả `answers_question=false` chủ yếu ở câu "khi nào / ở bước nào", vì thiết kế chỉ cho
+phép mỗi câu diễn đạt đúng một claim nên không nêu được thứ tự (Q009, Q012, Q013, Q018); bản soạn tự từ chối
+(Q014, Q015); Q060 gọi step ID như claim; Q068 soạn thiếu Step của quy trình; Q028, Q029 gộp nhiều claim vào một
+câu và cite thêm evidence không thuộc claim nên code từ chối (đúng thiết kế); Q025, Q026, Q059 bị bước kiểm
+từ chối (`answers_question=false`) nhưng chưa xếp vào nhóm nào. Q004, Q011, Q024, Q027 chưa phân tích nguyên nhân. Chưa đổi prompt: làm vậy trên chính tập đang chấm là chỉnh theo đáp án.
+
+Chấm điểm bằng `rescore`, không dùng `answers --verdicts` (lệnh đó sinh lại câu trả lời và làm verdict stale):
+
+```powershell
+.\.venv\Scripts\python.exe -m retrieval.evaluation rescore --run out/eval/ANS_20260924T075546Z_674db22a --verdicts out/eval/ANS_20260924T075546Z_674db22a/verdicts.jsonl
+```
+
 ## Việc tiếp theo
 
 - [x] Soạn 14 câu cho `WF_0002`/`WF_0003` (Q055–Q068) để bộ câu hỏi phủ hết corpus;
       người kiểm `quyhienln` duyệt 2026-09-24 (14 `ok`).
+- [x] Chạy `evaluation answers` và có human verdict cho `citation_correctness` / `answer_groundedness`
+      (xem mục trên, kèm giới hạn).
+- [ ] Đội chốt ngưỡng ≥0.90 áp cho chỉ số nào (status accuracy hay citation/groundedness).
+- [ ] Giảm 17 câu từ chối oan bằng thay đổi prompt hoặc thiết kế trả lời, rồi đo lại trên tập độc lập,
+      không phải trên chính các câu dev này.
+- [ ] Kiểm độc lập 4 mục chưa kiểm của lượt verdict này (Q005/Q021, Q064, Q058).
 - [ ] Quét lại ngưỡng cổng liên quan trên đủ 66 câu, vì nó phụ thuộc cỡ corpus.
-- [ ] Chạy `evaluation answers` để có chỉ số tầng câu trả lời, nơi ngưỡng ≥0.90 thực sự áp.
-- [ ] Người kiểm điền verdict để có `citation_correctness` / `answer_groundedness`.

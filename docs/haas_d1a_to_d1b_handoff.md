@@ -19,6 +19,28 @@ fine-tuning were created under D1-A.
 Three official_service_video pilots (SRC_HAAS_0001, _0003, _0005), each in its own
 near-duplicate family, per the D1-A prompt's "three-video pilot" framing.
 
+### Playable video links (checked 2026-09-24)
+
+The haascnc.com video pages above are not reliable locators for a person: in a normal browser
+the SRC_HAAS_0005 page returned 404, and automated requests get a Cloudflare challenge (403).
+The same three videos play on YouTube. Each link below was checked against YouTube's own page:
+title, channel (Haas Automation, Inc.) and exact length against the `duration_ms` recorded here.
+
+| source_id | Watch | Length (YouTube = `duration_ms`) |
+|---|---|---|
+| SRC_HAAS_0001 | https://www.youtube.com/watch?v=TmjjC7BDDag | 191 s |
+| SRC_HAAS_0003 | https://www.youtube.com/watch?v=2bRa6qm6wm4 | 360 s |
+| SRC_HAAS_0005 | https://www.youtube.com/watch?v=cs-BvWsKXyU | 261 s |
+
+**YouTube video IDs are case-sensitive, and SRC_HAAS_0003's is stored in lowercase.** `Source.url`,
+the source candidate catalog and the source-ID registry all hold `2bra6qm6wm4`, which YouTube reports
+as "Video unavailable"; the correct ID has a capital R (`2bRa6qm6wm4`, which is also what the page's own
+`videoID` meta reads in `haas_d1a_quality_report.md`). The canonical data is checksum-backed and the
+registry keys on the URL, so correcting it is a coordinated change for Team 1, not done here. Until
+then, use the links in this table. `acquisition/extraction/review.py` builds worklist links from
+`Source.url`, so regenerating `review_worklist_real_wf_0002_0003.md` reproduces the wrong-case links
+until the data is corrected.
+
 ## 2. Reserved holdout families
 
 | source_id | Title | Family | Reason isolated |

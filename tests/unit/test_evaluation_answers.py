@@ -10,9 +10,9 @@ from knowflow_contracts.models import AnswerResponse, Citation, EntityRef, Query
 from retrieval.evaluation.__main__ import main
 from retrieval.evaluation.answers import (
     Verdict, answer_digest, check_citation, check_grounding, check_leakage, evaluate_answers, join_verdicts,
-    load_verdicts, summarize_answers, verdict_template,
+    load_verdicts, rescore_answers, summarize_answers, verdict_template,
 )
-from retrieval.evaluation.harness import EvaluationError
+from retrieval.evaluation.harness import EvaluationError, write_run
 from retrieval.generation.evidence import EvidenceAccess
 from retrieval.generation.models import AnswerDraft, Verification
 from retrieval.importer import import_bundle
@@ -162,6 +162,127 @@ def test_duplicate_verdicts_are_refused(tmp_path):
     path.write_text(entry + "\n" + entry + "\n", encoding="utf-8")
     with pytest.raises(EvaluationError, match="duplicate verdict"):
         load_verdicts(path)
+
+
+# --- scoring a finished run without regenerating it -------------------------
+
+
+def finished_run(tmp_path, **kwargs):
+    """A run folder as `answers` leaves it, plus a verdict file for its one answered question."""
+    report, rows = run(tmp_path, **kwargs)
+    folder = write_run(report, rows, tmp_path / "out")
+    verdicts = tmp_path / "verdicts.jsonl"
+    verdicts.write_text(json.dumps({
+        "question_id": "Q1", "answer_sha256": rows[0]["answer_sha256"], "reviewer_id": "reviewer",
+        "answers_question": True, "citations_supported": [True]}) + "\n", encoding="utf-8")
+    return report, rows, folder, verdicts
+
+
+def test_rescore_grades_the_saved_answers_without_calling_any_provider(tmp_path):
+    """Regenerating to score is unsafe: answers differ between runs, which stales every verdict."""
+    original, _, folder, verdicts = finished_run(tmp_path)
+    report, rows = rescore_answers(folder, verdicts)
+    human = report["summary"]["human"]
+    assert human["citation_correctness"] == 1.0 and human["answer_groundedness"] == 1.0
+    assert human["answers_question"] == 1.0 and human["graded_citations"] == 1
+    assert report["verdict_coverage"] == {"graded": ["Q1"], "stale": [], "ungraded": []}
+    assert report["rescored_from"] == original["run_id"] and report["run_id"] == original["run_id"] + "_scored"
+    # Same answers as the run: nothing was regenerated, so cost and status describe the original run.
+    assert report["summary"]["cost"] == original["summary"]["cost"]
+    assert report["summary"]["status"] == original["summary"]["status"]
+    assert report["git"] == original["git"] and report["created_at"] == original["created_at"]
+    assert [r["answer_sha256"] for r in rows] == [r["answer_sha256"] for r in
+                                                  map(json.loads, (folder / "rows.jsonl").read_text("utf-8").splitlines())]
+
+
+def test_rescore_matches_what_scoring_during_the_run_reports(tmp_path):
+    _, _, folder, verdicts = finished_run(tmp_path)
+    rescored, _ = rescore_answers(folder, verdicts)
+    during, _ = run(tmp_path, verdicts_path=verdicts)
+    assert rescored["summary"]["human"] == during["summary"]["human"]
+
+
+def test_rescore_leaves_the_original_run_untouched_and_writes_a_new_folder(tmp_path):
+    _, _, folder, verdicts = finished_run(tmp_path)
+    before = {p.name: p.read_bytes() for p in folder.iterdir()}
+    report, rows = rescore_answers(folder, verdicts)
+    target = write_run(report, rows, tmp_path / "out")
+    assert target != folder and target.name == report["run_id"]
+    assert {p.name: p.read_bytes() for p in folder.iterdir()} == before
+
+
+def test_rescore_still_refuses_a_verdict_pinned_to_another_answer(tmp_path):
+    _, _, folder, verdicts = finished_run(tmp_path)
+    entry = json.loads(verdicts.read_text("utf-8"))
+    verdicts.write_text(json.dumps({**entry, "answer_sha256": "0" * 64}) + "\n", encoding="utf-8")
+    report, _ = rescore_answers(folder, verdicts)
+    assert report["verdict_coverage"]["stale"] == ["Q1"]
+    assert report["summary"]["human"]["citation_correctness"] is None
+    assert "1 verdicts stale" in report["warning"]
+
+
+def test_rescore_drops_the_ungraded_warning_but_keeps_the_label_warning(tmp_path):
+    original, _, folder, verdicts = finished_run(tmp_path)
+    assert "ungraded" in original["warning"]
+    report, _ = rescore_answers(folder, verdicts)
+    assert "ungraded" not in report["warning"] and "not human-checked" in report["warning"]  # test labels are draft
+
+
+def test_rescoring_a_graded_run_never_inherits_the_earlier_grading(tmp_path):
+    _, _, folder, verdicts = finished_run(tmp_path)
+    graded, rows = rescore_answers(folder, verdicts)
+    again = write_run(graded, rows, tmp_path / "out")
+    verdicts.write_text("", encoding="utf-8")  # nobody graded anything this time
+    report, _ = rescore_answers(again, verdicts)
+    assert report["verdict_coverage"] == {"graded": [], "stale": [], "ungraded": ["Q1"]}
+    assert report["summary"]["human"]["citation_correctness"] is None
+
+
+def test_rescore_has_no_warning_once_everything_is_reviewed_and_graded(tmp_path):
+    original, _, folder, verdicts = finished_run(tmp_path)
+    assert "warning" in original
+    saved = json.loads((folder / "report.json").read_text("utf-8"))
+    saved["gold_labels"] = {"draft": 0, "ai_reviewed": 0, "reviewed": 2}
+    (folder / "report.json").write_text(json.dumps(saved), encoding="utf-8")
+    report, _ = rescore_answers(folder, verdicts)
+    assert "warning" not in report  # the run's own "ungraded" warning must not survive being graded
+
+
+def test_rescore_keeps_the_served_error_warning(tmp_path):
+    _, _, folder, verdicts = finished_run(tmp_path)
+    saved = json.loads((folder / "report.json").read_text("utf-8"))
+    saved["served_errors"] = [{"question_id": "Q9", "error": "GenerationError"}]
+    (folder / "report.json").write_text(json.dumps(saved), encoding="utf-8")
+    report, _ = rescore_answers(folder, verdicts)
+    assert "1 questions returned a served error" in report["warning"]
+
+
+@pytest.mark.parametrize("damage", ["no_rows", "no_report", "not_an_answers_run"])
+def test_rescore_refuses_a_folder_that_is_not_a_finished_answers_run(tmp_path, damage):
+    _, _, folder, verdicts = finished_run(tmp_path)
+    if damage == "no_rows":
+        (folder / "rows.jsonl").unlink()
+    elif damage == "no_report":
+        (folder / "report.json").unlink()
+    else:  # a retrieval `run` report has strategies, not an answer summary
+        (folder / "report.json").write_text(json.dumps({"run_id": "RUN_1", "strategies": {}}), encoding="utf-8")
+    with pytest.raises(EvaluationError, match="not a finished answers run"):
+        rescore_answers(folder, verdicts)
+
+
+def test_rescore_command_prints_the_graded_summary_and_writes_a_new_run(tmp_path, capsys):
+    _, _, folder, verdicts = finished_run(tmp_path)
+    out = tmp_path / "scored"
+    assert main(["rescore", "--run", str(folder), "--verdicts", str(verdicts), "--out", str(out)]) == 0
+    shown = capsys.readouterr().out
+    assert "citation correctness   1.000" in shown and "answers the question   1.000" in shown
+    written = next(out.iterdir())
+    assert written.name.endswith("_scored") and (written / "report.json").is_file()
+
+
+def test_rescore_command_reports_an_error_instead_of_a_traceback(tmp_path, capsys):
+    assert main(["rescore", "--run", str(tmp_path / "missing"), "--verdicts", str(tmp_path / "v.jsonl")]) == 1
+    assert "not a finished answers run" in capsys.readouterr().err
 
 
 # --- the asymmetric status errors -------------------------------------------

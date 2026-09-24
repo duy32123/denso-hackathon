@@ -431,6 +431,12 @@ def evaluate_answers(db: str | Path, questions_path: str | Path, *, mode: str, s
         "verdict_coverage": coverage,
         "summary": summarize_answers(rows, price=price),
     }
+    if warning := _warning(labels, coverage, served_errors):
+        report["warning"] = warning
+    return report, rows
+
+
+def _warning(labels, coverage: dict, served_errors: list) -> str | None:
     warnings = []
     unchecked = labels["draft"] + labels["ai_reviewed"]
     if unchecked:
@@ -442,9 +448,37 @@ def evaluate_answers(db: str | Path, questions_path: str | Path, *, mode: str, s
                         "own verifier does not count as a review")
     if served_errors:
         warnings.append(f"{len(served_errors)} questions returned a served error and are not scored")
-    if warnings:
-        report["warning"] = "; ".join(warnings) + " -- debugging only, do not report as results"
-    return report, rows
+    return "; ".join(warnings) + " -- debugging only, do not report as results" if warnings else None
+
+
+def rescore_answers(run_dir: str | Path, verdicts_path: str | Path, *, price: dict | None = None) -> tuple[dict, list[dict]]:
+    """Grade the answers a finished run already saved. Calls no provider and regenerates nothing.
+
+    Scoring through `evaluate_answers` runs the whole pipeline again, and answers differ between
+    runs, so verdicts pinned to the first run's answers would go stale. This joins them to the saved
+    rows instead. The report keeps the original run's git state and creation time: the numbers describe
+    that code, not whatever is checked out now. Only the verdicts, their coverage and the summary change.
+    """
+    run_dir = Path(run_dir)
+    try:
+        report = json.loads((run_dir / "report.json").read_text(encoding="utf-8"))
+        rows = [json.loads(line) for line in (run_dir / "rows.jsonl").read_text(encoding="utf-8").splitlines()
+                if line.strip()]
+        if "verdict_coverage" not in report or "summary" not in report:
+            raise ValueError("no answer summary in report.json")
+    except (OSError, ValueError) as exc:
+        raise EvaluationError(f"{run_dir} is not a finished answers run ({exc})") from exc
+    coverage = join_verdicts(rows, load_verdicts(verdicts_path))  # sets or clears every row's verdict
+    scored = {
+        **report, "run_id": f"{report['run_id']}_scored", "rescored_from": report["run_id"],
+        "rescored_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "verdicts_path": str(verdicts_path), "verdict_coverage": coverage,
+        "summary": summarize_answers(rows, price=price or report["summary"]["cost"]["pricing"]),
+    }
+    scored.pop("warning", None)
+    if warning := _warning(report["gold_labels"], coverage, report["served_errors"]):
+        scored["warning"] = warning
+    return scored, rows
 
 
 def verdict_template(rows: list[dict], reviewer_id: str) -> str:

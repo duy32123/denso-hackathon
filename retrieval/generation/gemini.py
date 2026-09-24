@@ -3,6 +3,7 @@
 import json
 import os
 import time
+from pathlib import Path
 
 from pydantic import ValidationError
 
@@ -83,10 +84,12 @@ class GeminiAnswerModel:
 
     def _call(self, policy, payload, schema):
         try:
+            from dotenv import load_dotenv
             from google import genai
             from google.genai import types
 
             if self._client is None:
+                load_dotenv(Path(__file__).resolve().parents[2] / ".env")  # same as the embedder and translator
                 key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
                 if not key:
                     raise GenerationError("Answer provider is not configured")

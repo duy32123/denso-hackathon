@@ -68,6 +68,25 @@ def test_provider_exception_is_not_reflected_in_public_message(adapter):
     assert "private-provider-details" not in str(caught.value)
 
 
+def test_key_is_read_from_dotenv_when_the_environment_has_none(adapter, monkeypatch):
+    """The embedder, translator and API app load .env themselves; an eval whose retrieval is fully cached
+    reaches the answer model first and used to fail every question with 'not configured'."""
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    monkeypatch.delenv("GOOGLE_API_KEY", raising=False)
+    monkeypatch.setattr("dotenv.load_dotenv", lambda *a, **k: monkeypatch.setenv("GEMINI_API_KEY", "from-dotenv"))
+    model = GeminiAnswerModel()
+    assert model.draft({"question": "test"}).status == "insufficient_evidence"
+    model.close()
+
+
+def test_missing_key_everywhere_is_still_a_generic_configuration_error(adapter, monkeypatch):
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    monkeypatch.delenv("GOOGLE_API_KEY", raising=False)
+    monkeypatch.setattr("dotenv.load_dotenv", lambda *a, **k: None)
+    with pytest.raises(GenerationError, match="not configured"):
+        GeminiAnswerModel().draft({"question": "test"})
+
+
 class ProviderError(Exception):
     def __init__(self, code, message):
         super().__init__(message)

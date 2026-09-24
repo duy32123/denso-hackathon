@@ -7,7 +7,8 @@
 `haas_real_dev.retrieval.v0.jsonl`: **66 câu real/dev, cả 66 `reviewed`**.
 52 câu cũ được người kiểm (`duy32123`, 2026-09-22). Q055–Q068 (phủ `REAL_WF_0002/0003`,
 người soạn `codex-draft`) được người kiểm (`quyhienln`, 2026-09-24): 14 `ok`, không `fix`,
-không `drop`.
+không `drop`. Số đo tầng câu trả lời có human verdict (2026-09-24) và giới hạn của nó:
+[kết quả real/dev](../../docs/retrieval_eval_real_dev.md).
 Xem [bản sửa alias SMTC và phép đo đối chứng](../../docs/retrieval_smtc_alias_fix.md).
 Kết quả cổng liên quan mới nhất: [claim-coherence, đối chứng cùng mẫu số](../../docs/retrieval_relevance_gate.md).
 Phần số đo/lượt kiểm bên dưới ghi lại **mốc 52 câu**. Soạn ban đầu 54 câu trên bundle

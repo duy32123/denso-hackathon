@@ -13,10 +13,12 @@ from retrieval.generation.models import AnswerDraft, GenerationError, InvalidGen
 @pytest.fixture
 def adapter(monkeypatch):
     calls = []
-    state = {"response": '{"status":"insufficient_evidence","statements":[]}', "error": None}
+    state = {"response": '{"status":"insufficient_evidence","statements":[]}', "error": None, "errors": []}
 
     def send(**kwargs):
         calls.append(kwargs)
+        if state["errors"]:
+            raise state["errors"].pop(0)
         if state["error"]:
             raise state["error"]
         return SimpleNamespace(text=state["response"])
@@ -64,6 +66,41 @@ def test_provider_exception_is_not_reflected_in_public_message(adapter):
     with pytest.raises(GenerationError) as caught:
         model.draft({"question": "test"})
     assert "private-provider-details" not in str(caught.value)
+
+
+class ProviderError(Exception):
+    def __init__(self, code, message):
+        super().__init__(message)
+        self.code = code
+
+
+def test_rate_limited_answer_call_waits_the_server_delay_then_succeeds(adapter):
+    _, calls, state = adapter
+    state["errors"] = [ProviderError(429, "RESOURCE_EXHAUSTED retryDelay: '2s'")]
+    waits = []
+    model = GeminiAnswerModel(sleep=waits.append)
+    assert model.draft({"question": "test"}).status == "insufficient_evidence"
+    assert len(calls) == 2 and waits == [3.0]
+    model.close()
+
+
+def test_persistent_rate_limit_still_ends_in_a_generic_generation_error(adapter):
+    _, calls, state = adapter
+    state["error"] = ProviderError(429, "quota key=private-provider-details")
+    model = GeminiAnswerModel(sleep=lambda _: None)
+    with pytest.raises(GenerationError) as caught:
+        model.draft({"question": "test"})
+    assert len(calls) == 4  # first call plus the helper's three retries
+    assert "private-provider-details" not in str(caught.value)
+
+
+def test_non_rate_limit_provider_error_is_not_retried(adapter):
+    _, calls, state = adapter
+    state["error"] = ProviderError(500, "internal")
+    model = GeminiAnswerModel(sleep=lambda _: pytest.fail("must not wait"))
+    with pytest.raises(GenerationError):
+        model.draft({"question": "test"})
+    assert len(calls) == 1
 
 
 @pytest.mark.parametrize("invalid", ["text_length", "revision", "statement_count"])

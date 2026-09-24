@@ -113,7 +113,7 @@ def generate_answer(request: QueryRequest, result: dict, corpus: dict, *,
                "intent": result["trace"]["intent"], "workflow": result["selected_workflow"],
                "steps": result["steps"], "relations": result["relations"], "questions": result["questions"],
                "candidates": list(candidates.values())}
-    cited, checked_statements = [], []
+    cited, checked_statements, statements = [], [], []
     try:
         draft = AnswerDraft.model_validate(model.draft(payload))
         if draft.status != "answered" or not draft.statements:
@@ -123,10 +123,14 @@ def generate_answer(request: QueryRequest, result: dict, corpus: dict, *,
             if item is None or not statement.text.strip():
                 raise InvalidGeneration("Unapproved claim reference")
             by_id = {e["evidence"]["evidence_id"]: e for e in item["evidence"]}
-            if (len(set(statement.evidence_ids)) != len(statement.evidence_ids)
-                    or not set(statement.evidence_ids) <= by_id.keys()):
+            # Only the claim's own linked evidence can support it. Stray IDs are dropped and never cited, so
+            # one of them cannot discard a whole answer; with none left the statement is unsupported.
+            ids = [eid for eid in statement.evidence_ids if eid in by_id]
+            if len(set(statement.evidence_ids)) != len(statement.evidence_ids) or not ids:
                 raise InvalidGeneration("Unapproved evidence reference")
-            selected = [by_id[eid] for eid in statement.evidence_ids]
+            statement = statement.model_copy(update={"evidence_ids": ids})
+            statements.append(statement)
+            selected = [by_id[eid] for eid in ids]
             literal = " ".join((e["evidence"]["quote"] or "") + " " +
                                (e["evidence"]["observation_note"] or "") for e in selected)
             if not numbers(statement.text) <= numbers(literal):
@@ -145,14 +149,14 @@ def generate_answer(request: QueryRequest, result: dict, corpus: dict, *,
             "steps": result["steps"], "relations": result["relations"], "questions": result["questions"],
             "statements": checked_statements,
         }))
-        if (not verification.answers_question or len(verification.supported) != len(draft.statements)
+        if (not verification.answers_question or len(verification.supported) != len(statements)
                 or not all(verification.supported)):
             raise InvalidGeneration("Semantic check failed")
     except (InvalidGeneration, ValidationError):
         return fallback(request, result, unresolved=cited + unavailable)
     vi = answer_language == "vi"
     lines, citations = [], []
-    for statement in draft.statements:
+    for statement in statements:
         claim = candidates[ref_key(statement.claim_ref)]["claim"]
         if request.mode == "synthetic":
             qualifier = "Dữ liệu mô phỏng" if vi else "Synthetic data"

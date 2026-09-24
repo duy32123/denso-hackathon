@@ -2,8 +2,11 @@
 
 import json
 import os
+import time
 
 from pydantic import ValidationError
+
+from retrieval.indexing.embeddings import retry_rate_limited
 
 from .models import AnswerDraft, GenerationError, InvalidGeneration, Verification
 
@@ -72,8 +75,8 @@ def provider_schema(model) -> dict:
 
 
 class GeminiAnswerModel:
-    def __init__(self, model: str = "gemini-3.5-flash-lite", *, timeout_ms: int = 30000):
-        self.model, self.timeout_ms, self._client = model, timeout_ms, None
+    def __init__(self, model: str = "gemini-3.5-flash-lite", *, timeout_ms: int = 30000, sleep=time.sleep):
+        self.model, self.timeout_ms, self._client, self._sleep = model, timeout_ms, None, sleep
         # Provider-reported token counts, for the evaluation cost budget (plan section 5).
         # Never used to steer generation; a missing count stays None rather than 0.
         self.usage: list[dict] = []
@@ -88,13 +91,14 @@ class GeminiAnswerModel:
                 if not key:
                     raise GenerationError("Answer provider is not configured")
                 self._client = genai.Client(api_key=key, http_options=types.HttpOptions(timeout=self.timeout_ms))
-            response = self._client.models.generate_content(
-                model=self.model, contents=json.dumps(payload, ensure_ascii=False),
-                config=types.GenerateContentConfig(
-                    system_instruction=policy, temperature=0, max_output_tokens=12000,
-                    response_mime_type="application/json", response_json_schema=provider_schema(schema),
-                    automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True)),
-            )
+            config = types.GenerateContentConfig(
+                system_instruction=policy, temperature=0, max_output_tokens=12000,
+                response_mime_type="application/json", response_json_schema=provider_schema(schema),
+                automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True))
+            # Per-minute 429s are routine on the free tier; without this an eval run loses answers to them.
+            response = retry_rate_limited(lambda: self._client.models.generate_content(
+                model=self.model, contents=json.dumps(payload, ensure_ascii=False), config=config),
+                sleep=self._sleep)
         except GenerationError:
             raise
         except Exception as exc:

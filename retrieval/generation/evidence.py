@@ -4,6 +4,7 @@ Only keyframes below the configured keyframe root may be read. No server-side UR
 fetching, arbitrary filesystem reads, or synthetic video links are performed.
 """
 
+import json
 import re
 from dataclasses import dataclass
 from pathlib import Path
@@ -39,6 +40,27 @@ class EvidenceAccess:
     def __init__(self, repo_root: Path):
         self.repo_root = Path(repo_root).resolve()
         self.keyframe_root = self.repo_root / "acquisition/preprocessing/keyframes"
+        self.transcript_root = self.repo_root / "acquisition/preprocessing/transcripts"
+
+    def _corrected_transcript_contains(self, evidence: Evidence, quote: str) -> bool:
+        """Human-corrected captions are not in Source.raw_text, which keeps the caption as published.
+
+        The retained corrected transcript is the audited copy, so only human-origin speech may fall back
+        to it, and only inside the evidence's own time window. Anything unproven stays unavailable.
+        """
+        loc = evidence.locator
+        if (evidence.modality != "speech" or evidence.transcript_origin != "human"
+                or loc.start_ms is None or loc.end_ms is None or not re.fullmatch(r"\w+", evidence.source_id)):
+            return False
+        try:
+            data = json.loads((self.transcript_root / evidence.source_id / "corrected.json").read_text(encoding="utf-8"))
+            if data["source_id"] != evidence.source_id:
+                return False
+            window = " ".join(u["text"] for u in data["utterances"]
+                              if u["start_ms"] < loc.end_ms and u["end_ms"] > loc.start_ms)
+        except (OSError, ValueError, KeyError, TypeError):
+            return False
+        return quote in normalized(window)
 
     def _image(self, uri: str | None) -> EvidenceView:
         if not uri or ":" in uri or uri.startswith(("/", "\\")):
@@ -75,7 +97,7 @@ class EvidenceAccess:
         if evidence.modality == "visual":
             return self._image(evidence.asset_uri)
         quote, raw = normalized(evidence.quote or ""), normalized(source.raw_text or "")
-        if not quote or quote not in raw:
+        if not quote or (quote not in raw and not self._corrected_transcript_contains(evidence, quote)):
             return EvidenceView(False, "unavailable")
         if evidence.modality == "speech":
             loc = evidence.locator

@@ -12,7 +12,7 @@ export const TYPES = {
 };
 export const ROLES = {context: 'Bối cảnh', observation: 'Dấu hiệu', action: 'Thao tác', rationale: 'Lý do', condition: 'Điều kiện', outcome: 'Kết quả ghi nhận', acceptance_criteria: 'Tiêu chí xác nhận'};
 export const RELATIONS = {observed_next: 'Tiếp theo trong nguồn', requires: 'Điều kiện tiên quyết', branch_if: 'Nhánh có điều kiện', repeated_step: 'Thao tác lặp', corrects: 'Đính chính'};
-export function buildGraph(mode, snapshots) {
+export function buildGraph(mode, snapshots, {includeClosedQuestions = false} = {}) {
   const nodes = [], edges = [], byId = new Map(), workflows = new Map();
   const put = n => { if (!byId.has(n.id)) { nodes.push(n); byId.set(n.id, n); } return byId.get(n.id); };
   const edge = (from, to, kind, data = null) => edges.push({from, to, kind, data});
@@ -70,11 +70,11 @@ export function buildGraph(mode, snapshots) {
       for (const cid of rel.claim_ids) edge(id(rel.relation_id), id(cid), 'relation_basis');
       for (const cid of rel.condition_claim_ids) edge(id(rel.relation_id), id(cid), 'branch_condition');
     });
-    wf.questions.filter(q => q.status === 'open').forEach((q, qi) => {
+    wf.questions.filter(q => includeClosedQuestions || q.status === 'open').forEach((q, qi) => {
       const step = byId.get(id(q.step_id)); if (!step) return;
       put({...base, id: id(q.question_id), kind: 'question', title: q.question, data: q,
         position: step.position.map((v, axis) => v + [2 + qi, 5, 6][axis])});
-      edge(id(q.step_id), id(q.question_id), `missing:${q.target_field}`);
+      edge(id(q.step_id), id(q.question_id), `${q.status === 'open' ? 'missing' : 'question'}:${q.target_field}`);
     });
     for (const source of snapshot.sources) {
       const sid = `${root}:source:${source.source_id}`;

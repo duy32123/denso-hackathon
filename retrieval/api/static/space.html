@@ -29,12 +29,40 @@
     <p id="space-status" class="space-status" role="status" aria-live="polite">Đang tải kho tri thức…</p>
     <div id="space-search-results" class="search-results" hidden></div>
     <section id="space-shell" class="space-shell" aria-label="Khám phá đồ thị tri thức">
+      <div class="space-explorer">
+        <div class="explorer-tabs" role="group" aria-label="Góc khám phá">
+          <button type="button" data-lens="overview" aria-pressed="true"><span>01</span> Toàn cảnh</button>
+          <button type="button" data-lens="situation" aria-pressed="false"><span>02</span> Theo tình huống</button>
+          <button type="button" data-lens="history" aria-pressed="false"><span>03</span> Tri thức thay đổi</button>
+        </div>
+        <div id="situation-controls" class="explorer-controls" hidden>
+          <label>Điều kiện / quan hệ trong nguồn<select id="situation-select"></select></label>
+          <button id="situation-trace" type="button">Xem đường tri thức ↗</button>
+        </div>
+        <div id="history-controls" class="explorer-controls" hidden>
+          <label class="history-workflow-label">Quy trình<select id="history-workflow"></select></label>
+          <label>Từ phiên bản<select id="history-before" disabled></select></label>
+          <span class="revision-arrow" aria-hidden="true">→</span>
+          <label>Đến phiên bản<select id="history-after" disabled></select></label>
+        </div>
+        <p id="explorer-note" class="explorer-note" role="status" hidden></p>
+        <div id="revision-playback" class="revision-playback" hidden>
+          <div class="revision-phases" role="group" aria-label="Xem các giai đoạn thay đổi">
+            <button type="button" data-phase="before" aria-pressed="false">Bản trước</button>
+            <button type="button" data-phase="changes" aria-pressed="true">Thay đổi</button>
+            <button type="button" data-phase="after" aria-pressed="false">Bản sau</button>
+          </div>
+          <label class="changes-filter"><input id="changes-only" type="checkbox"> Chỉ phần thay đổi</label>
+          <div id="revision-summary" class="revision-summary" aria-live="polite"></div>
+        </div>
+      </div>
       <div class="space-stage" id="space-stage">
         <div class="stage-heading"><span class="live-dot"></span> KNOWLEDGE SPACE <span id="space-namespace">PILOT</span></div>
         <button id="stage-tour" class="stage-tour" type="button">Câu chuyện →</button>
         <div id="space-canvas" class="space-canvas"></div>
         <div id="space-labels" class="space-labels" aria-hidden="true"></div>
         <div class="space-metrics" id="space-metrics"></div>
+        <div id="space-trace" class="space-trace" hidden></div>
         <div class="stage-caption"><strong>Tri thức có thể kiểm chứng</strong><span>Các đường nối thể hiện bản ghi và liên kết nguồn trong kho.</span></div>
         <div class="stage-hint">Kéo để xoay · Cuộn / chụm để zoom · Chọn nút để khám phá</div>
         <div id="space-tooltip" class="space-tooltip" hidden></div>

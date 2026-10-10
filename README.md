@@ -12,6 +12,9 @@ bốn nhóm “làm gì / khi nào / vì sao / kiểm chứng” và chuyển c�
 
 **Không gian tri thức 3D:** mở `/space` trên server local để xoay, zoom, chọn nút,
 mở bằng chứng và trình chiếu câu chuyện. Xem [hướng dẫn và phạm vi](docs/a2_knowledge_space_3d.md).
+Chọn **Theo tình huống** để theo nhánh có điều kiện, hoặc **Tri thức thay đổi**
+để đối chiếu các phiên bản và mở bằng chứng trước/sau. Chuẩn bị index lịch sử bằng
+`python -m scripts.prepare_knowledge_space` theo hướng dẫn trên.
 
 ## Bắt đầu
 

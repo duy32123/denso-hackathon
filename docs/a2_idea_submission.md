@@ -134,6 +134,7 @@ liên kết thực thể giữa nhiều workflow cần contract, đối chiếu 
 | Claim/evidence, bảy trường tri thức, review, snapshot, hỏi đáp, lịch sử | Có trong MVP |
 | Bản đồ Step–Relation và bốn nhóm làm gì/khi nào/vì sao/kiểm chứng | Đã bổ sung vào giao diện từ snapshot thật, xem [kịch bản](a2_knowledge_map_demo.md) |
 | Không gian 3D liên kết quy trình/bước/phát biểu/bằng chứng/câu hỏi | Có trong demo; tìm, chọn nút, mở nguồn và tour trình chiếu, xem [phạm vi](a2_knowledge_space_3d.md) |
+| Khám phá tình huống và đối chiếu phiên bản trong 3D | Có trong demo; đường nhánh từ Relation đã lưu, diff theo ID, bằng chứng đúng revision/index; ví dụ lịch sử sửa căn cứ nguồn, chưa phải kinh nghiệm mới từ chuyên gia |
 | Chọn câu hỏi thiếu để mở form bổ sung đúng bước/trường | Có trong giao diện; lưu đi qua service feedback hiện có |
 | Truy xuất lexical/vector/hybrid và mở rộng ngữ cảnh qua requires/branch_if/corrects | Có trong retrieval hiện tại; vẫn trong một workflow/revision |
 | Đồ thị thực thể thiết bị/công cụ và liên kết xuyên workflow | Hướng phát triển, cần review/migration và đo riêng |

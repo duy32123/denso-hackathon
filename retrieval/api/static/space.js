@@ -1,5 +1,6 @@
 import * as THREE from './vendor/three/three.module.min.js';
 import {buildGraph, TYPES, ROLES} from './space-graph.js';
+import {situations, compareSnapshots} from './space-explore.js';
 
 const $ = id => document.getElementById(id);
 const text = (tag, value, className) => { const n = document.createElement(tag); n.textContent = value; if (className) n.className = className; return n; };
@@ -17,6 +18,11 @@ const raycaster = new THREE.Raycaster(), pointer = new THREE.Vector2(), dummy = 
 const nodePositions = [], color = new THREE.Color();
 const projection = new THREE.Vector3(), neighborhood = new Set();
 let clusterDecorations = [];
+let baseGraph = null, lens = 'overview', situation = null, comparison = null, phase = 'changes';
+let viewToken = 0, viewController = null, history = null;
+const changeColors = {added: '#8df0ba', changed: '#f6c378', removed: '#ef879f', unchanged: '#415675'};
+const changeLabels = {added: 'Thêm mới', changed: 'Thay đổi', removed: 'Đã bỏ', unchanged: 'Giữ nguyên'};
+const nodeAt = id => graph?.byId.get(graph.aliases?.get(id) || id);
 
 async function get(url, signal) {
   const response = await fetch(url, {cache: 'no-store', signal});
@@ -24,8 +30,8 @@ async function get(url, signal) {
   if (!response.ok) throw new Error(data.error?.message || 'Không đọc được kho tri thức.');
   return data;
 }
-const params = () => new URLSearchParams({mode: graph.mode, dataset_split: 'dev', index_build_id: catalog.index_build_id});
-const evidenceUrl = (n, evidence) => `/v1/evidence/${encodeURIComponent(n.ref.workflow_id)}/${n.ref.revision}/${encodeURIComponent(evidence.evidence_id)}?${params()}`;
+const params = (build = catalog.index_build_id) => new URLSearchParams({mode: graph.mode, dataset_split: 'dev', index_build_id: build});
+const evidenceUrl = (n, evidence) => `/v1/evidence/${encodeURIComponent(n.ref.workflow_id)}/${n.ref.revision}/${encodeURIComponent(evidence.evidence_id)}?${params(graph.workflows.get(n.workflow).snapshot.index_build_id)}`;
 function sourceLink(url) {
   try {
     const parsed = new URL(url); if (!['https:', 'http:'].includes(parsed.protocol)) return null;
@@ -76,17 +82,18 @@ function claimCard(n, claim) {
   scope.append(text('summary', 'Phạm vi áp dụng'), text('p', claim.scope.description || 'Phạm vi chưa được ghi nhận', 'inspector-note')); box.append(scope);
   return box;
 }
-function linkedButton(id, label) { return action(label || graph.byId.get(id)?.title || id, () => selectNode(id)); }
+function linkedButton(id, label) { return action(label || nodeAt(id)?.title || id, () => selectNode(graph.aliases?.get(id) || id)); }
 function renderInspector(n) {
   clearEvidence(); content.replaceChildren();
   $('inspector-kind').textContent = TYPES[n.kind].label.toLocaleUpperCase('vi');
   $('inspector-title').textContent = n.title;
+  if (lens === 'history' && comparison && phase === 'changes') { renderChangeInspector(n); return; }
   const wfInfo = n.workflow ? graph.workflows.get(n.workflow) : null;
   if (wfInfo) content.append(text('p', `${n.ref.workflow_id} · r${n.ref.revision} · ${wfInfo.wf.context.manufacturer || 'Chưa rõ nhà sản xuất'}`, 'inspector-note'));
   if (n.kind === 'root') {
     content.append(text('p', 'Kinh nghiệm được tổ chức thành quy trình, bước và phát biểu. Mỗi phát biểu liên kết tới nguồn; phần còn thiếu trở thành câu hỏi để tiếp tục thu thập.'));
     content.append(text('p', 'Các cụm cùng xuất hiện trong một kho. Quan hệ kỹ thuật giữa nhiều quy trình cần được xác minh riêng.', 'inspector-note'));
-    for (const info of graph.workflows.values()) content.append(linkedButton(info.prefix, info.wf.title));
+    for (const info of graph.workflows.values()) if (graph.byId.has(info.prefix)) content.append(linkedButton(info.prefix, info.wf.title));
   } else if (n.kind === 'workflow') {
     const wf = n.data;
     content.append(text('p', `${wf.steps.length} bước · ${wf.claims.length} phát biểu · ${wf.relations.length} quan hệ bước · ${wf.questions.filter(q => q.status === 'open').length} câu hỏi mở`));
@@ -116,8 +123,8 @@ function renderInspector(n) {
     content.append(text('p', `Người / nguồn phát biểu: ${n.data.attribution.label || 'Chưa ghi nhận'}`, 'inspector-note'));
   } else if (n.kind === 'relation') {
     const r = n.data, claims = new Map(wfInfo.wf.claims.map(c => [c.claim_id, c]));
-    content.append(linkedButton(wfInfo.id(r.from_step_id), `Từ: ${graph.byId.get(wfInfo.id(r.from_step_id)).title}`));
-    content.append(linkedButton(wfInfo.id(r.to_step_id), `Đến: ${graph.byId.get(wfInfo.id(r.to_step_id)).title}`));
+    content.append(linkedButton(wfInfo.id(r.from_step_id), `Từ: ${nodeAt(wfInfo.id(r.from_step_id)).title}`));
+    content.append(linkedButton(wfInfo.id(r.to_step_id), `Đến: ${nodeAt(wfInfo.id(r.to_step_id)).title}`));
     if (r.condition_claim_ids.length) content.append(text('h3', 'Điều kiện chuyển bước'));
     for (const cid of r.condition_claim_ids) content.append(claimCard(n, claims.get(cid)));
     content.append(text('h3', 'Căn cứ của quan hệ'));
@@ -126,12 +133,13 @@ function renderInspector(n) {
     content.append(text('p', n.data.modality === 'visual' ? 'Khung hình có mốc thời gian' : n.data.modality === 'speech' ? 'Lời nói có mốc thời gian' : 'Đoạn tài liệu', 'inspector-note'));
     showEvidence(n, n.data);
   } else if (n.kind === 'question') {
-    content.append(text('span', 'Cần người có kinh nghiệm bổ sung', 'inspector-chip pending'));
-    content.append(text('p', `Trường cần làm rõ: ${ROLES[n.data.target_field]}`), linkedButton(wfInfo.id(n.data.step_id), `Xem bước: ${graph.byId.get(wfInfo.id(n.data.step_id)).title}`));
+    content.append(text('span', n.data.status === 'open' ? 'Cần người có kinh nghiệm bổ sung' : `Câu hỏi: ${n.data.status}`, 'inspector-chip pending'));
+    content.append(text('p', `Trường cần làm rõ: ${ROLES[n.data.target_field]}`), linkedButton(wfInfo.id(n.data.step_id), `Xem bước: ${nodeAt(wfInfo.id(n.data.step_id)).title}`));
     content.append(text('p', 'Phản hồi được giữ cùng người cung cấp và đi qua review để tạo phiên bản tri thức mới.'));
     const link = text('a', 'Mở biểu mẫu bổ sung kinh nghiệm ↗');
     link.href = `/?${new URLSearchParams({mode: graph.mode, workflow: n.ref.workflow_id, revision: n.ref.revision, question: n.data.question_id})}`;
-    content.append(link);
+    if (n.data.status === 'open' && catalog.workflows.some(w => w.workflow_id === n.ref.workflow_id && w.revision === n.ref.revision)) content.append(link);
+    else content.append(text('p', 'Câu hỏi thuộc bản lịch sử. Mở bản hiện tại để bổ sung kinh nghiệm.', 'inspector-note'));
   } else if (n.kind === 'source') {
     content.append(text('p', n.data.access_note || 'Nguồn đầu vào của pilot.'));
     const link = sourceLink(n.data.url); if (link) content.append(link);
@@ -148,6 +156,8 @@ function setRotate(value) {
 }
 function selectNode(id, fly = true) {
   const n = graph?.byId.get(id); if (!n) return;
+  if (lens === 'history' && phase === 'changes' && $('changes-only').checked && n.change === 'unchanged') $('changes-only').checked = false;
+  if (lens === 'situation' && situation && !situation.path.has(id)) { setLens('overview'); selectNode(id, fly); return; }
   enabled.add(n.kind); const checkbox = document.querySelector(`[data-space-type="${n.kind}"]`); if (checkbox) checkbox.checked = true;
   selected = id; setRotate(false); neighborhood.clear(); neighborhood.add(id);
   for (const neighbor of graph.adjacency.get(id)) neighborhood.add(neighbor);
@@ -198,33 +208,52 @@ function drawGraph() {
   highlightLines = new THREE.LineSegments(new THREE.BufferGeometry(), new THREE.LineBasicMaterial({color: '#c4f6ef', transparent: true, opacity: .8}));
   scene.add(edgeLines, highlightLines);
   for (const info of graph.workflows.values()) {
+    if (!graph.byId.has(info.prefix)) continue;
     const points = Array.from({length: 81}, (_, i) => {
       const a = i / 80 * Math.PI * 2; return new THREE.Vector3(info.center[0] + Math.cos(a) * 29, info.center[1] + Math.sin(a) * 21, info.center[2] - 4);
     });
-    const ring = new THREE.Line(new THREE.BufferGeometry().setFromPoints(points), new THREE.LineBasicMaterial({color: '#30587b', transparent: true, opacity: .22})); scene.add(ring); clusterDecorations.push(ring);
+    const ring = new THREE.Line(new THREE.BufferGeometry().setFromPoints(points), new THREE.LineBasicMaterial({color: '#30587b', transparent: true, opacity: .22})); ring.userData.workflow = info.prefix; scene.add(ring); clusterDecorations.push(ring);
   }
   updateVisibility(); updateLabels(); resize(); wake();
 }
 function updateVisibility() {
   if (!graph || !mesh) return;
   const focus = selected && graph.byId.get(selected);
-  const visible = n => enabled.has(n.kind) && (!focus || focus.kind === 'root' ||
-    (focus.workflow ? n.workflow === focus.workflow || neighborhood.has(n.id) : neighborhood.has(n.id)));
+  for (const ring of clusterDecorations) ring.visible = lens === 'situation' ? ring.userData.workflow === situation?.node.workflow : !focus?.workflow || ring.userData.workflow === focus.workflow;
+  const changesOnly = lens === 'history' && phase === 'changes' && $('changes-only').checked;
+  const changedNodes = new Set(graph.nodes.filter(n => n.change && n.change !== 'unchanged').map(n => n.id));
+  if (changesOnly) for (const e of graph.edges.filter(e => e.change !== 'unchanged')) { changedNodes.add(e.from); changedNodes.add(e.to); }
+  const visible = n => enabled.has(n.kind) && (lens === 'situation' && situation ? situation.path.has(n.id) :
+    (!changesOnly || changedNodes.has(n.id)) && (!focus || focus.kind === 'root' ||
+    (focus.workflow ? n.workflow === focus.workflow || neighborhood.has(n.id) : neighborhood.has(n.id))));
   graph.nodes.forEach((n, i) => {
     const show = visible(n); dummy.position.fromArray(n.position); dummy.scale.setScalar(show ? TYPES[n.kind].radius : 0); dummy.updateMatrix(); mesh.setMatrixAt(i, dummy.matrix);
-    color.set(TYPES[n.kind].color); if (selected && !neighborhood.has(n.id)) color.multiplyScalar(.18); mesh.setColorAt(i, color);
+    color.set(lens === 'history' && phase === 'changes' ? changeColors[n.change] : TYPES[n.kind].color);
+    if (selected && !neighborhood.has(n.id) && lens !== 'history') color.multiplyScalar(.18); mesh.setColorAt(i, color);
   });
   mesh.instanceMatrix.needsUpdate = true; mesh.instanceColor.needsUpdate = true;
   const coords = [], colors = [], highlighted = [];
   for (const e of graph.edges) {
     if (!visible(graph.byId.get(e.from)) || !visible(graph.byId.get(e.to))) continue;
     const from = graph.byId.get(e.from).position, to = graph.byId.get(e.to).position;
-    const active = selected && neighborhood.has(e.from) && neighborhood.has(e.to);
+    const active = lens === 'situation' ? true : selected && neighborhood.has(e.from) && neighborhood.has(e.to);
     coords.push(...from, ...to);
-    color.set(e.kind.startsWith('missing:') || ['branch_if', 'branch_condition'].includes(e.kind) ? '#eac58e' : '#769ecf');
-    if (selected && !active) color.multiplyScalar(.15);
+    color.set(lens === 'history' && phase === 'changes' ? changeColors[e.change] : e.kind.startsWith('missing:') || ['branch_if', 'branch_condition'].includes(e.kind) ? '#eac58e' : '#769ecf');
+    if (selected && !active && lens !== 'history') color.multiplyScalar(.15);
     colors.push(color.r, color.g, color.b, color.r, color.g, color.b);
-    if (active) highlighted.push(...from, ...to);
+    if (active && lens !== 'history') {
+      highlighted.push(...from, ...to);
+      // Arrowheads preserve direction for the recorded decision and evidence chain.
+      if (['relation_from', 'branch_if', 'requires', 'supported_by', 'from_source'].includes(e.kind)) {
+        const end = new THREE.Vector3(...to), direction = end.clone().sub(new THREE.Vector3(...from)).normalize();
+        end.addScaledVector(direction, -TYPES[graph.byId.get(e.to).kind].radius - .3);
+        const side = new THREE.Vector3().crossVectors(direction, new THREE.Vector3(0, 0, 1));
+        if (side.lengthSq() < .01) side.crossVectors(direction, new THREE.Vector3(0, 1, 0));
+        side.normalize().multiplyScalar(.55);
+        const tail = end.clone().addScaledVector(direction, -1.5);
+        highlighted.push(...tail.clone().add(side).toArray(), ...end.toArray(), ...tail.sub(side).toArray(), ...end.toArray());
+      }
+    }
   }
   edgeLines.geometry.dispose(); edgeLines.geometry = new THREE.BufferGeometry();
   edgeLines.geometry.setAttribute('position', new THREE.Float32BufferAttribute(coords, 3)); edgeLines.geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
@@ -239,7 +268,9 @@ function updateVisibility() {
 function updateLabels() {
   $('space-labels').replaceChildren(); labelNodes = [];
   if (!graph || !renderer) return;
-  const candidates = selected ? [graph.byId.get(selected), ...[...neighborhood].filter(id => id !== selected).map(id => graph.byId.get(id)).filter(n => ['step', 'workflow', 'relation', 'question'].includes(n.kind))].slice(0, 9) : graph.nodes.filter(n => ['root', 'workflow'].includes(n.kind));
+  const candidates = lens === 'situation' && situation ? [graph.byId.get(selected) || situation.node, situation.from, situation.to, ...situation.conditions].filter((n, i, all) => all.findIndex(x => x.id === n.id) === i) :
+    lens === 'history' && phase === 'changes' ? graph.nodes.filter(n => ['added', 'changed', 'removed'].includes(n.change)).sort((a, b) => (a.kind === 'claim' ? -1 : 0) - (b.kind === 'claim' ? -1 : 0)).slice(0, 7) :
+    selected ? [graph.byId.get(selected), ...[...neighborhood].filter(id => id !== selected).map(id => graph.byId.get(id)).filter(n => ['step', 'workflow', 'relation', 'question'].includes(n.kind))].slice(0, 9) : graph.nodes.filter(n => ['root', 'workflow'].includes(n.kind));
   for (const n of candidates) {
     if (!enabled.has(n.kind)) continue;
     const label = text('div', n.kind === 'workflow' ? n.title : n.title.length > 65 ? `${n.title.slice(0, 62)}…` : n.title, `space-node-label ${['workflow', 'root'].includes(n.kind) ? 'is-hub' : ''} ${n.id === selected ? 'is-selected' : ''}`);
@@ -260,9 +291,9 @@ function renderLabels() {
     projection.fromArray(n.position).project(camera);
     const x = (projection.x * .5 + .5) * w, y = (-projection.y * .5 + .5) * h + 15;
     const invalid = projection.z > 1 || projection.z < -1 || x < 10 || x > w - 10 || y < 10 || y > h - 45;
-    const overlap = n.id !== selected && occupied.some(p => Math.abs(p.x - x) < 145 && Math.abs(p.y - y) < 44);
+    const overlap = occupied.some(p => Math.abs(p.x - x) < 185 && Math.abs(p.y - y) < 60);
     label.hidden = invalid || overlap;
-    if (!label.hidden) { label.style.transform = `translate(${x}px, ${y}px) translateX(-50%)`; occupied.push({x, y}); }
+    if (!label.hidden) { label.style.transform = `translate(${Math.max(95, Math.min(w - 95, x))}px, ${y}px) translateX(-50%)`; occupied.push({x, y}); }
   }
 }
 function wake() {
@@ -403,6 +434,195 @@ function showStop(index) {
   if (stop.node) selectNode(stop.node); else { overview(); setRotate(!reducedMotion.matches); }
 }
 function closeTour() { tourIndex = -1; $('tour-card').hidden = true; setRotate(false); }
+function updateMetrics() {
+  $('space-canvas').dataset.nodeCount = String(graph.nodes.length);
+  $('space-canvas').dataset.edgeCount = String(graph.edges.length);
+  $('space-metrics').replaceChildren();
+  for (const [key, label] of [['workflow', 'QUY TRÌNH'], ['claim', 'PHÁT BIỂU'], ['evidence', 'BẰNG CHỨNG'], ['question', 'CÂU HỎI MỞ']]) {
+    const count = key === 'question' ? graph.nodes.filter(n => n.kind === 'question' && n.data.status === 'open').length : graph.counts[key];
+    const metric = document.createElement('div'); metric.append(text('strong', count), text('span', label)); $('space-metrics').append(metric);
+  }
+}
+function activateGraph(value) {
+  graph = value; selected = null; clearEvidence(); $('space-tooltip').hidden = true;
+  $('space-search').value = ''; renderSearch(); updateMetrics(); drawGraph(); overview(); prepareTour();
+  $('space-status').textContent = `${graph.nodes.length} nút · ${graph.edges.length} liên kết bản ghi và nguồn · ${graph.counts.relation} quan hệ giữa bước`;
+}
+function resetExplorer() {
+  viewToken++; viewController?.abort(); lens = 'overview'; situation = null; comparison = null; history = null; phase = 'changes'; baseGraph = null;
+  for (const b of document.querySelectorAll('[data-lens]')) b.setAttribute('aria-pressed', String(b.dataset.lens === lens));
+  for (const id of ['situation-controls', 'history-controls', 'revision-playback', 'explorer-note', 'space-trace']) $(id).hidden = true;
+  $('situation-select').replaceChildren(); $('history-workflow').replaceChildren();
+  $('changes-only').checked = false;
+}
+function setLens(value) {
+  if (!baseGraph) return;
+  viewToken++; viewController?.abort(); closeTour(); clearEvidence(); lens = value; situation = null; comparison = null;
+  for (const b of document.querySelectorAll('[data-lens]')) b.setAttribute('aria-pressed', String(b.dataset.lens === value));
+  $('situation-controls').hidden = value !== 'situation'; $('history-controls').hidden = value !== 'history';
+  $('revision-playback').hidden = true; $('space-trace').hidden = true;
+  $('explorer-note').hidden = value === 'overview';
+  activateGraph(baseGraph);
+  if (value === 'situation') applySituation();
+  if (value === 'history') loadHistory();
+}
+function prepareExplorer() {
+  const options = situations(baseGraph);
+  for (const s of options) {
+    const option = text('option', `${s.node.ref.workflow_id} · ${s.label}`); option.value = s.node.id; $('situation-select').append(option);
+  }
+  $('situation-select').disabled = !options.length; $('situation-trace').disabled = !options.length;
+  const workflows = [...baseGraph.workflows.values()].sort((a, b) =>
+    (a.wf.workflow_id === 'B0_SRC_HAAS_0005' ? -1 : 0) - (b.wf.workflow_id === 'B0_SRC_HAAS_0005' ? -1 : 0));
+  for (const info of workflows) {
+    const option = text('option', `${info.wf.workflow_id} · ${info.wf.title}`); option.value = info.prefix; $('history-workflow').append(option);
+  }
+}
+function applySituation() {
+  situation = situations(baseGraph).find(s => s.node.id === $('situation-select').value);
+  if (!situation) { $('explorer-note').textContent = 'Kho này chưa có quan hệ bước được ghi nhận. Chọn bước ở Toàn cảnh để đọc nguồn và phần còn thiếu.'; return; }
+  const s = situation;
+  $('explorer-note').textContent = 'Khám phá nhánh đã ghi trong nguồn. Điều kiện thực tế của máy cần được người vận hành xác nhận.';
+  $('space-trace').hidden = false; $('space-trace').replaceChildren();
+  $('space-trace').append(text('span', `BƯỚC ${s.from.data.display_order}`), text('span', '→', 'trace-arrow'), text('strong', s.node.data.relation_type === 'branch_if' ? 'NHÁNH CÓ ĐIỀU KIỆN' : 'ĐIỀU KIỆN TIÊN QUYẾT'), text('span', '→', 'trace-arrow'), text('span', `BƯỚC ${s.to.data.display_order}`));
+  selectNode(s.node.id, false); neighborhood.clear(); for (const id of s.path) neighborhood.add(id);
+  const points = [...s.path].map(id => graph.byId.get(id)?.position).filter(Boolean);
+  orbit.desiredTarget.fromArray(points.reduce((sum, p) => sum.map((v, i) => v + p[i] / points.length), [0, 0, 0])); orbit.desiredRadius = 100;
+  if (reducedMotion.matches) { orbit.target.copy(orbit.desiredTarget); orbit.radius = orbit.desiredRadius; }
+  const intro = text('div', '', 'situation-intro');
+  intro.append(text('span', 'TỪ ĐIỀU KIỆN TỚI THAO TÁC', 'inspector-note'), text('p', 'Đường sáng nối bước, điều kiện, thao tác và bằng chứng của nhánh này. Các mũi tên đi theo liên kết đã lưu.'));
+  content.prepend(intro);
+  const claims = new Map(s.info.wf.claims.map(c => [c.claim_id, c]));
+  content.append(text('h3', `Khi chuyển tới bước ${s.to.data.display_order}`));
+  for (const role of ['action', 'rationale', 'outcome', 'acceptance_criteria']) {
+    content.append(text('h3', ROLES[role]));
+    const field = s.to.data.fields[role];
+    if (!field.claim_ids.length) content.append(text('p', field.state === 'not_applicable' ? 'Không áp dụng' : 'Nguồn chưa ghi nhận — cần thu thập thêm.', 'inspector-note'));
+    for (const cid of field.claim_ids) content.append(claimCard(s.node, claims.get(cid)));
+  }
+  for (const q of s.info.wf.questions.filter(q => q.step_id === s.to.data.step_id && q.status === 'open')) content.append(linkedButton(s.info.id(q.question_id), `Cần hỏi thêm: ${q.question}`));
+  updateVisibility(); updateLabels(); wake();
+}
+function revisionParams(build) { return new URLSearchParams({mode: baseGraph.mode, dataset_split: 'dev', index_build_id: build}); }
+async function loadHistory() {
+  const info = baseGraph.workflows.get($('history-workflow').value); if (!info) return;
+  const token = ++viewToken; viewController?.abort(); viewController = new AbortController(); const signal = viewController.signal;
+  history = null; comparison = null; $('revision-playback').hidden = true; $('space-trace').hidden = true;
+  $('history-before').disabled = true; $('history-after').disabled = true;
+  $('history-before').replaceChildren(); $('history-after').replaceChildren();
+  activateGraph(baseGraph); selectNode(info.prefix);
+  $('explorer-note').textContent = 'Đang đọc lịch sử phiên bản…';
+  try {
+    const result = await get(`/v1/workflows/${encodeURIComponent(info.wf.workflow_id)}/${info.wf.revision}/history?${revisionParams(catalog.index_build_id)}`, signal);
+    if (token !== viewToken || lens !== 'history') return;
+    history = result;
+    const available = history.revisions.filter(r => r.index_build_id);
+    for (const id of ['history-before', 'history-after']) for (const r of history.revisions) {
+      const unavailable = r.review_counts.source.source_checked ? 'chưa có index lịch sử' : 'chưa đủ review nguồn';
+      const option = text('option', `r${r.revision}${r.index_build_id ? '' : ` · ${unavailable}`}`); option.value = r.revision; option.disabled = !r.index_build_id; $(id).append(option);
+    }
+    if (available.length < 2) {
+      $('explorer-note').textContent = history.revisions.length < 2 ? 'Quy trình này mới có một phiên bản; chưa có thay đổi để so sánh.' : 'Bản cũ chưa có index lịch sử. Chuẩn bị database demo theo hướng dẫn để mở đúng bằng chứng của cả hai bản.';
+      return;
+    }
+    $('history-before').disabled = false; $('history-after').disabled = false;
+    $('history-before').value = available.at(-2).revision; $('history-after').value = available.at(-1).revision;
+    revisionLimits(); await loadComparison();
+  } catch (error) { if (token === viewToken && error.name !== 'AbortError') $('explorer-note').textContent = error.message; }
+}
+function revisionLimits(changed) {
+  const available = history.revisions.filter(r => r.index_build_id).map(r => r.revision);
+  let before = +$('history-before').value, after = +$('history-after').value;
+  if (before >= after) {
+    if (changed === 'before') after = available.find(r => r > before);
+    else before = available.filter(r => r < after).at(-1);
+  }
+  $('history-before').value = before; $('history-after').value = after;
+  for (const o of $('history-before').options) o.disabled = !available.includes(+o.value) || +o.value >= after;
+  for (const o of $('history-after').options) o.disabled = !available.includes(+o.value) || +o.value <= before;
+}
+async function loadComparison() {
+  if (!history || lens !== 'history') return;
+  const token = ++viewToken; viewController?.abort(); viewController = new AbortController(); const signal = viewController.signal;
+  comparison = null; clearEvidence(); $('revision-playback').hidden = true; $('space-trace').hidden = true;
+  $('explorer-note').textContent = 'Đang đối chiếu hai snapshot và index của từng phiên bản…';
+  // Clear the old comparison immediately, including its picks and source buttons.
+  activateGraph(baseGraph);
+  try {
+    const revisions = [+$('history-before').value, +$('history-after').value];
+    const snapshots = await Promise.all(revisions.map(rev => {
+      const build = history.revisions.find(r => r.revision === rev)?.index_build_id;
+      if (!build) throw new Error('Phiên bản này chưa có index lịch sử.');
+      return get(`/v1/workflows/${encodeURIComponent(history.workflow_id)}/${rev}?${revisionParams(build)}`, signal);
+    }));
+    if (token !== viewToken || lens !== 'history') return;
+    comparison = compareSnapshots(baseGraph.mode, ...snapshots);
+    $('explorer-note').textContent = 'So sánh cùng ID trong hai bản đã lưu. Đổi màu thể hiện nội dung hoặc liên kết thay đổi; không tự nâng mức xác nhận chuyên môn.';
+    $('revision-playback').hidden = false; $('changes-only').checked = false;
+    renderRevisionSummary(); setPhase('changes');
+  } catch (error) { if (token === viewToken && error.name !== 'AbortError') $('explorer-note').textContent = error.message; }
+}
+function renderRevisionSummary() {
+  const box = $('revision-summary'); box.replaceChildren();
+  for (const key of ['added', 'changed', 'removed']) {
+    const b = action(`${comparison.counts[key]} ${changeLabels[key].toLocaleLowerCase('vi')}`, () => {
+      setPhase('changes'); const n = graph.nodes.find(n => n.change === key && n.kind === 'claim') || graph.nodes.find(n => n.change === key); if (n) selectNode(n.id);
+    }); b.className = `change-stat ${key}`; b.disabled = !comparison.counts[key]; box.append(b);
+  }
+  box.append(text('span', `${comparison.counts.unchanged} nút giữ nguyên`, 'unchanged-count'));
+}
+function setPhase(value) {
+  if (!comparison) return;
+  phase = value; for (const b of document.querySelectorAll('[data-phase]')) b.setAttribute('aria-pressed', String(b.dataset.phase === value));
+  $('changes-only').disabled = value !== 'changes';
+  activateGraph(value === 'changes' ? comparison.union : comparison[value]);
+  $('space-trace').hidden = false;
+  $('space-trace').replaceChildren(text('span', `r${comparison.beforeSnapshot.workflow.revision}`), text('span', '→', 'trace-arrow'), text('strong', value === 'changes' ? 'TRI THỨC THAY ĐỔI' : value === 'before' ? 'BẢN TRƯỚC' : 'BẢN SAU'), text('span', `r${comparison.afterSnapshot.workflow.revision}`));
+  orbit.desiredTarget.set(24, 0, 0); orbit.desiredRadius = 110;
+  if (reducedMotion.matches) { orbit.target.copy(orbit.desiredTarget); orbit.radius = orbit.desiredRadius; }
+  $('space-status').textContent = `So sánh ${history.workflow_id} · r${comparison.beforeSnapshot.workflow.revision} → r${comparison.afterSnapshot.workflow.revision} · ${value === 'changes' ? 'hiển thị hợp hai bản' : value === 'before' ? 'snapshot trước' : 'snapshot sau'}`;
+  wake();
+}
+function renderChangeInspector(n) {
+  const beforeRev = comparison.beforeSnapshot.workflow.revision, afterRev = comparison.afterSnapshot.workflow.revision;
+  if (n.kind === 'root') {
+    $('inspector-kind').textContent = 'LỊCH SỬ CÓ THỂ KIỂM CHỨNG'; $('inspector-title').textContent = `Tri thức thay đổi · r${beforeRev} → r${afterRev}`;
+    content.append(text('p', 'Chọn phần đổi màu để đọc hai bản cạnh nhau và mở nguồn của từng phiên bản. Màu xanh là thêm, vàng là thay đổi, hồng là bỏ.'));
+    const ec = comparison.edgeCounts;
+    content.append(text('p', `Liên kết: ${ec.added} thêm · ${ec.changed} thay đổi · ${ec.removed} bỏ.`, 'inspector-note'));
+    for (const changed of graph.nodes.filter(n => n.change !== 'unchanged')) content.append(linkedButton(changed.id, `${changeLabels[changed.change]} · ${changed.title}`));
+    const entry = history.revisions.find(r => r.revision === afterRev);
+    if (entry?.change_log.length) {
+      content.append(text('h3', 'Nhật ký đã lưu'));
+      for (const log of entry.change_log) content.append(text('p', log.reason || log.summary || JSON.stringify(log), 'inspector-note'));
+    }
+  } else {
+    content.append(text('span', changeLabels[n.change], `inspector-chip change-${n.change}`));
+    if (n.fields?.length) {
+      const labels = {evidence_links: 'liên kết bằng chứng', text: 'nội dung', source_review: 'đối chiếu nguồn', technical_review: 'xác nhận chuyên môn', fields: 'trường tri thức', scope: 'phạm vi', claim_ids: 'căn cứ', condition_claim_ids: 'điều kiện', status: 'trạng thái câu hỏi'};
+      content.append(text('p', `Thay đổi: ${n.fields.map(f => labels[f] || f).join(', ')}.`, 'inspector-note'));
+    }
+    for (const [version, original, rev] of [['before', n.beforeNode, beforeRev], ['after', n.afterNode, afterRev]]) {
+      const section = text('section', '', `revision-card revision-${version}`); section.dataset.revision = rev;
+      section.append(text('h3', `${version === 'before' ? 'Bản trước' : 'Bản sau'} · r${rev}`));
+      if (!original) section.append(text('p', version === 'before' ? 'Chưa có trong bản này.' : 'Không còn trong bản này.', 'inspector-note'));
+      else if (original.kind === 'claim') section.append(claimCard(original, original.data));
+      else if (original.kind === 'evidence') {
+        section.append(text('p', original.data.quote || original.data.observation_note || original.title));
+        const b = action(`Mở bằng chứng r${rev} ↗`, () => showEvidence(original, original.data)); b.dataset.evidenceId = original.data.evidence_id; section.append(b);
+      } else {
+        section.append(text('p', original.title));
+        if (original.data && n.fields?.length) {
+          const details = document.createElement('details'); details.append(text('summary', 'Chi tiết trường thay đổi'));
+          for (const field of n.fields) details.append(text('p', `${field}: ${JSON.stringify(original.data[field])}`, 'inspector-note'));
+          section.append(details);
+        }
+      }
+      content.append(section);
+    }
+  }
+  document.querySelector('.space-inspector').scrollTop = 0;
+}
 function exitPresentation() {
   shell.classList.remove('is-presenting'); $('presentation-exit')?.remove();
   if (document.fullscreenElement) document.exitFullscreen().catch(() => {}); resize();
@@ -420,7 +640,7 @@ let loadController = null;
 async function load() {
   const token = ++loading, mode = $('space-mode').value;
   loadController?.abort(); loadController = new AbortController(); const signal = loadController.signal;
-  closeTour(); clearEvidence(); graph = null; catalog = null; selected = null; setRotate(false); $('space-search').value = ''; renderSearch();
+  resetExplorer(); closeTour(); clearEvidence(); graph = null; catalog = null; selected = null; setRotate(false); $('space-search').value = ''; renderSearch();
   $('space-tooltip').hidden = true; $('space-labels').replaceChildren(); labelNodes = []; $('space-metrics').replaceChildren();
   if (mesh && scene) { scene.remove(mesh, edgeLines, highlightLines); selectionRing.visible = false; for (const ring of clusterDecorations) scene.remove(ring); }
   $('space-canvas').dataset.nodeCount = '0'; $('space-canvas').dataset.edgeCount = '0'; $('space-canvas').dataset.selectedNode = '';
@@ -432,11 +652,7 @@ async function load() {
     if (token !== loading) return;
     const snapshots = await Promise.all(currentCatalog.workflows.map(wf => get(`/v1/workflows/${encodeURIComponent(wf.workflow_id)}/${wf.revision}?${new URLSearchParams({mode, dataset_split: 'dev', index_build_id: currentCatalog.index_build_id})}`, signal)));
     if (token !== loading) return;
-    catalog = currentCatalog; graph = buildGraph(mode, snapshots);
-    $('space-canvas').dataset.nodeCount = String(graph.nodes.length); $('space-canvas').dataset.edgeCount = String(graph.edges.length);
-    for (const [key, label] of [['workflow', 'QUY TRÌNH'], ['claim', 'PHÁT BIỂU'], ['evidence', 'BẰNG CHỨNG'], ['question', 'CÂU HỎI MỞ']]) {
-      const metric = document.createElement('div'); metric.append(text('strong', graph.counts[key]), text('span', label)); $('space-metrics').append(metric);
-    }
+    catalog = currentCatalog; graph = buildGraph(mode, snapshots); baseGraph = graph; prepareExplorer(); updateMetrics();
     $('space-status').textContent = `${graph.nodes.length} nút · ${graph.edges.length} liên kết bản ghi và nguồn · ${graph.counts.relation} quan hệ giữa bước`;
     if (!snapshots.length) $('space-status').textContent = 'Kho đang chọn chưa có quy trình. Hãy import và build index hoặc chọn kho khác.';
     drawGraph(); overview(); prepareTour();
@@ -446,15 +662,22 @@ async function load() {
   }
 }
 // Useful for inspecting this read-only view; no KB mutations or LLM calls.
-window.knowflowSpace = {get graph() { return graph; }, select: selectNode, get orbit() { return orbit; }, get renderer() { return renderer; },
+window.knowflowSpace = {get graph() { return graph; }, get lens() { return lens; }, get situation() { return situation; }, get comparison() { return comparison; }, select: selectNode, get orbit() { return orbit; }, get renderer() { return renderer; },
   project(id) { const n = graph?.byId.get(id); if (!n || !camera) return null; const p = new THREE.Vector3(...n.position).project(camera), r = renderer.domElement.getBoundingClientRect(); return {x: r.left + (p.x * .5 + .5) * r.width, y: r.top + (-p.y * .5 + .5) * r.height, z: p.z}; }};
 $('space-mode').addEventListener('change', load);
+for (const b of document.querySelectorAll('[data-lens]')) b.addEventListener('click', () => setLens(b.dataset.lens));
+$('situation-select').addEventListener('change', applySituation);
+$('situation-trace').addEventListener('click', applySituation);
+$('history-workflow').addEventListener('change', loadHistory);
+for (const which of ['before', 'after']) $(`history-${which}`).addEventListener('change', () => { revisionLimits(which); loadComparison(); });
+for (const b of document.querySelectorAll('[data-phase]')) b.addEventListener('click', () => setPhase(b.dataset.phase));
+$('changes-only').addEventListener('change', () => { selected = null; overview(); updateVisibility(); });
 $('space-search').addEventListener('input', renderSearch);
-$('space-reset').addEventListener('click', () => { closeTour(); overview(); });
+$('space-reset').addEventListener('click', () => { setLens('overview'); overview(); });
 $('space-rotate').addEventListener('click', () => setRotate(!orbit.rotating));
 $('space-fullscreen').addEventListener('click', present);
-$('tour-start').addEventListener('click', () => { stage.scrollIntoView({behavior: reducedMotion.matches ? 'instant' : 'smooth', block: 'start'}); showStop(0); });
-$('stage-tour').addEventListener('click', () => showStop(0));
+$('tour-start').addEventListener('click', () => { setLens('overview'); stage.scrollIntoView({behavior: reducedMotion.matches ? 'instant' : 'smooth', block: 'start'}); showStop(0); });
+$('stage-tour').addEventListener('click', () => { setLens('overview'); showStop(0); });
 $('tour-prev').addEventListener('click', () => showStop(tourIndex - 1));
 $('tour-next').addEventListener('click', () => { if (tourIndex === stops.length - 1) closeTour(); else showStop(tourIndex + 1); });
 $('tour-close').addEventListener('click', closeTour);

@@ -16,7 +16,7 @@ from urllib.request import ProxyHandler, build_opener
 
 import pytest
 
-from conftest import FIXTURE_ROOT, REPO_ROOT, read_bundle, write_bundle
+from conftest import FIXTURE_ROOT, REPO_ROOT, read_bundle
 from retrieval.api.app import create_app
 from retrieval.generation.models import AnswerDraft, Verification
 from retrieval.generation.browse import WorkflowBrowser
@@ -25,6 +25,7 @@ from retrieval.generation.service import QAService
 from retrieval.importer import import_bundle
 from retrieval.indexing.search_index import build_index
 from retrieval.retrieval.engine import RetrievalConfig
+from scripts.prepare_knowledge_space import prepare
 
 
 class Model:
@@ -86,13 +87,8 @@ def test_english_demo_auto_evidence_fields_revision_history_and_mode_switch(tmp_
     real = tmp_path / "real.sqlite"
     bundle = REPO_ROOT / "acquisition/export/haas_pilot_dev_bundle"
     data = read_bundle(bundle)
-    old = {**data, "workflows": [wf for wf in data["workflows"]
-                               if wf["workflow_id"] == "B0_SRC_HAAS_0005" and wf["revision"] == 1]}
-    assert old["workflows"]
-    import_bundle(write_bundle(tmp_path / "r1", old), real, source_type="real", split="dev")
-    build_index(real, mode="real", split="dev")
-    import_bundle(bundle, real, source_type="real", split="dev")
-    build_index(real, mode="real", split="dev")
+    assert prepare(real)["stored_snapshots"] == len(data["workflows"])
+    assert prepare(real)["status"] == "ready"
     synthetic = tmp_path / "synthetic.sqlite"
     import_bundle(FIXTURE_ROOT / "F01_complete", synthetic, source_type="synthetic", split="dev")
     build_index(synthetic, mode="synthetic", split="dev")
@@ -273,6 +269,69 @@ def test_english_demo_auto_evidence_fields_revision_history_and_mode_switch(tmp_
         branch_screenshot.write_bytes(base64.b64decode(page.call("Page.captureScreenshot")["data"]))
         print(f"knowledge_space_branch_screenshot={branch_screenshot.as_posix()}")
         page.evaluate("document.querySelector('#tour-close').click()")
+        # Situation paths follow explicit fields/relations, with correct conditions.
+        page.evaluate("document.querySelector('[data-lens=situation]').click()")
+        assert page.evaluate("window.knowflowSpace.situation.node.ref.workflow_id") == "REAL_WF_0003"
+        assert page.evaluate("window.knowflowSpace.situation.node.data.relation_type") == "branch_if"
+        assert page.evaluate("window.knowflowSpace.situation.conditions.every(n=>window.knowflowSpace.situation.node.data.condition_claim_ids.includes(n.data.claim_id))")
+        assert page.evaluate("+document.querySelector('#space-canvas').dataset.visibleNodes === window.knowflowSpace.situation.path.size")
+        assert "Nguồn chưa ghi nhận" in page.evaluate("document.querySelector('#inspector-content').textContent")
+        assert page.evaluate("[...window.knowflowSpace.situation.path].every(id=>window.knowflowSpace.graph.byId.has(id))")
+        # Pure view-model cases: resolved questions keep their identity; deletion
+        # is distinct, and object key order cannot manufacture a content change.
+        assert page.evaluate("(async () => {const {compareSnapshots}=await import('/static/space-explore.js'); const a=structuredClone(window.knowflowSpace.situation.info.snapshot), b=structuredClone(a); b.workflow.revision++; b.workflow.questions[0].status='resolved'; const qid=b.workflow.questions[0].question_id; b.workflow.claims[0]=Object.fromEntries(Object.entries(b.workflow.claims[0]).reverse()); const first=compareSnapshots('real',a,b); const q=first.union.nodes.find(n=>n.data?.question_id===qid); const c=structuredClone(b); c.workflow.revision++; c.workflow.questions=c.workflow.questions.filter(q=>q.question_id!==qid); const second=compareSnapshots('real',b,c); const removed=second.union.nodes.find(n=>n.data?.question_id===qid); let rejected=false; try {compareSnapshots('real',b,a);} catch {rejected=true;} return q.change==='changed'&&q.fields.includes('status')&&first.union.nodes.find(n=>n.data?.claim_id===a.workflow.claims[0].claim_id).change==='unchanged'&&removed.change==='removed'&&removed.beforeNode.ref.revision===b.workflow.revision&&second.union.edges.every(e=>second.union.byId.has(e.from)&&second.union.byId.has(e.to))&&rejected;})()")
+        situation_screenshot = tmp_path / "a2-knowledge-space-situation.png"
+        situation_screenshot.write_bytes(base64.b64decode(page.call("Page.captureScreenshot")["data"]))
+        print(f"knowledge_space_situation_screenshot={situation_screenshot.as_posix()}")
+        # Same-ID history diff; unchanged claim text gets a repaired evidence link.
+        page.evaluate("document.querySelector('[data-lens=history]').click()")
+        page.wait("window.knowflowSpace.comparison !== null")
+        assert page.evaluate("window.knowflowSpace.comparison.beforeSnapshot.workflow.revision") == 1
+        assert page.evaluate("window.knowflowSpace.comparison.afterSnapshot.workflow.revision") == 2
+        assert page.evaluate("(() => {const c=window.knowflowSpace.comparison; return c.after.nodes.filter(n=>n.beforeNode).every(n=>JSON.stringify(n.position)===JSON.stringify(n.beforeNode.position));})()")
+        assert page.evaluate("(() => {const g=window.knowflowSpace.graph; return new Set(g.nodes.map(n=>n.id)).size===g.nodes.length && g.edges.every(e=>g.byId.has(e.from)&&g.byId.has(e.to));})()")
+        # Compare client entity diff to the server's stored snapshot diff.
+        assert page.evaluate("(async () => {const c=window.knowflowSpace.comparison, s=c.afterSnapshot; const h=await (await fetch('/v1/workflows/B0_SRC_HAAS_0005/2/history?'+new URLSearchParams({mode:'real',dataset_split:'dev',index_build_id:s.index_build_id}))).json(); const d=h.revisions.find(r=>r.revision===2).diff; return [['claim','claims','claim_id'],['step','steps','step_id'],['evidence','evidence','evidence_id'],['relation','relations','relation_id']].every(([kind,field,id])=>['added','removed','changed'].every(change=>JSON.stringify(c.union.nodes.filter(n=>n.kind===kind&&n.change===change).map(n=>n.data[id]).sort())===JSON.stringify(d[field][change].map(x=>typeof x==='string'?x:x.id).sort())));})()")
+        page.evaluate("window.knowflowSpace.select(window.knowflowSpace.graph.nodes.find(n=>n.data?.claim_id==='B0_SRC_HAAS_0005_CL_020').id)")
+        assert page.evaluate("document.querySelectorAll('.revision-card').length") == 2
+        assert "liên kết bằng chứng" in page.evaluate("document.querySelector('#inspector-content').textContent")
+        assert "Chưa xác nhận chuyên môn" in page.evaluate("document.querySelector('#inspector-content').textContent")
+        assert page.evaluate("window.knowflowSpace.graph.nodes.find(n=>n.data?.claim_id==='B0_SRC_HAAS_0005_CL_020').fields") == ["evidence_links"]
+        page.evaluate("document.querySelector('.revision-before [data-evidence-id]').click()")
+        page.wait("document.querySelector('#space-evidence').textContent.includes('B0_SRC_HAAS_0005_EV_019')")
+        assert "r1" in page.evaluate("document.querySelector('#space-evidence').textContent")
+        assert "apply some grease" not in page.evaluate("document.querySelector('#space-evidence blockquote').textContent")
+        page.evaluate("document.querySelector('.revision-after [data-evidence-id]').click()")
+        page.wait("document.querySelector('#space-evidence').textContent.includes('B0_SRC_HAAS_0005_EV_033')")
+        assert "r2" in page.evaluate("document.querySelector('#space-evidence').textContent")
+        assert "apply some grease" in page.evaluate("document.querySelector('#space-evidence blockquote').textContent")
+        page.evaluate("document.querySelector('.space-inspector').scrollTop=0")
+        revision_screenshot = tmp_path / "a2-knowledge-space-revision.png"
+        revision_screenshot.write_bytes(base64.b64decode(page.call("Page.captureScreenshot")["data"]))
+        print(f"knowledge_space_revision_screenshot={revision_screenshot.as_posix()}")
+        # Replaying end states doesn't change survivor coordinates or source scope.
+        page.evaluate("document.querySelector('[data-phase=before]').click()")
+        assert page.evaluate("window.knowflowSpace.graph.nodes.filter(n=>n.ref).every(n=>n.ref.revision===1)")
+        page.evaluate("document.querySelector('[data-phase=after]').click()")
+        assert page.evaluate("window.knowflowSpace.graph.nodes.filter(n=>n.ref).every(n=>n.ref.revision===2)")
+        page.evaluate("document.querySelector('[data-phase=changes]').click(); document.querySelector('#changes-only').click()")
+        assert page.evaluate("+document.querySelector('#space-canvas').dataset.visibleNodes < window.knowflowSpace.graph.nodes.length")
+        page.call("Emulation.setDeviceMetricsOverride", {"width": 375, "height": 900, "deviceScaleFactor": 1, "mobile": True})
+        assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+        page.call("Emulation.clearDeviceMetricsOverride")
+        # One revision is reported honestly; no invented timeline or changes.
+        page.evaluate("const one=document.querySelector('#history-workflow'); one.value=[...one.options].find(o=>o.value.includes('REAL_WF_0001')).value; one.dispatchEvent(new Event('change'))")
+        page.wait("document.querySelector('#explorer-note').textContent.includes('một phiên bản')")
+        assert page.evaluate("window.knowflowSpace.comparison === null && document.querySelector('#revision-playback').hidden")
+        page.evaluate("const unindexed=document.querySelector('#history-workflow'); unindexed.value=[...unindexed.options].find(o=>o.value.includes('REAL_WF_0003')).value; unindexed.dispatchEvent(new Event('change'))")
+        page.wait("document.querySelector('#explorer-note').textContent.includes('Bản cũ chưa')")
+        assert page.evaluate("document.querySelector('#history-before option[value=\"1\"]').disabled")
+        assert "review nguồn" in page.evaluate("document.querySelector('#history-before option[value=\"1\"]').textContent")
+        assert page.evaluate("window.knowflowSpace.comparison === null && document.querySelector('#revision-playback').hidden")
+        # A slow historical request cannot repaint after leaving the history lens.
+        page.evaluate("(() => {const original=window.fetch; window.fetch=(url,options)=>String(url).includes('/history?')?new Promise(resolve=>setTimeout(()=>resolve(original(url,options)),300)):original(url,options); document.querySelector('[data-lens=history]').click(); document.querySelector('[data-lens=situation]').click(); window.fetch=original;})()")
+        page.evaluate("new Promise(resolve=>setTimeout(resolve,500))")
+        assert page.evaluate("window.knowflowSpace.lens==='situation' && window.knowflowSpace.comparison===null && document.querySelector('#revision-playback').hidden")
         # Filters/search operate on graph nodes, including a keyboard-accessible route.
         page.evaluate("document.querySelector('#space-reset').click()")
         visible_count = page.evaluate("+document.querySelector('#space-canvas').dataset.visibleNodes")

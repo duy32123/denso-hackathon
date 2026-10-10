@@ -1,13 +1,15 @@
 """Contract-preserving HTTP facade. DB paths/model settings are never client input."""
 
 import asyncio
+import json
 import os
 import sqlite3
+import threading
 from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import ValidationError
 from starlette.middleware.trustedhost import TrustedHostMiddleware
@@ -20,6 +22,7 @@ from retrieval.generation.feedback import (
     RealFeedbackService, StubFeedbackService,
 )
 from retrieval.generation.models import GenerationError
+from retrieval.generation.tracing import TraceRequest, TraceCancelled
 from retrieval.generation.service import EvidenceNotFound, NamespaceUnavailable, QAService
 from retrieval.indexing.embeddings import EmbeddingError
 from retrieval.indexing.search_index import RetrievalError
@@ -135,6 +138,80 @@ def create_app(service: QAService | None = None, *, timeout_seconds: float = 90,
             return error(503, "index_unavailable", "Index chưa sẵn sàng hoặc vừa thay đổi; kiểm tra import/build.")
         except (GenerationError, EmbeddingError, TranslationError):
             return error(503, "provider_unavailable", "Dịch vụ AI chưa sẵn sàng; vui lòng thử lại sau.")
+
+    @app.post("/v1/trace")
+    async def trace(request: TraceRequest):
+        query = request.query
+        if not query.question.strip() or len(query.question) > 4000 or len(query.model_dump_json()) > 12000:
+            return error(422, "invalid_request", "Câu hỏi trống hoặc quá dài.")
+        service.database(query.mode, query.dataset_split)
+        if len(jobs) >= max_in_flight:
+            return error(429, "busy", "Đang xử lý câu hỏi khác; vui lòng thử lại sau.")
+        try:
+            catalog = await asyncio.to_thread(service.browser.catalog, query.mode, query.dataset_split)
+        except (RetrievalError, sqlite3.Error, OSError, ValidationError):
+            return error(503, "index_unavailable", "Index chưa sẵn sàng; kiểm tra import/build.")
+        if catalog["index_build_id"] != request.index_build_id:
+            return error(409, "graph_index_changed", "Kho tri thức vừa thay đổi. Tải lại đồ thị trước khi truy xuất.")
+        if len(jobs) >= max_in_flight:
+            return error(429, "busy", "Đang xử lý câu hỏi khác; vui lòng thử lại sau.")
+        loop = asyncio.get_running_loop()
+        queue = asyncio.Queue()
+        cancelled = threading.Event()
+
+        def enqueue(event):
+            if not loop.is_closed():
+                loop.call_soon_threadsafe(queue.put_nowait, event)
+
+        def stream_error(code, message):
+            enqueue({"type": "error", "code": code, "message": message,
+                     "mode": str(query.mode), "dataset_split": str(query.dataset_split),
+                     "index_build_id": request.index_build_id})
+
+        def run():
+            try:
+                service.trace(request, enqueue, cancelled)
+            except TraceCancelled:
+                pass
+            except (RetrievalError, sqlite3.Error, OSError, ValidationError):
+                stream_error("index_unavailable", "Index chưa sẵn sàng hoặc vừa thay đổi. Tải lại đồ thị.")
+            except (GenerationError, EmbeddingError, TranslationError):
+                stream_error("provider_unavailable", "Dịch vụ AI chưa sẵn sàng. Có thể chạy lại chỉ phần truy xuất.")
+            except Exception:
+                stream_error("internal_error", "Không thể hoàn tất lượt truy xuất này.")
+            finally:
+                enqueue(None)
+
+        task = asyncio.create_task(asyncio.to_thread(run))
+        jobs.add(task)
+
+        def finished(job):
+            jobs.discard(job)
+            if not job.cancelled():
+                job.exception()
+
+        task.add_done_callback(finished)
+
+        async def events():
+            deadline = loop.time() + timeout_seconds
+            try:
+                while True:
+                    remaining = deadline - loop.time()
+                    if remaining <= 0:
+                        raise TimeoutError()
+                    item = await asyncio.wait_for(queue.get(), remaining)
+                    if item is None:
+                        break
+                    yield json.dumps(item, ensure_ascii=False) + "\n"
+            except (TimeoutError, asyncio.TimeoutError):
+                yield json.dumps({"type": "error", "code": "query_timeout", "message": "Hết thời gian xử lý lượt này.",
+                                  "mode": str(query.mode), "dataset_split": str(query.dataset_split),
+                                  "index_build_id": request.index_build_id}, ensure_ascii=False) + "\n"
+            finally:
+                cancelled.set()
+
+        return StreamingResponse(events(), media_type="application/x-ndjson",
+                                 headers={"Cache-Control": "no-store", "X-Accel-Buffering": "no"})
 
     @app.get("/v1/evidence/{workflow_id}/{revision}/{evidence_id}")
     def evidence(workflow_id: str, revision: int, evidence_id: str, mode: str,

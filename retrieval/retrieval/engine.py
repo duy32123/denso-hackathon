@@ -69,7 +69,8 @@ class RetrievalConfig:
 
 
 def retrieve(db: str | Path, request: QueryRequest, *, config: RetrievalConfig | None = None,
-             embedder: Embedder | None = None, translator: Translator | None = None) -> dict:
+             embedder: Embedder | None = None, translator: Translator | None = None,
+             on_stage=None) -> dict:
     start = time.perf_counter()
     config = config or RetrievalConfig()
     if not request.question.strip():
@@ -96,10 +97,17 @@ def retrieve(db: str | Path, request: QueryRequest, *, config: RetrievalConfig |
                   "embedding_calls": 0, "cache": "disabled"},
     }
 
+    def observe(stage):
+        if on_stage is not None:
+            on_stage(stage, result)
+
+    observe('started')
+
     def finish(status=None):
         if status:
             result["status"] = status
         result["trace"]["latency_ms"] = round((time.perf_counter() - start) * 1000, 2)
+        observe('retrieval_complete')
         return result
 
     if contradictions:
@@ -117,6 +125,7 @@ def retrieve(db: str | Path, request: QueryRequest, *, config: RetrievalConfig |
             allowed.add(wf.workflow_id)
         elif not mismatches:
             unknown.update(missing)
+    observe('context')
     if not allowed:
         result["missing_context"] = sorted(unknown)
         return finish("needs_clarification" if unknown else "insufficient_evidence")
@@ -170,6 +179,7 @@ def retrieve(db: str | Path, request: QueryRequest, *, config: RetrievalConfig |
             relevance["gate"] = "passed"  # opt-out also disables the match-count rule
         result["trace"]["relevance"] = relevance
         gate = relevance["gate"]
+    observe('relevance')
     if gate == "rejected":
         return finish("insufficient_evidence")  # before any embedding call
     query_vector = None
@@ -236,6 +246,7 @@ def retrieve(db: str | Path, request: QueryRequest, *, config: RetrievalConfig |
         # Same scale as the strategy's score; a near-zero margin means the pick is arbitrary.
         result["trace"]["workflow_margin"] = selected["score"] - result["workflow_candidates"][1]["score"]
     wf = corpus["workflows"][selected["workflow_id"]]
+    observe('ranked')
     within_workflow = [d for d in docs if d["record"]["record_type"] == "step"
                        and d["record"]["workflow_id"] == wf.workflow_id]
     step_hits = ranked([d for d in within_workflow if d["purpose"] == "answer"])
@@ -281,6 +292,7 @@ def retrieve(db: str | Path, request: QueryRequest, *, config: RetrievalConfig |
         reasons = claim_blockers(claim, wf, mode=QueryMode(request.mode), is_latest_indexed_revision=True)
         if not reasons:
             result["claims"].append(package(wf, hit.claim_id, hit.matched_step_ids, hit.score, "answer_candidate"))
+    observe('matched')
     # WP2 step 5: the Steps a correct answer depends on -- a prerequisite, the branch point
     # whose condition gates a matched Step, a later Step that corrects one. They travel in
     # their own keys: `steps`, `claims` and `status` are untouched, so a neighbour can never
@@ -350,6 +362,7 @@ def retrieve(db: str | Path, request: QueryRequest, *, config: RetrievalConfig |
         "unavailable_step_ids": sorted(unavailable),
         "truncated_step_ids": sorted(set(ranked_related) - chosen),
     }
+    observe('expanded')
     # Separate lookup across the SAME filtered corpus, so conflicts cannot disappear
     # merely because they were excluded from assertable search text.
     # Conflict diagnostics compete with assertable steps of the same filtered corpus and are

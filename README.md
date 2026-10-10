@@ -15,6 +15,8 @@ mở bằng chứng và trình chiếu câu chuyện. Xem [hướng dẫn và ph
 Chọn **Theo tình huống** để theo nhánh có điều kiện, hoặc **Tri thức thay đổi**
 để đối chiếu các phiên bản và mở bằng chứng trước/sau. Chuẩn bị index lịch sử bằng
 `python -m scripts.prepare_knowledge_space` theo hướng dẫn trên.
+**Đường truy xuất** phát trace thực của backend trên đồ thị, có xem từng chặng,
+phát lại và tùy chọn tạo câu trả lời AI. Xem [kịch bản demo](docs/a2_retrieval_route_demo.md).
 
 ## Bắt đầu
 

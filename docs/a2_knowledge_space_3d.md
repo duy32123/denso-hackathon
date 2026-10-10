@@ -4,7 +4,8 @@
 
 Chạy server theo [chuẩn bị local](a2_knowledge_map_demo.md#chuẩn-bị-local), rồi mở
 `http://127.0.0.1:8000/space`. Trang chính cũng có nút **Khám phá không gian tri thức 3D**.
-Không gian đọc index hiện có, không gọi LLM. Three.js 0.186.0 được lưu trong repo;
+Khám phá và đọc nguồn dùng index hiện có. Chế độ Đường truy xuất có tùy chọn tạo
+câu trả lời AI; khi bật mới gọi model generation. Three.js 0.186.0 được lưu trong repo;
 không tải module, font hoặc tài nguyên từ CDN khi trình chiếu.
 
 Để demo cả so sánh phiên bản, chuẩn bị database riêng có index lịch sử:
@@ -67,6 +68,11 @@ Quy trình chỉ có một bản sẽ báo chưa có thay đổi; bản chưa c�
 khóa. Đổi góc khám phá/corpus hủy yêu cầu lịch sử cũ và xóa bảng/bằng chứng cũ.
 
 ## Thao tác
+
+**Đường truy xuất:** nhập câu hỏi để xem trace thực từ lọc ngữ cảnh tới bước,
+quan hệ và bằng chứng, cùng chuyển động trên đồ thị. Có dừng, xem từng chặng,
+phát lại và tùy chọn tạo câu trả lời có trích dẫn. Xem
+[kịch bản và phạm vi telemetry](a2_retrieval_route_demo.md).
 
 - Kéo chuột hoặc một ngón tay để xoay; cuộn hoặc chụm hai ngón tay để zoom.
 - Chọn nút trên không gian: sáng các liên kết liên quan, camera hướng tới nút,

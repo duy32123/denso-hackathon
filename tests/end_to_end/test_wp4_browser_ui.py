@@ -332,6 +332,74 @@ def test_english_demo_auto_evidence_fields_revision_history_and_mode_switch(tmp_
         page.evaluate("(() => {const original=window.fetch; window.fetch=(url,options)=>String(url).includes('/history?')?new Promise(resolve=>setTimeout(()=>resolve(original(url,options)),300)):original(url,options); document.querySelector('[data-lens=history]').click(); document.querySelector('[data-lens=situation]').click(); window.fetch=original;})()")
         page.evaluate("new Promise(resolve=>setTimeout(resolve,500))")
         assert page.evaluate("window.knowflowSpace.lens==='situation' && window.knowflowSpace.comparison===null && document.querySelector('#revision-playback').hidden")
+        # Actual streamed retrieval, followed by controllable graph playback.
+        page.evaluate("document.querySelector('[data-lens=route]').click(); document.querySelector('#route-speed').value='4'; document.querySelector('#route-run').click()")
+        page.wait("window.knowflowSpace.route.events.at(-1)?.type==='result'")
+        assert page.evaluate("window.knowflowSpace.route.events.every(e=>e.origin==='observed_pipeline'&&e.mode==='real')")
+        assert page.evaluate("window.knowflowSpace.route.events.find(e=>e.stage==='expanded').data.related_steps") == 1
+        page.wait("document.querySelector('#space-canvas').dataset.routeStage==='done'")
+        assert page.evaluate("window.knowflowSpace.route.events.at(-1).data.answer===null")
+        assert page.evaluate("document.querySelectorAll('[data-route-candidate]').length") > 0
+        assert page.evaluate("window.knowflowSpace.routeDisplay.active.size > 0")
+        assert not page.evaluate("window.knowflowSpace.route.playing")
+        # Exact node IDs, real directional graph edges, including reverse dependency inspection.
+        page.evaluate("[...document.querySelectorAll('[data-route-stage]')].find(b=>b.textContent.includes('Theo quan hệ')).click()")
+        assert page.evaluate("window.knowflowSpace.routeDisplay.hops.length") == 2
+        assert page.evaluate("window.knowflowSpace.routeDisplay.hops.every(h=>window.knowflowSpace.graph.edges.some(e=>(e.from===h.from&&e.to===h.to)||(e.from===h.to&&e.to===h.from)))")
+        assert page.evaluate("[...window.knowflowSpace.routeDisplay.active].every(id=>window.knowflowSpace.graph.byId.has(id))")
+        # Actual particles move in WebGL when motion is allowed; pause stops them.
+        page.call("Emulation.setEmulatedMedia", {"features": [{"name": "prefers-reduced-motion", "value": "no-preference"}]})
+        page.evaluate("document.querySelector('#route-speed').value='1'; document.querySelector('#route-play').click()")
+        page.wait("window.knowflowSpace.routeParticles.visible")
+        particle_position = page.evaluate("Array.from(window.knowflowSpace.routeParticles.instanceMatrix.array.slice(12,15))")
+        page.evaluate("new Promise(resolve=>setTimeout(resolve,100))")
+        assert page.evaluate("Array.from(window.knowflowSpace.routeParticles.instanceMatrix.array.slice(12,15))") != particle_position
+        page.evaluate("document.querySelector('#route-play').click()")
+        page.wait("!window.knowflowSpace.routeParticles.visible")
+        page.evaluate("document.querySelector('#space-fullscreen').click()")
+        page.wait("document.querySelector('#space-shell').classList.contains('is-presenting')")
+        page.call("Emulation.setDeviceMetricsOverride", {"width": 1440, "height": 1000, "deviceScaleFactor": 1, "mobile": False})
+        page.wait("document.querySelector('#space-stage').clientHeight > 500")
+        route_screenshot = tmp_path / "a2-knowledge-space-route.png"
+        route_screenshot.write_bytes(base64.b64decode(page.call("Page.captureScreenshot")["data"]))
+        print(f"knowledge_space_route_screenshot={route_screenshot.as_posix()}")
+        page.evaluate("document.querySelector('#presentation-exit').click()")
+        page.call("Emulation.clearDeviceMetricsOverride")
+        page.call("Emulation.setEmulatedMedia", {"features": [{"name": "prefers-reduced-motion", "value": "reduce"}]})
+        # A replay doesn't issue a new retrieval or model request.
+        trace_requests = sum('/v1/trace' in url for url in page.requests)
+        page.evaluate("document.querySelector('#route-replay').click(); document.querySelector('#route-play').click(); document.querySelector('#route-next').click(); document.querySelector('#route-prev').click()")
+        assert sum('/v1/trace' in url for url in page.requests) == trace_requests
+        assert page.evaluate("window.knowflowSpace.route.cursor") == 0
+        # Optional generation uses the same run and presents only guarded citations.
+        page.evaluate("document.querySelector('#route-speed').value='4'; document.querySelector('#route-generate').checked=true; document.querySelector('#route-run').click()")
+        page.wait("window.knowflowSpace.route.events.at(-1)?.type==='result'")
+        assert page.evaluate("window.knowflowSpace.route.events.at(-1).data.answer.status") == "answered"
+        assert page.evaluate("window.knowflowSpace.route.events.some(e=>e.stage==='verifying')")
+        page.wait("document.querySelector('#space-canvas').dataset.routeStage==='done'")
+        assert page.evaluate("(() => {const g=window.knowflowSpace.graph,r=window.knowflowSpace.routeDisplay,a=window.knowflowSpace.route.events.at(-1).data.answer;return JSON.stringify([...r.active].filter(id=>g.byId.get(id).kind==='claim').map(id=>g.byId.get(id).data.claim_id).sort())===JSON.stringify(a.citations.map(c=>c.claim_ref.entity_id).sort());})()")
+        assert page.evaluate("document.querySelector('#inspector-content [data-evidence-id]') !== null")
+        route_evidence = page.evaluate("document.querySelector('#inspector-content [data-evidence-id]').dataset.evidenceId")
+        page.evaluate("document.querySelector('#inspector-content [data-evidence-id]').click()")
+        page.wait(f"document.querySelector('#space-evidence').textContent.includes('{route_evidence}')")
+        assert "r2" in page.evaluate("document.querySelector('#space-evidence').textContent")
+        # Mobile/fullscreen keeps playback controls available.
+        page.call("Emulation.setDeviceMetricsOverride", {"width": 375, "height": 900, "deviceScaleFactor": 1, "mobile": True})
+        assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+        page.call("Emulation.clearDeviceMetricsOverride")
+        page.evaluate("document.querySelector('#space-fullscreen').click()")
+        page.wait("document.querySelector('#space-shell').classList.contains('is-presenting')")
+        assert page.evaluate("document.querySelector('#route-controls').offsetHeight > 0 && document.querySelector('#space-stage').clientHeight > 0")
+        page.evaluate("document.querySelector('#presentation-exit').click()")
+        # Insufficient evidence has no invented matched/expanded/cited nodes.
+        page.evaluate("document.querySelector('[data-route-question=\"How to cook spaghetti?\"]').click(); document.querySelector('#route-generate').checked=false; document.querySelector('#route-run').click()")
+        page.wait("window.knowflowSpace.route.events.at(-1)?.type==='result'")
+        assert page.evaluate("window.knowflowSpace.route.events.at(-1).data.status") == "insufficient_evidence"
+        assert page.evaluate("!window.knowflowSpace.route.events.some(e=>['matched','expanded','citations'].includes(e.stage))")
+        # Clear in-flight trace, old nodes and playback timers on a lens change.
+        page.evaluate("(() => {const original=window.fetch; window.fetch=(url,options)=>String(url)==='/v1/trace'?new Promise(resolve=>setTimeout(()=>resolve(original(url,options)),300)):original(url,options); document.querySelector('#route-run').click(); document.querySelector('[data-lens=overview]').click(); window.fetch=original;})()")
+        page.evaluate("new Promise(resolve=>setTimeout(resolve,600))")
+        assert page.evaluate("window.knowflowSpace.route.events.length===0 && !window.knowflowSpace.route.pending && window.knowflowSpace.routeDisplay===null && document.querySelector('#space-canvas').dataset.routeStage===''")
         # Filters/search operate on graph nodes, including a keyboard-accessible route.
         page.evaluate("document.querySelector('#space-reset').click()")
         visible_count = page.evaluate("+document.querySelector('#space-canvas').dataset.visibleNodes")

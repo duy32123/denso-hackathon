@@ -34,6 +34,7 @@
           <button type="button" data-lens="overview" aria-pressed="true"><span>01</span> Toàn cảnh</button>
           <button type="button" data-lens="situation" aria-pressed="false"><span>02</span> Theo tình huống</button>
           <button type="button" data-lens="history" aria-pressed="false"><span>03</span> Tri thức thay đổi</button>
+          <button type="button" data-lens="route" aria-pressed="false"><span>04</span> Đường truy xuất</button>
         </div>
         <div id="situation-controls" class="explorer-controls" hidden>
           <label>Điều kiện / quan hệ trong nguồn<select id="situation-select"></select></label>
@@ -54,6 +55,23 @@
           </div>
           <label class="changes-filter"><input id="changes-only" type="checkbox"> Chỉ phần thay đổi</label>
           <div id="revision-summary" class="revision-summary" aria-live="polite"></div>
+        </div>
+        <div id="route-controls" class="route-controls" hidden>
+          <form id="route-form" class="route-form">
+            <label class="route-question-label">Câu hỏi cho kho tri thức<input id="route-question" maxlength="4000" value="What should I do if automatic recovery fails?" placeholder="Nhập câu hỏi; ví dụ tiếng Anh khớp ngôn ngữ nguồn"></label>
+            <label>Bước khớp trực tiếp<select id="route-top-k"><option value="1">Top 1</option><option value="3">Top 3</option><option value="5">Top 5</option></select></label>
+            <button id="route-run" class="primary" type="submit">Chạy truy xuất →</button>
+          </form>
+          <div class="route-options">
+            <div class="route-examples"><span>Thử câu hỏi:</span><button type="button" data-route-question="What should I do if automatic recovery fails?">Nhánh phục hồi</button><button type="button" data-route-question="How is the pocket slider lubricated?">Bằng chứng bôi trơn</button><button type="button" data-route-question="How to cook spaghetti?">Ngoài phạm vi</button></div>
+            <label><input id="route-generate" type="checkbox"> Tạo câu trả lời AI sau truy xuất</label>
+          </div>
+          <p id="route-message" class="explorer-note" role="status" aria-live="polite"></p>
+          <div class="route-playback">
+            <button id="route-prev" type="button" aria-label="Chặng trước">←</button><button id="route-play" type="button" aria-pressed="false">Tạm dừng</button><button id="route-next" type="button" aria-label="Chặng tiếp">→</button><button id="route-replay" type="button">Phát lại ↺</button><button id="route-stop" type="button">Dừng lượt</button>
+            <label>Nhịp phát<select id="route-speed"><option value="1">1×</option><option value="2">2×</option><option value="4">4×</option></select></label><span id="route-position"></span>
+          </div>
+          <div id="route-timeline" class="route-timeline" role="group" aria-label="Các chặng truy xuất đã quan sát"></div>
         </div>
       </div>
       <div class="space-stage" id="space-stage">

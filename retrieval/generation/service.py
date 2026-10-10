@@ -1,6 +1,7 @@
 """D2-A orchestration: fixed namespace routing, read-only snapshots, no KB writes."""
 
 import json
+from dataclasses import replace
 from contextlib import closing
 from pathlib import Path
 
@@ -8,7 +9,8 @@ from knowflow_contracts.models import QueryRequest, Source, Workflow
 from retrieval.indexing.search_index import RetrievalError, read_connection, read_corpus, require_index
 from retrieval.retrieval.engine import RetrievalConfig, retrieve
 
-from .engine import generate_answer
+from .engine import generate_answer, checked_candidates
+from .tracing import TraceRequest, TraceCancelled, retrieval_stage, ref
 from .browse import WorkflowBrowser
 from .feedback import FeedbackRequest, FeedbackService, FeedbackUnavailable
 from .evidence import EvidenceAccess, external_url
@@ -56,6 +58,99 @@ class QAService:
         if manifest["index_build_id"] != answer.index_build_id:
             raise RetrievalError("Index changed while answering; retry")
         return answer
+
+    def trace(self, request: TraceRequest, emit, cancelled):
+        """One actual retrieval run, optionally followed by the normal answer guard.
+
+        Stream observable pipeline events, never a reconstructed model monologue.
+        No persisted trace/session and no changes to shared AnswerResponse.
+        """
+        query = request.query
+        db = self.database(query.mode, query.dataset_split)
+        sequence = 0
+
+        def send(event):
+            nonlocal sequence
+            if cancelled.is_set():
+                raise TraceCancelled()
+            sequence += 1
+            emit({**event, "seq": sequence, "mode": str(query.mode), "dataset_split": str(query.dataset_split),
+                  "index_build_id": request.index_build_id, "origin": "observed_pipeline"})
+
+        def observe(stage, result):
+            if (result["index_build_id"] != request.index_build_id or
+                (result["source_type"], result["dataset_split"]) != (query.mode, query.dataset_split)):
+                raise RetrievalError("Index changed while tracing; reload the graph")
+            send(retrieval_stage(stage, result))
+
+        config = replace(self.config, top_k=request.top_k, candidate_k=max(self.config.candidate_k, request.top_k))
+        result = self.retriever(db, query, config=config, on_stage=observe)
+        corpus = read_corpus(db, query.mode, query.dataset_split)
+        manifest, _ = require_index(corpus)
+        if (manifest["index_build_id"] != request.index_build_id or result["index_build_id"] != request.index_build_id):
+            raise RetrievalError("Index changed while tracing; reload the graph")
+        candidates, unavailable = checked_candidates(query, result, corpus, self.access)
+        related, related_unavailable = checked_candidates(query, {**result, "claims": [
+            {**c, "purpose": "answer_candidate"} for c in result["related_claims"]]}, corpus, self.access)
+        evidence_refs = []
+        for group, items in [("selected", candidates), ("context", related)]:
+            for c in items.values():
+                r = c["claim_ref"]
+                evidence_refs.append(ref(r["workflow_id"], r["revision"], "claim", r["entity_id"], state=group))
+                for e in c["evidence"]:
+                    evidence_refs.append(ref(r["workflow_id"], r["revision"], "evidence", e["evidence"]["evidence_id"], state=group))
+                    evidence_refs.append(ref(r["workflow_id"], r["revision"], "source", e["source_id"], state=group))
+        evidence_refs += [ref(r.workflow_id, r.revision, "claim", r.entity_id, state="blocked", reasons=["evidence_unavailable"])
+                          for r in unavailable + related_unavailable]
+        send({"type": "stage", "stage": "evidence", "refs": evidence_refs,
+              "data": {"answer_candidates": len(candidates), "context_candidates": len(related),
+                       "unavailable": len(unavailable) + len(related_unavailable)}})
+        answer = None
+        def ensure_current():
+            current = read_corpus(db, query.mode, query.dataset_split)
+            current_manifest, _ = require_index(current)
+            if current_manifest["index_build_id"] != request.index_build_id:
+                raise RetrievalError("Index changed while tracing; reload the graph")
+
+        if request.generate_answer:
+            owner = self
+
+            class ObservedModel:
+                def __init__(self, model):
+                    self.model = model
+
+                def draft(self, payload):
+                    send({"type": "stage", "stage": "drafting", "refs": [], "data": {"candidates": len(candidates)}})
+                    return self.model.draft(payload)
+
+                def verify(self, payload):
+                    send({"type": "stage", "stage": "verifying", "refs": [], "data": {"statements": len(payload["statements"])}})
+                    return self.model.verify(payload)
+
+            # Early fallback doesn't require an external model or an API key.
+            model = owner.model_factory() if result["status"] == "retrieved" and candidates else None
+            try:
+                answer = generate_answer(query, result, corpus, model=ObservedModel(model) if model else None, access=self.access)
+            finally:
+                if model:
+                    model.close()
+            ensure_current()
+            refs = []
+            for citation in answer.citations:
+                r = citation.claim_ref
+                refs.append(ref(r.workflow_id, r.revision, "claim", r.entity_id, state="cited"))
+                refs += [ref(r.workflow_id, r.revision, "evidence", eid, state="cited") for eid in citation.evidence_ids]
+            send({"type": "stage", "stage": "citations", "refs": refs, "data": {"status": str(answer.status)}})
+        ensure_current()
+        send({"type": "result", "stage": "done", "refs": [], "data": {
+            "status": result["status"], "selected_workflow": result["selected_workflow"],
+            "missing_context": result["missing_context"], "latency_ms": result["trace"]["latency_ms"],
+            "strategy": config.strategy, "top_k": config.top_k,
+            "candidates": [{"claim_ref": c["claim_ref"], "text": c["claim"]["text"],
+                            "evidence_ids": [e["evidence"]["evidence_id"] for e in c["evidence"]],
+                            "source_review": c["claim"]["source_review"], "technical_review": c["claim"]["technical_review"]}
+                           for c in candidates.values()],
+            "answer": answer.model_dump(mode="json") if answer else None}})
 
     def evidence(self, mode: str, split: str, build: str, workflow_id: str, revision: int, evidence_id: str):
         """Open the exact indexed revision, including historical builds; never resolve to latest."""

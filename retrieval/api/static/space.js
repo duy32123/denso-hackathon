@@ -1,6 +1,7 @@
 import * as THREE from './vendor/three/three.module.min.js';
 import {buildGraph, TYPES, ROLES} from './space-graph.js';
 import {situations, compareSnapshots} from './space-explore.js';
+import {createRoute, STAGES, edgeKey, nodeId} from './space-route.js';
 
 const $ = id => document.getElementById(id);
 const text = (tag, value, className) => { const n = document.createElement(tag); n.textContent = value; if (className) n.className = className; return n; };
@@ -20,6 +21,7 @@ const projection = new THREE.Vector3(), neighborhood = new Set();
 let clusterDecorations = [];
 let baseGraph = null, lens = 'overview', situation = null, comparison = null, phase = 'changes';
 let viewToken = 0, viewController = null, history = null;
+let routeUI = null, routeDisplay = null, routeParticles = null, routeStarted = 0;
 const changeColors = {added: '#8df0ba', changed: '#f6c378', removed: '#ef879f', unchanged: '#415675'};
 const changeLabels = {added: 'Thêm mới', changed: 'Thay đổi', removed: 'Đã bỏ', unchanged: 'Giữ nguyên'};
 const nodeAt = id => graph?.byId.get(graph.aliases?.get(id) || id);
@@ -156,6 +158,7 @@ function setRotate(value) {
 }
 function selectNode(id, fly = true) {
   const n = graph?.byId.get(id); if (!n) return;
+  if (lens === 'route') routeUI?.pause();
   if (lens === 'history' && phase === 'changes' && $('changes-only').checked && n.change === 'unchanged') $('changes-only').checked = false;
   if (lens === 'situation' && situation && !situation.path.has(id)) { setLens('overview'); selectNode(id, fly); return; }
   enabled.add(n.kind); const checkbox = document.querySelector(`[data-space-type="${n.kind}"]`); if (checkbox) checkbox.checked = true;
@@ -219,27 +222,36 @@ function drawGraph() {
 function updateVisibility() {
   if (!graph || !mesh) return;
   const focus = selected && graph.byId.get(selected);
-  for (const ring of clusterDecorations) ring.visible = lens === 'situation' ? ring.userData.workflow === situation?.node.workflow : !focus?.workflow || ring.userData.workflow === focus.workflow;
+  for (const ring of clusterDecorations) ring.visible = lens === 'route' && routeDisplay?.scope ? ring.userData.workflow === routeDisplay.scope : lens === 'situation' ? ring.userData.workflow === situation?.node.workflow : !focus?.workflow || ring.userData.workflow === focus.workflow;
   const changesOnly = lens === 'history' && phase === 'changes' && $('changes-only').checked;
   const changedNodes = new Set(graph.nodes.filter(n => n.change && n.change !== 'unchanged').map(n => n.id));
   if (changesOnly) for (const e of graph.edges.filter(e => e.change !== 'unchanged')) { changedNodes.add(e.from); changedNodes.add(e.to); }
-  const visible = n => enabled.has(n.kind) && (lens === 'situation' && situation ? situation.path.has(n.id) :
+  const visible = n => enabled.has(n.kind) && (lens === 'route' ? (!routeDisplay?.scope || n.workflow === routeDisplay.scope || n.kind === 'source' && routeDisplay.visited.has(n.id)) : lens === 'situation' && situation ? situation.path.has(n.id) :
     (!changesOnly || changedNodes.has(n.id)) && (!focus || focus.kind === 'root' ||
     (focus.workflow ? n.workflow === focus.workflow || neighborhood.has(n.id) : neighborhood.has(n.id))));
   graph.nodes.forEach((n, i) => {
     const show = visible(n); dummy.position.fromArray(n.position); dummy.scale.setScalar(show ? TYPES[n.kind].radius : 0); dummy.updateMatrix(); mesh.setMatrixAt(i, dummy.matrix);
     color.set(lens === 'history' && phase === 'changes' ? changeColors[n.change] : TYPES[n.kind].color);
-    if (selected && !neighborhood.has(n.id) && lens !== 'history') color.multiplyScalar(.18); mesh.setColorAt(i, color);
+    if (lens === 'route' && routeDisplay) {
+      const state = routeDisplay.states.get(n.id);
+      if (state === 'blocked') color.set('#ec8b9f');
+      else if (state === 'context') color.set('#f6c378');
+      else if (state === 'cited') color.set('#a5ffd9');
+      if (!routeDisplay.visited.has(n.id)) color.multiplyScalar(.12);
+      else if (!routeDisplay.active.has(n.id)) color.multiplyScalar(.45);
+    } else if (selected && !neighborhood.has(n.id) && lens !== 'history') color.multiplyScalar(.18);
+    mesh.setColorAt(i, color);
   });
   mesh.instanceMatrix.needsUpdate = true; mesh.instanceColor.needsUpdate = true;
   const coords = [], colors = [], highlighted = [];
   for (const e of graph.edges) {
     if (!visible(graph.byId.get(e.from)) || !visible(graph.byId.get(e.to))) continue;
     const from = graph.byId.get(e.from).position, to = graph.byId.get(e.to).position;
-    const active = lens === 'situation' ? true : selected && neighborhood.has(e.from) && neighborhood.has(e.to);
+    const active = lens === 'route' ? routeDisplay?.edges.has(edgeKey(e)) : lens === 'situation' ? true : selected && neighborhood.has(e.from) && neighborhood.has(e.to);
     coords.push(...from, ...to);
     color.set(lens === 'history' && phase === 'changes' ? changeColors[e.change] : e.kind.startsWith('missing:') || ['branch_if', 'branch_condition'].includes(e.kind) ? '#eac58e' : '#769ecf');
-    if (selected && !active && lens !== 'history') color.multiplyScalar(.15);
+    if (lens === 'route' && !active) color.multiplyScalar(routeDisplay?.trailEdges.has(edgeKey(e)) ? .7 : .08);
+    else if (selected && !active && lens !== 'history') color.multiplyScalar(.15);
     colors.push(color.r, color.g, color.b, color.r, color.g, color.b);
     if (active && lens !== 'history') {
       highlighted.push(...from, ...to);
@@ -268,7 +280,7 @@ function updateVisibility() {
 function updateLabels() {
   $('space-labels').replaceChildren(); labelNodes = [];
   if (!graph || !renderer) return;
-  const candidates = lens === 'situation' && situation ? [graph.byId.get(selected) || situation.node, situation.from, situation.to, ...situation.conditions].filter((n, i, all) => all.findIndex(x => x.id === n.id) === i) :
+  const candidates = lens === 'route' && routeDisplay ? [...routeDisplay.active].map(id => graph.byId.get(id)).filter(n => n && ['workflow', 'step', 'relation', 'claim'].includes(n.kind)).sort((a, b) => (a.id === routeDisplay.primary ? -1 : 0) - (b.id === routeDisplay.primary ? -1 : 0)).slice(0, 6) : lens === 'situation' && situation ? [graph.byId.get(selected) || situation.node, situation.from, situation.to, ...situation.conditions].filter((n, i, all) => all.findIndex(x => x.id === n.id) === i) :
     lens === 'history' && phase === 'changes' ? graph.nodes.filter(n => ['added', 'changed', 'removed'].includes(n.change)).sort((a, b) => (a.kind === 'claim' ? -1 : 0) - (b.kind === 'claim' ? -1 : 0)).slice(0, 7) :
     selected ? [graph.byId.get(selected), ...[...neighborhood].filter(id => id !== selected).map(id => graph.byId.get(id)).filter(n => ['step', 'workflow', 'relation', 'question'].includes(n.kind))].slice(0, 9) : graph.nodes.filter(n => ['root', 'workflow'].includes(n.kind));
   for (const n of candidates) {
@@ -303,9 +315,9 @@ function animate(time) {
   frame = 0;
   if (!renderer || !inViewport || document.hidden) { lastTime = 0; return; }
   const delta = lastTime ? Math.min((time - lastTime) / 1000, .05) : 1 / 60; lastTime = time;
-  updateCamera(delta); renderer.render(scene, camera); renderLabels();
+  updateCamera(delta); updateRouteParticles(time); renderer.render(scene, camera); renderLabels();
   const moving = orbit.target.distanceTo(orbit.desiredTarget) > .02 || Math.abs(orbit.radius - orbit.desiredRadius) > .02;
-  if (orbit.rotating || moving) frame = requestAnimationFrame(animate); else lastTime = 0;
+  if (orbit.rotating || moving || lens === 'route' && routeUI?.playing && !reducedMotion.matches) frame = requestAnimationFrame(animate); else lastTime = 0;
 }
 function resize() {
   if (!renderer) return;
@@ -337,6 +349,7 @@ function initRenderer() {
   const stars = new THREE.Points(new THREE.BufferGeometry(), new THREE.PointsMaterial({size: .5, color: '#7691be', transparent: true, opacity: .55}));
   stars.geometry.setAttribute('position', new THREE.Float32BufferAttribute(starPositions, 3)); scene.add(stars);
   selectionRing = new THREE.Mesh(new THREE.TorusGeometry(1, .08, 6, 48), new THREE.MeshBasicMaterial({color: '#e8fff8'})); selectionRing.visible = false; scene.add(selectionRing);
+  routeParticles = new THREE.InstancedMesh(new THREE.SphereGeometry(.8, 10, 8), new THREE.MeshBasicMaterial({color: '#bdffe6'}), 3); routeParticles.visible = false; routeParticles.frustumCulled = false; scene.add(routeParticles);
   const pointers = new Map(); let down = null, traveled = 0, pinch = 0;
   const canvas = renderer.domElement;
   canvas.addEventListener('pointerdown', event => {
@@ -434,6 +447,77 @@ function showStop(index) {
   if (stop.node) selectNode(stop.node); else { overview(); setRotate(!reducedMotion.matches); }
 }
 function closeTour() { tourIndex = -1; $('tour-card').hidden = true; setRotate(false); }
+function clearRoute() {
+  routeDisplay = null; if (routeParticles) routeParticles.visible = false;
+  $('space-canvas').dataset.routeStage = ''; $('space-canvas').dataset.routeNodes = '[]';
+  if (graph) { updateVisibility(); updateLabels(); wake(); }
+}
+function updateRouteParticles(time) {
+  if (!routeParticles) return;
+  const hops = routeDisplay?.hops || [];
+  routeParticles.visible = lens === 'route' && routeUI?.playing && hops.length > 0 && !reducedMotion.matches;
+  if (!routeParticles.visible) return;
+  for (let i = 0; i < 3; i++) {
+    const progress = Math.max(0, (time - routeStarted) / 1600 + i / 3), hop = hops[Math.floor(progress) % hops.length];
+    dummy.position.fromArray(graph.byId.get(hop.from).position).lerp(new THREE.Vector3(...graph.byId.get(hop.to).position), progress % 1);
+    dummy.scale.setScalar(enabled.has(graph.byId.get(hop.from).kind) && enabled.has(graph.byId.get(hop.to).kind) ? 1 : 0); dummy.updateMatrix(); routeParticles.setMatrixAt(i, dummy.matrix);
+  }
+  routeParticles.instanceMatrix.needsUpdate = true;
+}
+function showRouteFrame(frame) {
+  if (lens !== 'route' || !baseGraph) return;
+  const scopeRef = (frame.event.refs || []).find(r => r.kind === 'workflow' && r.state === 'selected');
+  const scope = scopeRef ? nodeId(graph, scopeRef) : routeDisplay?.scope;
+  routeDisplay = {...frame, scope}; routeStarted = performance.now(); selected = null; neighborhood.clear(); setRotate(false);
+  for (const id of frame.active) { const n = graph.byId.get(id); if (n) { enabled.add(n.kind); const c = document.querySelector(`[data-space-type="${n.kind}"]`); if (c) c.checked = true; } }
+  $('space-trace').hidden = false;
+  $('space-trace').replaceChildren(text('span', 'TRUY XUẤT THỰC'), text('span', '→', 'trace-arrow'), text('strong', STAGES[frame.event.stage][0]), text('span', frame.total ? `${frame.position} / ${frame.total}` : 'ĐANG CHẠY'));
+  const center = scope ? graph.workflows.get(scope)?.center : null;
+  orbit.desiredTarget.fromArray(center || [0, 0, 0]); orbit.desiredRadius = center ? 115 : 180;
+  if (reducedMotion.matches) { orbit.target.copy(orbit.desiredTarget); orbit.radius = orbit.desiredRadius; }
+  renderRouteInspector(frame); updateVisibility(); updateLabels(); wake();
+  $('space-canvas').dataset.routeStage = frame.event.stage;
+  $('space-canvas').dataset.routeNodes = JSON.stringify([...frame.active]);
+}
+function renderRouteInspector(frame) {
+  clearEvidence(); content.replaceChildren();
+  const event = frame.event, data = event.data || {}, [title, description] = STAGES[event.stage];
+  $('inspector-kind').textContent = 'ĐƯỜNG TRUY XUẤT CÓ THỂ KIỂM TRA'; $('inspector-title').textContent = title;
+  content.append(text('p', description), text('p', 'Nút sáng lấy từ sự kiện backend. Hạt chuyển động mô phỏng nhịp trình chiếu.', 'inspector-note'));
+  if (data.strategy) content.append(text('span', `${data.strategy.toUpperCase()}${data.top_k ? ` · TOP ${data.top_k}` : ''}`, 'inspector-chip'));
+  const statuses = {retrieved: 'Đã tìm thấy ứng viên', answered: 'Câu trả lời đã qua kiểm tra', insufficient_evidence: 'Chưa đủ bằng chứng', needs_clarification: 'Cần làm rõ ngữ cảnh', conflicting_sources: 'Nguồn có mâu thuẫn'};
+  if (data.status) content.append(text('span', statuses[data.status] || data.status, `inspector-chip ${['retrieved', 'answered'].includes(data.status) ? '' : 'pending'}`));
+  if (data.latency_ms !== undefined) content.append(text('p', `Truy xuất thực: ${data.latency_ms.toFixed(1)} ms. Nhịp phát đồ thị được giãn để quan sát.`, 'inspector-note'));
+  if (event.stage === 'matched') content.append(text('p', `${data.steps} bước khớp trực tiếp · ${data.claims} phát biểu ứng viên.`));
+  if (event.stage === 'expanded') content.append(text('p', data.related_steps ? `Thêm ${data.related_steps} bước theo quan hệ đã lưu. Nội dung này bổ sung ngữ cảnh.` : 'Không thêm bước phụ thuộc ở lượt này; các bước cần thiết có thể đã nằm trong kết quả khớp.'));
+  if (event.stage === 'evidence') content.append(text('p', `${data.answer_candidates} ứng viên mở được nguồn · ${data.context_candidates} phát biểu ngữ cảnh · ${data.unavailable} không mở đủ bằng chứng.`));
+  if (data.missing_context?.length) content.append(text('p', `Cần làm rõ: ${data.missing_context.join(', ')}`, 'inspector-note'));
+  if (event.stage === 'done') {
+    if (data.answer) {
+      content.append(text('h3', 'Kết quả AI đã kiểm'), text('p', data.answer.answer, 'route-answer'));
+      for (const citation of data.answer.citations) {
+        const n = graph.byId.get(nodeId(graph, {...citation.claim_ref, kind: 'claim', entity_id: citation.claim_ref.entity_id})); if (!n) continue;
+        const box = text('div', '', 'route-candidate'); box.append(linkedButton(n.id, citation.answer_span), reviewChips(n.data));
+        for (const eid of citation.evidence_ids) { const ev = graph.workflows.get(n.workflow).wf.evidence.find(e => e.evidence_id === eid); if (ev) { const b = action(`Mở nguồn trích dẫn · r${n.ref.revision} ↗`, () => showEvidence(n, ev)); b.dataset.evidenceId = eid; box.append(b); } }
+        content.append(box);
+      }
+    } else content.append(text('h3', 'Ứng viên đã kiểm bằng chứng'), text('p', 'Lượt này chỉ chạy truy xuất. Bật tạo câu trả lời AI để chạy thêm bước soạn và kiểm tra bằng model.', 'inspector-note'));
+    if (!data.answer) for (const candidate of data.candidates || []) {
+      const n = graph.byId.get(nodeId(graph, {...candidate.claim_ref, kind: 'claim'})); if (!n) continue;
+      const box = text('div', '', 'route-candidate'); box.dataset.routeCandidate = n.id;
+      box.append(linkedButton(n.id, candidate.text), reviewChips(n.data));
+      for (const eid of candidate.evidence_ids) { const ev = graph.workflows.get(n.workflow).wf.evidence.find(e => e.evidence_id === eid); if (ev) { const b = action(`Mở bằng chứng · r${n.ref.revision} ↗`, () => showEvidence(n, ev)); b.dataset.evidenceId = eid; box.append(b); } }
+      content.append(box);
+    }
+    if (!data.candidates?.length && !data.answer) content.append(text('p', 'Không có phát biểu đủ bằng chứng để đưa vào câu trả lời.', 'inspector-note'));
+  } else for (const ref of (event.refs || []).filter(r => ['workflow', 'step', 'relation', 'claim', 'question'].includes(r.kind)).slice(0, 7)) {
+    const n = graph.byId.get(nodeId(graph, ref)); if (!n) continue;
+    const b = linkedButton(n.id, `${ref.state === 'context' ? 'Ngữ cảnh · ' : ref.state === 'blocked' ? 'Bị chặn · ' : ''}${n.title}`);
+    content.append(b);
+    if (ref.score !== undefined) content.append(text('p', `Điểm xếp hạng: ${ref.score.toFixed(3)}`, 'inspector-note'));
+  }
+  document.querySelector('.space-inspector').scrollTop = 0;
+}
 function updateMetrics() {
   $('space-canvas').dataset.nodeCount = String(graph.nodes.length);
   $('space-canvas').dataset.edgeCount = String(graph.edges.length);
@@ -449,19 +533,24 @@ function activateGraph(value) {
   $('space-status').textContent = `${graph.nodes.length} nút · ${graph.edges.length} liên kết bản ghi và nguồn · ${graph.counts.relation} quan hệ giữa bước`;
 }
 function resetExplorer() {
+  routeUI?.reset();
+  shell.classList.remove('is-routing');
   viewToken++; viewController?.abort(); lens = 'overview'; situation = null; comparison = null; history = null; phase = 'changes'; baseGraph = null;
   for (const b of document.querySelectorAll('[data-lens]')) b.setAttribute('aria-pressed', String(b.dataset.lens === lens));
-  for (const id of ['situation-controls', 'history-controls', 'revision-playback', 'explorer-note', 'space-trace']) $(id).hidden = true;
+  for (const id of ['situation-controls', 'history-controls', 'route-controls', 'revision-playback', 'explorer-note', 'space-trace']) $(id).hidden = true;
   $('situation-select').replaceChildren(); $('history-workflow').replaceChildren();
   $('changes-only').checked = false;
 }
 function setLens(value) {
   if (!baseGraph) return;
+  routeUI?.reset();
+  shell.classList.toggle('is-routing', value === 'route');
   viewToken++; viewController?.abort(); closeTour(); clearEvidence(); lens = value; situation = null; comparison = null;
   for (const b of document.querySelectorAll('[data-lens]')) b.setAttribute('aria-pressed', String(b.dataset.lens === value));
   $('situation-controls').hidden = value !== 'situation'; $('history-controls').hidden = value !== 'history';
+  $('route-controls').hidden = value !== 'route';
   $('revision-playback').hidden = true; $('space-trace').hidden = true;
-  $('explorer-note').hidden = value === 'overview';
+  $('explorer-note').hidden = ['overview', 'route'].includes(value);
   activateGraph(baseGraph);
   if (value === 'situation') applySituation();
   if (value === 'history') loadHistory();
@@ -661,8 +750,8 @@ async function load() {
     if (token === loading && error.name !== 'AbortError') { $('space-status').textContent = error.message; $('inspector-title').textContent = 'Chưa mở được kho tri thức'; content.append(action('Tải lại kho', load)); }
   }
 }
-// Useful for inspecting this read-only view; no KB mutations or LLM calls.
-window.knowflowSpace = {get graph() { return graph; }, get lens() { return lens; }, get situation() { return situation; }, get comparison() { return comparison; }, select: selectNode, get orbit() { return orbit; }, get renderer() { return renderer; },
+// Read-only inspection hooks. AI calls occur only through the explicit trace option.
+window.knowflowSpace = {get graph() { return graph; }, get lens() { return lens; }, get situation() { return situation; }, get comparison() { return comparison; }, get route() { return routeUI; }, get routeDisplay() { return routeDisplay; }, get routeParticles() { return routeParticles; }, select: selectNode, get orbit() { return orbit; }, get renderer() { return renderer; },
   project(id) { const n = graph?.byId.get(id); if (!n || !camera) return null; const p = new THREE.Vector3(...n.position).project(camera), r = renderer.domElement.getBoundingClientRect(); return {x: r.left + (p.x * .5 + .5) * r.width, y: r.top + (-p.y * .5 + .5) * r.height, z: p.z}; }};
 $('space-mode').addEventListener('change', load);
 for (const b of document.querySelectorAll('[data-lens]')) b.addEventListener('click', () => setLens(b.dataset.lens));
@@ -693,4 +782,6 @@ async function start() {
   } catch { /* The catalog request below reports the actual availability error. */ }
   load();
 }
-renderLegend(); initRenderer(); start();
+renderLegend(); initRenderer();
+routeUI = createRoute({getGraph: () => graph, getCatalog: () => catalog, onFrame: showRouteFrame, onClear: clearRoute, reducedMotion});
+start();

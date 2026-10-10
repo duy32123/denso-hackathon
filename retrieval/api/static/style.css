@@ -4,8 +4,8 @@ h1 { color: #12665b; } h2 { font-size: 1.15rem; }
 form, section { background: white; border: 1px solid #cedbd8; border-radius: 10px; padding: 1.2rem; }
 label { display: block; margin: .7rem 0; } input, select, textarea, button { font: inherit; padding: .6rem; border: 1px solid #abc0bb; border-radius: 5px; box-sizing: border-box; }
 textarea { width: 100%; display: block; } button { cursor: pointer; background: #12665b; color: white; }
-button:disabled { opacity: .5; } .context, .results { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-.context input { width: 100%; } .results { grid-template-columns: 1fr 1fr; } section { min-width: 0; }
+button:disabled { opacity: .5; } .context, .results { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.context label { min-width: 0; } .context input, .context select { width: 100%; } .results { grid-template-columns: 1fr 1fr; } section { min-width: 0; }
 #answer, blockquote { white-space: pre-wrap; } small { overflow-wrap: anywhere; } #banner { color: #9b4609; font-weight: 600; }
 #citations button { display: block; margin: .8rem 0; text-align: left; background: #e7f2ee; color: #17312f; }
 blockquote { border-left: 3px solid #12665b; margin: 1rem 0; padding: .8rem; background: #f5f7f5; }
@@ -21,3 +21,35 @@ summary { cursor: pointer; overflow-wrap: anywhere; font-weight: 600; } .field {
 #workflow-meta, #workflow-steps, #workflow-relations, #workflow-questions, #workflow-history, #evidence { overflow-wrap: anywhere; }
 #workflow-meta p, #workflow-history p, #evidence p { white-space: pre-wrap; }
 @media (max-width: 740px) { .context, .results { grid-template-columns: 1fr; } .evidence-panel { position: static; max-height: none; order: -1; } }
+.intro { margin-bottom: 1.5rem; } .intro h1 { margin: .3rem 0; font-size: 2.2rem; }
+.eyebrow { color: #12665b; font-size: .85rem; font-weight: 700; letter-spacing: .04em; }
+.lead { font-size: 1.3rem; } .knowledge-browser { margin-bottom: 1rem; }
+.space-entry { display: inline-block; padding: .7rem 1rem; background: #0a1c30; color: #a5efdc; border-radius: 7px; text-decoration: none; font-weight: 600; }
+.knowledge-stats { padding: .8rem; background: #e7f2ee; border-radius: 6px; font-weight: 600; }
+.knowledge-viewport { border: 1px solid #cedbd8; background: #f8faf9; border-radius: 8px; max-height: 460px; overflow: auto; }
+.knowledge-graph { display: block; width: 100%; min-width: 600px; max-width: 800px; margin: auto; }
+.knowledge-node { cursor: pointer; } .knowledge-node circle { fill: white; stroke: #12665b; stroke-width: 2; }
+.knowledge-node.selected circle { fill: #12665b; stroke-width: 4; }
+.knowledge-number { fill: #12665b; font-weight: 700; } .knowledge-node.selected .knowledge-number { fill: white; }
+.knowledge-node-title { fill: #17312f; font-size: 12px; } .knowledge-node:focus circle { stroke: #ad6b10; stroke-width: 4; }
+.knowledge-edge path { fill: none; stroke: #719a91; stroke-width: 2; }
+.knowledge-edge.edge-branch_if path { stroke: #ad6b10; stroke-dasharray: 6 4; }
+.knowledge-edge.edge-requires path { stroke: #12665b; }
+.knowledge-edge.edge-corrects path { stroke: #a6424e; }
+.knowledge-edge.selected path { stroke-width: 4; }
+.arrow-observed_next, .arrow-repeated_step { fill: #719a91; } .arrow-branch_if { fill: #ad6b10; }
+.arrow-requires { fill: #12665b; } .arrow-corrects { fill: #a6424e; }
+.knowledge-relations { display: flex; flex-wrap: wrap; gap: .5rem; margin: .8rem 0; }
+.knowledge-button { background: #e7f2ee; color: #17312f; text-align: left; max-width: 100%; margin: .3rem 0; }
+.knowledge-lenses { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.knowledge-lens { border: 1px solid #cedbd8; border-radius: 8px; padding: 1rem; min-width: 0; }
+.knowledge-lens > h3 { margin-top: 0; color: #12665b; }
+.knowledge-field + .knowledge-field { margin-top: 1rem; padding-top: .5rem; border-top: 1px solid #e2eae7; }
+.knowledge-field h4 { margin: .3rem 0; } .knowledge-field-state, .knowledge-review { font-size: .8rem; color: #4c635c; }
+.knowledge-state-missing, .knowledge-state-ambiguous { padding: .6rem; border-left: 3px dashed #ad6b10; background: #fff9ef; }
+.knowledge-claim { padding: .5rem 0; } .knowledge-claim p { margin: .4rem 0; }
+.knowledge-warning { color: #9b4609; font-weight: 600; }
+.knowledge-gaps { background: #fff9ef; padding: 1rem; border-radius: 8px; margin-top: 1rem; }
+.knowledge-gap { border-top: 1px solid #e4d9c4; padding: .5rem 0; }
+#knowledge-map, #knowledge-detail { overflow-wrap: anywhere; }
+@media (max-width: 740px) { .knowledge-lenses { grid-template-columns: 1fr; } .lead { font-size: 1.1rem; } }

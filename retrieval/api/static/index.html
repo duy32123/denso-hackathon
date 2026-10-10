@@ -2,12 +2,31 @@
 <html lang="vi">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>KnowFlow — hỏi đáp có nguồn</title>
+<title>KnowFlow AI — bộ nhớ kinh nghiệm có bằng chứng</title>
 <link rel="stylesheet" href="/static/style.css">
 <main>
-  <h1>KnowFlow · pilot</h1>
-  <p>Tra cứu theo nguồn đã kiểm. Không thay thế hướng dẫn an toàn của nhà sản xuất hoặc người có chuyên môn.</p>
+  <header class="intro">
+    <p class="eyebrow">A2 · Thu nhận và chuyển giao kinh nghiệm</p>
+    <h1>KnowFlow AI</h1>
+    <p class="lead">Hiểu <strong>làm gì, khi nào, vì sao và kiểm chứng bằng gì</strong>.</p>
+    <p>Liên kết bước thao tác với điều kiện, lý do và bằng chứng; ghi nhận phần còn thiếu để thu thập kinh nghiệm bổ sung.</p>
+    <p><a class="space-entry" href="/space">Khám phá không gian tri thức 3D ↗</a></p>
+    <p class="muted">Pilot trên nguồn kỹ thuật Haas. Review nguồn xác nhận nội dung trung thực với nguồn; xác nhận chuyên môn là bước riêng.</p>
+  </header>
+  <section class="knowledge-browser" aria-labelledby="knowledge-heading">
+    <h2 id="knowledge-heading">Bản đồ tri thức quy trình</h2>
+    <div class="browser-controls">
+      <label>Quy trình trong kho đang chọn <select id="workflow-select"><option value="">Đang tải…</option></select></label>
+      <button type="button" id="refresh-workflows">Tải lại danh sách</button>
+    </div>
+    <p id="catalog-status" role="status"></p>
+    <p id="workflow-status" role="status" aria-live="polite"></p>
+    <div id="knowledge-map">Chọn một quy trình để khám phá các bước, quan hệ và phần kiến thức còn thiếu.</div>
+    <div id="knowledge-detail" aria-live="polite"></div>
+  </section>
   <form id="ask">
+    <h2>Hỏi theo tình huống</h2>
+    <p class="muted">Câu trả lời giữ phạm vi thiết bị và dẫn nguồn cho từng phát biểu. Đối chiếu hướng dẫn an toàn và người có chuyên môn trước khi áp dụng.</p>
     <label>Corpus <select id="mode"><option value="real">Nguồn thực · dev</option><option value="synthetic">Dữ liệu mô phỏng · dev</option></select></label>
     <p id="banner" role="status"></p>
     <div class="context">
@@ -26,14 +45,8 @@
     <div class="main-column">
     <section aria-label="Câu trả lời"><h2>Câu trả lời</h2><p id="answer"></p><p id="missing"></p><p id="unresolved"></p><small id="build"></small><div id="citations"></div></section>
   <section class="browser" aria-labelledby="workflow-heading">
-    <h2 id="workflow-heading">Workflow · field · claim</h2>
+    <h2 id="workflow-heading">Chi tiết tri thức và nguồn</h2>
     <p class="muted">Chế độ đọc. Review nguồn không đồng nghĩa xác nhận kỹ thuật. Không tự ghép thao tác giữa các workflow.</p>
-    <div class="browser-controls">
-      <label>Workflow trong index của corpus đang chọn <select id="workflow-select"><option value="">Đang tải…</option></select></label>
-      <button type="button" id="refresh-workflows">Tải lại danh sách</button>
-    </div>
-    <p id="catalog-status" role="status"></p>
-    <p id="workflow-status" role="status" aria-live="polite"></p>
     <div id="workflow-meta"></div>
     <div id="workflow-steps"></div>
     <div id="workflow-relations"></div>
@@ -75,6 +88,7 @@
   </div>
 </main>
 <script src="/static/app.js" defer></script>
+<script src="/static/knowledge.js" defer></script>
 <script src="/static/viewer.js" defer></script>
 <script src="/static/feedback.js" defer></script>
 </html>

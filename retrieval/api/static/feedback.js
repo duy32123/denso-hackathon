@@ -170,5 +170,15 @@
   el('feedback-preview').addEventListener('click', preview);
   el('feedback-save').addEventListener('click', save);
   document.addEventListener('workflow-shown', event => fill(event.detail));
+  document.addEventListener('knowledge-question-selected', event => {
+    const selected = event.detail, workflow = current?.data.workflow;
+    if (!workflow || workflow.workflow_id !== selected.workflow_id || workflow.revision !== selected.revision) return;
+    const question = workflow.questions.find(q => q.question_id === selected.question_id && q.status === 'open');
+    if (!question) return;
+    el('feedback-question').value = question.question_id;
+    el('feedback-question').dispatchEvent(new Event('change'));
+    el('feedback-heading').scrollIntoView({behavior: 'smooth', block: 'start'});
+    el('feedback-text').focus({preventScroll: true});
+  });
   document.addEventListener('workflow-cleared', () => reset('Chọn một workflow ở trên để bổ sung.'));
 })();

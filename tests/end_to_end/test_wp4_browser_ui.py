@@ -44,7 +44,7 @@ class Model:
 
 class Page:
     def __init__(self, ws):
-        self.ws, self.counter, self.errors = ws, 0, []
+        self.ws, self.counter, self.errors, self.requests = ws, 0, [], []
 
     def call(self, method, params=None):
         self.counter += 1
@@ -53,6 +53,8 @@ class Page:
             result = json.loads(self.ws.recv(timeout=15))
             if result.get("method") == "Runtime.exceptionThrown":
                 self.errors.append(result["params"])
+            if result.get("method") == "Network.requestWillBeSent":
+                self.requests.append(result["params"]["request"]["url"])
             if result.get("id") == self.counter:
                 assert "error" not in result, result
                 return result.get("result", {})
@@ -110,7 +112,8 @@ def test_english_demo_auto_evidence_fields_revision_history_and_mode_switch(tmp_
             time.sleep(.05)
         assert server.started
         profile = tmp_path / "edge-profile"
-        proc = subprocess.Popen([str(edge), "--headless=new", "--disable-gpu", "--no-first-run",
+        proc = subprocess.Popen([str(edge), "--headless=new", "--use-gl=angle", "--use-angle=swiftshader",
+                                 "--enable-unsafe-swiftshader", "--no-first-run",
                                  "--no-default-browser-check", "--disable-extensions", "--disable-sync",
                                  "--disable-background-networking", "--disable-component-update",
                                  "--remote-debugging-port=0", "--remote-debugging-address=127.0.0.1",
@@ -129,7 +132,7 @@ def test_english_demo_auto_evidence_fields_revision_history_and_mode_switch(tmp_
             targets = json.load(response)
         target = next(item for item in targets if item["type"] == "page" and f":{port}" in item["url"])
         ws = connect(target["webSocketDebuggerUrl"], proxy=None, max_size=20_000_000)
-        page = Page(ws); page.call("Runtime.enable")
+        page = Page(ws); page.call("Runtime.enable"); page.call("Page.enable")
         page.wait("document.querySelector('#workflow-select')?.options.length > 1")
         assert page.evaluate("document.querySelector('#question').value") == "How is the pocket slider lubricated?"
         page.evaluate("document.querySelector('#ask').requestSubmit()")
@@ -137,6 +140,14 @@ def test_english_demo_auto_evidence_fields_revision_history_and_mode_switch(tmp_
         assert page.evaluate("document.querySelectorAll('#citations button').length") > 0
         page.evaluate("const picker = document.querySelector('#workflow-select'); picker.value = [...picker.options].find(x => x.textContent.startsWith('B0_SRC_HAAS_0005')).value; picker.dispatchEvent(new Event('change'))")
         page.wait("document.querySelector('#workflow-status').textContent.includes('B0_SRC_HAAS_0005 r2 ·') && document.querySelector('#workflow-history').textContent.includes('EV_033')")
+        # A2 map: layout order is not silently converted to dependency edges.
+        assert page.evaluate("document.querySelectorAll('.knowledge-node').length") == 9
+        assert page.evaluate("document.querySelectorAll('.knowledge-edge').length") == 0
+        assert page.evaluate("[...document.querySelectorAll('.knowledge-lens > h3')].map(x => x.textContent)") == [
+            "Làm gì?", "Khi nào?", "Vì sao?", "Kiểm chứng bằng gì?"]
+        page.evaluate("document.querySelector('[data-knowledge-step=\"B0_SRC_HAAS_0005_ST_006\"]').dispatchEvent(new KeyboardEvent('keydown', {key:'Enter', bubbles:true}))")
+        page.evaluate("document.querySelector('[data-knowledge-claim=\"B0_SRC_HAAS_0005_CL_020\"] button').click()")
+        page.wait("document.querySelector('#evidence').textContent.includes('B0_SRC_HAAS_0005_EV_033')")
         # Contract muc 5.1: nguoi ghi revision la loi tu khai, lich su khong duoc trinh bay nhu da xac thuc.
         assert "codex (tự khai, chưa xác thực)" in page.evaluate("document.querySelector('#workflow-history').textContent")
         page.evaluate("document.querySelector('[data-claim-id=\"B0_SRC_HAAS_0005_CL_020\"] button').click()")
@@ -154,6 +165,32 @@ def test_english_demo_auto_evidence_fields_revision_history_and_mode_switch(tmp_
         screenshot = tmp_path / "wp4-browser.png"
         screenshot.write_bytes(base64.b64decode(page.call("Page.captureScreenshot", {"captureBeyondViewport": True})["data"]))
         print(f"browser_screenshot={screenshot.as_posix()}")
+        # Actual branch condition, original evidence and targeted question-to-feedback.
+        page.evaluate("const recoveryPicker = document.querySelector('#workflow-select'); recoveryPicker.value = [...recoveryPicker.options].find(x => x.textContent.startsWith('REAL_WF_0003')).value; recoveryPicker.dispatchEvent(new Event('change'))")
+        page.wait("document.querySelector('#workflow-status').textContent.includes('REAL_WF_0003 r2 ·')")
+        assert page.evaluate("document.querySelectorAll('.knowledge-edge').length") == 1
+        page.evaluate("document.querySelector('[data-knowledge-relation=\"REAL_WF_0003_RL_001\"]').click()")
+        assert page.evaluate("document.querySelector('[data-knowledge-relation-detail=\"REAL_WF_0003_RL_001\"]').open")
+        assert "Điều kiện chuyển bước" in page.evaluate("document.querySelector('#knowledge-detail').textContent")
+        assert page.evaluate("document.querySelector('[data-knowledge-claim=\"REAL_WF_0003_CL_013\"] button') !== null")
+        page.evaluate("document.querySelector('#knowledge-heading').scrollIntoView({block:'start'})")
+        assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+        map_screenshot = tmp_path / "a2-knowledge-map.png"
+        map_screenshot.write_bytes(base64.b64decode(page.call("Page.captureScreenshot")["data"]))
+        print(f"knowledge_map_screenshot={map_screenshot.as_posix()}")
+        page.call("Emulation.setDeviceMetricsOverride", {"width": 375, "height": 900, "deviceScaleFactor": 1, "mobile": True})
+        assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+        assert page.evaluate("document.querySelector('.knowledge-viewport').scrollWidth > document.querySelector('.knowledge-viewport').clientWidth")
+        page.call("Emulation.clearDeviceMetricsOverride")
+        page.evaluate("document.querySelector('[data-knowledge-step=\"REAL_WF_0003_ST_005\"]').dispatchEvent(new MouseEvent('click', {bubbles:true}))")
+        assert "Chưa được ghi nhận" in page.evaluate("document.querySelector('#knowledge-detail').textContent")
+        page.evaluate("document.querySelector('[data-knowledge-question=\"REAL_WF_0003_Q_001\"] button').click()")
+        assert page.evaluate("document.querySelector('#feedback-question').value") == "REAL_WF_0003_Q_001"
+        assert page.evaluate("document.querySelector('#feedback-step').value") == "REAL_WF_0003_ST_005"
+        assert page.evaluate("document.querySelector('#feedback-field').value") == "rationale"
+        assert page.evaluate("document.querySelector('#feedback-save').disabled")
+        page.evaluate("const pocketPicker = document.querySelector('#workflow-select'); pocketPicker.value = [...pocketPicker.options].find(x => x.textContent.startsWith('B0_SRC_HAAS_0005')).value; pocketPicker.dispatchEvent(new Event('change'))")
+        page.wait("document.querySelector('#workflow-status').textContent.includes('B0_SRC_HAAS_0005 r2 ·')")
         # Man Bo sung. Stub chay duoc preview, nhung nut Luu PHAI van tat: chua co
         # service ghi cua doi 1 thi khong duoc co nut luu gia.
         page.wait("!document.querySelector('#feedback-form').hidden")
@@ -176,12 +213,114 @@ def test_english_demo_auto_evidence_fields_revision_history_and_mode_switch(tmp_
         page.wait("document.querySelector('#workflow-select').options.length > 1")
         assert "MÔ PHỎNG" in page.evaluate("document.querySelector('#banner').textContent")
         assert not page.evaluate("document.body.innerText.includes('B0_SRC_HAAS_0005')")
+        assert page.evaluate("document.querySelectorAll('.knowledge-node').length") == 0
         assert page.evaluate("document.querySelector('#demo-question').disabled")
         # A slow response from the previous corpus must not repaint the new one.
         page.evaluate("(() => { const original = window.fetch; window.fetch = (url, options) => String(url).startsWith('/v1/workflows?mode=real') ? new Promise(resolve => setTimeout(() => resolve(original(url, options)), 400)) : original(url, options); const select = document.querySelector('#mode'); select.value = 'real'; select.dispatchEvent(new Event('change')); select.value = 'synthetic'; select.dispatchEvent(new Event('change')); })()")
         page.wait("document.querySelector('#workflow-select').options.length > 1")
         page.evaluate("new Promise(resolve => setTimeout(resolve, 800))")
         assert not page.evaluate("document.body.innerText.includes('B0_SRC_HAAS_0005')")
+        # Genuine WebGL space, built from the same indexed snapshots, no CDN/LLM.
+        page.call("Network.enable")
+        page.call("Emulation.setEmulatedMedia", {"features": [{"name": "prefers-reduced-motion", "value": "reduce"}]})
+        page.call("Page.navigate", {"url": f"http://127.0.0.1:{port}/space"})
+        page.wait("document.querySelector('#space-canvas')?.dataset.nodeCount > 0")
+        assert page.evaluate("document.querySelector('#space-canvas').dataset.renderer") == "webgl"
+        page.wait("window.knowflowSpace.renderer.info.render.calls > 0")
+        counts = page.evaluate("window.knowflowSpace.graph.counts")
+        latest = {}
+        for workflow in data["workflows"]:
+            if workflow["revision"] > latest.get(workflow["workflow_id"], {}).get("revision", 0):
+                latest[workflow["workflow_id"]] = workflow
+        assert counts["workflow"] == len(latest)
+        for kind, field in (("step", "steps"), ("claim", "claims"), ("evidence", "evidence"), ("relation", "relations")):
+            assert counts[kind] == sum(len(wf[field]) for wf in latest.values())
+        assert counts["question"] == sum(q["status"] == "open" for wf in latest.values() for q in wf["questions"])
+        assert page.evaluate("(() => {const g=window.knowflowSpace.graph; return new Set(g.nodes.map(n=>n.id)).size===g.nodes.length && g.edges.every(e=>g.byId.has(e.from)&&g.byId.has(e.to));})()")
+        assert page.evaluate("window.knowflowSpace.graph.nodes.filter(n=>n.kind==='relation').every(n=>window.knowflowSpace.graph.workflows.get(n.workflow).wf.relations.some(r=>r.relation_id===n.data.relation_id))")
+        assert page.evaluate("!window.knowflowSpace.orbit.rotating")
+        assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+        space_screenshot = tmp_path / "a2-knowledge-space.png"
+        space_screenshot.write_bytes(base64.b64decode(page.call("Page.captureScreenshot")["data"]))
+        print(f"knowledge_space_screenshot={space_screenshot.as_posix()}")
+        # Pick a real node through the canvas raycaster, then orbit/zoom via input.
+        root_point = page.evaluate("window.knowflowSpace.project(window.knowflowSpace.graph.root)")
+        page.call("Input.dispatchMouseEvent", {"type": "mousePressed", "x": root_point["x"], "y": root_point["y"], "button": "left", "clickCount": 1})
+        page.call("Input.dispatchMouseEvent", {"type": "mouseReleased", "x": root_point["x"], "y": root_point["y"], "button": "left", "clickCount": 1})
+        assert page.evaluate("document.querySelector('#space-canvas').dataset.selectedNode === window.knowflowSpace.graph.root")
+        theta = page.evaluate("window.knowflowSpace.orbit.theta")
+        page.evaluate("document.querySelector('#space-canvas canvas').dispatchEvent(new KeyboardEvent('keydown', {key:'ArrowRight',bubbles:true}))")
+        assert page.evaluate("window.knowflowSpace.orbit.theta") > theta
+        theta = page.evaluate("window.knowflowSpace.orbit.theta")
+        page.call("Input.dispatchMouseEvent", {"type": "mousePressed", "x": root_point["x"], "y": root_point["y"], "button": "left", "clickCount": 1})
+        page.call("Input.dispatchMouseEvent", {"type": "mouseMoved", "x": root_point["x"] + 45, "y": root_point["y"] + 15, "buttons": 1})
+        page.call("Input.dispatchMouseEvent", {"type": "mouseReleased", "x": root_point["x"] + 45, "y": root_point["y"] + 15, "button": "left", "clickCount": 1})
+        assert page.evaluate("window.knowflowSpace.orbit.theta") != theta
+        radius = page.evaluate("window.knowflowSpace.orbit.desiredRadius")
+        page.evaluate("document.querySelector('#space-canvas canvas').dispatchEvent(new WheelEvent('wheel', {deltaY:-100,cancelable:true}))")
+        assert page.evaluate("window.knowflowSpace.orbit.desiredRadius") < radius
+        # Story selects the actual branch and opens evidence from its own revision.
+        page.evaluate("document.querySelector('#tour-start').click(); document.querySelector('#tour-next').click()")
+        assert "Nhánh có điều kiện" in page.evaluate("document.querySelector('#inspector-title').textContent")
+        assert "Điều kiện chuyển bước" in page.evaluate("document.querySelector('#inspector-content').textContent")
+        assert "Chưa xác nhận chuyên môn" in page.evaluate("document.querySelector('#inspector-content').textContent")
+        evidence_id = page.evaluate("document.querySelector('#inspector-content [data-evidence-id]').dataset.evidenceId")
+        page.evaluate("document.querySelector('#inspector-content [data-evidence-id]').click()")
+        page.wait(f"document.querySelector('#space-evidence').textContent.includes('{evidence_id}')")
+        assert "r2" in page.evaluate("document.querySelector('#space-evidence').textContent")
+        page.wait("window.knowflowSpace.orbit.target.distanceTo(window.knowflowSpace.orbit.desiredTarget) < .02")
+        branch_screenshot = tmp_path / "a2-knowledge-space-branch.png"
+        branch_screenshot.write_bytes(base64.b64decode(page.call("Page.captureScreenshot")["data"]))
+        print(f"knowledge_space_branch_screenshot={branch_screenshot.as_posix()}")
+        page.evaluate("document.querySelector('#tour-close').click()")
+        # Filters/search operate on graph nodes, including a keyboard-accessible route.
+        page.evaluate("document.querySelector('#space-reset').click()")
+        visible_count = page.evaluate("+document.querySelector('#space-canvas').dataset.visibleNodes")
+        page.evaluate("const evFilter=document.querySelector('[data-space-type=evidence]'); evFilter.checked=false; evFilter.dispatchEvent(new Event('change'))")
+        assert page.evaluate("+document.querySelector('#space-canvas').dataset.visibleNodes") == visible_count - counts["evidence"]
+        page.evaluate("const restoredFilter=document.querySelector('[data-space-type=evidence]'); restoredFilter.checked=true; restoredFilter.dispatchEvent(new Event('change'))")
+        # Search by content rather than requiring knowledge of IDs.
+        page.evaluate("document.querySelector('#space-search').value='why'; document.querySelector('#space-search').dispatchEvent(new Event('input'))")
+        page.wait("document.querySelector('#space-search-results button') !== null")
+        page.evaluate("document.querySelector('#space-search-results button').click()")
+        assert page.evaluate("document.querySelector('#space-canvas').dataset.selectedNode !== ''")
+        page.call("Emulation.setDeviceMetricsOverride", {"width": 375, "height": 900, "deviceScaleFactor": 1, "mobile": True})
+        assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+        page.call("Emulation.clearDeviceMetricsOverride")
+        page.evaluate("document.querySelector('#space-fullscreen').click()")
+        page.wait("document.querySelector('#space-shell').classList.contains('is-presenting')")
+        assert page.evaluate("document.querySelector('#space-shell').clientWidth === innerWidth && document.querySelector('#space-stage').clientWidth > 0")
+        page.evaluate("document.querySelector('#stage-tour').click()")
+        assert not page.evaluate("document.querySelector('#tour-card').hidden")
+        page.evaluate("document.querySelector('#tour-close').click()")
+        page.evaluate("document.querySelector('#presentation-exit').click()")
+        page.wait("!document.querySelector('#space-shell').classList.contains('is-presenting')")
+        # Follow a real open question to the existing feedback form.
+        page.evaluate("document.querySelector('#tour-start').click(); document.querySelector('#tour-next').click(); document.querySelector('#tour-next').click(); document.querySelector('#tour-next').click()")
+        deep_link = page.evaluate("document.querySelector('#inspector-content a').href")
+        page.call("Page.navigate", {"url": deep_link})
+        page.wait("document.querySelector('#feedback-question')?.value === 'REAL_WF_0003_Q_001'")
+        assert page.evaluate("document.querySelector('#feedback-step').value") == "REAL_WF_0003_ST_005"
+        assert page.evaluate("document.querySelector('#feedback-field').value") == "rationale"
+        # Namespace changes clear old entities; stale responses cannot repaint them.
+        page.call("Page.navigate", {"url": f"http://127.0.0.1:{port}/space"})
+        page.wait("document.querySelector('#space-canvas')?.dataset.nodeCount > 0")
+        page.evaluate("document.querySelector('#space-mode').value='synthetic'; document.querySelector('#space-mode').dispatchEvent(new Event('change'))")
+        page.wait("window.knowflowSpace?.graph?.mode === 'synthetic'")
+        assert "MÔ PHỎNG" in page.evaluate("document.body.innerText")
+        assert not page.evaluate("document.body.innerText.includes('B0_SRC_HAAS_0005')")
+        assert page.evaluate("window.knowflowSpace.graph.nodes.every(n=>n.id.startsWith('synthetic:dev'))")
+        # WebGL unavailable: data, search and evidence remain usable.
+        # Only the configured namespace should remain selectable on this server.
+        service.databases.pop(("synthetic", "dev"))
+        page.call("Page.addScriptToEvaluateOnNewDocument", {"source": "window.__webglBlockedForTest=true; const originalGetContext=HTMLCanvasElement.prototype.getContext; HTMLCanvasElement.prototype.getContext=function(kind,...args){return kind.startsWith('webgl')?null:originalGetContext.call(this,kind,...args)}"})
+        page.call("Page.reload", {"ignoreCache": True})
+        page.wait("window.__webglBlockedForTest === true")
+        page.wait("document.querySelector('#space-canvas')?.dataset.renderer === 'unavailable' && window.knowflowSpace?.graph?.mode === 'real' && document.querySelector('#space-canvas').dataset.nodeCount > 0")
+        assert page.evaluate("document.querySelector('#space-mode option[value=synthetic]').disabled")
+        page.evaluate("document.querySelector('#space-search').value='Nhánh có điều kiện'; document.querySelector('#space-search').dispatchEvent(new Event('input')); document.querySelector('#space-search-results button').click()")
+        assert "Điều kiện chuyển bước" in page.evaluate("document.querySelector('#inspector-content').textContent")
+        assert all(url.startswith((f"http://127.0.0.1:{port}/", "data:")) for url in page.requests)
         assert page.errors == []
         page.call("Browser.close")
     finally:

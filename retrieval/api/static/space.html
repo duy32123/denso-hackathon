@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KnowFlow AI — Không gian tri thức 3D</title>
+  <link rel="stylesheet" href="/static/space.css">
+</head>
+<body>
+  <main class="space-page">
+    <nav class="space-nav" aria-label="Điều hướng">
+      <a class="brand" href="/">K<span class="brand-dot"></span> KnowFlow <span>AI</span></a>
+      <span class="pilot-tag">A2 · MASTER KNOW-HOW</span>
+      <a class="back-link" href="/">Đọc quy trình & hỏi đáp ↗</a>
+    </nav>
+    <header class="space-intro">
+      <div><p class="eyebrow">BỘ NHỚ KINH NGHIỆM CÓ BẰNG CHỨNG</p>
+        <h1>Không gian tri thức<span>3D</span></h1>
+        <p>Khám phá thao tác, điều kiện, lý do và nguồn của từng kinh nghiệm.</p></div>
+      <button id="tour-start" class="primary" type="button">Bắt đầu câu chuyện <span>→</span></button>
+    </header>
+    <div class="space-toolbar">
+      <label class="search-label"><span>Tìm trong tri thức</span><input id="space-search" type="search" autocomplete="off" placeholder="Tìm bước, phát biểu, bằng chứng…" aria-controls="space-search-results"></label>
+      <label class="corpus-label"><span>Kho tri thức</span><select id="space-mode"><option value="real">Nguồn Haas · pilot</option><option value="synthetic">Dữ liệu mô phỏng</option></select></label>
+      <button id="space-reset" type="button">Về toàn cảnh</button>
+      <button id="space-rotate" type="button" aria-pressed="false">Tự xoay</button>
+      <button id="space-fullscreen" type="button">Trình chiếu ⛶</button>
+    </div>
+    <p id="space-status" class="space-status" role="status" aria-live="polite">Đang tải kho tri thức…</p>
+    <div id="space-search-results" class="search-results" hidden></div>
+    <section id="space-shell" class="space-shell" aria-label="Khám phá đồ thị tri thức">
+      <div class="space-stage" id="space-stage">
+        <div class="stage-heading"><span class="live-dot"></span> KNOWLEDGE SPACE <span id="space-namespace">PILOT</span></div>
+        <button id="stage-tour" class="stage-tour" type="button">Câu chuyện →</button>
+        <div id="space-canvas" class="space-canvas"></div>
+        <div id="space-labels" class="space-labels" aria-hidden="true"></div>
+        <div class="space-metrics" id="space-metrics"></div>
+        <div class="stage-caption"><strong>Tri thức có thể kiểm chứng</strong><span>Các đường nối thể hiện bản ghi và liên kết nguồn trong kho.</span></div>
+        <div class="stage-hint">Kéo để xoay · Cuộn / chụm để zoom · Chọn nút để khám phá</div>
+        <div id="space-tooltip" class="space-tooltip" hidden></div>
+        <div class="tour-card" id="tour-card" hidden>
+          <div class="tour-top"><span id="tour-count"></span><button id="tour-close" type="button" aria-label="Kết thúc câu chuyện">×</button></div>
+          <h2 id="tour-title"></h2><p id="tour-text"></p>
+          <div class="tour-buttons"><button id="tour-prev" type="button">← Trước</button><button id="tour-next" class="primary" type="button">Tiếp →</button></div>
+        </div>
+      </div>
+      <aside class="space-inspector" aria-labelledby="inspector-title">
+        <div class="inspector-header"><span id="inspector-kind">KHÁM PHÁ TRI THỨC</span><span class="inspector-icon">◎</span></div>
+        <h2 id="inspector-title">Mỗi nút mở một phần kinh nghiệm</h2>
+        <div id="inspector-content" aria-live="polite"><p>Chọn một quy trình để thấy các bước. Chọn phát biểu để đọc điều kiện, lý do và bằng chứng hỗ trợ.</p></div>
+        <div id="space-evidence" aria-live="polite"></div>
+      </aside>
+    </section>
+    <fieldset class="space-legend" id="space-legend"><legend>Hiển thị trong không gian</legend></fieldset>
+    <footer class="space-footer"><p id="space-scope">Pilot dùng nguồn Haas. Đối chiếu nguồn và xác nhận chuyên môn là hai bước riêng.</p><p>Vị trí 3D giúp khám phá; khoảng cách giữa nút không biểu thị độ đúng hay mức độ tương đồng.</p></footer>
+  </main>
+  <script type="module" src="/static/space.js"></script>
+</body>
+</html>

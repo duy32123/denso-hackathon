@@ -1,6 +1,8 @@
 /* Read-only WP4 browser. All source/model text is rendered with textContent. */
 (() => {
   let catalogGeneration = 0, viewGeneration = 0, catalog = null;
+  const entry = new URLSearchParams(location.search);
+  let entryPending = entry.has('workflow');
   const areas = ['workflow-meta', 'workflow-steps', 'workflow-relations', 'workflow-questions'];
   const counts = value => Object.entries(value || {}).map(([key, count]) => `${key}: ${count}`).join(' · ') || '—';
   const text = value => value === null || value === undefined || value === '' ? 'Không nêu' :
@@ -22,6 +24,7 @@
   }
   function clear() {
     viewGeneration++;
+    window.knowledgeMap.clear();
     for (const id of areas) el(id).replaceChildren();
     el('workflow-status').textContent = '';
     el('workflow-history').textContent = 'Chọn một workflow để xem lịch sử.';
@@ -41,7 +44,16 @@
         const option = node('option', `${wf.workflow_id} · r${wf.revision} · ${wf.title}`);
         option.value = String(index); el('workflow-select').append(option);
       });
-      el('catalog-status').textContent = `${data.workflows.length} workflow trong index này (không lọc theo ô context của câu hỏi). ${data.index_build_id}`;
+      el('catalog-status').textContent = `${data.workflows.length} quy trình trong kho đang chọn. Bộ lọc thiết bị được áp dụng ở phần hỏi đáp.`;
+      el('catalog-status').title = data.index_build_id;
+      if (entryPending) {
+        entryPending = false;
+        const index = data.workflows.findIndex(wf => wf.workflow_id === entry.get('workflow') && String(wf.revision) === entry.get('revision'));
+        if (index >= 0) {
+          el('workflow-select').value = String(index);
+          show(data.workflows[index], mode, data.index_build_id, {focusQuestion: entry.get('question')});
+        } else el('catalog-status').textContent += ' Phiên bản trong liên kết chưa có ở index đang phục vụ.';
+      }
     } catch (error) {
       if (token === catalogGeneration) el('catalog-status').textContent = error.message;
     }
@@ -78,6 +90,17 @@
     meta.append(context, node('small', `Index: ${build}`));
     for (const source of data.sources) meta.append(node('p', `${source.source_id}: ${source.title}\n${source.access_note || ''}`));
     const claims = new Map(wf.claims.map(claim => [claim.claim_id, claim]));
+    window.knowledgeMap.render(data, {
+      focusClaim: options.focusClaim,
+      openEvidence: evidence => {
+        const url = `/v1/evidence/${encodeURIComponent(wf.workflow_id)}/${wf.revision}/${encodeURIComponent(evidence.evidence_id)}?${params(mode, build)}`;
+        openEvidence(url, token, 'workflow');
+        el('evidence').scrollIntoView({behavior: 'smooth', block: 'start'});
+      },
+      openQuestion: question => document.dispatchEvent(new CustomEvent('knowledge-question-selected', {
+        detail: {workflow_id: wf.workflow_id, revision: wf.revision, question_id: question.question_id}
+      }))
+    });
     wf.steps.forEach((step, index) => {
       const focused = Object.values(step.fields).some(field => field.claim_ids.includes(options.focusClaim));
       const card = details(`${step.display_order}. ${step.title} · ${step.step_id}`, focused || (!options.focusClaim && index === 0));
@@ -155,6 +178,7 @@
   async function show(ref, mode, build, options = {}) {
     if (mode !== el('mode').value) return;
     const token = ++viewGeneration, queryToken = generation;
+    window.knowledgeMap.clear();
     for (const id of areas) el(id).replaceChildren();
     el('workflow-status').textContent = `Đang đọc ${ref.workflow_id} r${ref.revision}…`;
     if (!options.keepHistory) el('workflow-history').textContent = 'Đang đọc lịch sử…';
@@ -165,6 +189,11 @@
       el('workflow-status').textContent = `Đang xem ${ref.workflow_id} r${ref.revision} · chỉ đọc`;
       // Man Bo sung doc tu day de khong giu mot ban sao trang thai thu hai.
       document.dispatchEvent(new CustomEvent('workflow-shown', {detail: {ref, mode, build, data}}));
+      if (options.focusQuestion && data.workflow.questions.some(q => q.question_id === options.focusQuestion && q.status === 'open')) {
+        document.dispatchEvent(new CustomEvent('knowledge-question-selected', {detail: {
+          workflow_id: ref.workflow_id, revision: ref.revision, question_id: options.focusQuestion
+        }}));
+      }
       if (!options.keepHistory) {
         const path = `/v1/workflows/${encodeURIComponent(ref.workflow_id)}/${ref.revision}/history?${params(mode, build)}`;
         try {
@@ -190,5 +219,7 @@
     show(catalog.workflows[Number(index)], catalog.mode, catalog.index_build_id);
   });
   window.workflowViewer = {clear, loadCatalog, show};
-  loadCatalog();
+  if (['real', 'synthetic'].includes(entry.get('mode')) && entry.get('mode') !== el('mode').value) {
+    el('mode').value = entry.get('mode'); el('mode').dispatchEvent(new Event('change'));
+  } else loadCatalog();
 })();

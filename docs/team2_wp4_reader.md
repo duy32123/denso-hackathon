@@ -1,5 +1,13 @@
 # D2-B WP4 + D2-A — workflow, evidence và lịch sử (chỉ đọc)
 
+**Bổ sung hướng A2 (2026-10-10):** giao diện có bản đồ Step–Relation, màn đọc bốn nhóm
+làm gì/khi nào/vì sao/kiểm chứng và chọn câu hỏi để mở form bổ sung đúng bước/trường.
+Xem [kịch bản mới](a2_knowledge_map_demo.md) và [phạm vi ý tưởng](a2_idea_submission.md).
+Đồ thị đọc đúng snapshot và không tạo thêm quan hệ từ thứ tự hiển thị.
+
+Không gian 3D tại `/space` hiển thị liên kết bản ghi/nguồn của các workflow trong
+index, có tìm kiếm và tour trình chiếu. Xem [hướng dẫn và giới hạn](a2_knowledge_space_3d.md).
+
 Phần tiếp theo của `docs/03_Plan_doi_2_Synthetic_KB_RAG_LLM.docx`, mục 3 / WP4.
 Không sửa Schema 1.0.0, không ghi KB/review và không tự đổi index khi xem bản cũ.
 Ngôn ngữ câu trả lời nay do code quyết định (xem mục 5 của [grounded QA](team2_grounded_qa.md)); **chưa kiểm lại với Gemini thật**, nên demo vẫn nên chuẩn bị sẵn câu hỏi tiếng Anh làm phương án dự phòng.

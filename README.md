@@ -6,6 +6,13 @@ bằng chứng mở được, phần chưa biết được giữ lại và chuy�
 Tài liệu gốc nằm ở [docs/](docs): schema chung, kế hoạch đội 1 (video → kho tri thức),
 kế hoạch đội 2 (synthetic KB → RAG → UI).
 
+Hướng trình bày A2: [ý tưởng và kế hoạch sáu tuần](docs/a2_idea_submission.md),
+[demo bản đồ tri thức](docs/a2_knowledge_map_demo.md). Giao diện có bản đồ Step–Relation,
+bốn nhóm “làm gì / khi nào / vì sao / kiểm chứng” và chuyển câu hỏi thiếu sang form bổ sung.
+
+**Không gian tri thức 3D:** mở `/space` trên server local để xoay, zoom, chọn nút,
+mở bằng chứng và trình chiếu câu chuyện. Xem [hướng dẫn và phạm vi](docs/a2_knowledge_space_3d.md).
+
 ## Bắt đầu
 
 ```bash

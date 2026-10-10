@@ -181,6 +181,10 @@ def create_app(service: QAService | None = None, *, timeout_seconds: float = 90,
     static = Path(__file__).parent / "static"
     app.mount("/static", StaticFiles(directory=static), name="static")
 
+    @app.get("/space", include_in_schema=False)
+    def knowledge_space():
+        return FileResponse(static / "space.html")
+
     @app.post("/v1/feedback/preview")
     def feedback_preview(request: FeedbackRequest):
         """Xem truoc thay doi. Khong ghi gi, khong doi active index."""

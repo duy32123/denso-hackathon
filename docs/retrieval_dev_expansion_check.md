@@ -49,11 +49,11 @@ Q015 và Q031 (mỡ bôi trơn con trượt hốc dao) giờ bị đưa sang `RE
 tấm che) thay vì `REAL_WF_0003`. Trước và sau đều chọn sai workflow nên workflow accuracy
 không đổi, nhưng kiểu sai đã khác.
 
-## 15 câu nháp cho năm workflow mới
+## 15 câu cho năm workflow mới
 
-`HAAS_DEV_Q069`–`Q083`, ba câu mỗi workflow, tiếng Anh, `label.status=draft`,
-`labeled_by=claude-draft`. Nhãn được soạn từ snapshot **trước khi** chạy engine và không
-sửa theo kết quả. Chúng **chưa được người kiểm**, nên không được gộp vào số báo cáo.
+`HAAS_DEV_Q069`–`Q083`, ba câu mỗi workflow, tiếng Anh, `labeled_by=claude-draft`. Nhãn
+được soạn từ snapshot **trước khi** chạy engine và không sửa theo kết quả. `quyhienln` đã
+kiểm ngày 2026-10-12 (`label.status=reviewed`); người kiểm không trùng người soạn.
 
 Trên bundle mới (lexical): 14/15 có kết quả, **13/15 đúng Step ở hạng 1**, Q070 ở hạng 4.
 Q069 ("According to the service video, when does alarm 626 occur?") bị cổng từ chối: `alarm
@@ -61,7 +61,8 @@ Q069 ("According to the service video, when does alarm 626 occur?") bị cổng 
 lần trượt thật của engine, giữ nguyên nhãn.
 
 Cả 81 câu: Recall@5 0.9423 (mẫu số 52), MRR@5 0.8109, Hit@1 0.7308, status accuracy 0.8765.
-Con số này trộn nhãn đã kiểm và nhãn nháp; chỉ dùng để theo dõi, không dùng để báo cáo.
+Lượt đo này chạy khi 15 câu mới còn là nháp; nhãn không đổi sau khi kiểm nên con số giữ nguyên,
+nhưng đây mới là lexical. Số báo cáo chính thức cần lượt hybrid còn nợ bên dưới.
 
 ## Đã thử và không dùng
 
@@ -74,7 +75,8 @@ chồng lên nhau, nên chỉnh ngưỡng tỷ lệ cũng không tách được 
 
 ## Việc còn lại
 
-- [ ] Người kiểm lại 20 câu phủ định trên corpus mới (ít nhất Q041, Q049) và 15 câu nháp.
+- [x] Người kiểm 15 câu mới (`quyhienln`, 2026-10-12).
+- [ ] Người kiểm lại 20 câu phủ định trên corpus mới (ít nhất Q041, Q049).
 - [ ] Sau đó mới hiệu chỉnh cổng liên quan; cần một tín hiệu khác ngoài tỷ lệ từ khớp.
 - [ ] Dựng lại index Gemini và đo vector/hybrid khi có quota.
 - [ ] Nhập bundle mới vào kho phục vụ (`out/retrieval/real_dev.sqlite`) khi nhóm quyết định

@@ -345,14 +345,15 @@ one symptom triage and one replacement procedure, on subsystems the pilot did no
 - 31 keyframes at 1080p, chosen by reading the frame against the claim it supports, not by
   cue timing. All 31 are in the `data/keyframes/` ledgers; six are marked `accepted_weak`
   because the frame alone cannot identify the part the narration names. Many of these videos carry on-screen captions and part labels, which make them
-  strong visual evidence. As in section 18, those judgments are AI vision review with
-  **no human sign-off yet**.
+  strong visual evidence. The frame judgments were AI vision review, as in section 18, and
+  were then signed off by `quyhienln` on 2026-10-12 (`human_signoff` in `keyframe_review.jsonl`).
+  The 20 pilot rows still have no sign-off.
 - `Source.content_sha256` for these five is the SHA-256 of `raw_text`, so it can be checked from
   the record. The pilot video records hold a different legacy value that nothing enforces.
-- Five workflows, 169 claims, all `source_checked` by reviewer id `d1c-source-review`. That
-  review was an **AI-assisted second pass** (a claim-by-claim read plus a script that flags any
-  number, code or proper noun not found in the cited cues). It is not `expert_validated`
-  and still needs a human reviewer to sign off.
+- Five workflows, 169 claims, all `source_checked`. Each claim carries two review events:
+  an AI-assisted pass recorded as `d1c-source-review` (a claim-by-claim read plus a script
+  that flags any number, code or proper noun not found in the cited cues), and the human
+  source review by `quyhienln` on 2026-10-12. Neither is `expert_validated`.
 
 ### Reviewer links
 
@@ -378,8 +379,8 @@ section 1: regenerating a worklist no longer produces the lower-case SRC_HAAS_00
    `data/eval/README.md`, `docs/retrieval_eval_real_dev.md`,
    `docs/gold_review_worklist_real_dev.md`, `benchmarks/results/20261011_real_dev/`). They describe
    runs on that bundle and remain true for it; the bundle is now
-   `BUNDLE_HAAS_SMTC_DEV_566195ef6c9f`. Fifteen draft questions for the new workflows (Q069-Q083)
-   were added to the question file; they are `draft` and not human-checked.
+   `BUNDLE_HAAS_SMTC_DEV_95b81c529dbe`. Fifteen questions for the new workflows (Q069-Q083) were
+   added to the question file, drafted by AI and reviewed by `quyhienln` on 2026-10-12.
 4. **Each workflow lists open questions** (40 across the bundle) for fields the video does not
    cover, such as acceptance thresholds. They are in the snapshots, not here.
 
@@ -391,9 +392,9 @@ section 1: regenerating a worklist no longer produces the lower-case SRC_HAAS_00
 ea85bea89b2889e9d22f2931a4735af9f1f748cb37c2d4df09684ce13de0c3bc  data/catalogs/haas_d1a_source_id_registry.json
 2453d19fbf8b16fefe1e0683daea7872c5f2d89d722463bc836bf60e6dc63798  data/catalogs/haas_playable_links.json
 a35c48c36d067cba9c2ab36299395e15aef410cc7c6e68694c55f7535696823e  acquisition/video_catalog/haas_d1a_source_candidates.csv
-5ecb1fd9e77c08ca91d043d110597e150f13b87c49e73fc8014faefb31c573a3  acquisition/export/haas_pilot_dev_bundle/manifest.json
+249a3e8d17c1e61cb55b840247fd9bd500030c06e5d0878ed1508c356192823b  acquisition/export/haas_pilot_dev_bundle/manifest.json
 1e50f901750ea2630037496bc58282a973d10c25a0417e690ddea60f9a2b3500  acquisition/export/haas_pilot_dev_bundle/sources.jsonl
-a796674a29e97d01a8b1f9fcf62cd91c8f52ed134cf66f5eb672d4d4dee57658  acquisition/export/haas_pilot_dev_bundle/workflows.jsonl
+c4703bb729accc54d89e080941a3c80d99ff5a6408dbc9001ee02e5d6e66da16  acquisition/export/haas_pilot_dev_bundle/workflows.jsonl
 8d1e67506668d6b89d21c129b2c0ad22df1f6e3723a307db7686a2bd5363d2a8  acquisition/preprocessing/haas_d1a_media_inventory.jsonl
 fd56d421bb3cabfa0c8f39e9aa57421b4c16ed6ccfb0259db66d27d8dec9e09e  docs/data_rights_register.md
 ```

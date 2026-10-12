@@ -55,7 +55,16 @@ def test_review_ledger_marks_ai_review_as_not_human_signed_off():
     assert rows
     for row in rows:
         assert row["reviewer_kind"] == "ai_vision_review"
-        assert row["human_signoff"] is None
+        # A sign-off is a named person and a date, never a bare flag; the pilot rows have none yet.
+        signoff = row["human_signoff"]
+        assert signoff is None or (signoff["by"].strip() and signoff["at"].endswith("Z")), row
+
+
+def test_keyframes_added_after_the_pilot_are_signed_off_by_a_person():
+    later = [r for r in _rows("keyframe_review.jsonl") if r["source_id"] >= "SRC_HAAS_0008"]
+    assert len(later) == 31
+    for row in later:
+        assert row["human_signoff"] and row["human_signoff"]["by"] != row["reviewer_id"], row
 
 
 def test_every_selection_original_timestamp_is_within_its_source_duration():

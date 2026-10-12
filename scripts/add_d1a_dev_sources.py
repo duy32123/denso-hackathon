@@ -230,7 +230,8 @@ def source_record(sid: str, spec: dict, raw: list[dict]) -> dict:
             "mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com "
             "returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the "
             "channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp "
-            "(official_caption); no video file retained. Redistribution not established -- do not redistribute retained "
+            "(official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) "
+            "for keyframe extraction. Redistribution not established -- do not redistribute retained "
             "caption text outside this pilot."
         ),
         "asset_uri": None,

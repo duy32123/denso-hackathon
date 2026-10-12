@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0.0",
-  "bundle_id": "BUNDLE_HAAS_SMTC_DEV_f1ffda495fd6",
+  "bundle_id": "BUNDLE_HAAS_SMTC_DEV_566195ef6c9f",
   "source_type": "real",
   "dataset_split": "dev",
-  "created_at": "2026-10-12T11:11:22Z",
+  "created_at": "2026-10-12T11:40:18Z",
   "files": [
     {
       "path": "sources.jsonl",
-      "sha256": "9bb110009f680da6996d16947751cbf1e2644a758032d57d346c96c9242eca96",
+      "sha256": "1e50f901750ea2630037496bc58282a973d10c25a0417e690ddea60f9a2b3500",
       "record_count": 10
     },
     {

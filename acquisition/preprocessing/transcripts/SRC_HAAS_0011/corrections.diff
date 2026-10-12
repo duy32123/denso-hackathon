@@ -1,0 +1,44 @@
+# Corrections applied 2026-10-12 (terminology only; every one cites a primary source
+# or the same transcript's own usage; timestamps and sentence structure are unchanged).
+
+utterance start_ms=170 end_ms=9920
+
+- the 997 three-alarm tells you that there is a problem with the incoming power supplied
++ the 9973 alarm tells you that there is a problem with the incoming power supplied
+
+Basis: the video's own title, "ALARM 9973 Unstable Incoming Power".
+
+utterance start_ms=9920 end_ms=16310
+
+- to the machine the wide delta contactor here has one set of contacts closed and the other open at
++ to the machine the Wye-Delta contactor here has one set of contacts closed and the other open at
+
+Basis: the description: "does not require a Wye-Delta replacement".
+
+utterance start_ms=39110 end_ms=45530
+
+- all wide delta contactor assemblies built after August 2017 use a pair of auxiliary contacts
++ all Wye-Delta contactor assemblies built after August 2017 use a pair of auxiliary contacts
+
+Basis: the description: "does not require a Wye-Delta replacement".
+
+utterance start_ms=59750 end_ms=66110
+
+- contactor continuously if your machine generates a 997 three alarm it means the i/o board saw one
++ contactor continuously if your machine generates a 9973 alarm it means the i/o board saw one
+
+Basis: the title.
+
+utterance start_ms=117140 end_ms=123590
+
+- contactors from a dangerous arc if the 997 three alarm is persistent the Machine needs a third
++ contactors from a dangerous arc if the 9973 alarm is persistent the Machine needs a third
+
+Basis: the title.
+
+utterance start_ms=153650 end_ms=159020
+
+- loaded in the machine for more in-depth why delta contact or troubleshooting click on the links in
++ loaded in the machine for more in-depth Wye-Delta contactor troubleshooting click on the links in
+
+Basis: the description's "Wye_Delta_Contactor_Troubleshooting_Guide" link and "Wye-Delta".

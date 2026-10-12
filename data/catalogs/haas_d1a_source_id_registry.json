@@ -1,12 +1,17 @@
 {
-  "next_seq": 8,
+  "next_seq": 13,
   "urls": {
     "https://www.haascnc.com/service/troubleshooting-and-how-to/how-to/mill---side-mount-tool-changer---manual-recovery.html": "SRC_HAAS_0004",
     "https://www.haascnc.com/service/troubleshooting-and-how-to/troubleshooting/Side_Mount_Tool_Changer_SMTC_Double_Arm_Troubleshooting_Guide.html": "SRC_HAAS_0002",
     "https://www.haascnc.com/video/service/2bra6qm6wm4.html": "SRC_HAAS_0003",
+    "https://www.haascnc.com/video/service/DXtocZX8hf0.html": "SRC_HAAS_0008",
+    "https://www.haascnc.com/video/service/DgHQtvvf1kI.html": "SRC_HAAS_0011",
     "https://www.haascnc.com/video/service/HXsqcIapVgc.html": "SRC_HAAS_0006",
+    "https://www.haascnc.com/video/service/M-VcwEodqP0.html": "SRC_HAAS_0010",
     "https://www.haascnc.com/video/service/TmjjC7BDDag.html": "SRC_HAAS_0001",
     "https://www.haascnc.com/video/service/ZlU-dWyulOU.html": "SRC_HAAS_0007",
-    "https://www.haascnc.com/video/service/cs-BvWsKXyU.html": "SRC_HAAS_0005"
+    "https://www.haascnc.com/video/service/cs-BvWsKXyU.html": "SRC_HAAS_0005",
+    "https://www.haascnc.com/video/service/cwYsbzAW3r0.html": "SRC_HAAS_0009",
+    "https://www.haascnc.com/video/service/ezplV3447C8.html": "SRC_HAAS_0012"
   }
 }

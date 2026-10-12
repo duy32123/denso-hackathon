@@ -1,0 +1,23 @@
+# Corrections applied 2026-10-12 (terminology only; every one cites a primary source
+# or the same transcript's own usage; timestamps and sentence structure are unchanged).
+
+utterance start_ms=130 end_ms=10630
+
+- [Music] if you're in the middle of a job and you get alarmed 2:54 spin the motor overheat here are
++ [Music] if you're in the middle of a job and you get alarm 254 spindle motor overheat here are
+
+Basis: the video's own title, "Alarm 254 Spindle Motor Overheat".
+
+utterance start_ms=21490 end_ms=27760
+
+- the spindle motor temperature begins to reach those limits this sensor triggers alarm to 54
++ the spindle motor temperature begins to reach those limits this sensor triggers alarm 254
+
+Basis: the title, and the same alarm said correctly in the description ("a 254 alarm").
+
+utterance start_ms=80500 end_ms=86800
+
+- persists it's time to contact your local hospital outlet for assistance thanks for watching [Music]
++ persists it's time to contact your local HFO for assistance thanks for watching [Music]
+
+Basis: the description: "please contact your local HFO".

@@ -1,0 +1,736 @@
+{
+  "workflow_id": "REAL_WF_0008",
+  "revision": 1,
+  "sessions": [
+    {
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:06Z",
+      "self_review": false,
+      "decisions": [
+        {
+          "claim_id": "REAL_WF_0008_CL_001",
+          "fingerprint": "60c80fe94704ef12",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_002",
+          "fingerprint": "31c1159715eb754d",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_003",
+          "fingerprint": "08c7162fa1809fd1",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_004",
+          "fingerprint": "e9628f71e09dcee6",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_005",
+          "fingerprint": "9ab77250d3945fd3",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_006",
+          "fingerprint": "01a6ba4415430a35",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_007",
+          "fingerprint": "c06135f13cc6796e",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_008",
+          "fingerprint": "c56c3f08e30f618b",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_009",
+          "fingerprint": "b3aae75e12feb9d6",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_010",
+          "fingerprint": "0b9c3da48771fe4d",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_011",
+          "fingerprint": "9e6be582c99bca0e",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_012",
+          "fingerprint": "0d7d0a7069283295",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_013",
+          "fingerprint": "c7348ca1e3d7b674",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_014",
+          "fingerprint": "66a3b4e7bc32262b",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_015",
+          "fingerprint": "4d9083580773d6ef",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_016",
+          "fingerprint": "0e55e4028afec267",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_017",
+          "fingerprint": "75c9339523091cd4",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_018",
+          "fingerprint": "78f3efc6c9f059dd",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_019",
+          "fingerprint": "a39016a9fb33edba",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_020",
+          "fingerprint": "c4baeefeaae10c2a",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_021",
+          "fingerprint": "6ad971240444a978",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_022",
+          "fingerprint": "a6f55c27bbfc4be2",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_023",
+          "fingerprint": "ac40f348330ca228",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_024",
+          "fingerprint": "564688ca077ebba2",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_025",
+          "fingerprint": "8e5db87dd5262ffd",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_026",
+          "fingerprint": "ffca5d359bf13561",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_027",
+          "fingerprint": "48f51b33d3e8b8a7",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_028",
+          "fingerprint": "1ba7cd40183e8e5b",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_029",
+          "fingerprint": "5b461ec1bcbc24e2",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_030",
+          "fingerprint": "fb188f01666a4f02",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_031",
+          "fingerprint": "9f58cade8a2e2718",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_032",
+          "fingerprint": "1b9df42bd18b00ee",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_033",
+          "fingerprint": "3633bfbc9dabb854",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_034",
+          "fingerprint": "99353f03ad5ed1e0",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_035",
+          "fingerprint": "186a7acc52db2cfd",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_036",
+          "fingerprint": "67920b979d69737d",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_037",
+          "fingerprint": "ace24cdc8adf60e8",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_038",
+          "fingerprint": "6fe9a53bb35633ed",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_039",
+          "fingerprint": "c7dd196ad1a60fff",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_040",
+          "fingerprint": "0a100b111c1a53c4",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_041",
+          "fingerprint": "7d34036c2710ab50",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_042",
+          "fingerprint": "42d15c3dc5ade3e2",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_043",
+          "fingerprint": "783142cc5e937a4d",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_044",
+          "fingerprint": "85181752588a8638",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_045",
+          "fingerprint": "797b8ea039c16205",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_046",
+          "fingerprint": "ae4519e67144322d",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_047",
+          "fingerprint": "9f6e4caba9d6738f",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_048",
+          "fingerprint": "1a1437edda64f9af",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_049",
+          "fingerprint": "90e286bbdc60d880",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_050",
+          "fingerprint": "914ce147ea08f74c",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_051",
+          "fingerprint": "1add7d572f371402",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        }
+      ]
+    },
+    {
+      "reviewer_id": "quyhienln",
+      "reviewer_role": "D1-C annotation/QA",
+      "reviewed_at": "2026-10-12T12:03:17Z",
+      "self_review": false,
+      "decisions": [
+        {
+          "claim_id": "REAL_WF_0008_CL_001",
+          "fingerprint": "60c80fe94704ef12",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_002",
+          "fingerprint": "31c1159715eb754d",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_003",
+          "fingerprint": "08c7162fa1809fd1",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_004",
+          "fingerprint": "e9628f71e09dcee6",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_005",
+          "fingerprint": "9ab77250d3945fd3",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_006",
+          "fingerprint": "01a6ba4415430a35",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_007",
+          "fingerprint": "c06135f13cc6796e",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_008",
+          "fingerprint": "c56c3f08e30f618b",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_009",
+          "fingerprint": "b3aae75e12feb9d6",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_010",
+          "fingerprint": "0b9c3da48771fe4d",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_011",
+          "fingerprint": "9e6be582c99bca0e",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_012",
+          "fingerprint": "0d7d0a7069283295",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_013",
+          "fingerprint": "c7348ca1e3d7b674",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_014",
+          "fingerprint": "66a3b4e7bc32262b",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_015",
+          "fingerprint": "4d9083580773d6ef",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_016",
+          "fingerprint": "0e55e4028afec267",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_017",
+          "fingerprint": "75c9339523091cd4",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_018",
+          "fingerprint": "78f3efc6c9f059dd",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_019",
+          "fingerprint": "a39016a9fb33edba",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_020",
+          "fingerprint": "c4baeefeaae10c2a",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_021",
+          "fingerprint": "6ad971240444a978",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_022",
+          "fingerprint": "a6f55c27bbfc4be2",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_023",
+          "fingerprint": "ac40f348330ca228",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_024",
+          "fingerprint": "564688ca077ebba2",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_025",
+          "fingerprint": "8e5db87dd5262ffd",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_026",
+          "fingerprint": "ffca5d359bf13561",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_027",
+          "fingerprint": "48f51b33d3e8b8a7",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_028",
+          "fingerprint": "1ba7cd40183e8e5b",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_029",
+          "fingerprint": "5b461ec1bcbc24e2",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_030",
+          "fingerprint": "fb188f01666a4f02",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_031",
+          "fingerprint": "9f58cade8a2e2718",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_032",
+          "fingerprint": "1b9df42bd18b00ee",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_033",
+          "fingerprint": "3633bfbc9dabb854",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_034",
+          "fingerprint": "99353f03ad5ed1e0",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_035",
+          "fingerprint": "186a7acc52db2cfd",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_036",
+          "fingerprint": "67920b979d69737d",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_037",
+          "fingerprint": "ace24cdc8adf60e8",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_038",
+          "fingerprint": "6fe9a53bb35633ed",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_039",
+          "fingerprint": "c7dd196ad1a60fff",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_040",
+          "fingerprint": "0a100b111c1a53c4",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_041",
+          "fingerprint": "7d34036c2710ab50",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_042",
+          "fingerprint": "42d15c3dc5ade3e2",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_043",
+          "fingerprint": "783142cc5e937a4d",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_044",
+          "fingerprint": "85181752588a8638",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_045",
+          "fingerprint": "797b8ea039c16205",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_046",
+          "fingerprint": "ae4519e67144322d",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_047",
+          "fingerprint": "9f6e4caba9d6738f",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_048",
+          "fingerprint": "1a1437edda64f9af",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_049",
+          "fingerprint": "90e286bbdc60d880",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_050",
+          "fingerprint": "914ce147ea08f74c",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        },
+        {
+          "claim_id": "REAL_WF_0008_CL_051",
+          "fingerprint": "1add7d572f371402",
+          "dimension": "source",
+          "decision": "source_checked",
+          "note": null
+        }
+      ]
+    }
+  ]
+}

@@ -44,6 +44,51 @@
         "acquisition/preprocessing/transcripts/SRC_HAAS_0005/raw.json": "9106f9a6764ea43c9aa6079051339e30f485c0e385db1b202dcd3d77a3c98cc8",
         "acquisition/preprocessing/transcripts/SRC_HAAS_0005/corrected.json": "eb85bc5081846578f88e3a27eed07ba67fb842cea574d082f66e260a2e899fd2"
       }
+    },
+    "SRC_HAAS_0008": {
+      "file": "SRC_HAAS_0008.jsonl",
+      "sha256": "3bca55e17b9363a0bd419c7bd9981b28736a81ee7e8836291451d23914dce158",
+      "candidate_count": 16,
+      "inputs": {
+        "acquisition/preprocessing/transcripts/SRC_HAAS_0008/raw.json": "f815aed859ac2a4b08f1cef28666ddcac0bbb937de0497d1eae81323a8bbe6e4",
+        "acquisition/preprocessing/transcripts/SRC_HAAS_0008/corrected.json": "bff07dc4d3bfe8598faac020749c8d8a3eb6f03d50cc3a0de22619d23a5d1aaf"
+      }
+    },
+    "SRC_HAAS_0009": {
+      "file": "SRC_HAAS_0009.jsonl",
+      "sha256": "f3f82ebc491b0545e9e2cca1258f96b55a7dd777efc1fd8e3cc2c9741ebe3041",
+      "candidate_count": 40,
+      "inputs": {
+        "acquisition/preprocessing/transcripts/SRC_HAAS_0009/raw.json": "4afb99a167833751bcbee890702a7d05c2bbe7f9129157a738e5f18ec08006d1",
+        "acquisition/preprocessing/transcripts/SRC_HAAS_0009/corrected.json": "df7a12689097d9e50d1344696acd5df5f18cb7f768551ee10cc99c0bff0f7ef2"
+      }
+    },
+    "SRC_HAAS_0010": {
+      "file": "SRC_HAAS_0010.jsonl",
+      "sha256": "c6a5831d41d10ad5a230e6477564cb77b0e7dc475d6aeeeb8ed8be63c2d759d3",
+      "candidate_count": 17,
+      "inputs": {
+        "acquisition/preprocessing/transcripts/SRC_HAAS_0010/raw.json": "ec0f9005e3bce0a6807b31a60f3a3e6e7950964adfffb6d87b99ccf127ac3296",
+        "acquisition/preprocessing/transcripts/SRC_HAAS_0010/corrected.json": "662221e03eb012ed96cfb0c4f3d71c57893815463667bde06602c11ed8032999"
+      }
+    },
+    "SRC_HAAS_0011": {
+      "file": "SRC_HAAS_0011.jsonl",
+      "sha256": "0b43be86133130cf8b5ab33f7966734c207b82d1e31c299aecec130a219d70ae",
+      "candidate_count": 34,
+      "inputs": {
+        "acquisition/preprocessing/transcripts/SRC_HAAS_0011/raw.json": "19d349d6eb525ac4c5f6d2b00e3c2d91e9671e9518a632eaa4d7055d36c4ef1f",
+        "acquisition/preprocessing/transcripts/SRC_HAAS_0011/corrected.json": "57984576f0250114d43289cce47900cc96718a5aad09e8052dfce6b2753970c2"
+      }
+    },
+    "SRC_HAAS_0012": {
+      "file": "SRC_HAAS_0012.jsonl",
+      "sha256": "58c9d4729dfe4d4812e448838dc7beacf89a92ccfbdfafc1dd58f7d4b7536011",
+      "candidate_count": 64,
+      "inputs": {
+        "acquisition/preprocessing/transcripts/SRC_HAAS_0012/raw.json": "680a022792ec7c227746f58fb35c07859cd56792f03e3b78f6bc647077f971a8",
+        "acquisition/preprocessing/transcripts/SRC_HAAS_0012/corrected.json": "e3e90dcc0fda28a214a91b5d795b3e9c9fe1a703e0ae7910a1bc04a8552b1d4d"
+      }
     }
   }
 }

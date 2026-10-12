@@ -1,0 +1,304 @@
+{
+  "source_id": "SRC_HAAS_0012",
+  "transcript_origin": "official_caption",
+  "timestamp_basis": "original_video_ms",
+  "producer": "yt-dlp 2026.x + youtube official uploader captions (en)",
+  "processed_at": "2026-10-12T10:51:00Z",
+  "utterances": [
+    {
+      "start_ms": 0,
+      "end_ms": 1000,
+      "text": "[Music]"
+    },
+    {
+      "start_ms": 1500,
+      "end_ms": 12540,
+      "text": "the purpose of the x-axis way cover is to protect the ball screw and guideways from chips coolant"
+    },
+    {
+      "start_ms": 12540,
+      "end_ms": 19320,
+      "text": "and any other debris inside the machine enclosure in this video we're gonna look at replacing the"
+    },
+    {
+      "start_ms": 19320,
+      "end_ms": 25560,
+      "text": "x-axis way covers on your mill and do some troubleshooting along the way if the bolts"
+    },
+    {
+      "start_ms": 25560,
+      "end_ms": 30600,
+      "text": "that holds the way cover rails to the castings are loose the way covers make popping noise when"
+    },
+    {
+      "start_ms": 30600,
+      "end_ms": 37830,
+      "text": "they are moving this will eventually damage the plastic tabs that slide on the rails this in turn"
+    },
+    {
+      "start_ms": 37830,
+      "end_ms": 44580,
+      "text": "will cause a section of the way covers to separate and leak so as soon as the way covers start making"
+    },
+    {
+      "start_ms": 44580,
+      "end_ms": 50280,
+      "text": "that popping noise pulled away covers back and inspect the rails for loose fasteners tighten"
+    },
+    {
+      "start_ms": 50280,
+      "end_ms": 55110,
+      "text": "the fasteners and apply a thin coat of red-eye grease to the guide rails to prevent that issue"
+    },
+    {
+      "start_ms": 55110,
+      "end_ms": 61470,
+      "text": "in the future in a normal machine operation weight covers are lubricated by the coolant"
+    },
+    {
+      "start_ms": 61470,
+      "end_ms": 68370,
+      "text": "it is critical to maintain the correct coolant concentration so use a refractometer to check"
+    },
+    {
+      "start_ms": 68370,
+      "end_ms": 74430,
+      "text": "the coolant concentration now if you have to cut parts without flood cooling make sure that you"
+    },
+    {
+      "start_ms": 74430,
+      "end_ms": 80760,
+      "text": "lubricate all the way covers with a lightweight oil fully extended way covers and spray an even"
+    },
+    {
+      "start_ms": 80760,
+      "end_ms": 87450,
+      "text": "coat of lightweight oil on the way covers if you continue to run the machine without lubricant"
+    },
+    {
+      "start_ms": 87450,
+      "end_ms": 94260,
+      "text": "the rubber seals will break down prematurely now let's review how to replace the entire way cover"
+    },
+    {
+      "start_ms": 94260,
+      "end_ms": 100620,
+      "text": "and also we look at replacing just the wiper if they're the only thing that's damaged if the way"
+    },
+    {
+      "start_ms": 100620,
+      "end_ms": 106350,
+      "text": "cover wipers are damaged luckily these can be changed out on their own we'll review the old"
+    },
+    {
+      "start_ms": 106350,
+      "end_ms": 114240,
+      "text": "style and the new style x-axis Way covers starting with the new style way covers first jog the x-axis"
+    },
+    {
+      "start_ms": 114240,
+      "end_ms": 120900,
+      "text": "all the way to the end of travel he stopped the machine remove the x-axis way cover turn it over"
+    },
+    {
+      "start_ms": 120900,
+      "end_ms": 129210,
+      "text": "and remove each section wipe away any excess grease locate and remove the small Phillips"
+    },
+    {
+      "start_ms": 129210,
+      "end_ms": 136810,
+      "text": "screw with a flathead screwdriver the retaining strip towards the opposite end and remove it from"
+    },
+    {
+      "start_ms": 136810,
+      "end_ms": 146020,
+      "text": "the standoffs remove the damaged wiper cut the new wiper to the exact length and verify the holes are"
+    },
+    {
+      "start_ms": 146020,
+      "end_ms": 153640,
+      "text": "aligned with the new wiper cut clean up the way cover and apply a light coat of red-eye grease to"
+    },
+    {
+      "start_ms": 153640,
+      "end_ms": 160330,
+      "text": "the wiper and install the wiper correctly back on the way cover install the retainer and make"
+    },
+    {
+      "start_ms": 160330,
+      "end_ms": 166510,
+      "text": "sure the retainer capture all the standoffs with one hand apply a little pressure to the retainer"
+    },
+    {
+      "start_ms": 166510,
+      "end_ms": 171670,
+      "text": "and use a flathead screwdriver to slide the retainer into the locking position on the"
+    },
+    {
+      "start_ms": 171670,
+      "end_ms": 180400,
+      "text": "standoff once all the wipers are installed put the sections back together now for the old-style way"
+    },
+    {
+      "start_ms": 180400,
+      "end_ms": 187030,
+      "text": "covers the wiper replacement process is slightly different use a flathead screwdriver to remove"
+    },
+    {
+      "start_ms": 187030,
+      "end_ms": 194440,
+      "text": "the way cover wiper and clean the channel out with the sections apart that was a good time to"
+    },
+    {
+      "start_ms": 194440,
+      "end_ms": 201040,
+      "text": "take care of any dent in the way covers now cut the replacement wiper to the same length as the"
+    },
+    {
+      "start_ms": 201040,
+      "end_ms": 207010,
+      "text": "original one you just removed apply a light coat of redeye agrees to each replacement wiper and"
+    },
+    {
+      "start_ms": 207010,
+      "end_ms": 214810,
+      "text": "then install them using a mallet to tap the wiper firmly into the slot finally install each section"
+    },
+    {
+      "start_ms": 214810,
+      "end_ms": 223900,
+      "text": "back together at this point the steps are the same whether you're reinstalling their existing"
+    },
+    {
+      "start_ms": 223900,
+      "end_ms": 230560,
+      "text": "x-axis way covers or you're installing some new ones remove any chips and debris from the linear"
+    },
+    {
+      "start_ms": 230560,
+      "end_ms": 236980,
+      "text": "guides remove the used gasket and sealant from the table mounting surface and clean it apply a"
+    },
+    {
+      "start_ms": 236980,
+      "end_ms": 242050,
+      "text": "thin coat of red-eye grease to the way cover guide bar and install the way cover over the"
+    },
+    {
+      "start_ms": 242050,
+      "end_ms": 249040,
+      "text": "guide bars attach the way cover and panel to the way cover bracket with the fasteners fully extend"
+    },
+    {
+      "start_ms": 249040,
+      "end_ms": 255100,
+      "text": "away cover one leaf at a time to make sure the section don't separate with the largest leaf of"
+    },
+    {
+      "start_ms": 255100,
+      "end_ms": 261610,
+      "text": "the way cover away from the table put a bead of RTV silicone followed by the new gasket on the"
+    },
+    {
+      "start_ms": 261610,
+      "end_ms": 269400,
+      "text": "face of the way cover attach the way cover to the table install the fasteners and wipe away"
+    },
+    {
+      "start_ms": 269400,
+      "end_ms": 276180,
+      "text": "any excess silicone from the table release the e stop and press reset a couple times to clear"
+    },
+    {
+      "start_ms": 276180,
+      "end_ms": 282330,
+      "text": "the alarms apply a light coat of oil to all sections of the way cover and jog the x-axis"
+    },
+    {
+      "start_ms": 282330,
+      "end_ms": 290760,
+      "text": "slowly to make sure the way cover does not bind follow the same process for the other side in"
+    },
+    {
+      "start_ms": 290760,
+      "end_ms": 297690,
+      "text": "August 2013 the VF one through VF five machines change to a new revision of x-axis Way covers"
+    },
+    {
+      "start_ms": 297690,
+      "end_ms": 303480,
+      "text": "the new way covers have a slightly different mounting configuration they attach directly to"
+    },
+    {
+      "start_ms": 303480,
+      "end_ms": 310980,
+      "text": "the guide bars this provide a stronger support for the way covers some slight modification may"
+    },
+    {
+      "start_ms": 310980,
+      "end_ms": 317370,
+      "text": "be needed for machines that was built when this was first introduced for this the following tools"
+    },
+    {
+      "start_ms": 317370,
+      "end_ms": 326340,
+      "text": "are required a way cover kit a number twenty one drill bit 1032 tap a tube of black RTV silicone"
+    },
+    {
+      "start_ms": 326340,
+      "end_ms": 335010,
+      "text": "a red eye grease cartridge and a scraper let's get into it jog the x-axis all the way to the opposite"
+    },
+    {
+      "start_ms": 335010,
+      "end_ms": 342840,
+      "text": "end of travel put the machine in e-stop remove the all x-axis way cover and L bracket locate"
+    },
+    {
+      "start_ms": 342840,
+      "end_ms": 348960,
+      "text": "the two holes on the way cover mounting bar if the holes are not drilled all the way through use the"
+    },
+    {
+      "start_ms": 348960,
+      "end_ms": 355530,
+      "text": "number twenty one drill bit and break it through then use a 1032 tap to tap the holes all the way"
+    },
+    {
+      "start_ms": 355530,
+      "end_ms": 363810,
+      "text": "now with the holes drill in tapped in the guide bars will remove the guide bars from the machine"
+    },
+    {
+      "start_ms": 363810,
+      "end_ms": 369420,
+      "text": "and install them in the way cover and then install the way cover and guide bars on the machine as an"
+    },
+    {
+      "start_ms": 369420,
+      "end_ms": 377370,
+      "text": "assembly now check the transition between the way cover guide bar and the casting for smoothness if"
+    },
+    {
+      "start_ms": 377370,
+      "end_ms": 383370,
+      "text": "the surface is not smooth the tabs on the bottom of the way covers will get caught and damaged"
+    },
+    {
+      "start_ms": 383370,
+      "end_ms": 391440,
+      "text": "away covers once that's completed reinstall the way covers jog the axis around a couple of times"
+    },
+    {
+      "start_ms": 391440,
+      "end_ms": 399780,
+      "text": "to make sure it's not binding this process is now completed for more information or to"
+    },
+    {
+      "start_ms": 399780,
+      "end_ms": 405390,
+      "text": "order parts we've used in this service video visit Haas CNC comm and thanks for watching"
+    }
+  ]
+}

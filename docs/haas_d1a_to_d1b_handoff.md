@@ -291,3 +291,111 @@ and `human_signoff: null`, since this pass's judgments were made by Claude Opus 
 the pixels, not by a person; (2) `REAL_WF_0001.r2` needs the normal D1-C source-review +
 promotion flow before it can supersede r1 in `dev/`; (3) `REAL_WF_0002.r1.draft.json`'s
 edits should be folded into its first D1-C review rather than reviewed twice.
+
+## 19. Five more dev sources (2026-10-12), SRC_HAAS_0008 to SRC_HAAS_0012
+
+Branch `team1/d1a-expand-dev-sources`. The same process as the pilot, applied to five more
+official Haas service videos, all in `dev`. The holdout sources SRC_HAAS_0006 and
+SRC_HAAS_0007 were not touched. This section updates the counts in sections 1, 4, 14 and 15
+(dev is now 10 sources and 12 published workflow revisions).
+
+| source_id | Video | Length | Workflow | Family |
+|---|---|---|---|---|
+| SRC_HAAS_0008 | Alarm 626 Tool Pocket Slide Error | 86 s | `REAL_WF_0004` | FAM-TOOL-POCKET-ALARM-626 |
+| SRC_HAAS_0009 | Spindle Troubleshooting | 236 s | `REAL_WF_0005` | FAM-SPINDLE-TROUBLESHOOTING |
+| SRC_HAAS_0010 | Alarm 254 Spindle Motor Overheat | 90 s | `REAL_WF_0006` | FAM-SPINDLE-MOTOR-OVERHEAT-254 |
+| SRC_HAAS_0011 | Alarm 9973 Unstable Incoming Power | 181 s | `REAL_WF_0007` | FAM-INCOMING-POWER-ALARM-9973 |
+| SRC_HAAS_0012 | X-Axis Mill Waycover Replacement | 411 s | `REAL_WF_0008` | FAM-X-AXIS-WAYCOVER-REPLACEMENT |
+
+### Playable video links (checked 2026-10-12)
+
+Each link was read from YouTube's own metadata (title, channel "Haas Automation, Inc.", duration),
+and the video id is compared character by character with `Source.url` by
+`tests/unit/test_d1a_dev_expansion.py`, because ids are case-sensitive (see section 1).
+
+| source_id | Watch |
+|---|---|
+| SRC_HAAS_0008 | https://www.youtube.com/watch?v=DXtocZX8hf0 |
+| SRC_HAAS_0009 | https://www.youtube.com/watch?v=cwYsbzAW3r0 |
+| SRC_HAAS_0010 | https://www.youtube.com/watch?v=M-VcwEodqP0 |
+| SRC_HAAS_0011 | https://www.youtube.com/watch?v=DgHQtvvf1kI |
+| SRC_HAAS_0012 | https://www.youtube.com/watch?v=ezplV3447C8 |
+
+The haascnc.com page was not fetched for any of them (Cloudflare); `Source.url` is the
+haascnc.com address built from the same video id, as for the pilot.
+
+### How they were chosen
+
+About 28 official service videos turned up in a metadata-only search. Only those with a
+**manual English caption** were eligible, so no speech recognition was run. `tsp_eLbb-UQ`
+(spindle orientation, side-mount) and `OrflTBq-JBo` (spindle encoder troubleshooting) were
+dropped because they have no manual captions. The five above cover three alarm diagnoses,
+one symptom triage and one replacement procedure, on subsystems the pilot did not reach.
+
+### What was added
+
+- `scripts/add_d1a_dev_sources.py` holds the curated values and builds the registry entries,
+  Source records, catalog rows, split families, transcripts and keyframes. It is idempotent.
+- `acquisition/preprocessing/captions.py` turns a caption file into utterances. Its tests
+  reproduce the existing SRC_HAAS_0005 transcript exactly.
+- Transcripts: `raw.json` is the uploader's caption; `corrected.json` carries terminology
+  fixes only, each cited in `corrections.diff` against the video's title, its official
+  description, an on-screen overlay, or the transcript's own usage. SRC_HAAS_0009's "Bijur pump"
+  and "Mobil SHC 625" are fixed from on-screen text, which is the stronger source.
+- 31 keyframes at 1080p, chosen by reading the frame against the claim it supports, not by
+  cue timing. All 31 are in the `data/keyframes/` ledgers; six are marked `accepted_weak`
+  because the frame alone cannot identify the part the narration names. Many of these videos carry on-screen captions and part labels, which make them
+  strong visual evidence. The frame judgments were AI vision review, as in section 18, and
+  were then signed off by `quyhienln` on 2026-10-12 (`human_signoff` in `keyframe_review.jsonl`).
+  The 20 pilot rows still have no sign-off.
+- `Source.content_sha256` for these five is the SHA-256 of `raw_text`, so it can be checked from
+  the record. The pilot video records hold a different legacy value that nothing enforces.
+- Five workflows, 169 claims, all `source_checked`. Each claim carries two review events:
+  an AI-assisted pass recorded as `d1c-source-review` (a claim-by-claim read plus a script
+  that flags any number, code or proper noun not found in the cited cues), and the human
+  source review by `quyhienln` on 2026-10-12. Neither is `expert_validated`.
+
+### Reviewer links
+
+`data/catalogs/haas_playable_links.json` now holds the YouTube id of every dev video as YouTube
+spells it, and `review.py` builds watch links from it. This closes the trap described in
+section 1: regenerating a worklist no longer produces the lower-case SRC_HAAS_0003 link.
+`Source.url` for SRC_HAAS_0003 is unchanged.
+
+### Open items
+
+1. **Wye-Delta contactor guide.** The description of SRC_HAAS_0011 links a Haas DIY page. It is
+   recorded as deferred candidate CAND-018 with no source_id. Its text has to be copied by
+   ordinary browsing, as for TG0128, before it can become a companion source.
+2. **Refusal got worse on the larger corpus; recall did not.** Measured on the 66 reviewed
+   questions, old bundle against new: hybrid Recall@5 0.9730 on both (MRR 0.8928 to 0.8793),
+   lexical 0.9459 on both, but status accuracy 0.9848 to 0.8636 and out-of-scope questions
+   answered 1 to 9. The gate drops words found in more than 75% of steps, and words like
+   "tool" and "carousel" fell under that line once the corpus stopped being all SMTC. One
+   alternative rule was tried and was worse, so the gate is unchanged. Cause, labels to
+   re-check and the full table are in `docs/retrieval_dev_expansion_check.md`.
+   `tests/unit/test_query.py` uses probes that are still out of domain. The serving DB
+   `out/retrieval/real_dev.sqlite` now holds the new bundle (the old one is kept next to it).
+3. **Evaluation records name the old bundle id** (`BUNDLE_HAAS_SMTC_DEV_20382d7957b6` in
+   `data/eval/README.md`, `docs/retrieval_eval_real_dev.md`,
+   `docs/gold_review_worklist_real_dev.md`, `benchmarks/results/20261011_real_dev/`). They describe
+   runs on that bundle and remain true for it; the bundle is now
+   `BUNDLE_HAAS_SMTC_DEV_95b81c529dbe`. Fifteen questions for the new workflows (Q069-Q083) were
+   added to the question file, drafted by AI and reviewed by `quyhienln` on 2026-10-12.
+4. **Each workflow lists open questions** (40 across the bundle) for fields the video does not
+   cover, such as acceptance thresholds. They are in the snapshots, not here.
+
+### Checksums (sha256)
+
+```
+1e50f901750ea2630037496bc58282a973d10c25a0417e690ddea60f9a2b3500  data/sources/haas_pilot_sources.jsonl
+7e1afb016ced366080ec86102010390e3df70cf4db058d3a40be31b8eaffcdfa  data/splits/haas_d1a_split_manifest.json
+ea85bea89b2889e9d22f2931a4735af9f1f748cb37c2d4df09684ce13de0c3bc  data/catalogs/haas_d1a_source_id_registry.json
+2453d19fbf8b16fefe1e0683daea7872c5f2d89d722463bc836bf60e6dc63798  data/catalogs/haas_playable_links.json
+a35c48c36d067cba9c2ab36299395e15aef410cc7c6e68694c55f7535696823e  acquisition/video_catalog/haas_d1a_source_candidates.csv
+249a3e8d17c1e61cb55b840247fd9bd500030c06e5d0878ed1508c356192823b  acquisition/export/haas_pilot_dev_bundle/manifest.json
+1e50f901750ea2630037496bc58282a973d10c25a0417e690ddea60f9a2b3500  acquisition/export/haas_pilot_dev_bundle/sources.jsonl
+c4703bb729accc54d89e080941a3c80d99ff5a6408dbc9001ee02e5d6e66da16  acquisition/export/haas_pilot_dev_bundle/workflows.jsonl
+8d1e67506668d6b89d21c129b2c0ad22df1f6e3723a307db7686a2bd5363d2a8  acquisition/preprocessing/haas_d1a_media_inventory.jsonl
+fd56d421bb3cabfa0c8f39e9aa57421b4c16ed6ccfb0259db66d27d8dec9e09e  docs/data_rights_register.md
+```

@@ -53,6 +53,56 @@
       ],
       "why_family": "Title does not state a specific tool-changer subsystem; kept isolated rather than merged into either dev family to avoid misclassifying it.",
       "why_no_cross_split": "Reserved entirely for holdout; untouched beyond eligibility metadata."
+    },
+    {
+      "near_duplicate_group": "FAM-TOOL-POCKET-ALARM-626",
+      "split": "dev",
+      "source_ids": ["SRC_HAAS_0008"],
+      "members": [
+        {"source_id": "SRC_HAAS_0008", "role": "official_service_video"}
+      ],
+      "why_family": "Alarm 626 tool pocket troubleshooting; the narration does not say whether the changer is side-mount or umbrella.",
+      "why_no_cross_split": "No holdout source covers an alarm-code diagnosis of a pocket fault: SRC_HAAS_0006 is umbrella-style maintenance and SRC_HAAS_0007 is a generic stuck toolholder call. Both stay untouched."
+    },
+    {
+      "near_duplicate_group": "FAM-SPINDLE-TROUBLESHOOTING",
+      "split": "dev",
+      "source_ids": ["SRC_HAAS_0009"],
+      "members": [
+        {"source_id": "SRC_HAAS_0009", "role": "official_service_video"}
+      ],
+      "why_family": "Spindle symptom triage (seize, heat, noise, stuck tool) before replacement.",
+      "why_no_cross_split": "No holdout source covers the spindle. SRC_HAAS_0010 (alarm 254) is a different, alarm-driven task and sits in its own dev family."
+    },
+    {
+      "near_duplicate_group": "FAM-SPINDLE-MOTOR-OVERHEAT-254",
+      "split": "dev",
+      "source_ids": ["SRC_HAAS_0010"],
+      "members": [
+        {"source_id": "SRC_HAAS_0010", "role": "official_service_video"}
+      ],
+      "why_family": "Alarm 254 spindle motor overheat.",
+      "why_no_cross_split": "No holdout source covers a spindle-motor alarm. SRC_HAAS_0009 shares the word spindle but is a symptom triage, not this alarm."
+    },
+    {
+      "near_duplicate_group": "FAM-INCOMING-POWER-ALARM-9973",
+      "split": "dev",
+      "source_ids": ["SRC_HAAS_0011"],
+      "members": [
+        {"source_id": "SRC_HAAS_0011", "role": "official_service_video"}
+      ],
+      "why_family": "Alarm 9973 incoming-power diagnosis.",
+      "why_no_cross_split": "No holdout source covers machine electrical or power alarms."
+    },
+    {
+      "near_duplicate_group": "FAM-X-AXIS-WAYCOVER-REPLACEMENT",
+      "split": "dev",
+      "source_ids": ["SRC_HAAS_0012"],
+      "members": [
+        {"source_id": "SRC_HAAS_0012", "role": "official_service_video"}
+      ],
+      "why_family": "X-axis way cover and wiper replacement.",
+      "why_no_cross_split": "No holdout source covers way covers or enclosure parts."
     }
   ],
   "excluded_not_split": {
@@ -63,6 +113,7 @@
     "Three pilot videos (SRC_HAAS_0001, SRC_HAAS_0003, SRC_HAAS_0005) assigned to dev, each in its own near-duplicate family.",
     "Two untouched source families (SRC_HAAS_0006, SRC_HAAS_0007) reserved for holdout.",
     "Holdout sources received eligibility/metadata processing only (title, duration_ms, publisher, upload date via yt-dlp/oEmbed) -- no captions downloaded, no transcript built, no guide page fetched.",
-    "No source_id appears in both data/sources/haas_pilot_sources.jsonl (dev) and data/sources/haas_pilot_holdout_sources.jsonl (holdout)."
+    "No source_id appears in both data/sources/haas_pilot_sources.jsonl (dev) and data/sources/haas_pilot_holdout_sources.jsonl (holdout).",
+    "2026-10-12: five more official service videos (SRC_HAAS_0008..0012) added to dev, each in its own family; holdout sources SRC_HAAS_0006 and SRC_HAAS_0007 were not touched."
   ]
 }

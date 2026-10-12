@@ -1,0 +1,37 @@
+# Corrections applied 2026-10-12 (terminology only; every one cites a primary source
+# or the same transcript's own usage; timestamps and sentence structure are unchanged).
+
+utterance start_ms=55110 end_ms=61470
+
+- in the future in a normal machine operation weight covers are lubricated by the coolant
++ in the future in a normal machine operation way covers are lubricated by the coolant
+
+Basis: self-consistency: "way covers" is used correctly in cues 2-3 of this transcript.
+
+utterance start_ms=44580 end_ms=50280
+
+- that popping noise pulled away covers back and inspect the rails for loose fasteners tighten
++ that popping noise pull the way covers back and inspect the rails for loose fasteners tighten
+
+Basis: self-consistency: "way covers" in cues 2-3 and the imperative "inspect ... tighten" that follows.
+
+utterance start_ms=114240 end_ms=120900
+
+- all the way to the end of travel he stopped the machine remove the x-axis way cover turn it over
++ all the way to the end of travel e-stop the machine remove the x-axis way cover turn it over
+
+Basis: self-consistency: cue 50 says "put the machine in e-stop".
+
+utterance start_ms=249040 end_ms=255100
+
+- away cover one leaf at a time to make sure the section don't separate with the largest leaf of
++ the way cover one leaf at a time to make sure the section don't separate with the largest leaf of
+
+Basis: self-consistency: "way cover" in cues 2-3.
+
+utterance start_ms=383370 end_ms=391440
+
+- away covers once that's completed reinstall the way covers jog the axis around a couple of times
++ way covers once that's completed reinstall the way covers jog the axis around a couple of times
+
+Basis: self-consistency: "way covers" in cues 2-3.

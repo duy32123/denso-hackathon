@@ -6,6 +6,9 @@
 
 > Kết quả mới nhất cho cổng liên quan: [claim-coherence và đối chứng cache-only](retrieval_relevance_gate.md).
 
+> **Corpus đã đổi (2026-10-12):** real/dev có thêm năm workflow. Phần từ chối tụt, phần tìm đúng giữ nguyên:
+> xem [đo lại sau khi mở rộng](retrieval_dev_expansion_check.md).
+
 **Số đo đầu tiên được phép báo cáo.** Trước ngày này evaluator in cảnh báo
 `not human-checked` và kế hoạch cấm báo cáo. Nhãn gold đã được người kiểm
 (52/52, `reviewed_by=duy32123`), xem [worklist](gold_review_worklist_real_dev.md).

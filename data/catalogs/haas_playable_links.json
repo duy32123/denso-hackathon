@@ -1,0 +1,14 @@
+{
+  "note": "YouTube id of each dev video, exactly as YouTube spells it (ids are case-sensitive). Source.url is the haascnc.com page and may spell the same id differently, so reviewer links are built from this file.",
+  "checked_at": "2026-10-12",
+  "youtube_ids": {
+    "SRC_HAAS_0001": "TmjjC7BDDag",
+    "SRC_HAAS_0003": "2bRa6qm6wm4",
+    "SRC_HAAS_0005": "cs-BvWsKXyU",
+    "SRC_HAAS_0008": "DXtocZX8hf0",
+    "SRC_HAAS_0009": "cwYsbzAW3r0",
+    "SRC_HAAS_0010": "M-VcwEodqP0",
+    "SRC_HAAS_0011": "DgHQtvvf1kI",
+    "SRC_HAAS_0012": "ezplV3447C8"
+  }
+}

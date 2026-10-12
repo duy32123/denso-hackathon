@@ -1,0 +1,149 @@
+{
+  "source_id": "SRC_HAAS_0011",
+  "transcript_origin": "official_caption",
+  "timestamp_basis": "original_video_ms",
+  "producer": "yt-dlp 2026.x + youtube official uploader captions (en)",
+  "processed_at": "2026-10-12T10:51:00Z",
+  "utterances": [
+    {
+      "start_ms": 170,
+      "end_ms": 9920,
+      "text": "the 997 three-alarm tells you that there is a problem with the incoming power supplied"
+    },
+    {
+      "start_ms": 9920,
+      "end_ms": 16310,
+      "text": "to the machine the wide delta contactor here has one set of contacts closed and the other open at"
+    },
+    {
+      "start_ms": 16310,
+      "end_ms": 22340,
+      "text": "all times power from the i/o board here keeps the relevant contactor closed and conducting"
+    },
+    {
+      "start_ms": 22340,
+      "end_ms": 28070,
+      "text": "current if you experience a brownout in your shop the power keeping the contactor closed"
+    },
+    {
+      "start_ms": 28070,
+      "end_ms": 33500,
+      "text": "might sag momentarily allowing the contactor to open up if this happens while the circuit"
+    },
+    {
+      "start_ms": 33500,
+      "end_ms": 39110,
+      "text": "is under full load the contactor will arc and can cause serious damage to protect from this"
+    },
+    {
+      "start_ms": 39110,
+      "end_ms": 45530,
+      "text": "all wide delta contactor assemblies built after August 2017 use a pair of auxiliary contacts"
+    },
+    {
+      "start_ms": 45530,
+      "end_ms": 53810,
+      "text": "here to monitor the open and close state of the main contacts this cable here connects"
+    },
+    {
+      "start_ms": 53810,
+      "end_ms": 59750,
+      "text": "these auxiliary contacts to the i/o PCB allowing the machine to check the status of the Y Delta"
+    },
+    {
+      "start_ms": 59750,
+      "end_ms": 66110,
+      "text": "contactor continuously if your machine generates a 997 three alarm it means the i/o board saw one"
+    },
+    {
+      "start_ms": 66110,
+      "end_ms": 71090,
+      "text": "of these contacts open when it should have been closed you will see the alarm on-screen and the"
+    },
+    {
+      "start_ms": 71090,
+      "end_ms": 77120,
+      "text": "Machine will stop let's make a quick check to verify the system worked like it should power"
+    },
+    {
+      "start_ms": 77120,
+      "end_ms": 83540,
+      "text": "down the machine and wait for the vector drive caution light to go dark now there is no residual"
+    },
+    {
+      "start_ms": 83540,
+      "end_ms": 92780,
+      "text": "energy left in the system remove the covers from the Y Delta contactor and the i/o PCB verify the"
+    },
+    {
+      "start_ms": 92780,
+      "end_ms": 98360,
+      "text": "cable from the Y Delta auxiliary contacts is connected to the i/o PCB correctly and that"
+    },
+    {
+      "start_ms": 98360,
+      "end_ms": 106430,
+      "text": "there is no arcing at the Y Delta connections or the vector drive connections if everything"
+    },
+    {
+      "start_ms": 106430,
+      "end_ms": 111440,
+      "text": "checks out the problem was likely caused by a brownout condition where insufficient incoming"
+    },
+    {
+      "start_ms": 111440,
+      "end_ms": 117140,
+      "text": "power was being supplied to the machine in this case the i/o board did its job and protected the"
+    },
+    {
+      "start_ms": 117140,
+      "end_ms": 123590,
+      "text": "contactors from a dangerous arc if the 997 three alarm is persistent the Machine needs a third"
+    },
+    {
+      "start_ms": 123590,
+      "end_ms": 129290,
+      "text": "party power conditioner or voltage stabilizer installed on the incoming power line do not"
+    },
+    {
+      "start_ms": 129290,
+      "end_ms": 136520,
+      "text": "change the delta Y assembly or the i/o PCB if you see alarm 973 logged into history but it did not"
+    },
+    {
+      "start_ms": 136520,
+      "end_ms": 142190,
+      "text": "appear on screen or stop the Machine ignore the alarm an upgrade to the software version shown"
+    },
+    {
+      "start_ms": 142190,
+      "end_ms": 148550,
+      "text": "on screen and if your machine doesn't have the Y Delta auxiliary contacts and the extra cable then"
+    },
+    {
+      "start_ms": 148550,
+      "end_ms": 153650,
+      "text": "the power monitoring feature shouldn't be enabled make sure you have the correct configuration file"
+    },
+    {
+      "start_ms": 153650,
+      "end_ms": 159020,
+      "text": "loaded in the machine for more in-depth why delta contact or troubleshooting click on the links in"
+    },
+    {
+      "start_ms": 159020,
+      "end_ms": 166220,
+      "text": "the description that will take you to DIY ha C&C com remember if you have recurring 9 9 7"
+    },
+    {
+      "start_ms": 166220,
+      "end_ms": 171950,
+      "text": "3 alarms it's very likely you have issues with your incoming power supply stabilize the power"
+    },
+    {
+      "start_ms": 171950,
+      "end_ms": 176390,
+      "text": "reaching your machine and these alarms will go away thanks for watching [Music]"
+    }
+  ]
+}

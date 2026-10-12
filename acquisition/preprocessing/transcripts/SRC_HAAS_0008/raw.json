@@ -1,0 +1,74 @@
+{
+  "source_id": "SRC_HAAS_0008",
+  "transcript_origin": "official_caption",
+  "timestamp_basis": "original_video_ms",
+  "producer": "yt-dlp 2026.x + youtube official uploader captions (en)",
+  "processed_at": "2026-10-12T10:51:00Z",
+  "utterances": [
+    {
+      "start_ms": 150,
+      "end_ms": 9930,
+      "text": "[Music] alarm 626 occurs when the tool pocket failed to reach the proper up in"
+    },
+    {
+      "start_ms": 9930,
+      "end_ms": 15930,
+      "text": "down location press the recovery button and follow the instruction to recover the tool"
+    },
+    {
+      "start_ms": 15930,
+      "end_ms": 22080,
+      "text": "change then command several - changes to make sure the tool change is working correctly if"
+    },
+    {
+      "start_ms": 22080,
+      "end_ms": 28320,
+      "text": "you're still getting alarm 626 follow these steps to troubleshoot the issue first give"
+    },
+    {
+      "start_ms": 28320,
+      "end_ms": 33300,
+      "text": "the pocket and carousel a good look for loose or damaged component make sure the machine has"
+    },
+    {
+      "start_ms": 33300,
+      "end_ms": 38970,
+      "text": "sufficient air pressure and volume during the tool change low air can prevent the tool pocket"
+    },
+    {
+      "start_ms": 38970,
+      "end_ms": 45360,
+      "text": "from reaching the proper position take a look at the air line to the pocket air cylinder look for"
+    },
+    {
+      "start_ms": 45360,
+      "end_ms": 51930,
+      "text": "kinks or broken lines examine the pocket up and down proximity switches look for contamination"
+    },
+    {
+      "start_ms": 51930,
+      "end_ms": 58800,
+      "text": "or damage touch the face of each switch with a small flat blade screwdriver the switch should"
+    },
+    {
+      "start_ms": 58800,
+      "end_ms": 65760,
+      "text": "change state if possible manually activate the pocket up and down solenoid to verify that it's"
+    },
+    {
+      "start_ms": 65760,
+      "end_ms": 71580,
+      "text": "working correctly make sure the pocket up and down switches change state at the appropriate"
+    },
+    {
+      "start_ms": 71580,
+      "end_ms": 77220,
+      "text": "time you'll find a link in the description of this video that shows you how to do it if you're still"
+    },
+    {
+      "start_ms": 77220,
+      "end_ms": 82950,
+      "text": "getting alarm 626 you will need to contact your ha spectra outlet and thanks for watching [Music]"
+    }
+  ]
+}

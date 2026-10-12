@@ -101,13 +101,21 @@ def _clock(ms: int | None) -> str:
     return "" if ms is None else f"{ms // 60000}:{(ms // 1000) % 60:02d}"
 
 
+def _playable_ids() -> dict[str, str]:
+    path = REPO_ROOT / "data" / "catalogs" / "haas_playable_links.json"
+    return json.loads(path.read_text(encoding="utf-8"))["youtube_ids"] if path.is_file() else {}
+
+
 def _watch_link(source: dict | None, start_ms: int) -> str:
     """Reviewer convenience only. How Team 2 opens evidence is still an open decision with D2-A."""
     if source is None:
         return ""
+    # The haascnc.com page can spell a video id in another case than YouTube does
+    # (SRC_HAAS_0003), and YouTube ids are case-sensitive: prefer the recorded id.
+    vid = _playable_ids().get(source.get("source_id"))
     match = _YOUTUBE_PAGE.search(source.get("url") or "")
-    if match:
-        return f"https://www.youtube.com/watch?v={match['vid']}&t={start_ms // 1000}s"
+    if vid or match:
+        return f"https://www.youtube.com/watch?v={vid or match['vid']}&t={start_ms // 1000}s"
     return f"{source.get('url')} @ {_clock(start_ms)}"
 
 

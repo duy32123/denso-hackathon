@@ -391,3 +391,19 @@ def test_the_committed_draft_has_been_source_checked(snapshot):
     assert status["source_checked"] == 38
     assert status["stale"] == ["REAL_WF_0001_CL_021"]
     assert status["rejected"] == status["pending"] == []
+
+
+def test_watch_link_uses_the_recorded_playable_id_not_the_page_url_spelling():
+    """haascnc.com spells the SRC_HAAS_0003 page in lower case; YouTube ids are case-sensitive."""
+    source = {"source_id": "SRC_HAAS_0003", "url": "https://www.haascnc.com/video/service/2bra6qm6wm4.html"}
+    assert rv._watch_link(source, 65500) == "https://www.youtube.com/watch?v=2bRa6qm6wm4&t=65s"
+
+
+def test_every_dev_video_has_a_playable_id_that_matches_its_page_url():
+    links = json.loads((cw.REPO_ROOT / "data" / "catalogs" / "haas_playable_links.json").read_text(encoding="utf-8"))["youtube_ids"]
+    lines = (cw.REPO_ROOT / "data" / "sources" / "haas_pilot_sources.jsonl").read_text(encoding="utf-8").splitlines()
+    videos = [s for s in map(json.loads, filter(None, lines)) if s["source_kind"] == "official_service_video"]
+    assert videos and {s["source_id"] for s in videos} == set(links)
+    for s in videos:
+        page_id = s["url"].rsplit("/", 1)[1].removesuffix(".html")
+        assert links[s["source_id"]].lower() == page_id.lower(), s["source_id"]

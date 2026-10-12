@@ -155,6 +155,8 @@ def test_english_demo_auto_evidence_fields_revision_history_and_mode_switch(tmp_
         # Man Bo sung ngay duoi da hien trang thai ghi that; panel cau hoi khong
         # duoc lap lai thong bao "chua bat" cu, sai voi RealFeedbackService mac dinh.
         assert "Chưa bật gửi feedback" not in page.evaluate("document.querySelector('#workflow-questions').textContent")
+        # Trang chu chia tab: chi tiet claim nam o tab "Chi tiet & nguon".
+        page.evaluate("document.querySelector('[data-tab=\"details\"]').click()")
         page.evaluate("document.querySelector('[data-claim-id=\"B0_SRC_HAAS_0005_CL_020\"]').closest('details').open = true; document.querySelector('[data-claim-id=\"B0_SRC_HAAS_0005_CL_020\"]').closest('details').parentElement.open = true; document.querySelector('[data-claim-id=\"B0_SRC_HAAS_0005_CL_020\"]').scrollIntoView({block:'center'})")
         assert page.evaluate("document.querySelector('.evidence-panel').getBoundingClientRect().top >= 0 && document.querySelector('.evidence-panel').getBoundingClientRect().bottom <= innerHeight")
         page.evaluate("window.scrollTo(0, 0)")
@@ -169,6 +171,7 @@ def test_english_demo_auto_evidence_fields_revision_history_and_mode_switch(tmp_
         assert page.evaluate("document.querySelector('[data-knowledge-relation-detail=\"REAL_WF_0003_RL_001\"]').open")
         assert "Điều kiện chuyển bước" in page.evaluate("document.querySelector('#knowledge-detail').textContent")
         assert page.evaluate("document.querySelector('[data-knowledge-claim=\"REAL_WF_0003_CL_013\"] button') !== null")
+        page.evaluate("document.querySelector('[data-tab=\"map\"]').click()")
         page.evaluate("document.querySelector('#knowledge-heading').scrollIntoView({block:'start'})")
         assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
         map_screenshot = tmp_path / "a2-knowledge-map.png"
@@ -181,6 +184,8 @@ def test_english_demo_auto_evidence_fields_revision_history_and_mode_switch(tmp_
         page.evaluate("document.querySelector('[data-knowledge-step=\"REAL_WF_0003_ST_005\"]').dispatchEvent(new MouseEvent('click', {bubbles:true}))")
         assert "Chưa được ghi nhận" in page.evaluate("document.querySelector('#knowledge-detail').textContent")
         page.evaluate("document.querySelector('[data-knowledge-question=\"REAL_WF_0003_Q_001\"] button').click()")
+        # Nut "Bo sung cho cau hoi nay" tu chuyen sang tab Bo sung.
+        assert page.evaluate("document.querySelector('[data-tab=\"feedback\"]').getAttribute('aria-pressed')") == "true"
         assert page.evaluate("document.querySelector('#feedback-question').value") == "REAL_WF_0003_Q_001"
         assert page.evaluate("document.querySelector('#feedback-step').value") == "REAL_WF_0003_ST_005"
         assert page.evaluate("document.querySelector('#feedback-field').value") == "rationale"

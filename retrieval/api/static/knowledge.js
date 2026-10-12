@@ -139,7 +139,8 @@
       const field = step.fields[role], group = card('div', '', `knowledge-field knowledge-state-${field.state}`);
       group.append(node('h4', ROLES[role]), card('p', STATES[field.state], 'knowledge-field-state'));
       for (const cid of field.claim_ids) group.append(claimView(cid));
-      if (!field.claim_ids.length) group.append(node('p', 'Nguồn chưa cung cấp nội dung cho phần này.'));
+      // Truong trong: mot dong gon (ten + trang thai), khong chiem ca mot khoi.
+      if (!field.claim_ids.length) { group.classList.add('is-empty'); group.title = 'Nguồn chưa cung cấp nội dung cho phần này.'; }
       return group;
     }
     function selectStep(id, selectedRelation = null) {
@@ -155,9 +156,11 @@
         ['Làm gì?', ['action', 'observation']], ['Khi nào?', ['context', 'condition']],
         ['Vì sao?', ['rationale']], ['Kiểm chứng bằng gì?', ['acceptance_criteria', 'outcome']]
       ]) {
-        const lens = card('article', '', 'knowledge-lens'); lens.append(node('h3', label));
-        for (const role of roles) lens.append(fieldView(step, role));
-        lenses.append(lens);
+        // Moi goc nhin la mot dai ngang: nhan ben trai, noi dung ben phai, cao theo noi dung.
+        const lens = card('article', '', 'knowledge-lens'), body = card('div', '', 'knowledge-lens-body');
+        lens.append(node('h3', label), card('p', roles.map(role => ROLES[role]).join(' · '), 'knowledge-lens-roles'));
+        for (const role of roles) body.append(fieldView(step, role));
+        lens.append(body); lenses.append(lens);
       }
       const connected = wf.relations.filter(r => r.from_step_id === id || r.to_step_id === id);
       const otherRelations = [];

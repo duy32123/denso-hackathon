@@ -6,6 +6,7 @@ const node = (tag, text) => { const n = document.createElement(tag); n.textConte
 function clearResult() {
   generation++; evidenceGeneration++;
   for (const id of ['answer', 'missing', 'unresolved', 'build', 'citations', 'evidence', 'status']) el(id).replaceChildren();
+  delete el('status').dataset.state;
   el('evidence').textContent = 'Chọn một claim/citation để đọc bằng chứng. Citation đầu tiên của câu trả lời sẽ tự mở.';
   window.workflowViewer?.clear();
 }
@@ -77,7 +78,7 @@ el('ask').addEventListener('submit', async event => {
     const data = await response.json();
     if (token !== generation) return;
     if (!response.ok) throw new Error(data.error?.message || 'Không xử lý được câu hỏi.');
-    el('status').textContent = data.status; el('answer').textContent = data.answer;
+    el('status').textContent = data.status; el('status').dataset.state = data.status; el('answer').textContent = data.answer;
     el('build').textContent = `Index: ${data.index_build_id}`;
     if (data.missing_context.length) el('missing').textContent = `Cần làm rõ: ${data.missing_context.join(', ')}`;
     if (data.unresolved_claim_refs.length) el('unresolved').textContent = `Claim chưa giải quyết: ${data.unresolved_claim_refs.map(r => `${r.workflow_id}@r${r.revision}/${r.entity_id}`).join(', ')}`;
@@ -95,7 +96,7 @@ el('ask').addEventListener('submit', async event => {
     }
     const firstCitation = el('citations').querySelector('button');
     if (firstCitation) firstCitation.click();
-    else el('evidence').textContent = 'Câu trả lời này không có citation. Có thể chọn workflow bên dưới để xem dữ liệu và phần còn thiếu.';
+    else el('evidence').textContent = 'Câu trả lời này không có citation. Có thể chọn quy trình ở thanh trên để xem dữ liệu và phần còn thiếu.';
   } catch (error) { if (token === generation) el('status').textContent = error.message; }
   finally { el('submit').disabled = false; }
 });

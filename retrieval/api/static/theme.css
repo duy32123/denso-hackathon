@@ -1,0 +1,39 @@
+/* Shared dark palette for the reader (/) and the 3D space (/space), taken from the
+   original /space tone. Solid colours only: no gradients. Both pages read these tokens. */
+:root {
+  color-scheme: dark;
+  --bg: #070d1b;
+  --surface: #0e1830;
+  --surface-2: #122038;
+  --surface-3: #1b304b;
+  --stage: #0a1428;
+  --border: #283b56;
+  --border-strong: #3b5372;
+  --text: #e4edf9;
+  --text-2: #c3d1e5;
+  --muted: #9aadc8;
+  --accent: #8cebd5;
+  --accent-hover: #b3f5e6;
+  --accent-soft: #17372f;
+  --accent-border: #2e5c59;
+  --on-accent: #09231f;
+  --warn: #f6c378;
+  --warn-soft: #2f2719;
+  --warn-border: #765d35;
+  --danger: #ef879f;
+  --danger-soft: #36202b;
+  --danger-border: #764356;
+  --ok: #8df0ba;
+  --ok-soft: #19362c;
+  --ok-border: #396a56;
+  --violet: #a396f4;
+  --cyan: #72d8e9;
+  --overlay: rgba(14, 24, 48, .94);
+  --radius: 10px;
+  --shadow: none;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+body { margin: 0; background: var(--bg); }
+a { color: var(--accent); }

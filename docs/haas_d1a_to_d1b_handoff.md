@@ -368,13 +368,14 @@ section 1: regenerating a worklist no longer produces the lower-case SRC_HAAS_00
    recorded as deferred candidate CAND-018 with no source_id. Its text has to be copied by
    ordinary browsing, as for TG0128, before it can become a companion source.
 2. **Refusal got worse on the larger corpus; recall did not.** Measured on the 66 reviewed
-   questions, lexical, old bundle against new: Recall@5 0.9459 on both, status accuracy
-   0.9848 to 0.8636, out-of-scope questions answered 1 to 9. The gate drops words found in
-   more than 75% of steps, and words like "tool" and "carousel" fell under that line once the
-   corpus stopped being all SMTC. One alternative rule was tried and was worse, so the gate is
-   unchanged. Numbers, cause, labels to re-check and what is still owed (hybrid was not
-   measured: Gemini quota) are in `docs/retrieval_dev_expansion_check.md`.
-   `tests/unit/test_query.py` uses probes that are still out of domain.
+   questions, old bundle against new: hybrid Recall@5 0.9730 on both (MRR 0.8928 to 0.8793),
+   lexical 0.9459 on both, but status accuracy 0.9848 to 0.8636 and out-of-scope questions
+   answered 1 to 9. The gate drops words found in more than 75% of steps, and words like
+   "tool" and "carousel" fell under that line once the corpus stopped being all SMTC. One
+   alternative rule was tried and was worse, so the gate is unchanged. Cause, labels to
+   re-check and the full table are in `docs/retrieval_dev_expansion_check.md`.
+   `tests/unit/test_query.py` uses probes that are still out of domain. The serving DB
+   `out/retrieval/real_dev.sqlite` now holds the new bundle (the old one is kept next to it).
 3. **Evaluation records name the old bundle id** (`BUNDLE_HAAS_SMTC_DEV_20382d7957b6` in
    `data/eval/README.md`, `docs/retrieval_eval_real_dev.md`,
    `docs/gold_review_worklist_real_dev.md`, `benchmarks/results/20261011_real_dev/`). They describe

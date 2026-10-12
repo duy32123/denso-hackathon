@@ -11,9 +11,9 @@ heuristic này phụ thuộc corpus và phải kiểm lại khi thêm nguồn; �
 - Cùng file câu hỏi, cùng mã nguồn, hai kho tạm dựng từ bundle cũ (`main`,
   `BUNDLE_HAAS_SMTC_DEV_20382d7957b6`) và bundle mới. Không đụng kho đang phục vụ ở `out/`.
 - Chiến lược **lexical**, bản dịch lấy từ cache sẵn có: **0 lượt gọi dịch, 0 lượt gọi embedding**.
-- **Chưa đo vector/hybrid**: dựng index Gemini bị giới hạn quota (HTTP 429) trong phiên này.
-  Cổng liên quan chạy trước embedding nên số câu lọt cổng không phụ thuộc chiến lược, nhưng
-  Recall/MRR của hybrid trên corpus mới vẫn là việc còn nợ.
+- Phần lexical ở trên dùng bản dịch có sẵn trong cache. Phần vector/hybrid ở mục kế tiếp dùng
+  index Gemini dựng riêng cho từng bundle (lúc đầu bị giới hạn quota HTTP 429, dựng lại được
+  sau khi thử lại). Cổng liên quan chạy trước embedding nên số câu lọt cổng giống nhau ở cả ba chiến lược.
 
 ## 66 câu đã được người kiểm
 
@@ -49,6 +49,21 @@ Q015 và Q031 (mỡ bôi trơn con trượt hốc dao) giờ bị đưa sang `RE
 tấm che) thay vì `REAL_WF_0003`. Trước và sau đều chọn sai workflow nên workflow accuracy
 không đổi, nhưng kiểu sai đã khác.
 
+## Vector và hybrid (Gemini), 66 câu đã kiểm, cùng câu hỏi
+
+| Chiến lược | Recall@5 cũ → mới | MRR@5 cũ → mới | Hit@1 cũ → mới | Workflow acc cũ → mới |
+|---|---:|---:|---:|---:|
+| Lexical | 0.9459 → 0.9459 | 0.7680 → 0.7815 | 0.6486 → 0.6757 | 0.9333 → 0.9333 |
+| Vector | 0.9189 → 0.8919 | 0.8716 → 0.8581 | 0.8378 → 0.8378 | 0.9111 → 0.8889 |
+| Hybrid | 0.9730 → 0.9730 | 0.8928 → 0.8793 | 0.8378 → 0.8108 | 0.9556 → 0.9333 |
+
+Mẫu số Recall/MRR là 37 câu. Status accuracy giống nhau ở cả ba chiến lược: 0.9848 → 0.8636
+(`false_retrieved` 1 → 9). Hybrid giữ Recall@5 và mất khoảng 0.015 MRR, 0.027 Hit@1: một ít Step
+mới chen lên trên Step đúng. Vẫn là số lượt đo một lần trên dev đã dùng để chỉnh cổng, không phải holdout.
+
+Trên cả 81 câu (mẫu số 52, bundle mới): hybrid Recall@5 0.9615, MRR@5 0.8853, Hit@1 0.8269;
+vector 0.9038 / 0.8702 / 0.8462; lexical 0.9423 / 0.8109 / 0.7308. Q069 vẫn bị cổng từ chối ở cả ba.
+
 ## 15 câu cho năm workflow mới
 
 `HAAS_DEV_Q069`–`Q083`, ba câu mỗi workflow, tiếng Anh, `labeled_by=claude-draft`. Nhãn
@@ -78,6 +93,6 @@ chồng lên nhau, nên chỉnh ngưỡng tỷ lệ cũng không tách được 
 - [x] Người kiểm 15 câu mới (`quyhienln`, 2026-10-12).
 - [ ] Người kiểm lại 20 câu phủ định trên corpus mới (ít nhất Q041, Q049).
 - [ ] Sau đó mới hiệu chỉnh cổng liên quan; cần một tín hiệu khác ngoài tỷ lệ từ khớp.
-- [ ] Dựng lại index Gemini và đo vector/hybrid khi có quota.
-- [ ] Nhập bundle mới vào kho phục vụ (`out/retrieval/real_dev.sqlite`) khi nhóm quyết định
-      đưa năm workflow mới ra demo; hiện kho đó vẫn là bundle cũ.
+- [x] Kho phục vụ `out/retrieval/real_dev.sqlite` đã thay bằng bundle mới (có vector Gemini);
+      bản cũ giữ ở `out/retrieval/real_dev.before_expansion.sqlite`. Thư mục `out/` bị gitignore,
+      máy khác tự dựng lại bằng lệnh build trong `retrieval/README.md`.

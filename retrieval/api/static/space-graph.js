@@ -1,14 +1,14 @@
 // Project explicit snapshot references into a display graph. Coordinates are layout,
 // never inferred semantic similarity. Entity identity includes corpus/workflow/revision.
 export const TYPES = {
-  root: {label: 'Kho tri thức', color: '#0f766e', radius: 3.3},
-  workflow: {label: 'Quy trình', color: '#14a38f', radius: 2.5},
-  step: {label: 'Bước', color: '#2f6fdf', radius: 1.2},
-  claim: {label: 'Phát biểu', color: '#7b5ce0', radius: .65},
-  relation: {label: 'Quan hệ bước', color: '#d48a1c', radius: 1.15},
-  evidence: {label: 'Bằng chứng', color: '#1597b5', radius: .45},
-  question: {label: 'Câu hỏi mở', color: '#e5652e', radius: 1},
-  source: {label: 'Nguồn', color: '#6b7d90', radius: 1.3}
+  root: {label: 'Kho tri thức', color: '#b7ffe9', radius: 3.3},
+  workflow: {label: 'Quy trình', color: '#80e6c7', radius: 2.5},
+  step: {label: 'Bước', color: '#70aaff', radius: 1.2},
+  claim: {label: 'Phát biểu', color: '#b4a1ff', radius: .65},
+  relation: {label: 'Quan hệ bước', color: '#f6c378', radius: 1.15},
+  evidence: {label: 'Bằng chứng', color: '#5ed4e5', radius: .45},
+  question: {label: 'Câu hỏi mở', color: '#ffad69', radius: 1},
+  source: {label: 'Nguồn', color: '#9ebbd0', radius: 1.3}
 };
 export const ROLES = {context: 'Bối cảnh', observation: 'Dấu hiệu', action: 'Thao tác', rationale: 'Lý do', condition: 'Điều kiện', outcome: 'Kết quả ghi nhận', acceptance_criteria: 'Tiêu chí xác nhận'};
 export const RELATIONS = {observed_next: 'Tiếp theo trong nguồn', requires: 'Điều kiện tiên quyết', branch_if: 'Nhánh có điều kiện', repeated_step: 'Thao tác lặp', corrects: 'Đính chính'};

@@ -215,7 +215,7 @@
     const index = el('workflow-select').value;
     if (!catalog || index === '') return;
     evidenceGeneration++;
-    el('evidence').textContent = 'Chọn field → claim → Mở nguồn trong workflow bên dưới.';
+    el('evidence').textContent = 'Bấm “Mở bằng chứng” ở tab Bản đồ tri thức hoặc Chi tiết & nguồn để đọc đoạn gốc tại đây.';
     show(catalog.workflows[Number(index)], catalog.mode, catalog.index_build_id);
   });
   window.workflowViewer = {clear, loadCatalog, show};

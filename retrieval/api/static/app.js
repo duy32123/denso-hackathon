@@ -96,7 +96,7 @@ el('ask').addEventListener('submit', async event => {
     }
     const firstCitation = el('citations').querySelector('button');
     if (firstCitation) firstCitation.click();
-    else el('evidence').textContent = 'Câu trả lời này không có citation. Có thể chọn workflow bên dưới để xem dữ liệu và phần còn thiếu.';
+    else el('evidence').textContent = 'Câu trả lời này không có citation. Có thể chọn quy trình ở thanh trên để xem dữ liệu và phần còn thiếu.';
   } catch (error) { if (token === generation) el('status').textContent = error.message; }
   finally { el('submit').disabled = false; }
 });

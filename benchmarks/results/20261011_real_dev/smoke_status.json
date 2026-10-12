@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "rows": 12,
+  "real_generation": {
+    "A_knowflow": true,
+    "B_transcript_rag": true,
+    "C_no_graph": true
+  },
+  "errors": [],
+  "finished_at": "2026-10-11T16:56:21.351+00:00",
+  "quality_threshold_used": false
+}

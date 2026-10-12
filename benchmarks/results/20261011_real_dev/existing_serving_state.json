@@ -1,0 +1,27 @@
+{
+  "configured_db": "out\\retrieval\\real_dev.sqlite",
+  "retrieval_strategy": "hybrid",
+  "answer_model": "gemini-3.5-flash-lite",
+  "benchmark_uses_separate_frozen_db": true,
+  "active_workflows": [
+    {
+      "workflow_id": "B0_SRC_HAAS_0005",
+      "revision": 2
+    },
+    {
+      "workflow_id": "REAL_WF_0001",
+      "revision": 1
+    },
+    {
+      "workflow_id": "REAL_WF_0002",
+      "revision": 2
+    },
+    {
+      "workflow_id": "REAL_WF_0003",
+      "revision": 2
+    }
+  ],
+  "index_build_id": "IDX_SEARCH_1a9591e771409f82fbaee974713046e2a2ed7470e73c9ec33b365f8816127006",
+  "embedding": null,
+  "record_build_id": "IDX_WP1_a370567bdad9772ef9fe057efc0edb05dafe74a0040bdd35f49bc78d849fbfe8"
+}

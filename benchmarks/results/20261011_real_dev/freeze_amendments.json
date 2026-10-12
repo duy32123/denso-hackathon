@@ -1,0 +1,9 @@
+{
+  "at": "2026-10-11T16:53:41.715+00:00",
+  "reason": "Correct a benchmark-only manifest comparison: build_index return status is not stored in authoritative manifest. No question smoke/full requests had run; config, gold, corpus and product unchanged.",
+  "changed_code": [
+    "scripts/benchmark_knowflow/__main__.py"
+  ],
+  "config_changed": false,
+  "product_changed": false
+}

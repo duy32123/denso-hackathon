@@ -1,0 +1,2 @@
+# Preserve measured artifact bytes, including CSV/JSONL line endings and SHA inputs.
+* -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

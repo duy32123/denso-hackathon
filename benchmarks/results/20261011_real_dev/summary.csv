@@ -1,0 +1,4 @@
+﻿arm,planned,completed,api_errors,status_correct,status_denominator,status_accuracy,answered,false_answer,false_abstention,recall_at_5,mrr_at_5,retrieval_denominator,valid_citations,citation_denominator,latency_p50_ms,latency_p95_ms,latency_denominator,api_cost_usd,known_cost_subtotal_usd,known_usd_per_task,api_usd_per_task,human_semantic_reviewed
+A_knowflow,66,65,1,49,66,0.7424242424242424,26,1,15,0.9459459459459459,0.8657657657657657,37,42,42,3833.651,31859.873,66,null,0.23159269999999998,0.0035089803030303028,null,0
+B_transcript_rag,66,64,2,56,66,0.8484848484848485,31,0,8,null,null,0,64,64,3361.218,39600.163,66,null,0.10702239999999999,0.001621551515151515,null,0
+C_no_graph,66,63,3,48,66,0.7272727272727273,25,1,14,0.9459459459459459,0.8792792792792792,37,41,41,4144.804,84236.377,66,null,0.25444925,0.003855291666666667,null,0

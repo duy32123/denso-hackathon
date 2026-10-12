@@ -1,0 +1,2201 @@
+{
+  "product_commit": "dfde6f43704b532053c74e09701d1e978d5d12f9",
+  "config_sha256": "5d909552eb9c998567331167a833da1b81a63e357c7926add9ab9720f1b7caf3",
+  "questions_sha256": "0793aea3eaf00b12883ef5ad1e0d251c3d19d617ac2ac32c1a07bd22b293d7de",
+  "corpus_sha256": "bf9752e17feee4e853a6536f7eb4cacadd9ed945812648a7d95fa9ed982a886a",
+  "summaries": {
+    "A_knowflow": {
+      "planned_questions": 66,
+      "recorded_questions": 66,
+      "completed": 65,
+      "not_recorded": 0,
+      "status_accuracy": {
+        "numerator": 49,
+        "denominator": 66,
+        "rate": 0.7424242424242424
+      },
+      "answered": 26,
+      "answerable_status_coverage": {
+        "numerator": 25,
+        "denominator": 41,
+        "rate": 0.6097560975609756
+      },
+      "false_answer": [
+        "HAAS_DEV_Q031"
+      ],
+      "false_abstention": [
+        "HAAS_DEV_Q028",
+        "HAAS_DEV_Q068",
+        "HAAS_DEV_Q029",
+        "HAAS_DEV_Q058",
+        "HAAS_DEV_Q059",
+        "HAAS_DEV_Q007",
+        "HAAS_DEV_Q025",
+        "HAAS_DEV_Q012",
+        "HAAS_DEV_Q027",
+        "HAAS_DEV_Q015",
+        "HAAS_DEV_Q060",
+        "HAAS_DEV_Q009",
+        "HAAS_DEV_Q014",
+        "HAAS_DEV_Q001",
+        "HAAS_DEV_Q018"
+      ],
+      "confusion": {
+        "needs_clarification": {
+          "needs_clarification": 1
+        },
+        "insufficient_evidence": {
+          "insufficient_evidence": 23,
+          "answered": 1
+        },
+        "answered": {
+          "answered": 25,
+          "insufficient_evidence": 15,
+          "error": 1
+        }
+      },
+      "api_errors": [
+        {
+          "question_id": "HAAS_DEV_Q016",
+          "http_status": 503,
+          "error_class": "GenerationError",
+          "latency_ms": 14298.396
+        }
+      ],
+      "retrieval": {
+        "denominator": 37,
+        "gold_kind": "human_reviewed_step_units",
+        "recall_at_5": 0.9459459459459459,
+        "mrr_at_5": 0.8657657657657657,
+        "baseline_limitation": null
+      },
+      "citation_mechanical_validity": {
+        "numerator": 42,
+        "denominator": 42,
+        "rate": 1.0
+      },
+      "citation_failure_codes": {},
+      "human_semantics": {
+        "reviewed_questions": 0,
+        "answers_question": null,
+        "conditions_correct": null,
+        "source_supported": null,
+        "citation_correctness": null
+      },
+      "latency_ms_all_attempts": {
+        "p50": 3833.651,
+        "p95": 31859.873,
+        "denominator": 66,
+        "includes_backoff": true
+      },
+      "latency_max_ms": 89019.215,
+      "latency_anomalies": [],
+      "latency_ms_successful": {
+        "p50": 3833.651,
+        "p95": 31859.873,
+        "denominator": 65
+      },
+      "http_attempts": 173,
+      "http_status_counts": {
+        "200": 167,
+        "429": 6
+      },
+      "observed_retries": 6,
+      "provider_timeouts": [],
+      "backoff_seconds": 218.0,
+      "post_timeout_drain_ms": 0,
+      "pipeline_guard_counts": {
+        "retrieval_needs_clarification": 1,
+        "retrieval_insufficient_evidence": 20,
+        "accepted": 26,
+        "mechanical_guard_or_procedure_coverage": 6,
+        "draft_insufficient_evidence": 8,
+        "pipeline_verifier_rejected": 4,
+        "api_error": 1
+      },
+      "leakage": [],
+      "cost": {
+        "provider_calls": 174,
+        "successful_calls": 167,
+        "failed_calls": 7,
+        "input_tokens": null,
+        "output_tokens": null,
+        "billed_output_tokens": null,
+        "total_tokens": null,
+        "known_input_tokens_subtotal": 767079,
+        "known_output_tokens_subtotal": 13607,
+        "usage_known_calls": 122,
+        "standard_list_price_usd": null,
+        "known_list_price_subtotal_usd": 0.23159269999999998,
+        "unknown_cost_calls": 52,
+        "actual_invoice_usd": null
+      },
+      "cost_by_stage": {
+        "embedding_index": {
+          "provider_calls": 0,
+          "successful_calls": 0,
+          "failed_calls": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "billed_output_tokens": 0,
+          "total_tokens": 0,
+          "known_input_tokens_subtotal": 0,
+          "known_output_tokens_subtotal": 0,
+          "usage_known_calls": 0,
+          "standard_list_price_usd": 0,
+          "known_list_price_subtotal_usd": 0,
+          "unknown_cost_calls": 0,
+          "actual_invoice_usd": null
+        },
+        "embedding_query": {
+          "provider_calls": 45,
+          "successful_calls": 45,
+          "failed_calls": 0,
+          "input_tokens": null,
+          "output_tokens": null,
+          "billed_output_tokens": null,
+          "total_tokens": null,
+          "known_input_tokens_subtotal": 0,
+          "known_output_tokens_subtotal": 0,
+          "usage_known_calls": 0,
+          "standard_list_price_usd": null,
+          "known_list_price_subtotal_usd": 0,
+          "unknown_cost_calls": 45,
+          "actual_invoice_usd": null
+        },
+        "translation": {
+          "provider_calls": 53,
+          "successful_calls": 48,
+          "failed_calls": 5,
+          "input_tokens": null,
+          "output_tokens": null,
+          "billed_output_tokens": null,
+          "total_tokens": null,
+          "known_input_tokens_subtotal": 5338,
+          "known_output_tokens_subtotal": 795,
+          "usage_known_calls": 48,
+          "standard_list_price_usd": null,
+          "known_list_price_subtotal_usd": 0.0035889,
+          "unknown_cost_calls": 5,
+          "actual_invoice_usd": null
+        },
+        "answer_generation": {
+          "provider_calls": 45,
+          "successful_calls": 44,
+          "failed_calls": 1,
+          "input_tokens": null,
+          "output_tokens": null,
+          "billed_output_tokens": null,
+          "total_tokens": null,
+          "known_input_tokens_subtotal": 653689,
+          "known_output_tokens_subtotal": 12024,
+          "usage_known_calls": 44,
+          "standard_list_price_usd": null,
+          "known_list_price_subtotal_usd": 0.1936182,
+          "unknown_cost_calls": 1,
+          "actual_invoice_usd": null
+        },
+        "answer_verification": {
+          "provider_calls": 31,
+          "successful_calls": 30,
+          "failed_calls": 1,
+          "input_tokens": null,
+          "output_tokens": null,
+          "billed_output_tokens": null,
+          "total_tokens": null,
+          "known_input_tokens_subtotal": 108052,
+          "known_output_tokens_subtotal": 788,
+          "usage_known_calls": 30,
+          "standard_list_price_usd": null,
+          "known_list_price_subtotal_usd": 0.034385599999999995,
+          "unknown_cost_calls": 1,
+          "actual_invoice_usd": null
+        }
+      },
+      "known_list_price_usd_per_planned_task": 0.0035089803030303028,
+      "total_api_usd_per_planned_task": null,
+      "interrupted_provider_call_ids": [],
+      "unmeasured_interrupted_latency_ms": 0
+    },
+    "B_transcript_rag": {
+      "planned_questions": 66,
+      "recorded_questions": 66,
+      "completed": 64,
+      "not_recorded": 0,
+      "status_accuracy": {
+        "numerator": 56,
+        "denominator": 66,
+        "rate": 0.8484848484848485
+      },
+      "answered": 31,
+      "answerable_status_coverage": {
+        "numerator": 31,
+        "denominator": 41,
+        "rate": 0.7560975609756098
+      },
+      "false_answer": [],
+      "false_abstention": [
+        "HAAS_DEV_Q028",
+        "HAAS_DEV_Q064",
+        "HAAS_DEV_Q059",
+        "HAAS_DEV_Q012",
+        "HAAS_DEV_Q015",
+        "HAAS_DEV_Q060",
+        "HAAS_DEV_Q009",
+        "HAAS_DEV_Q018"
+      ],
+      "confusion": {
+        "needs_clarification": {
+          "needs_clarification": 1
+        },
+        "insufficient_evidence": {
+          "insufficient_evidence": 24
+        },
+        "answered": {
+          "answered": 31,
+          "insufficient_evidence": 8,
+          "error": 2
+        }
+      },
+      "api_errors": [
+        {
+          "question_id": "HAAS_DEV_Q063",
+          "http_status": 504,
+          "error_class": null,
+          "latency_ms": 90010.731
+        },
+        {
+          "question_id": "HAAS_DEV_Q017",
+          "http_status": 504,
+          "error_class": null,
+          "latency_ms": 90014.916
+        }
+      ],
+      "retrieval": {
+        "denominator": 0,
+        "gold_kind": null,
+        "recall_at_5": null,
+        "mrr_at_5": null,
+        "baseline_limitation": "No human-reviewed raw-chunk gold; Step gold cannot score raw chunks"
+      },
+      "citation_mechanical_validity": {
+        "numerator": 64,
+        "denominator": 64,
+        "rate": 1.0
+      },
+      "citation_failure_codes": {},
+      "human_semantics": {
+        "reviewed_questions": 0,
+        "answers_question": null,
+        "conditions_correct": null,
+        "source_supported": null,
+        "citation_correctness": null
+      },
+      "latency_ms_all_attempts": {
+        "p50": 3361.218,
+        "p95": 39600.163,
+        "denominator": 66,
+        "includes_backoff": true
+      },
+      "latency_max_ms": 90014.916,
+      "latency_anomalies": [],
+      "latency_ms_successful": {
+        "p50": 3324.597,
+        "p95": 31899.477,
+        "denominator": 64
+      },
+      "http_attempts": 214,
+      "http_status_counts": {
+        "200": 204,
+        "429": 10
+      },
+      "observed_retries": 10,
+      "provider_timeouts": [],
+      "backoff_seconds": 375.0,
+      "post_timeout_drain_ms": 9891.82,
+      "pipeline_guard_counts": {
+        "retrieval_needs_clarification": 1,
+        "draft_insufficient_evidence": 26,
+        "accepted": 31,
+        "InvalidGeneration: Wrong answer language": 1,
+        "retrieval_insufficient_evidence": 4,
+        "api_error": 2,
+        "InvalidGeneration: Semantic check failed": 1
+      },
+      "leakage": [],
+      "cost": {
+        "provider_calls": 217,
+        "successful_calls": 206,
+        "failed_calls": 11,
+        "input_tokens": null,
+        "output_tokens": null,
+        "billed_output_tokens": null,
+        "total_tokens": null,
+        "known_input_tokens_subtotal": 270208,
+        "known_output_tokens_subtotal": 10384,
+        "usage_known_calls": 144,
+        "standard_list_price_usd": null,
+        "known_list_price_subtotal_usd": 0.10702239999999999,
+        "unknown_cost_calls": 73,
+        "actual_invoice_usd": null
+      },
+      "cost_by_stage": {
+        "embedding_index": {
+          "provider_calls": 0,
+          "successful_calls": 0,
+          "failed_calls": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "billed_output_tokens": 0,
+          "total_tokens": 0,
+          "known_input_tokens_subtotal": 0,
+          "known_output_tokens_subtotal": 0,
+          "usage_known_calls": 0,
+          "standard_list_price_usd": 0,
+          "known_list_price_subtotal_usd": 0,
+          "unknown_cost_calls": 0,
+          "actual_invoice_usd": null
+        },
+        "embedding_query": {
+          "provider_calls": 62,
+          "successful_calls": 62,
+          "failed_calls": 0,
+          "input_tokens": null,
+          "output_tokens": null,
+          "billed_output_tokens": null,
+          "total_tokens": null,
+          "known_input_tokens_subtotal": 0,
+          "known_output_tokens_subtotal": 0,
+          "usage_known_calls": 0,
+          "standard_list_price_usd": null,
+          "known_list_price_subtotal_usd": 0,
+          "unknown_cost_calls": 62,
+          "actual_invoice_usd": null
+        },
+        "translation": {
+          "provider_calls": 52,
+          "successful_calls": 48,
+          "failed_calls": 4,
+          "input_tokens": null,
+          "output_tokens": null,
+          "billed_output_tokens": null,
+          "total_tokens": null,
+          "known_input_tokens_subtotal": 5338,
+          "known_output_tokens_subtotal": 799,
+          "usage_known_calls": 48,
+          "standard_list_price_usd": null,
+          "known_list_price_subtotal_usd": 0.0035989,
+          "unknown_cost_calls": 4,
+          "actual_invoice_usd": null
+        },
+        "answer_generation": {
+          "provider_calls": 65,
+          "successful_calls": 62,
+          "failed_calls": 3,
+          "input_tokens": null,
+          "output_tokens": null,
+          "billed_output_tokens": null,
+          "total_tokens": null,
+          "known_input_tokens_subtotal": 201766,
+          "known_output_tokens_subtotal": 8659,
+          "usage_known_calls": 62,
+          "standard_list_price_usd": null,
+          "known_list_price_subtotal_usd": 0.0821773,
+          "unknown_cost_calls": 3,
+          "actual_invoice_usd": null
+        },
+        "answer_verification": {
+          "provider_calls": 38,
+          "successful_calls": 34,
+          "failed_calls": 4,
+          "input_tokens": null,
+          "output_tokens": null,
+          "billed_output_tokens": null,
+          "total_tokens": null,
+          "known_input_tokens_subtotal": 63104,
+          "known_output_tokens_subtotal": 926,
+          "usage_known_calls": 34,
+          "standard_list_price_usd": null,
+          "known_list_price_subtotal_usd": 0.0212462,
+          "unknown_cost_calls": 4,
+          "actual_invoice_usd": null
+        }
+      },
+      "known_list_price_usd_per_planned_task": 0.001621551515151515,
+      "total_api_usd_per_planned_task": null,
+      "interrupted_provider_call_ids": [
+        "call-000345",
+        "call-000346",
+        "call-000347"
+      ],
+      "unmeasured_interrupted_latency_ms": null
+    },
+    "C_no_graph": {
+      "planned_questions": 66,
+      "recorded_questions": 66,
+      "completed": 63,
+      "not_recorded": 0,
+      "status_accuracy": {
+        "numerator": 48,
+        "denominator": 66,
+        "rate": 0.7272727272727273
+      },
+      "answered": 25,
+      "answerable_status_coverage": {
+        "numerator": 24,
+        "denominator": 41,
+        "rate": 0.5853658536585366
+      },
+      "false_answer": [
+        "HAAS_DEV_Q031"
+      ],
+      "false_abstention": [
+        "HAAS_DEV_Q026",
+        "HAAS_DEV_Q068",
+        "HAAS_DEV_Q029",
+        "HAAS_DEV_Q007",
+        "HAAS_DEV_Q025",
+        "HAAS_DEV_Q017",
+        "HAAS_DEV_Q056",
+        "HAAS_DEV_Q010",
+        "HAAS_DEV_Q015",
+        "HAAS_DEV_Q060",
+        "HAAS_DEV_Q009",
+        "HAAS_DEV_Q014",
+        "HAAS_DEV_Q001",
+        "HAAS_DEV_Q018"
+      ],
+      "confusion": {
+        "needs_clarification": {
+          "needs_clarification": 1
+        },
+        "insufficient_evidence": {
+          "insufficient_evidence": 23,
+          "answered": 1
+        },
+        "answered": {
+          "insufficient_evidence": 14,
+          "answered": 24,
+          "error": 3
+        }
+      },
+      "api_errors": [
+        {
+          "question_id": "HAAS_DEV_Q059",
+          "http_status": 504,
+          "error_class": null,
+          "latency_ms": 90008.295
+        },
+        {
+          "question_id": "HAAS_DEV_Q012",
+          "http_status": 504,
+          "error_class": null,
+          "latency_ms": 90008.079
+        },
+        {
+          "question_id": "HAAS_DEV_Q016",
+          "http_status": 504,
+          "error_class": "GenerationError",
+          "latency_ms": 921754.993
+        }
+      ],
+      "retrieval": {
+        "denominator": 37,
+        "gold_kind": "human_reviewed_step_units",
+        "recall_at_5": 0.9459459459459459,
+        "mrr_at_5": 0.8792792792792792,
+        "baseline_limitation": null
+      },
+      "citation_mechanical_validity": {
+        "numerator": 41,
+        "denominator": 41,
+        "rate": 1.0
+      },
+      "citation_failure_codes": {},
+      "human_semantics": {
+        "reviewed_questions": 0,
+        "answers_question": null,
+        "conditions_correct": null,
+        "source_supported": null,
+        "citation_correctness": null
+      },
+      "latency_ms_all_attempts": {
+        "p50": 4144.804,
+        "p95": 84236.377,
+        "denominator": 66,
+        "includes_backoff": true
+      },
+      "latency_max_ms": 921754.993,
+      "latency_anomalies": [
+        {
+          "question_id": "HAAS_DEV_Q016",
+          "latency_ms": 921754.993,
+          "http_status": 504,
+          "backoff_seconds": 88.0,
+          "provider_call_elapsed_ms": 4742.6990000000005,
+          "explanation": "Observed latency over twice configured API deadline; cause not established; retained in all metrics"
+        }
+      ],
+      "latency_ms_successful": {
+        "p50": 4073.919,
+        "p95": 42617.677,
+        "denominator": 63
+      },
+      "http_attempts": 179,
+      "http_status_counts": {
+        "200": 164,
+        "429": 15
+      },
+      "observed_retries": 15,
+      "provider_timeouts": [],
+      "backoff_seconds": 590.0,
+      "post_timeout_drain_ms": 11253.999,
+      "pipeline_guard_counts": {
+        "retrieval_needs_clarification": 1,
+        "retrieval_insufficient_evidence": 22,
+        "mechanical_guard_or_procedure_coverage": 6,
+        "accepted": 25,
+        "draft_insufficient_evidence": 6,
+        "api_error": 3,
+        "pipeline_verifier_rejected": 3
+      },
+      "leakage": [],
+      "cost": {
+        "provider_calls": 180,
+        "successful_calls": 164,
+        "failed_calls": 16,
+        "input_tokens": null,
+        "output_tokens": null,
+        "billed_output_tokens": null,
+        "total_tokens": null,
+        "known_input_tokens_subtotal": 753820,
+        "known_output_tokens_subtotal": 13970,
+        "usage_known_calls": 121,
+        "standard_list_price_usd": null,
+        "known_list_price_subtotal_usd": 0.25444925,
+        "unknown_cost_calls": 59,
+        "actual_invoice_usd": null
+      },
+      "cost_by_stage": {
+        "embedding_index": {
+          "provider_calls": 0,
+          "successful_calls": 0,
+          "failed_calls": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "billed_output_tokens": 0,
+          "total_tokens": 0,
+          "known_input_tokens_subtotal": 0,
+          "known_output_tokens_subtotal": 0,
+          "usage_known_calls": 0,
+          "standard_list_price_usd": 0,
+          "known_list_price_subtotal_usd": 0,
+          "unknown_cost_calls": 0,
+          "actual_invoice_usd": null
+        },
+        "embedding_query": {
+          "provider_calls": 43,
+          "successful_calls": 43,
+          "failed_calls": 0,
+          "input_tokens": null,
+          "output_tokens": null,
+          "billed_output_tokens": null,
+          "total_tokens": null,
+          "known_input_tokens_subtotal": 0,
+          "known_output_tokens_subtotal": 0,
+          "usage_known_calls": 0,
+          "standard_list_price_usd": null,
+          "known_list_price_subtotal_usd": 0,
+          "unknown_cost_calls": 43,
+          "actual_invoice_usd": null
+        },
+        "translation": {
+          "provider_calls": 51,
+          "successful_calls": 48,
+          "failed_calls": 3,
+          "input_tokens": null,
+          "output_tokens": null,
+          "billed_output_tokens": null,
+          "total_tokens": null,
+          "known_input_tokens_subtotal": 5338,
+          "known_output_tokens_subtotal": 804,
+          "usage_known_calls": 48,
+          "standard_list_price_usd": null,
+          "known_list_price_subtotal_usd": 0.0036114,
+          "unknown_cost_calls": 3,
+          "actual_invoice_usd": null
+        },
+        "answer_generation": {
+          "provider_calls": 51,
+          "successful_calls": 43,
+          "failed_calls": 8,
+          "input_tokens": null,
+          "output_tokens": null,
+          "billed_output_tokens": null,
+          "total_tokens": null,
+          "known_input_tokens_subtotal": 637086,
+          "known_output_tokens_subtotal": 12366,
+          "usage_known_calls": 43,
+          "standard_list_price_usd": null,
+          "known_list_price_subtotal_usd": 0.21541905,
+          "unknown_cost_calls": 8,
+          "actual_invoice_usd": null
+        },
+        "answer_verification": {
+          "provider_calls": 35,
+          "successful_calls": 30,
+          "failed_calls": 5,
+          "input_tokens": null,
+          "output_tokens": null,
+          "billed_output_tokens": null,
+          "total_tokens": null,
+          "known_input_tokens_subtotal": 111396,
+          "known_output_tokens_subtotal": 800,
+          "usage_known_calls": 30,
+          "standard_list_price_usd": null,
+          "known_list_price_subtotal_usd": 0.0354188,
+          "unknown_cost_calls": 5,
+          "actual_invoice_usd": null
+        }
+      },
+      "known_list_price_usd_per_planned_task": 0.003855291666666667,
+      "total_api_usd_per_planned_task": null,
+      "interrupted_provider_call_ids": [],
+      "unmeasured_interrupted_latency_ms": 0
+    }
+  },
+  "paired_A_B": {
+    "paired_questions": 66,
+    "left_only_status_correct": [
+      "HAAS_DEV_Q017",
+      "HAAS_DEV_Q063",
+      "HAAS_DEV_Q064"
+    ],
+    "right_only_status_correct": [
+      "HAAS_DEV_Q001",
+      "HAAS_DEV_Q007",
+      "HAAS_DEV_Q014",
+      "HAAS_DEV_Q016",
+      "HAAS_DEV_Q025",
+      "HAAS_DEV_Q027",
+      "HAAS_DEV_Q029",
+      "HAAS_DEV_Q031",
+      "HAAS_DEV_Q058",
+      "HAAS_DEV_Q068"
+    ],
+    "answer_changed": [
+      "HAAS_DEV_Q001",
+      "HAAS_DEV_Q002",
+      "HAAS_DEV_Q003",
+      "HAAS_DEV_Q004",
+      "HAAS_DEV_Q005",
+      "HAAS_DEV_Q006",
+      "HAAS_DEV_Q007",
+      "HAAS_DEV_Q008",
+      "HAAS_DEV_Q009",
+      "HAAS_DEV_Q010",
+      "HAAS_DEV_Q011",
+      "HAAS_DEV_Q012",
+      "HAAS_DEV_Q013",
+      "HAAS_DEV_Q014",
+      "HAAS_DEV_Q015",
+      "HAAS_DEV_Q016",
+      "HAAS_DEV_Q017",
+      "HAAS_DEV_Q018",
+      "HAAS_DEV_Q019",
+      "HAAS_DEV_Q020",
+      "HAAS_DEV_Q021",
+      "HAAS_DEV_Q022",
+      "HAAS_DEV_Q023",
+      "HAAS_DEV_Q024",
+      "HAAS_DEV_Q025",
+      "HAAS_DEV_Q026",
+      "HAAS_DEV_Q027",
+      "HAAS_DEV_Q028",
+      "HAAS_DEV_Q029",
+      "HAAS_DEV_Q030",
+      "HAAS_DEV_Q031",
+      "HAAS_DEV_Q032",
+      "HAAS_DEV_Q033",
+      "HAAS_DEV_Q034",
+      "HAAS_DEV_Q035",
+      "HAAS_DEV_Q037",
+      "HAAS_DEV_Q039",
+      "HAAS_DEV_Q040",
+      "HAAS_DEV_Q041",
+      "HAAS_DEV_Q042",
+      "HAAS_DEV_Q043",
+      "HAAS_DEV_Q044",
+      "HAAS_DEV_Q045",
+      "HAAS_DEV_Q046",
+      "HAAS_DEV_Q047",
+      "HAAS_DEV_Q048",
+      "HAAS_DEV_Q049",
+      "HAAS_DEV_Q050",
+      "HAAS_DEV_Q051",
+      "HAAS_DEV_Q052",
+      "HAAS_DEV_Q053",
+      "HAAS_DEV_Q054",
+      "HAAS_DEV_Q055",
+      "HAAS_DEV_Q056",
+      "HAAS_DEV_Q057",
+      "HAAS_DEV_Q058",
+      "HAAS_DEV_Q059",
+      "HAAS_DEV_Q060",
+      "HAAS_DEV_Q061",
+      "HAAS_DEV_Q062",
+      "HAAS_DEV_Q063",
+      "HAAS_DEV_Q064",
+      "HAAS_DEV_Q065",
+      "HAAS_DEV_Q066",
+      "HAAS_DEV_Q067",
+      "HAAS_DEV_Q068"
+    ],
+    "candidate_content_changed": null,
+    "same_candidate_pairs": null,
+    "same_candidate_left_only_status_correct": null,
+    "same_candidate_right_only_status_correct": null,
+    "graph_exposed_questions": [
+      "HAAS_DEV_Q004",
+      "HAAS_DEV_Q007",
+      "HAAS_DEV_Q009",
+      "HAAS_DEV_Q010",
+      "HAAS_DEV_Q015",
+      "HAAS_DEV_Q016",
+      "HAAS_DEV_Q022",
+      "HAAS_DEV_Q024",
+      "HAAS_DEV_Q025",
+      "HAAS_DEV_Q026",
+      "HAAS_DEV_Q028",
+      "HAAS_DEV_Q030",
+      "HAAS_DEV_Q031",
+      "HAAS_DEV_Q043",
+      "HAAS_DEV_Q055",
+      "HAAS_DEV_Q056",
+      "HAAS_DEV_Q057",
+      "HAAS_DEV_Q058",
+      "HAAS_DEV_Q059",
+      "HAAS_DEV_Q060",
+      "HAAS_DEV_Q061",
+      "HAAS_DEV_Q062",
+      "HAAS_DEV_Q063",
+      "HAAS_DEV_Q064",
+      "HAAS_DEV_Q065",
+      "HAAS_DEV_Q066",
+      "HAAS_DEV_Q067",
+      "HAAS_DEV_Q068"
+    ]
+  },
+  "paired_A_C": {
+    "paired_questions": 66,
+    "left_only_status_correct": [
+      "HAAS_DEV_Q010",
+      "HAAS_DEV_Q017",
+      "HAAS_DEV_Q026",
+      "HAAS_DEV_Q056"
+    ],
+    "right_only_status_correct": [
+      "HAAS_DEV_Q027",
+      "HAAS_DEV_Q028",
+      "HAAS_DEV_Q058"
+    ],
+    "answer_changed": [
+      "HAAS_DEV_Q002",
+      "HAAS_DEV_Q003",
+      "HAAS_DEV_Q004",
+      "HAAS_DEV_Q005",
+      "HAAS_DEV_Q006",
+      "HAAS_DEV_Q008",
+      "HAAS_DEV_Q010",
+      "HAAS_DEV_Q012",
+      "HAAS_DEV_Q017",
+      "HAAS_DEV_Q024",
+      "HAAS_DEV_Q026",
+      "HAAS_DEV_Q027",
+      "HAAS_DEV_Q028",
+      "HAAS_DEV_Q031",
+      "HAAS_DEV_Q055",
+      "HAAS_DEV_Q056",
+      "HAAS_DEV_Q057",
+      "HAAS_DEV_Q058",
+      "HAAS_DEV_Q059",
+      "HAAS_DEV_Q062",
+      "HAAS_DEV_Q063",
+      "HAAS_DEV_Q064",
+      "HAAS_DEV_Q066",
+      "HAAS_DEV_Q067"
+    ],
+    "candidate_content_changed": [
+      "HAAS_DEV_Q007",
+      "HAAS_DEV_Q015",
+      "HAAS_DEV_Q018",
+      "HAAS_DEV_Q025",
+      "HAAS_DEV_Q043",
+      "HAAS_DEV_Q056",
+      "HAAS_DEV_Q060",
+      "HAAS_DEV_Q062",
+      "HAAS_DEV_Q063",
+      "HAAS_DEV_Q064",
+      "HAAS_DEV_Q066",
+      "HAAS_DEV_Q068"
+    ],
+    "same_candidate_pairs": 54,
+    "same_candidate_left_only_status_correct": [
+      "HAAS_DEV_Q010",
+      "HAAS_DEV_Q017",
+      "HAAS_DEV_Q026"
+    ],
+    "same_candidate_right_only_status_correct": [
+      "HAAS_DEV_Q027",
+      "HAAS_DEV_Q028",
+      "HAAS_DEV_Q058"
+    ],
+    "graph_exposed_questions": [
+      "HAAS_DEV_Q004",
+      "HAAS_DEV_Q007",
+      "HAAS_DEV_Q009",
+      "HAAS_DEV_Q010",
+      "HAAS_DEV_Q015",
+      "HAAS_DEV_Q016",
+      "HAAS_DEV_Q022",
+      "HAAS_DEV_Q024",
+      "HAAS_DEV_Q025",
+      "HAAS_DEV_Q026",
+      "HAAS_DEV_Q028",
+      "HAAS_DEV_Q030",
+      "HAAS_DEV_Q031",
+      "HAAS_DEV_Q043",
+      "HAAS_DEV_Q055",
+      "HAAS_DEV_Q056",
+      "HAAS_DEV_Q057",
+      "HAAS_DEV_Q058",
+      "HAAS_DEV_Q059",
+      "HAAS_DEV_Q060",
+      "HAAS_DEV_Q061",
+      "HAAS_DEV_Q062",
+      "HAAS_DEV_Q063",
+      "HAAS_DEV_Q064",
+      "HAAS_DEV_Q065",
+      "HAAS_DEV_Q066",
+      "HAAS_DEV_Q067",
+      "HAAS_DEV_Q068"
+    ]
+  },
+  "index_build_cost": {
+    "A_knowflow": {
+      "provider_calls": 6,
+      "successful_calls": 4,
+      "failed_calls": 2,
+      "input_tokens": null,
+      "output_tokens": null,
+      "billed_output_tokens": null,
+      "total_tokens": null,
+      "known_input_tokens_subtotal": 0,
+      "known_output_tokens_subtotal": 0,
+      "usage_known_calls": 0,
+      "standard_list_price_usd": null,
+      "known_list_price_subtotal_usd": 0,
+      "unknown_cost_calls": 6,
+      "actual_invoice_usd": null
+    },
+    "B_transcript_rag": {
+      "provider_calls": 1,
+      "successful_calls": 1,
+      "failed_calls": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "billed_output_tokens": null,
+      "total_tokens": null,
+      "known_input_tokens_subtotal": 0,
+      "known_output_tokens_subtotal": 0,
+      "usage_known_calls": 0,
+      "standard_list_price_usd": null,
+      "known_list_price_subtotal_usd": 0,
+      "unknown_cost_calls": 1,
+      "actual_invoice_usd": null
+    }
+  },
+  "smoke_cost_separate": {
+    "provider_calls": 40,
+    "successful_calls": 38,
+    "failed_calls": 2,
+    "input_tokens": null,
+    "output_tokens": null,
+    "billed_output_tokens": null,
+    "total_tokens": null,
+    "known_input_tokens_subtotal": 121417,
+    "known_output_tokens_subtotal": 2090,
+    "usage_known_calls": 28,
+    "standard_list_price_usd": null,
+    "known_list_price_subtotal_usd": 0.041650099999999995,
+    "unknown_cost_calls": 12,
+    "actual_invoice_usd": null
+  },
+  "pricing": {
+    "checked_date": "2026-10-11",
+    "currency": "USD",
+    "service_tier": "standard",
+    "gemini-3.5-flash-lite": {
+      "input_per_million": 0.3,
+      "output_per_million": 2.5,
+      "cached_input_per_million": 0.03,
+      "url": "https://ai.google.dev/gemini-api/docs/pricing#gemini-3.5-flash-lite"
+    },
+    "gemini-embedding-001": {
+      "input_per_million": null,
+      "output_per_million": null,
+      "url": "https://ai.google.dev/gemini-api/docs/pricing?hl=es",
+      "note": "Official search index shows legacy $0.15/M but the live English and Spanish pages omit this exact model. Current exact-model price is unverified; do not substitute Embedding 2 pricing. Provider token metadata is also absent."
+    },
+    "actual_invoice_usd": null,
+    "interpretation": "Standard list-price equivalent from observed usage; account billing tier/credits/invoice unknown. No server or expert labour included."
+  },
+  "provider_availability_probe_cost_separate": {
+    "provider_calls": 2,
+    "successful_calls": 2,
+    "failed_calls": 0,
+    "input_tokens": null,
+    "output_tokens": null,
+    "billed_output_tokens": null,
+    "total_tokens": null,
+    "known_input_tokens_subtotal": 4,
+    "known_output_tokens_subtotal": 1,
+    "usage_known_calls": 1,
+    "standard_list_price_usd": null,
+    "known_list_price_subtotal_usd": 3.7e-06,
+    "unknown_cost_calls": 1,
+    "actual_invoice_usd": null
+  },
+  "all_experiment_api_cost_including_index_smoke_probe_interruption": {
+    "provider_calls": 620,
+    "successful_calls": 582,
+    "failed_calls": 38,
+    "input_tokens": null,
+    "output_tokens": null,
+    "billed_output_tokens": null,
+    "total_tokens": null,
+    "known_input_tokens_subtotal": 1912528,
+    "known_output_tokens_subtotal": 40052,
+    "usage_known_calls": 416,
+    "standard_list_price_usd": null,
+    "known_list_price_subtotal_usd": 0.63471815,
+    "unknown_cost_calls": 204,
+    "actual_invoice_usd": null
+  },
+  "missing_tasks": [],
+  "semantic_review_status": "pending_human",
+  "synthetic_included": false,
+  "holdout_opened": false,
+  "interruption_journal": {
+    "at": "2026-10-12T01:28:56.205578+00:00",
+    "cause": "Tool/environment interruption terminated process; read-only process check confirmed no benchmark running.",
+    "preserved_rows": 107,
+    "unfinished_task": {
+      "arm": "B_transcript_rag",
+      "question_id": "HAAS_DEV_Q019",
+      "status": "interrupted",
+      "http_status": null,
+      "latency_ms": null
+    },
+    "provider_call_ids": [
+      "call-000345",
+      "call-000346",
+      "call-000347"
+    ],
+    "resume_policy": "Only unfinished tasks. Completed rows and HTTP errors are not rerun or overwritten. Include interrupted provider calls in cost ledger.",
+    "unobserved_inflight_cost_usd": null
+  },
+  "interrupted_calls_cost_included": [
+    "call-000345",
+    "call-000346",
+    "call-000347"
+  ],
+  "by_language": {
+    "A_knowflow": {
+      "vi": {
+        "planned_questions": 50,
+        "recorded_questions": 50,
+        "completed": 49,
+        "not_recorded": 0,
+        "status_accuracy": {
+          "numerator": 35,
+          "denominator": 50,
+          "rate": 0.7
+        },
+        "answered": 19,
+        "answerable_status_coverage": {
+          "numerator": 18,
+          "denominator": 32,
+          "rate": 0.5625
+        },
+        "false_answer": [
+          "HAAS_DEV_Q031"
+        ],
+        "false_abstention": [
+          "HAAS_DEV_Q028",
+          "HAAS_DEV_Q068",
+          "HAAS_DEV_Q058",
+          "HAAS_DEV_Q059",
+          "HAAS_DEV_Q007",
+          "HAAS_DEV_Q025",
+          "HAAS_DEV_Q012",
+          "HAAS_DEV_Q015",
+          "HAAS_DEV_Q060",
+          "HAAS_DEV_Q009",
+          "HAAS_DEV_Q014",
+          "HAAS_DEV_Q001",
+          "HAAS_DEV_Q018"
+        ],
+        "confusion": {
+          "needs_clarification": {
+            "needs_clarification": 1
+          },
+          "insufficient_evidence": {
+            "insufficient_evidence": 16,
+            "answered": 1
+          },
+          "answered": {
+            "answered": 18,
+            "insufficient_evidence": 13,
+            "error": 1
+          }
+        },
+        "api_errors": [
+          {
+            "question_id": "HAAS_DEV_Q016",
+            "http_status": 503,
+            "error_class": "GenerationError",
+            "latency_ms": 14298.396
+          }
+        ],
+        "retrieval": {
+          "denominator": 29,
+          "gold_kind": "human_reviewed_step_units",
+          "recall_at_5": 0.9310344827586207,
+          "mrr_at_5": 0.8735632183908045,
+          "baseline_limitation": null
+        },
+        "citation_mechanical_validity": {
+          "numerator": 32,
+          "denominator": 32,
+          "rate": 1.0
+        },
+        "citation_failure_codes": {},
+        "human_semantics": {
+          "reviewed_questions": 0,
+          "answers_question": null,
+          "conditions_correct": null,
+          "source_supported": null,
+          "citation_correctness": null
+        },
+        "latency_ms_all_attempts": {
+          "p50": 4050.725,
+          "p95": 35040.473,
+          "denominator": 50,
+          "includes_backoff": true
+        },
+        "latency_max_ms": 89019.215,
+        "latency_anomalies": [],
+        "latency_ms_successful": {
+          "p50": 4050.725,
+          "p95": 35040.473,
+          "denominator": 49
+        },
+        "http_attempts": 146,
+        "http_status_counts": {
+          "200": 141,
+          "429": 5
+        },
+        "observed_retries": 5,
+        "provider_timeouts": [],
+        "backoff_seconds": 193.0,
+        "post_timeout_drain_ms": 0,
+        "pipeline_guard_counts": {
+          "retrieval_needs_clarification": 1,
+          "retrieval_insufficient_evidence": 13,
+          "accepted": 19,
+          "mechanical_guard_or_procedure_coverage": 5,
+          "draft_insufficient_evidence": 8,
+          "pipeline_verifier_rejected": 3,
+          "api_error": 1
+        },
+        "leakage": [],
+        "cost": {
+          "provider_calls": 147,
+          "successful_calls": 141,
+          "failed_calls": 6,
+          "input_tokens": null,
+          "output_tokens": null,
+          "billed_output_tokens": null,
+          "total_tokens": null,
+          "known_input_tokens_subtotal": 622075,
+          "known_output_tokens_subtotal": 10942,
+          "usage_known_calls": 105,
+          "standard_list_price_usd": null,
+          "known_list_price_subtotal_usd": 0.19316185,
+          "unknown_cost_calls": 42,
+          "actual_invoice_usd": null
+        },
+        "cost_by_stage": {
+          "embedding_index": {
+            "provider_calls": 0,
+            "successful_calls": 0,
+            "failed_calls": 0,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "billed_output_tokens": 0,
+            "total_tokens": 0,
+            "known_input_tokens_subtotal": 0,
+            "known_output_tokens_subtotal": 0,
+            "usage_known_calls": 0,
+            "standard_list_price_usd": 0,
+            "known_list_price_subtotal_usd": 0,
+            "unknown_cost_calls": 0,
+            "actual_invoice_usd": null
+          },
+          "embedding_query": {
+            "provider_calls": 36,
+            "successful_calls": 36,
+            "failed_calls": 0,
+            "input_tokens": null,
+            "output_tokens": null,
+            "billed_output_tokens": null,
+            "total_tokens": null,
+            "known_input_tokens_subtotal": 0,
+            "known_output_tokens_subtotal": 0,
+            "usage_known_calls": 0,
+            "standard_list_price_usd": null,
+            "known_list_price_subtotal_usd": 0,
+            "unknown_cost_calls": 36,
+            "actual_invoice_usd": null
+          },
+          "translation": {
+            "provider_calls": 53,
+            "successful_calls": 48,
+            "failed_calls": 5,
+            "input_tokens": null,
+            "output_tokens": null,
+            "billed_output_tokens": null,
+            "total_tokens": null,
+            "known_input_tokens_subtotal": 5338,
+            "known_output_tokens_subtotal": 795,
+            "usage_known_calls": 48,
+            "standard_list_price_usd": null,
+            "known_list_price_subtotal_usd": 0.0035889,
+            "unknown_cost_calls": 5,
+            "actual_invoice_usd": null
+          },
+          "answer_generation": {
+            "provider_calls": 36,
+            "successful_calls": 35,
+            "failed_calls": 1,
+            "input_tokens": null,
+            "output_tokens": null,
+            "billed_output_tokens": null,
+            "total_tokens": null,
+            "known_input_tokens_subtotal": 535887,
+            "known_output_tokens_subtotal": 9563,
+            "usage_known_calls": 35,
+            "standard_list_price_usd": null,
+            "known_list_price_subtotal_usd": 0.16385795,
+            "unknown_cost_calls": 1,
+            "actual_invoice_usd": null
+          },
+          "answer_verification": {
+            "provider_calls": 22,
+            "successful_calls": 22,
+            "failed_calls": 0,
+            "input_tokens": 80850,
+            "output_tokens": 584,
+            "billed_output_tokens": 584,
+            "total_tokens": 81434,
+            "known_input_tokens_subtotal": 80850,
+            "known_output_tokens_subtotal": 584,
+            "usage_known_calls": 22,
+            "standard_list_price_usd": 0.025715,
+            "known_list_price_subtotal_usd": 0.025715,
+            "unknown_cost_calls": 0,
+            "actual_invoice_usd": null
+          }
+        },
+        "known_list_price_usd_per_planned_task": 0.003863237,
+        "total_api_usd_per_planned_task": null
+      },
+      "en": {
+        "planned_questions": 16,
+        "recorded_questions": 16,
+        "completed": 16,
+        "not_recorded": 0,
+        "status_accuracy": {
+          "numerator": 14,
+          "denominator": 16,
+          "rate": 0.875
+        },
+        "answered": 7,
+        "answerable_status_coverage": {
+          "numerator": 7,
+          "denominator": 9,
+          "rate": 0.7777777777777778
+        },
+        "false_answer": [],
+        "false_abstention": [
+          "HAAS_DEV_Q029",
+          "HAAS_DEV_Q027"
+        ],
+        "confusion": {
+          "insufficient_evidence": {
+            "insufficient_evidence": 7
+          },
+          "answered": {
+            "insufficient_evidence": 2,
+            "answered": 7
+          }
+        },
+        "api_errors": [],
+        "retrieval": {
+          "denominator": 8,
+          "gold_kind": "human_reviewed_step_units",
+          "recall_at_5": 1.0,
+          "mrr_at_5": 0.8375,
+          "baseline_limitation": null
+        },
+        "citation_mechanical_validity": {
+          "numerator": 10,
+          "denominator": 10,
+          "rate": 1.0
+        },
+        "citation_failure_codes": {},
+        "human_semantics": {
+          "reviewed_questions": 0,
+          "answers_question": null,
+          "conditions_correct": null,
+          "source_supported": null,
+          "citation_correctness": null
+        },
+        "latency_ms_all_attempts": {
+          "p50": 3001.81,
+          "p95": 31859.873,
+          "denominator": 16,
+          "includes_backoff": true
+        },
+        "latency_max_ms": 31859.873,
+        "latency_anomalies": [],
+        "latency_ms_successful": {
+          "p50": 3001.81,
+          "p95": 31859.873,
+          "denominator": 16
+        },
+        "http_attempts": 27,
+        "http_status_counts": {
+          "200": 26,
+          "429": 1
+        },
+        "observed_retries": 1,
+        "provider_timeouts": [],
+        "backoff_seconds": 25.0,
+        "post_timeout_drain_ms": 0,
+        "pipeline_guard_counts": {
+          "retrieval_insufficient_evidence": 7,
+          "mechanical_guard_or_procedure_coverage": 1,
+          "accepted": 7,
+          "pipeline_verifier_rejected": 1
+        },
+        "leakage": [],
+        "cost": {
+          "provider_calls": 27,
+          "successful_calls": 26,
+          "failed_calls": 1,
+          "input_tokens": null,
+          "output_tokens": null,
+          "billed_output_tokens": null,
+          "total_tokens": null,
+          "known_input_tokens_subtotal": 145004,
+          "known_output_tokens_subtotal": 2665,
+          "usage_known_calls": 17,
+          "standard_list_price_usd": null,
+          "known_list_price_subtotal_usd": 0.038430849999999996,
+          "unknown_cost_calls": 10,
+          "actual_invoice_usd": null
+        },
+        "cost_by_stage": {
+          "embedding_index": {
+            "provider_calls": 0,
+            "successful_calls": 0,
+            "failed_calls": 0,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "billed_output_tokens": 0,
+            "total_tokens": 0,
+            "known_input_tokens_subtotal": 0,
+            "known_output_tokens_subtotal": 0,
+            "usage_known_calls": 0,
+            "standard_list_price_usd": 0,
+            "known_list_price_subtotal_usd": 0,
+            "unknown_cost_calls": 0,
+            "actual_invoice_usd": null
+          },
+          "embedding_query": {
+            "provider_calls": 9,
+            "successful_calls": 9,
+            "failed_calls": 0,
+            "input_tokens": null,
+            "output_tokens": null,
+            "billed_output_tokens": null,
+            "total_tokens": null,
+            "known_input_tokens_subtotal": 0,
+            "known_output_tokens_subtotal": 0,
+            "usage_known_calls": 0,
+            "standard_list_price_usd": null,
+            "known_list_price_subtotal_usd": 0,
+            "unknown_cost_calls": 9,
+            "actual_invoice_usd": null
+          },
+          "translation": {
+            "provider_calls": 0,
+            "successful_calls": 0,
+            "failed_calls": 0,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "billed_output_tokens": 0,
+            "total_tokens": 0,
+            "known_input_tokens_subtotal": 0,
+            "known_output_tokens_subtotal": 0,
+            "usage_known_calls": 0,
+            "standard_list_price_usd": 0,
+            "known_list_price_subtotal_usd": 0,
+            "unknown_cost_calls": 0,
+            "actual_invoice_usd": null
+          },
+          "answer_generation": {
+            "provider_calls": 9,
+            "successful_calls": 9,
+            "failed_calls": 0,
+            "input_tokens": 117802,
+            "output_tokens": 2461,
+            "billed_output_tokens": 2461,
+            "total_tokens": 120263,
+            "known_input_tokens_subtotal": 117802,
+            "known_output_tokens_subtotal": 2461,
+            "usage_known_calls": 9,
+            "standard_list_price_usd": 0.02976025,
+            "known_list_price_subtotal_usd": 0.02976025,
+            "unknown_cost_calls": 0,
+            "actual_invoice_usd": null
+          },
+          "answer_verification": {
+            "provider_calls": 9,
+            "successful_calls": 8,
+            "failed_calls": 1,
+            "input_tokens": null,
+            "output_tokens": null,
+            "billed_output_tokens": null,
+            "total_tokens": null,
+            "known_input_tokens_subtotal": 27202,
+            "known_output_tokens_subtotal": 204,
+            "usage_known_calls": 8,
+            "standard_list_price_usd": null,
+            "known_list_price_subtotal_usd": 0.0086706,
+            "unknown_cost_calls": 1,
+            "actual_invoice_usd": null
+          }
+        },
+        "known_list_price_usd_per_planned_task": 0.0024019281249999997,
+        "total_api_usd_per_planned_task": null
+      }
+    },
+    "B_transcript_rag": {
+      "vi": {
+        "planned_questions": 50,
+        "recorded_questions": 50,
+        "completed": 48,
+        "not_recorded": 0,
+        "status_accuracy": {
+          "numerator": 40,
+          "denominator": 50,
+          "rate": 0.8
+        },
+        "answered": 22,
+        "answerable_status_coverage": {
+          "numerator": 22,
+          "denominator": 32,
+          "rate": 0.6875
+        },
+        "false_answer": [],
+        "false_abstention": [
+          "HAAS_DEV_Q028",
+          "HAAS_DEV_Q064",
+          "HAAS_DEV_Q059",
+          "HAAS_DEV_Q012",
+          "HAAS_DEV_Q015",
+          "HAAS_DEV_Q060",
+          "HAAS_DEV_Q009",
+          "HAAS_DEV_Q018"
+        ],
+        "confusion": {
+          "needs_clarification": {
+            "needs_clarification": 1
+          },
+          "insufficient_evidence": {
+            "insufficient_evidence": 17
+          },
+          "answered": {
+            "answered": 22,
+            "insufficient_evidence": 8,
+            "error": 2
+          }
+        },
+        "api_errors": [
+          {
+            "question_id": "HAAS_DEV_Q063",
+            "http_status": 504,
+            "error_class": null,
+            "latency_ms": 90010.731
+          },
+          {
+            "question_id": "HAAS_DEV_Q017",
+            "http_status": 504,
+            "error_class": null,
+            "latency_ms": 90014.916
+          }
+        ],
+        "retrieval": {
+          "denominator": 0,
+          "gold_kind": null,
+          "recall_at_5": null,
+          "mrr_at_5": null,
+          "baseline_limitation": "No human-reviewed raw-chunk gold; Step gold cannot score raw chunks"
+        },
+        "citation_mechanical_validity": {
+          "numerator": 37,
+          "denominator": 37,
+          "rate": 1.0
+        },
+        "citation_failure_codes": {},
+        "human_semantics": {
+          "reviewed_questions": 0,
+          "answers_question": null,
+          "conditions_correct": null,
+          "source_supported": null,
+          "citation_correctness": null
+        },
+        "latency_ms_all_attempts": {
+          "p50": 3580.658,
+          "p95": 84805.058,
+          "denominator": 50,
+          "includes_backoff": true
+        },
+        "latency_max_ms": 90014.916,
+        "latency_anomalies": [],
+        "latency_ms_successful": {
+          "p50": 3508.639,
+          "p95": 34961.713,
+          "denominator": 48
+        },
+        "http_attempts": 175,
+        "http_status_counts": {
+          "200": 165,
+          "429": 10
+        },
+        "observed_retries": 10,
+        "provider_timeouts": [],
+        "backoff_seconds": 375.0,
+        "post_timeout_drain_ms": 9891.82,
+        "pipeline_guard_counts": {
+          "retrieval_needs_clarification": 1,
+          "draft_insufficient_evidence": 20,
+          "accepted": 22,
+          "InvalidGeneration: Wrong answer language": 1,
+          "retrieval_insufficient_evidence": 3,
+          "api_error": 2,
+          "InvalidGeneration: Semantic check failed": 1
+        },
+        "leakage": [],
+        "cost": {
+          "provider_calls": 175,
+          "successful_calls": 165,
+          "failed_calls": 10,
+          "input_tokens": null,
+          "output_tokens": null,
+          "billed_output_tokens": null,
+          "total_tokens": null,
+          "known_input_tokens_subtotal": 196347,
+          "known_output_tokens_subtotal": 7611,
+          "usage_known_calls": 119,
+          "standard_list_price_usd": null,
+          "known_list_price_subtotal_usd": 0.07793159999999999,
+          "unknown_cost_calls": 56,
+          "actual_invoice_usd": null
+        },
+        "cost_by_stage": {
+          "embedding_index": {
+            "provider_calls": 0,
+            "successful_calls": 0,
+            "failed_calls": 0,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "billed_output_tokens": 0,
+            "total_tokens": 0,
+            "known_input_tokens_subtotal": 0,
+            "known_output_tokens_subtotal": 0,
+            "usage_known_calls": 0,
+            "standard_list_price_usd": 0,
+            "known_list_price_subtotal_usd": 0,
+            "unknown_cost_calls": 0,
+            "actual_invoice_usd": null
+          },
+          "embedding_query": {
+            "provider_calls": 46,
+            "successful_calls": 46,
+            "failed_calls": 0,
+            "input_tokens": null,
+            "output_tokens": null,
+            "billed_output_tokens": null,
+            "total_tokens": null,
+            "known_input_tokens_subtotal": 0,
+            "known_output_tokens_subtotal": 0,
+            "usage_known_calls": 0,
+            "standard_list_price_usd": null,
+            "known_list_price_subtotal_usd": 0,
+            "unknown_cost_calls": 46,
+            "actual_invoice_usd": null
+          },
+          "translation": {
+            "provider_calls": 52,
+            "successful_calls": 48,
+            "failed_calls": 4,
+            "input_tokens": null,
+            "output_tokens": null,
+            "billed_output_tokens": null,
+            "total_tokens": null,
+            "known_input_tokens_subtotal": 5338,
+            "known_output_tokens_subtotal": 799,
+            "usage_known_calls": 48,
+            "standard_list_price_usd": null,
+            "known_list_price_subtotal_usd": 0.0035989,
+            "unknown_cost_calls": 4,
+            "actual_invoice_usd": null
+          },
+          "answer_generation": {
+            "provider_calls": 49,
+            "successful_calls": 46,
+            "failed_calls": 3,
+            "input_tokens": null,
+            "output_tokens": null,
+            "billed_output_tokens": null,
+            "total_tokens": null,
+            "known_input_tokens_subtotal": 150302,
+            "known_output_tokens_subtotal": 6174,
+            "usage_known_calls": 46,
+            "standard_list_price_usd": null,
+            "known_list_price_subtotal_usd": 0.0605256,
+            "unknown_cost_calls": 3,
+            "actual_invoice_usd": null
+          },
+          "answer_verification": {
+            "provider_calls": 28,
+            "successful_calls": 25,
+            "failed_calls": 3,
+            "input_tokens": null,
+            "output_tokens": null,
+            "billed_output_tokens": null,
+            "total_tokens": null,
+            "known_input_tokens_subtotal": 40707,
+            "known_output_tokens_subtotal": 638,
+            "usage_known_calls": 25,
+            "standard_list_price_usd": null,
+            "known_list_price_subtotal_usd": 0.0138071,
+            "unknown_cost_calls": 3,
+            "actual_invoice_usd": null
+          }
+        },
+        "known_list_price_usd_per_planned_task": 0.001558632,
+        "total_api_usd_per_planned_task": null
+      },
+      "en": {
+        "planned_questions": 16,
+        "recorded_questions": 16,
+        "completed": 16,
+        "not_recorded": 0,
+        "status_accuracy": {
+          "numerator": 16,
+          "denominator": 16,
+          "rate": 1.0
+        },
+        "answered": 9,
+        "answerable_status_coverage": {
+          "numerator": 9,
+          "denominator": 9,
+          "rate": 1.0
+        },
+        "false_answer": [],
+        "false_abstention": [],
+        "confusion": {
+          "insufficient_evidence": {
+            "insufficient_evidence": 7
+          },
+          "answered": {
+            "answered": 9
+          }
+        },
+        "api_errors": [],
+        "retrieval": {
+          "denominator": 0,
+          "gold_kind": null,
+          "recall_at_5": null,
+          "mrr_at_5": null,
+          "baseline_limitation": "No human-reviewed raw-chunk gold; Step gold cannot score raw chunks"
+        },
+        "citation_mechanical_validity": {
+          "numerator": 27,
+          "denominator": 27,
+          "rate": 1.0
+        },
+        "citation_failure_codes": {},
+        "human_semantics": {
+          "reviewed_questions": 0,
+          "answers_question": null,
+          "conditions_correct": null,
+          "source_supported": null,
+          "citation_correctness": null
+        },
+        "latency_ms_all_attempts": {
+          "p50": 2480.12,
+          "p95": 5250.816,
+          "denominator": 16,
+          "includes_backoff": true
+        },
+        "latency_max_ms": 5250.816,
+        "latency_anomalies": [],
+        "latency_ms_successful": {
+          "p50": 2480.12,
+          "p95": 5250.816,
+          "denominator": 16
+        },
+        "http_attempts": 39,
+        "http_status_counts": {
+          "200": 39
+        },
+        "observed_retries": 0,
+        "provider_timeouts": [],
+        "backoff_seconds": 0.0,
+        "post_timeout_drain_ms": 0,
+        "pipeline_guard_counts": {
+          "draft_insufficient_evidence": 6,
+          "accepted": 9,
+          "retrieval_insufficient_evidence": 1
+        },
+        "leakage": [],
+        "cost": {
+          "provider_calls": 42,
+          "successful_calls": 41,
+          "failed_calls": 1,
+          "input_tokens": null,
+          "output_tokens": null,
+          "billed_output_tokens": null,
+          "total_tokens": null,
+          "known_input_tokens_subtotal": 73861,
+          "known_output_tokens_subtotal": 2773,
+          "usage_known_calls": 25,
+          "standard_list_price_usd": null,
+          "known_list_price_subtotal_usd": 0.0290908,
+          "unknown_cost_calls": 17,
+          "actual_invoice_usd": null
+        },
+        "cost_by_stage": {
+          "embedding_index": {
+            "provider_calls": 0,
+            "successful_calls": 0,
+            "failed_calls": 0,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "billed_output_tokens": 0,
+            "total_tokens": 0,
+            "known_input_tokens_subtotal": 0,
+            "known_output_tokens_subtotal": 0,
+            "usage_known_calls": 0,
+            "standard_list_price_usd": 0,
+            "known_list_price_subtotal_usd": 0,
+            "unknown_cost_calls": 0,
+            "actual_invoice_usd": null
+          },
+          "embedding_query": {
+            "provider_calls": 16,
+            "successful_calls": 16,
+            "failed_calls": 0,
+            "input_tokens": null,
+            "output_tokens": null,
+            "billed_output_tokens": null,
+            "total_tokens": null,
+            "known_input_tokens_subtotal": 0,
+            "known_output_tokens_subtotal": 0,
+            "usage_known_calls": 0,
+            "standard_list_price_usd": null,
+            "known_list_price_subtotal_usd": 0,
+            "unknown_cost_calls": 16,
+            "actual_invoice_usd": null
+          },
+          "translation": {
+            "provider_calls": 0,
+            "successful_calls": 0,
+            "failed_calls": 0,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "billed_output_tokens": 0,
+            "total_tokens": 0,
+            "known_input_tokens_subtotal": 0,
+            "known_output_tokens_subtotal": 0,
+            "usage_known_calls": 0,
+            "standard_list_price_usd": 0,
+            "known_list_price_subtotal_usd": 0,
+            "unknown_cost_calls": 0,
+            "actual_invoice_usd": null
+          },
+          "answer_generation": {
+            "provider_calls": 16,
+            "successful_calls": 16,
+            "failed_calls": 0,
+            "input_tokens": 51464,
+            "output_tokens": 2485,
+            "billed_output_tokens": 2485,
+            "total_tokens": 53949,
+            "known_input_tokens_subtotal": 51464,
+            "known_output_tokens_subtotal": 2485,
+            "usage_known_calls": 16,
+            "standard_list_price_usd": 0.0216517,
+            "known_list_price_subtotal_usd": 0.0216517,
+            "unknown_cost_calls": 0,
+            "actual_invoice_usd": null
+          },
+          "answer_verification": {
+            "provider_calls": 10,
+            "successful_calls": 9,
+            "failed_calls": 1,
+            "input_tokens": null,
+            "output_tokens": null,
+            "billed_output_tokens": null,
+            "total_tokens": null,
+            "known_input_tokens_subtotal": 22397,
+            "known_output_tokens_subtotal": 288,
+            "usage_known_calls": 9,
+            "standard_list_price_usd": null,
+            "known_list_price_subtotal_usd": 0.0074391,
+            "unknown_cost_calls": 1,
+            "actual_invoice_usd": null
+          }
+        },
+        "known_list_price_usd_per_planned_task": 0.001818175,
+        "total_api_usd_per_planned_task": null
+      }
+    },
+    "C_no_graph": {
+      "vi": {
+        "planned_questions": 50,
+        "recorded_questions": 50,
+        "completed": 47,
+        "not_recorded": 0,
+        "status_accuracy": {
+          "numerator": 33,
+          "denominator": 50,
+          "rate": 0.66
+        },
+        "answered": 17,
+        "answerable_status_coverage": {
+          "numerator": 16,
+          "denominator": 32,
+          "rate": 0.5
+        },
+        "false_answer": [
+          "HAAS_DEV_Q031"
+        ],
+        "false_abstention": [
+          "HAAS_DEV_Q026",
+          "HAAS_DEV_Q068",
+          "HAAS_DEV_Q007",
+          "HAAS_DEV_Q025",
+          "HAAS_DEV_Q017",
+          "HAAS_DEV_Q056",
+          "HAAS_DEV_Q010",
+          "HAAS_DEV_Q015",
+          "HAAS_DEV_Q060",
+          "HAAS_DEV_Q009",
+          "HAAS_DEV_Q014",
+          "HAAS_DEV_Q001",
+          "HAAS_DEV_Q018"
+        ],
+        "confusion": {
+          "needs_clarification": {
+            "needs_clarification": 1
+          },
+          "insufficient_evidence": {
+            "insufficient_evidence": 16,
+            "answered": 1
+          },
+          "answered": {
+            "insufficient_evidence": 13,
+            "answered": 16,
+            "error": 3
+          }
+        },
+        "api_errors": [
+          {
+            "question_id": "HAAS_DEV_Q059",
+            "http_status": 504,
+            "error_class": null,
+            "latency_ms": 90008.295
+          },
+          {
+            "question_id": "HAAS_DEV_Q012",
+            "http_status": 504,
+            "error_class": null,
+            "latency_ms": 90008.079
+          },
+          {
+            "question_id": "HAAS_DEV_Q016",
+            "http_status": 504,
+            "error_class": "GenerationError",
+            "latency_ms": 921754.993
+          }
+        ],
+        "retrieval": {
+          "denominator": 29,
+          "gold_kind": "human_reviewed_step_units",
+          "recall_at_5": 0.9310344827586207,
+          "mrr_at_5": 0.8908045977011494,
+          "baseline_limitation": null
+        },
+        "citation_mechanical_validity": {
+          "numerator": 30,
+          "denominator": 30,
+          "rate": 1.0
+        },
+        "citation_failure_codes": {},
+        "human_semantics": {
+          "reviewed_questions": 0,
+          "answers_question": null,
+          "conditions_correct": null,
+          "source_supported": null,
+          "citation_correctness": null
+        },
+        "latency_ms_all_attempts": {
+          "p50": 4513.596,
+          "p95": 90008.079,
+          "denominator": 50,
+          "includes_backoff": true
+        },
+        "latency_max_ms": 921754.993,
+        "latency_anomalies": [
+          {
+            "question_id": "HAAS_DEV_Q016",
+            "latency_ms": 921754.993,
+            "http_status": 504,
+            "backoff_seconds": 88.0,
+            "provider_call_elapsed_ms": 4742.6990000000005,
+            "explanation": "Observed latency over twice configured API deadline; cause not established; retained in all metrics"
+          }
+        ],
+        "latency_ms_successful": {
+          "p50": 4509.708,
+          "p95": 58243.992,
+          "denominator": 47
+        },
+        "http_attempts": 153,
+        "http_status_counts": {
+          "200": 138,
+          "429": 15
+        },
+        "observed_retries": 15,
+        "provider_timeouts": [],
+        "backoff_seconds": 590.0,
+        "post_timeout_drain_ms": 11253.999,
+        "pipeline_guard_counts": {
+          "retrieval_needs_clarification": 1,
+          "retrieval_insufficient_evidence": 15,
+          "mechanical_guard_or_procedure_coverage": 5,
+          "accepted": 17,
+          "draft_insufficient_evidence": 6,
+          "api_error": 3,
+          "pipeline_verifier_rejected": 3
+        },
+        "leakage": [],
+        "cost": {
+          "provider_calls": 154,
+          "successful_calls": 138,
+          "failed_calls": 16,
+          "input_tokens": null,
+          "output_tokens": null,
+          "billed_output_tokens": null,
+          "total_tokens": null,
+          "known_input_tokens_subtotal": 609424,
+          "known_output_tokens_subtotal": 11315,
+          "usage_known_calls": 104,
+          "standard_list_price_usd": null,
+          "known_list_price_subtotal_usd": 0.20770811,
+          "unknown_cost_calls": 50,
+          "actual_invoice_usd": null
+        },
+        "cost_by_stage": {
+          "embedding_index": {
+            "provider_calls": 0,
+            "successful_calls": 0,
+            "failed_calls": 0,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "billed_output_tokens": 0,
+            "total_tokens": 0,
+            "known_input_tokens_subtotal": 0,
+            "known_output_tokens_subtotal": 0,
+            "usage_known_calls": 0,
+            "standard_list_price_usd": 0,
+            "known_list_price_subtotal_usd": 0,
+            "unknown_cost_calls": 0,
+            "actual_invoice_usd": null
+          },
+          "embedding_query": {
+            "provider_calls": 34,
+            "successful_calls": 34,
+            "failed_calls": 0,
+            "input_tokens": null,
+            "output_tokens": null,
+            "billed_output_tokens": null,
+            "total_tokens": null,
+            "known_input_tokens_subtotal": 0,
+            "known_output_tokens_subtotal": 0,
+            "usage_known_calls": 0,
+            "standard_list_price_usd": null,
+            "known_list_price_subtotal_usd": 0,
+            "unknown_cost_calls": 34,
+            "actual_invoice_usd": null
+          },
+          "translation": {
+            "provider_calls": 51,
+            "successful_calls": 48,
+            "failed_calls": 3,
+            "input_tokens": null,
+            "output_tokens": null,
+            "billed_output_tokens": null,
+            "total_tokens": null,
+            "known_input_tokens_subtotal": 5338,
+            "known_output_tokens_subtotal": 804,
+            "usage_known_calls": 48,
+            "standard_list_price_usd": null,
+            "known_list_price_subtotal_usd": 0.0036114,
+            "unknown_cost_calls": 3,
+            "actual_invoice_usd": null
+          },
+          "answer_generation": {
+            "provider_calls": 42,
+            "successful_calls": 34,
+            "failed_calls": 8,
+            "input_tokens": null,
+            "output_tokens": null,
+            "billed_output_tokens": null,
+            "total_tokens": null,
+            "known_input_tokens_subtotal": 519613,
+            "known_output_tokens_subtotal": 9915,
+            "usage_known_calls": 34,
+            "standard_list_price_usd": null,
+            "known_list_price_subtotal_usd": 0.17726481,
+            "unknown_cost_calls": 8,
+            "actual_invoice_usd": null
+          },
+          "answer_verification": {
+            "provider_calls": 27,
+            "successful_calls": 22,
+            "failed_calls": 5,
+            "input_tokens": null,
+            "output_tokens": null,
+            "billed_output_tokens": null,
+            "total_tokens": null,
+            "known_input_tokens_subtotal": 84473,
+            "known_output_tokens_subtotal": 596,
+            "usage_known_calls": 22,
+            "standard_list_price_usd": null,
+            "known_list_price_subtotal_usd": 0.0268319,
+            "unknown_cost_calls": 5,
+            "actual_invoice_usd": null
+          }
+        },
+        "known_list_price_usd_per_planned_task": 0.0041541622,
+        "total_api_usd_per_planned_task": null
+      },
+      "en": {
+        "planned_questions": 16,
+        "recorded_questions": 16,
+        "completed": 16,
+        "not_recorded": 0,
+        "status_accuracy": {
+          "numerator": 15,
+          "denominator": 16,
+          "rate": 0.9375
+        },
+        "answered": 8,
+        "answerable_status_coverage": {
+          "numerator": 8,
+          "denominator": 9,
+          "rate": 0.8888888888888888
+        },
+        "false_answer": [],
+        "false_abstention": [
+          "HAAS_DEV_Q029"
+        ],
+        "confusion": {
+          "insufficient_evidence": {
+            "insufficient_evidence": 7
+          },
+          "answered": {
+            "insufficient_evidence": 1,
+            "answered": 8
+          }
+        },
+        "api_errors": [],
+        "retrieval": {
+          "denominator": 8,
+          "gold_kind": "human_reviewed_step_units",
+          "recall_at_5": 1.0,
+          "mrr_at_5": 0.8375,
+          "baseline_limitation": null
+        },
+        "citation_mechanical_validity": {
+          "numerator": 11,
+          "denominator": 11,
+          "rate": 1.0
+        },
+        "citation_failure_codes": {},
+        "human_semantics": {
+          "reviewed_questions": 0,
+          "answers_question": null,
+          "conditions_correct": null,
+          "source_supported": null,
+          "citation_correctness": null
+        },
+        "latency_ms_all_attempts": {
+          "p50": 3110.859,
+          "p95": 5456.626,
+          "denominator": 16,
+          "includes_backoff": true
+        },
+        "latency_max_ms": 5456.626,
+        "latency_anomalies": [],
+        "latency_ms_successful": {
+          "p50": 3110.859,
+          "p95": 5456.626,
+          "denominator": 16
+        },
+        "http_attempts": 26,
+        "http_status_counts": {
+          "200": 26
+        },
+        "observed_retries": 0,
+        "provider_timeouts": [],
+        "backoff_seconds": 0.0,
+        "post_timeout_drain_ms": 0,
+        "pipeline_guard_counts": {
+          "retrieval_insufficient_evidence": 7,
+          "mechanical_guard_or_procedure_coverage": 1,
+          "accepted": 8
+        },
+        "leakage": [],
+        "cost": {
+          "provider_calls": 26,
+          "successful_calls": 26,
+          "failed_calls": 0,
+          "input_tokens": null,
+          "output_tokens": null,
+          "billed_output_tokens": null,
+          "total_tokens": null,
+          "known_input_tokens_subtotal": 144396,
+          "known_output_tokens_subtotal": 2655,
+          "usage_known_calls": 17,
+          "standard_list_price_usd": null,
+          "known_list_price_subtotal_usd": 0.04674114,
+          "unknown_cost_calls": 9,
+          "actual_invoice_usd": null
+        },
+        "cost_by_stage": {
+          "embedding_index": {
+            "provider_calls": 0,
+            "successful_calls": 0,
+            "failed_calls": 0,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "billed_output_tokens": 0,
+            "total_tokens": 0,
+            "known_input_tokens_subtotal": 0,
+            "known_output_tokens_subtotal": 0,
+            "usage_known_calls": 0,
+            "standard_list_price_usd": 0,
+            "known_list_price_subtotal_usd": 0,
+            "unknown_cost_calls": 0,
+            "actual_invoice_usd": null
+          },
+          "embedding_query": {
+            "provider_calls": 9,
+            "successful_calls": 9,
+            "failed_calls": 0,
+            "input_tokens": null,
+            "output_tokens": null,
+            "billed_output_tokens": null,
+            "total_tokens": null,
+            "known_input_tokens_subtotal": 0,
+            "known_output_tokens_subtotal": 0,
+            "usage_known_calls": 0,
+            "standard_list_price_usd": null,
+            "known_list_price_subtotal_usd": 0,
+            "unknown_cost_calls": 9,
+            "actual_invoice_usd": null
+          },
+          "translation": {
+            "provider_calls": 0,
+            "successful_calls": 0,
+            "failed_calls": 0,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "billed_output_tokens": 0,
+            "total_tokens": 0,
+            "known_input_tokens_subtotal": 0,
+            "known_output_tokens_subtotal": 0,
+            "usage_known_calls": 0,
+            "standard_list_price_usd": 0,
+            "known_list_price_subtotal_usd": 0,
+            "unknown_cost_calls": 0,
+            "actual_invoice_usd": null
+          },
+          "answer_generation": {
+            "provider_calls": 9,
+            "successful_calls": 9,
+            "failed_calls": 0,
+            "input_tokens": 117473,
+            "output_tokens": 2451,
+            "billed_output_tokens": 2451,
+            "total_tokens": 119924,
+            "known_input_tokens_subtotal": 117473,
+            "known_output_tokens_subtotal": 2451,
+            "usage_known_calls": 9,
+            "standard_list_price_usd": 0.03815424,
+            "known_list_price_subtotal_usd": 0.03815424,
+            "unknown_cost_calls": 0,
+            "actual_invoice_usd": null
+          },
+          "answer_verification": {
+            "provider_calls": 8,
+            "successful_calls": 8,
+            "failed_calls": 0,
+            "input_tokens": 26923,
+            "output_tokens": 204,
+            "billed_output_tokens": 204,
+            "total_tokens": 27127,
+            "known_input_tokens_subtotal": 26923,
+            "known_output_tokens_subtotal": 204,
+            "usage_known_calls": 8,
+            "standard_list_price_usd": 0.0085869,
+            "known_list_price_subtotal_usd": 0.0085869,
+            "unknown_cost_calls": 0,
+            "actual_invoice_usd": null
+          }
+        },
+        "known_list_price_usd_per_planned_task": 0.00292132125,
+        "total_api_usd_per_planned_task": null
+      }
+    }
+  }
+}

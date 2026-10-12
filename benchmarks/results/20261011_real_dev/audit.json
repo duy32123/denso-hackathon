@@ -1,0 +1,213 @@
+{
+  "git": {
+    "head": "dfde6f43704b532053c74e09701d1e978d5d12f9",
+    "feature_head": "dfde6f43704b532053c74e09701d1e978d5d12f9",
+    "branch": "benchmark/a2-real-dev-evidence",
+    "status": "?? benchmarks/\n?? scripts/benchmark_knowflow/"
+  },
+  "bundle_manifest": {
+    "schema_version": "1.0.0",
+    "bundle_id": "BUNDLE_HAAS_SMTC_DEV_20382d7957b6",
+    "source_type": "real",
+    "dataset_split": "dev",
+    "created_at": "2026-09-17T17:45:20Z",
+    "files": [
+      {
+        "path": "sources.jsonl",
+        "sha256": "e705acc5dba6653e07bdf5c7ebc615f82bd7ff92a9d4c1626021572e13a11b86",
+        "record_count": 5
+      },
+      {
+        "path": "workflows.jsonl",
+        "sha256": "05844566ae144e94964203a4df657724fcd520260b83131589291a87fe1525f0",
+        "record_count": 7
+      }
+    ],
+    "producer": {
+      "team": "team_1",
+      "pipeline_version": "d1b-exporter-0.1.0"
+    }
+  },
+  "import_result": {
+    "status": "imported",
+    "db": "C:\\Users\\PC\\Documents\\denso_final\\denso-hackathon\\out\\benchmark_knowflow\\20261011_real_dev\\real_dev.sqlite",
+    "bundle_id": "BUNDLE_HAAS_SMTC_DEV_20382d7957b6",
+    "index_build_id": "IDX_WP1_a370567bdad9772ef9fe057efc0edb05dafe74a0040bdd35f49bc78d849fbfe8",
+    "new_sources": 5,
+    "new_workflows": 7,
+    "unchanged_workflows": 0,
+    "active_workflows": 4,
+    "active_steps": 38,
+    "warnings": [],
+    "index_kind": "search-records"
+  },
+  "active_workflows": [
+    {
+      "workflow_id": "B0_SRC_HAAS_0005",
+      "revision": 2,
+      "lifecycle": "active",
+      "steps": 9,
+      "claims": 33,
+      "relations": 0,
+      "source_ids": [
+        "SRC_HAAS_0005"
+      ],
+      "technical_review": {
+        "not_requested": 33
+      },
+      "source_review": {
+        "source_checked": 33
+      }
+    },
+    {
+      "workflow_id": "REAL_WF_0001",
+      "revision": 1,
+      "lifecycle": "active",
+      "steps": 11,
+      "claims": 39,
+      "relations": 1,
+      "source_ids": [
+        "SRC_HAAS_0005"
+      ],
+      "technical_review": {
+        "not_requested": 39
+      },
+      "source_review": {
+        "source_checked": 39
+      }
+    },
+    {
+      "workflow_id": "REAL_WF_0002",
+      "revision": 2,
+      "lifecycle": "active",
+      "steps": 9,
+      "claims": 26,
+      "relations": 1,
+      "source_ids": [
+        "SRC_HAAS_0001",
+        "SRC_HAAS_0002"
+      ],
+      "technical_review": {
+        "not_requested": 26
+      },
+      "source_review": {
+        "source_checked": 26
+      }
+    },
+    {
+      "workflow_id": "REAL_WF_0003",
+      "revision": 2,
+      "lifecycle": "active",
+      "steps": 9,
+      "claims": 36,
+      "relations": 1,
+      "source_ids": [
+        "SRC_HAAS_0003",
+        "SRC_HAAS_0004"
+      ],
+      "technical_review": {
+        "not_requested": 36
+      },
+      "source_review": {
+        "source_checked": 36
+      }
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "SRC_HAAS_0001",
+      "source_kind": "official_service_video",
+      "title": "Side-Mount Tool Changer Double Arm Troubleshooting",
+      "url": "https://www.haascnc.com/video/service/TmjjC7BDDag.html",
+      "content_sha256": "2dc279c1da081d855cbe3d87901950ef9fc287394d3078a85688fbcd2dabb468",
+      "raw_text_chars": 2420,
+      "transcript": "acquisition/preprocessing/transcripts/SRC_HAAS_0001/corrected.json"
+    },
+    {
+      "source_id": "SRC_HAAS_0002",
+      "source_kind": "service_document",
+      "title": "Side Mount Tool Changer (SMTC) - Double Arm / Cambox - Troubleshooting Guide - TG0128",
+      "url": "https://www.haascnc.com/service/troubleshooting-and-how-to/troubleshooting/Side_Mount_Tool_Changer_SMTC_Double_Arm_Troubleshooting_Guide.html",
+      "content_sha256": "a8a47506a115f128e57290179fba3a874117c5f52ac8c8488ce065acc0f4ebb6",
+      "raw_text_chars": 12330,
+      "transcript": null
+    },
+    {
+      "source_id": "SRC_HAAS_0003",
+      "source_kind": "official_service_video",
+      "title": "Tool Changer Recovery; Haas Side Mount Tool Changer (SMTC)",
+      "url": "https://www.haascnc.com/video/service/2bra6qm6wm4.html",
+      "content_sha256": "dc6893074ade6790190a60fb039feae2d9cdb5ce7cfc3b4ec7da01141e2c41e6",
+      "raw_text_chars": 5099,
+      "transcript": "acquisition/preprocessing/transcripts/SRC_HAAS_0003/corrected.json"
+    },
+    {
+      "source_id": "SRC_HAAS_0004",
+      "source_kind": "service_document",
+      "title": "Side-Mount Tool Changer - Manual Recovery - Mill",
+      "url": "https://www.haascnc.com/service/troubleshooting-and-how-to/how-to/mill---side-mount-tool-changer---manual-recovery.html",
+      "content_sha256": "66454ed72f033d500a25df30bdd3db84939b0411a6ed32ab9cd9e206f3aa0109",
+      "raw_text_chars": 1851,
+      "transcript": null
+    },
+    {
+      "source_id": "SRC_HAAS_0005",
+      "source_kind": "official_service_video",
+      "title": "Replace a Tool Pocket on Your Haas Side Mount Tool Changer (SMTC)",
+      "url": "https://www.haascnc.com/video/service/cs-BvWsKXyU.html",
+      "content_sha256": "5d8ecf73a6b6b4ee6a80cdd271cbdb767b5e075d642c8c1917557eeff8d2f292",
+      "raw_text_chars": 2672,
+      "transcript": "acquisition/preprocessing/transcripts/SRC_HAAS_0005/corrected.json"
+    }
+  ],
+  "questions": 66,
+  "questions_sha256": "0793aea3eaf00b12883ef5ad1e0d251c3d19d617ac2ac32c1a07bd22b293d7de",
+  "corpus_files_sha256": "bf9752e17feee4e853a6536f7eb4cacadd9ed945812648a7d95fa9ed982a886a",
+  "input_files": {
+    "data/eval/haas_real_dev.retrieval.v0.jsonl": "0793aea3eaf00b12883ef5ad1e0d251c3d19d617ac2ac32c1a07bd22b293d7de",
+    "acquisition/export/haas_pilot_dev_bundle/manifest.json": "30351ada029f205130ac8ea848de007989463df77c67bd37d0bf3ac6c07ff85c",
+    "acquisition/export/haas_pilot_dev_bundle/sources.jsonl": "e705acc5dba6653e07bdf5c7ebc615f82bd7ff92a9d4c1626021572e13a11b86",
+    "acquisition/export/haas_pilot_dev_bundle/workflows.jsonl": "05844566ae144e94964203a4df657724fcd520260b83131589291a87fe1525f0",
+    "data/sources/haas_pilot_sources.jsonl": "e705acc5dba6653e07bdf5c7ebc615f82bd7ff92a9d4c1626021572e13a11b86",
+    "data/workflows/dev/B0_SRC_HAAS_0005.r1.json": "db5732b18c3cb7bddb6ab4ea437a99d8e79a0d949ef1e04357f59954bb95df2c",
+    "data/workflows/dev/B0_SRC_HAAS_0005.r2.json": "8d7a5eeded42f80f5fa7387101a12a99f5ac8954c85434048f8edcf8f94fefd5",
+    "data/workflows/dev/REAL_WF_0001.r1.json": "3548c883f295151b6d93f9474e2a6b18af42a81b8df54a05f549c288d00a5277",
+    "data/workflows/dev/REAL_WF_0002.r1.json": "51cc9af4ba3d6d3bb6949fbfed414d19c5e2564f9da97a7eee126aa43b6f6900",
+    "data/workflows/dev/REAL_WF_0002.r2.json": "d5c0bf2fc7af4c7fe68600a530635bd2bcf3792646fa90175502953817b4c8c1",
+    "data/workflows/dev/REAL_WF_0003.r1.json": "bfe60115ae2165dcef3a80c930f2d4604dc9896c359dd282439e6ec9995e3812",
+    "data/workflows/dev/REAL_WF_0003.r2.json": "565e9f089ecbbb2d5b71e6c1fd514ebfb5d26cbb6bf0dc03132a88b16dfdad59",
+    "acquisition/preprocessing/transcripts/SRC_HAAS_0001/corrected.json": "66df79b11aad6a2a8c26d24dc38a1633552a122813c9fca257515227fcddc8d6",
+    "acquisition/preprocessing/transcripts/SRC_HAAS_0003/corrected.json": "ee1c43c555cad70a8db1c0808e73bd35366c23dc0ac260e17611e45becdaa180",
+    "acquisition/preprocessing/transcripts/SRC_HAAS_0005/corrected.json": "eb85bc5081846578f88e3a27eed07ba67fb842cea574d082f66e260a2e899fd2"
+  },
+  "labels": {
+    "reviewed": 66
+  },
+  "reviewers": {
+    "duy32123": 52,
+    "quyhienln": 14
+  },
+  "languages": {
+    "vi": 50,
+    "en": 16
+  },
+  "expected_status": {
+    "answered": 41,
+    "insufficient_evidence": 24,
+    "needs_clarification": 1
+  },
+  "retrieval_gold_denominator": 37,
+  "python": "3.12.14",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "dependencies": {
+    "google-genai": "2.29.0",
+    "pydantic": "2.14.0",
+    "fastapi": "0.143.0",
+    "httpx": "0.28.1",
+    "snowballstemmer": "3.1.1",
+    "python-dotenv": "1.2.4",
+    "pytest": "9.1.1"
+  },
+  "holdout_opened": false,
+  "synthetic_opened": false
+}

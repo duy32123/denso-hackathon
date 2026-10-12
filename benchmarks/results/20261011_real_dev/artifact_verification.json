@@ -1,0 +1,39 @@
+{
+  "planned_tasks": 198,
+  "recorded_tasks": 198,
+  "missing_tasks": 0,
+  "duplicates": 0,
+  "frozen_files_changed": [],
+  "product_unchanged": true,
+  "review_rows": 198,
+  "answer_hashes_valid": true,
+  "provider_journal_matches_rows": true,
+  "cost_includes_interrupted_calls": true,
+  "per_question_cost_matches_complete_ledger": true,
+  "credential_findings": 0,
+  "retained_evidence": {
+    "retained_transcript": 115,
+    "keyframe": 12,
+    "retained_text": 9
+  },
+  "unavailable_evidence": [],
+  "evidence_asset_files": {
+    "acquisition/preprocessing/keyframes/SRC_HAAS_0005/kf_0142700.jpg": "fdb25497ea02a70a52eb644b34a3bda86760c93c5a9124dd61fe30f83ba8f176",
+    "acquisition/preprocessing/keyframes/SRC_HAAS_0001/kf_0041220.jpg": "7b29a2e9b203ad27d7904c797d0d1e59bd12d53987b198d85b92147372002352",
+    "acquisition/preprocessing/keyframes/SRC_HAAS_0001/kf_0115000.jpg": "e3ad49471462f1484e42811406a0c4af76ab932be49885ed0800556bc060b036",
+    "acquisition/preprocessing/keyframes/SRC_HAAS_0001/kf_0124300.jpg": "b00d6f89a5a2013b70bb53626bddf16da519556fabae69155e308ee66ff5634d",
+    "acquisition/preprocessing/keyframes/SRC_HAAS_0001/kf_0170000.jpg": "71d7518d9cdf2b4a3eb3e9626e475e5b27af9b126936a3f6852196b8af11d5ba",
+    "acquisition/preprocessing/keyframes/SRC_HAAS_0003/kf_0065500.jpg": "d25a1b9aba6ae0e9ce90ec25c6be3c37afcb011347ef6946deb87d4f63cdbb72",
+    "acquisition/preprocessing/keyframes/SRC_HAAS_0003/kf_0116500.jpg": "8ada635d7713b5805e1f0e43cb9740d73a30202ddb580affab3bbc2d13ba3765",
+    "acquisition/preprocessing/keyframes/SRC_HAAS_0003/kf_0123000.jpg": "9144751c303c83f5adb932f7a366420b310466281604b44b4c62c0fe36c2b4f3",
+    "acquisition/preprocessing/keyframes/SRC_HAAS_0003/kf_0157000.jpg": "70f263211894e659f4112520df89af82e873b79177e6be8e823f7138f066c039",
+    "acquisition/preprocessing/keyframes/SRC_HAAS_0003/kf_0190000.jpg": "d68eb03b91fe2b994a3a0ad7cde32f5eb2e34d8b6e9a0da6a827f1d6a7eb762a",
+    "acquisition/preprocessing/keyframes/SRC_HAAS_0003/kf_0242900.jpg": "05575e7af9c57295c5a0a5572d872a1bd1d29e4917b712eb185a1f94c5d1c3b9",
+    "acquisition/preprocessing/keyframes/SRC_HAAS_0003/kf_0258000.jpg": "3f010495a08744082242697d3a0263eb80194957a320de4fdd66cc284cb30694"
+  },
+  "evidence_assets_sha256": "40ab6d239232d4bc4df07dfdc5d36467861ef850b99c30c110d970e0eb5edec9",
+  "evidence_assets_match_product_commit": true,
+  "holdout_opened": false,
+  "report_code_sha256": "23ffc136256295332942e7309a25ca35e4dff8b47ca70b252222558385777fe7",
+  "review_import_code_sha256": "bc3f49c3f12ad2493327d3ee3556173ea9346f34b41ff310436db91c6c3f9726"
+}

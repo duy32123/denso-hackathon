@@ -1,0 +1,19 @@
+{
+  "at": "2026-10-12T01:28:56.205578+00:00",
+  "cause": "Tool/environment interruption terminated process; read-only process check confirmed no benchmark running.",
+  "preserved_rows": 107,
+  "unfinished_task": {
+    "arm": "B_transcript_rag",
+    "question_id": "HAAS_DEV_Q019",
+    "status": "interrupted",
+    "http_status": null,
+    "latency_ms": null
+  },
+  "provider_call_ids": [
+    "call-000345",
+    "call-000346",
+    "call-000347"
+  ],
+  "resume_policy": "Only unfinished tasks. Completed rows and HTTP errors are not rerun or overwritten. Include interrupted provider calls in cost ledger.",
+  "unobserved_inflight_cost_usd": null
+}

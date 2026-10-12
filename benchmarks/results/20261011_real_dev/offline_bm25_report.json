@@ -1,0 +1,209 @@
+{
+  "run_id": "EVAL_20261011T165022Z_86a6ce24",
+  "created_at": "2026-10-11T16:50:22+00:00",
+  "git": {
+    "commit": "dfde6f43704b532053c74e09701d1e978d5d12f9",
+    "dirty": true
+  },
+  "db": "C:\\Users\\PC\\Documents\\denso_final\\denso-hackathon\\out\\benchmark_knowflow\\20261011_real_dev\\real_dev.sqlite",
+  "source_type": "real",
+  "dataset_split": "dev",
+  "index_build_id": "IDX_SEARCH_1a9591e771409f82fbaee974713046e2a2ed7470e73c9ec33b365f8816127006",
+  "record_build_id": "IDX_WP1_a370567bdad9772ef9fe057efc0edb05dafe74a0040bdd35f49bc78d849fbfe8",
+  "embedding": null,
+  "questions_path": "C:\\Users\\PC\\Documents\\denso_final\\denso-hackathon\\data\\eval\\haas_real_dev.retrieval.v0.jsonl",
+  "questions_sha256": "0793aea3eaf00b12883ef5ad1e0d251c3d19d617ac2ac32c1a07bd22b293d7de",
+  "questions": 66,
+  "gold_labels": {
+    "draft": 0,
+    "ai_reviewed": 0,
+    "reviewed": 66
+  },
+  "config": {
+    "top_k": 5,
+    "candidate_k": 20,
+    "min_cosine": 0.25,
+    "rrf_k": 60,
+    "min_term_coverage": 0.2,
+    "query_translation": "never",
+    "workflow_routing": "best_step",
+    "relevance_policy": "claim_coherence",
+    "strategies": [
+      "lexical"
+    ]
+  },
+  "query_embedding_calls": 0,
+  "query_cache": null,
+  "translation": null,
+  "query_translation_calls": 0,
+  "translation_cache": null,
+  "strategies": {
+    "lexical": {
+      "questions": 66,
+      "retrieval": {
+        "questions": 37,
+        "recall_at_5": 0.5811,
+        "mrr_at_5": 0.4955,
+        "hit_at_1": 0.4324,
+        "answer_coverage": 0.7838,
+        "incomplete_recall": [
+          "HAAS_DEV_Q001",
+          "HAAS_DEV_Q008",
+          "HAAS_DEV_Q009",
+          "HAAS_DEV_Q010",
+          "HAAS_DEV_Q011",
+          "HAAS_DEV_Q013",
+          "HAAS_DEV_Q014",
+          "HAAS_DEV_Q015",
+          "HAAS_DEV_Q016",
+          "HAAS_DEV_Q018",
+          "HAAS_DEV_Q025",
+          "HAAS_DEV_Q026",
+          "HAAS_DEV_Q055",
+          "HAAS_DEV_Q056",
+          "HAAS_DEV_Q057",
+          "HAAS_DEV_Q066"
+        ]
+      },
+      "workflow_selection": {
+        "questions": 45,
+        "accuracy": 0.6,
+        "selected": {
+          "B0_SRC_HAAS_0005": 15,
+          "REAL_WF_0001": 6,
+          "REAL_WF_0003": 11,
+          "REAL_WF_0002": 12
+        }
+      },
+      "status": {
+        "accuracy": 0.7121,
+        "confusion": {
+          "insufficient_evidence": {
+            "insufficient_evidence": 11,
+            "retrieved": 9
+          },
+          "needs_clarification": {
+            "needs_clarification": 1
+          },
+          "retrieved": {
+            "insufficient_evidence": 10,
+            "retrieved": 35
+          }
+        },
+        "false_retrieved": [
+          "HAAS_DEV_Q033",
+          "HAAS_DEV_Q039",
+          "HAAS_DEV_Q040",
+          "HAAS_DEV_Q042",
+          "HAAS_DEV_Q043",
+          "HAAS_DEV_Q044",
+          "HAAS_DEV_Q045",
+          "HAAS_DEV_Q046",
+          "HAAS_DEV_Q047"
+        ],
+        "missed": [
+          "HAAS_DEV_Q001",
+          "HAAS_DEV_Q009",
+          "HAAS_DEV_Q010",
+          "HAAS_DEV_Q011",
+          "HAAS_DEV_Q014",
+          "HAAS_DEV_Q016",
+          "HAAS_DEV_Q025",
+          "HAAS_DEV_Q026",
+          "HAAS_DEV_Q030",
+          "HAAS_DEV_Q031"
+        ],
+        "wrong_status": [
+          "HAAS_DEV_Q001",
+          "HAAS_DEV_Q009",
+          "HAAS_DEV_Q010",
+          "HAAS_DEV_Q011",
+          "HAAS_DEV_Q014",
+          "HAAS_DEV_Q016",
+          "HAAS_DEV_Q025",
+          "HAAS_DEV_Q026",
+          "HAAS_DEV_Q030",
+          "HAAS_DEV_Q031",
+          "HAAS_DEV_Q033",
+          "HAAS_DEV_Q039",
+          "HAAS_DEV_Q040",
+          "HAAS_DEV_Q042",
+          "HAAS_DEV_Q043",
+          "HAAS_DEV_Q044",
+          "HAAS_DEV_Q045",
+          "HAAS_DEV_Q046",
+          "HAAS_DEV_Q047"
+        ]
+      },
+      "by_category": {
+        "abstain_detail": {
+          "questions": 4,
+          "status_accuracy": 0.5,
+          "recall_at_5": null
+        },
+        "clarification": {
+          "questions": 1,
+          "status_accuracy": 1.0,
+          "recall_at_5": null
+        },
+        "context_mismatch": {
+          "questions": 1,
+          "status_accuracy": 1.0,
+          "recall_at_5": null
+        },
+        "detail": {
+          "questions": 27,
+          "status_accuracy": 0.8519,
+          "recall_at_5": 0.7037
+        },
+        "multi_unit": {
+          "questions": 3,
+          "status_accuracy": 0.3333,
+          "recall_at_5": 0.1667
+        },
+        "no_diacritics": {
+          "questions": 4,
+          "status_accuracy": 0.75,
+          "recall_at_5": 0.25
+        },
+        "off_topic": {
+          "questions": 1,
+          "status_accuracy": 1.0,
+          "recall_at_5": null
+        },
+        "out_of_scope": {
+          "questions": 18,
+          "status_accuracy": 0.5,
+          "recall_at_5": null
+        },
+        "paraphrase": {
+          "questions": 3,
+          "status_accuracy": 0.6667,
+          "recall_at_5": 0.3333
+        },
+        "procedure": {
+          "questions": 4,
+          "status_accuracy": 1.0,
+          "recall_at_5": null
+        }
+      },
+      "by_language": {
+        "en": {
+          "questions": 16,
+          "status_accuracy": 1.0,
+          "recall_at_5": 1.0
+        },
+        "vi": {
+          "questions": 50,
+          "status_accuracy": 0.62,
+          "recall_at_5": 0.4655
+        }
+      },
+      "latency_ms": {
+        "p50": 212.62,
+        "p95": 289.88
+      },
+      "embedding_calls": 0
+    }
+  }
+}

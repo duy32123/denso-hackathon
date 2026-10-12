@@ -1,0 +1,485 @@
+{
+  "workflow_id": "REAL_WF_0006",
+  "revision": 1,
+  "authored_by": "team1-d1a-draft",
+  "dataset_split": "dev",
+  "title": "Troubleshoot alarm 254 spindle motor overheat on a Haas mill",
+  "language": "en",
+  "created_at": "2026-10-12T00:00:00Z",
+  "source_ids": [
+    "SRC_HAAS_0010"
+  ],
+  "attribution": {
+    "label": "Orville Collins (presenter)",
+    "kind": "speaker"
+  },
+  "scope": "Alarm 254 troubleshooting as demonstrated in SRC_HAAS_0010.",
+  "context": {
+    "manufacturer": "Haas Automation",
+    "machine_family": "Haas mills (vertical and horizontal)",
+    "subsystem": "spindle motor thermal protection",
+    "task_type": "troubleshooting",
+    "symptoms": [
+      "alarm 254 spindle motor overheat during a job"
+    ],
+    "alarm_codes": [
+      "254"
+    ],
+    "components": [
+      "spindle motor",
+      "motor temperature sensor",
+      "spindle fan",
+      "I/O PCB cable P39",
+      "ferrite filter",
+      "spindle head cover"
+    ],
+    "provenance": {
+      "manufacturer": {
+        "basis": "source",
+        "note": "Publisher is Haas Automation, Inc."
+      },
+      "machine_family": {
+        "basis": "source",
+        "note": "The narration distinguishes vertical and horizontal mills."
+      },
+      "subsystem": {
+        "basis": "source",
+        "note": "Named in the title and narration."
+      },
+      "task_type": {
+        "basis": "source",
+        "note": "Presented as troubleshooting for alarm 254."
+      },
+      "symptoms": {
+        "basis": "source",
+        "note": "Stated in the narration and shown on the control."
+      },
+      "alarm_codes": {
+        "basis": "source",
+        "note": "Stated in the narration and shown on the control."
+      },
+      "components": {
+        "basis": "source",
+        "note": "Named in the narration or shown with labels on screen."
+      },
+      "machine_model": {
+        "basis": "unknown",
+        "note": "Not stated; the video shows a VF-2 model graphic only as an illustration."
+      }
+    }
+  },
+  "steps": [
+    {
+      "title": "Understand what triggers alarm 254",
+      "fields": {
+        "context": [
+          {
+            "text": "The presenter says the alarm can come up in the middle of a job, and names it as alarm 254 spindle motor overheat.",
+            "evidence": [
+              [
+                "SRC_HAAS_0010:C0001",
+                "SRC_HAAS_0010:U0002"
+              ]
+            ],
+            "explanation": "The captions state this directly. Cue 1 is corrected from 'alarmed 2:54 spin the motor overheat' to 'alarm 254 spindle motor overheat' (the video's title)."
+          },
+          {
+            "text": "The control shows an orange banner reading '254 SPINDLE MOTOR OVERHEAT'.",
+            "evidence_type": "observed",
+            "attribution": {
+              "label": "D1-A keyframe observation, pending human check",
+              "kind": "model"
+            },
+            "evidence": [
+              {
+                "keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0010/kf_0026500.jpg",
+                "source_id": "SRC_HAAS_0010",
+                "start_ms": 26000,
+                "end_ms": 27000,
+                "observation_note": "Control screen with an orange banner '254 SPINDLE MOTOR OVERHEAT'.",
+                "explanation": "The banner text is legible in the frame."
+              },
+              [
+                "SRC_HAAS_0010:C0001",
+                "SRC_HAAS_0010:U0002",
+                "SRC_HAAS_0010:U0003",
+                "SRC_HAAS_0010:C0004"
+              ]
+            ],
+            "explanation": "The narration around this moment names the alarm and how it is triggered."
+          }
+        ],
+        "rationale": [
+          {
+            "text": "The presenter says the spindle motor has a temperature sensor built into it, usually in the junction box, with factory-preset temperature limits, and that the sensor triggers alarm 254 when the motor temperature begins to reach those limits.",
+            "evidence": [
+              [
+                "SRC_HAAS_0010:U0002",
+                "SRC_HAAS_0010:U0003",
+                "SRC_HAAS_0010:C0004"
+              ]
+            ],
+            "explanation": "The captions state this directly. Cue 4 is corrected from 'alarm to 54' to 'alarm 254'."
+          }
+        ]
+      },
+      "questions": [
+        {
+          "target_field": "outcome",
+          "reason": "missing",
+          "question": "What does the machine do when the alarm triggers (stop the spindle, stop the program)? The video does not say."
+        }
+      ]
+    },
+    {
+      "title": "Check the spindle load",
+      "fields": {
+        "action": [
+          {
+            "text": "The presenter says to begin by checking that the spindle loads are not way over a hundred percent for extended periods.",
+            "evidence": [
+              [
+                "SRC_HAAS_0010:U0005",
+                "SRC_HAAS_0010:U0006"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          },
+          {
+            "text": "The Main Spindle panel shows spindle speed 2700 RPM, spindle power 18.7 KW and a Spindle Load bar reading 149%.",
+            "evidence_type": "observed",
+            "attribution": {
+              "label": "D1-A keyframe observation, pending human check",
+              "kind": "model"
+            },
+            "evidence": [
+              {
+                "keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0010/kf_0031000.jpg",
+                "source_id": "SRC_HAAS_0010",
+                "start_ms": 30500,
+                "end_ms": 31500,
+                "observation_note": "Main Spindle panel: spindle speed 2700 RPM, spindle power 18.7 KW, Spindle Load bar reading 149%.",
+                "explanation": "The panel values and the load percentage are legible in the frame."
+              },
+              [
+                "SRC_HAAS_0010:U0005"
+              ]
+            ],
+            "explanation": "The narration at this moment is about spindle load going well over a hundred percent."
+          }
+        ],
+        "rationale": [
+          {
+            "text": "The presenter ties spindle load that stays far over a hundred percent for long periods to running a long, super-aggressive program.",
+            "evidence": [
+              [
+                "SRC_HAAS_0010:U0005",
+                "SRC_HAAS_0010:U0006"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          }
+        ]
+      },
+      "questions": [
+        {
+          "target_field": "acceptance_criteria",
+          "reason": "missing",
+          "question": "What load level and duration are acceptable? The video only says 'not way over a hundred percent for extended periods'."
+        }
+      ]
+    },
+    {
+      "title": "Check the spindle fan",
+      "fields": {
+        "rationale": [
+          {
+            "text": "The presenter says this alarm can be triggered if there are problems with the spindle fan.",
+            "evidence": [
+              [
+                "SRC_HAAS_0010:U0006",
+                "SRC_HAAS_0010:U0007"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          }
+        ],
+        "acceptance_criteria": [
+          {
+            "text": "The presenter says the fan should turn on as soon as the spindle starts turning.",
+            "evidence": [
+              [
+                "SRC_HAAS_0010:U0007",
+                "SRC_HAAS_0010:U0008"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          },
+          {
+            "text": "The presenter says that on a vertical mill the fan should pull air up through the spindle head and push it out through the top, and on a horizontal mill it pushes air out through the back of the spindle head.",
+            "evidence": [
+              [
+                "SRC_HAAS_0010:U0008",
+                "SRC_HAAS_0010:U0009",
+                "SRC_HAAS_0010:U0010"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          }
+        ],
+        "action": [
+          {
+            "text": "The presenter says that if the fan is working, to make sure it is running in the right direction.",
+            "evidence": [
+              [
+                "SRC_HAAS_0010:U0008"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          },
+          {
+            "text": "A close-up shows a fan inside a sheet-metal housing.",
+            "evidence_type": "observed",
+            "attribution": {
+              "label": "D1-A keyframe observation, pending human check",
+              "kind": "model"
+            },
+            "evidence": [
+              {
+                "keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0010/kf_0040500.jpg",
+                "source_id": "SRC_HAAS_0010",
+                "start_ms": 40000,
+                "end_ms": 41000,
+                "observation_note": "Close-up of a fan inside a sheet-metal housing, shown while the spindle fan is discussed.",
+                "explanation": "The fan housing and its blades are visible in the frame; the frame alone does not show that this is the spindle fan."
+              },
+              [
+                "SRC_HAAS_0010:U0007",
+                "SRC_HAAS_0010:U0008"
+              ]
+            ],
+            "explanation": "The narration at this moment is about the spindle fan turning on."
+          }
+        ]
+      },
+      "questions": [
+        {
+          "target_field": "action",
+          "reason": "missing",
+          "question": "How is the fan's direction checked in practice (by hand over the outlet, by eye)?"
+        }
+      ]
+    },
+    {
+      "title": "Next-gen control: check the P39 cable",
+      "fields": {
+        "condition": [
+          {
+            "text": "The presenter says this check applies if the machine has a next-gen control.",
+            "evidence": [
+              [
+                "SRC_HAAS_0010:U0010",
+                "SRC_HAAS_0010:U0011"
+              ]
+            ],
+            "explanation": "The captions state this directly.",
+            "key": "next_gen"
+          }
+        ],
+        "action": [
+          {
+            "text": "The presenter says to open the control cabinet and look at the cable connected to P39 on the I/O PC board.",
+            "evidence": [
+              [
+                "SRC_HAAS_0010:U0011"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          },
+          {
+            "text": "A technician crouches at an open control cabinet, with drives, boards and a 40 horsepower vector drive visible.",
+            "evidence_type": "observed",
+            "attribution": {
+              "label": "D1-A keyframe observation, pending human check",
+              "kind": "model"
+            },
+            "evidence": [
+              {
+                "keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0010/kf_0064000.jpg",
+                "source_id": "SRC_HAAS_0010",
+                "start_ms": 63500,
+                "end_ms": 64500,
+                "observation_note": "A technician crouches at an open control cabinet; drives, boards and a 40 horsepower vector drive are visible.",
+                "explanation": "The open cabinet and its contents are visible in the frame."
+              },
+              [
+                "SRC_HAAS_0010:U0011"
+              ]
+            ],
+            "explanation": "The narration at this moment is about opening the control cabinet."
+          },
+          {
+            "text": "A 3D model of a circuit board shows a connector labelled 'P39'.",
+            "evidence_type": "observed",
+            "attribution": {
+              "label": "D1-A keyframe observation, pending human check",
+              "kind": "model"
+            },
+            "evidence": [
+              {
+                "keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0010/kf_0066500.jpg",
+                "source_id": "SRC_HAAS_0010",
+                "start_ms": 66000,
+                "end_ms": 67000,
+                "observation_note": "3D model of a circuit board with the connector labelled 'P39'.",
+                "explanation": "The 'P39' label is legible in the frame."
+              },
+              [
+                "SRC_HAAS_0010:U0011"
+              ]
+            ],
+            "explanation": "The narration at this moment names P39 on the I/O PC board."
+          }
+        ],
+        "acceptance_criteria": [
+          {
+            "text": "The presenter says the cable should have a ferrite filter on it.",
+            "evidence": [
+              [
+                "SRC_HAAS_0010:U0012"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          }
+        ]
+      },
+      "questions": [
+        {
+          "target_field": "rationale",
+          "reason": "missing",
+          "question": "What does the ferrite filter do for this alarm?"
+        }
+      ]
+    },
+    {
+      "title": "Inspect the temperature sensor",
+      "fields": {
+        "action": [
+          {
+            "text": "The presenter says to remove the spindle head cover and examine the temperature sensor itself.",
+            "evidence": [
+              [
+                "SRC_HAAS_0010:U0012",
+                "SRC_HAAS_0010:U0013"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          },
+          {
+            "text": "A close-up shows a black cable labelled 'THERM PROBE' clamped to a brass fitting.",
+            "evidence_type": "observed",
+            "attribution": {
+              "label": "D1-A keyframe observation, pending human check",
+              "kind": "model"
+            },
+            "evidence": [
+              {
+                "keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0010/kf_0078500.jpg",
+                "source_id": "SRC_HAAS_0010",
+                "start_ms": 78000,
+                "end_ms": 79000,
+                "observation_note": "Close-up of a black cable labelled 'THERM PROBE' clamped to a brass fitting.",
+                "explanation": "The cable label and brass fitting are legible in the frame."
+              },
+              [
+                "SRC_HAAS_0010:U0012",
+                "SRC_HAAS_0010:U0013"
+              ]
+            ],
+            "explanation": "The narration at this moment is about examining the temperature sensor and its cable."
+          }
+        ],
+        "acceptance_criteria": [
+          {
+            "text": "The presenter says to make sure the sensor is not damaged and the cable is firmly connected.",
+            "evidence": [
+              [
+                "SRC_HAAS_0010:U0013"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          }
+        ]
+      },
+      "questions": []
+    },
+    {
+      "title": "Contact the service outlet if the alarm persists",
+      "fields": {
+        "condition": [
+          {
+            "text": "The presenter says this applies if the alarm persists after these checks.",
+            "evidence": [
+              [
+                "SRC_HAAS_0010:U0013",
+                "SRC_HAAS_0010:C0014"
+              ]
+            ],
+            "explanation": "The captions state this directly. Cue 14 is corrected from 'local hospital outlet' to 'local HFO' (the description says 'contact your local HFO').",
+            "key": "persists"
+          }
+        ],
+        "action": [
+          {
+            "text": "The presenter says it is time to contact the local HFO for assistance.",
+            "evidence": [
+              [
+                "SRC_HAAS_0010:C0014"
+              ]
+            ],
+            "explanation": "The captions state this directly. Corrected as above."
+          }
+        ]
+      },
+      "questions": []
+    }
+  ],
+  "relations": [
+    {
+      "type": "branch_if",
+      "from_step": 3,
+      "to_step": 4,
+      "condition_keys": [
+        "next_gen"
+      ],
+      "claim": {
+        "text": "The presenter makes the P39 cable check conditional on the machine having a next-gen control.",
+        "evidence": [
+          [
+            "SRC_HAAS_0010:U0010",
+            "SRC_HAAS_0010:U0011"
+          ]
+        ],
+        "explanation": "The captions state this directly."
+      }
+    },
+    {
+      "type": "branch_if",
+      "from_step": 5,
+      "to_step": 6,
+      "condition_keys": [
+        "persists"
+      ],
+      "claim": {
+        "text": "The presenter ends the checks with a hand-off to the local HFO if the alarm persists.",
+        "evidence": [
+          [
+            "SRC_HAAS_0010:U0013",
+            "SRC_HAAS_0010:C0014"
+          ]
+        ],
+        "explanation": "The captions state this directly."
+      }
+    }
+  ]
+}

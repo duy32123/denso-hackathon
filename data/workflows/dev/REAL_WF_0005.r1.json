@@ -1,0 +1,2941 @@
+{
+  "schema_version": "1.0.0",
+  "workflow_id": "REAL_WF_0005",
+  "revision": 1,
+  "source_type": "real",
+  "dataset_split": "dev",
+  "title": "Troubleshoot a Haas mill spindle before replacing it",
+  "language": "en",
+  "created_at": "2026-10-12T00:00:00Z",
+  "supersedes_revision": null,
+  "lifecycle": "active",
+  "source_ids": [
+    "SRC_HAAS_0009"
+  ],
+  "context": {
+    "manufacturer": "Haas Automation",
+    "machine_family": "Haas mills",
+    "machine_model": null,
+    "subsystem": "mill spindle (lubrication, heat, noise/vibration, tool sticking)",
+    "task_type": "troubleshooting",
+    "symptoms": [
+      "spindle seized",
+      "spindle running hot",
+      "noise or vibration",
+      "tool sticking in the taper"
+    ],
+    "alarm_codes": [],
+    "components": [
+      "spindle",
+      "lubrication pump",
+      "metering valve",
+      "sight glass",
+      "spindle taper",
+      "drive dogs",
+      "belt"
+    ],
+    "metadata_provenance": {
+      "manufacturer": {
+        "basis": "source",
+        "source_ids": [
+          "SRC_HAAS_0009"
+        ],
+        "note": "Publisher is Haas Automation, Inc."
+      },
+      "machine_family": {
+        "basis": "source",
+        "source_ids": [
+          "SRC_HAAS_0009"
+        ],
+        "note": "The official description speaks of 'your mill spindle'."
+      },
+      "machine_model": {
+        "basis": "unknown",
+        "source_ids": [],
+        "note": "Not stated."
+      },
+      "subsystem": {
+        "basis": "source",
+        "source_ids": [
+          "SRC_HAAS_0009"
+        ],
+        "note": "Named in the title and narration."
+      },
+      "task_type": {
+        "basis": "source",
+        "source_ids": [
+          "SRC_HAAS_0009"
+        ],
+        "note": "Presented as troubleshooting."
+      },
+      "symptoms": {
+        "basis": "source",
+        "source_ids": [
+          "SRC_HAAS_0009"
+        ],
+        "note": "The four symptoms are stated in the narration and shown as on-screen headings."
+      },
+      "alarm_codes": {
+        "basis": "unknown",
+        "source_ids": [],
+        "note": "No alarm code is stated."
+      },
+      "components": {
+        "basis": "source",
+        "source_ids": [
+          "SRC_HAAS_0009"
+        ],
+        "note": "Named in the narration."
+      }
+    }
+  },
+  "steps": [
+    {
+      "step_id": "REAL_WF_0005_ST_001",
+      "display_order": 1,
+      "title": "Troubleshoot before replacing the spindle",
+      "fields": {
+        "context": {
+          "state": "present",
+          "claim_ids": [
+            "REAL_WF_0005_CL_001"
+          ]
+        },
+        "observation": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "action": {
+          "state": "present",
+          "claim_ids": [
+            "REAL_WF_0005_CL_002"
+          ]
+        },
+        "rationale": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "condition": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "outcome": {
+          "state": "present",
+          "claim_ids": [
+            "REAL_WF_0005_CL_003"
+          ]
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claim_ids": []
+        }
+      }
+    },
+    {
+      "step_id": "REAL_WF_0005_ST_002",
+      "display_order": 2,
+      "title": "Seized spindle: check lubrication and the pump",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "observation": {
+          "state": "present",
+          "claim_ids": [
+            "REAL_WF_0005_CL_004",
+            "REAL_WF_0005_CL_005"
+          ]
+        },
+        "action": {
+          "state": "present",
+          "claim_ids": [
+            "REAL_WF_0005_CL_006",
+            "REAL_WF_0005_CL_007",
+            "REAL_WF_0005_CL_008",
+            "REAL_WF_0005_CL_009",
+            "REAL_WF_0005_CL_010",
+            "REAL_WF_0005_CL_011",
+            "REAL_WF_0005_CL_012",
+            "REAL_WF_0005_CL_013"
+          ]
+        },
+        "rationale": {
+          "state": "present",
+          "claim_ids": [
+            "REAL_WF_0005_CL_014",
+            "REAL_WF_0005_CL_015",
+            "REAL_WF_0005_CL_016"
+          ]
+        },
+        "condition": {
+          "state": "present",
+          "claim_ids": [
+            "REAL_WF_0005_CL_017"
+          ]
+        },
+        "outcome": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claim_ids": []
+        }
+      }
+    },
+    {
+      "step_id": "REAL_WF_0005_ST_003",
+      "display_order": 3,
+      "title": "Spindle running hot: check the amount of oil",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "observation": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "action": {
+          "state": "present",
+          "claim_ids": [
+            "REAL_WF_0005_CL_018",
+            "REAL_WF_0005_CL_019",
+            "REAL_WF_0005_CL_020"
+          ]
+        },
+        "rationale": {
+          "state": "present",
+          "claim_ids": [
+            "REAL_WF_0005_CL_021"
+          ]
+        },
+        "condition": {
+          "state": "present",
+          "claim_ids": [
+            "REAL_WF_0005_CL_022"
+          ]
+        },
+        "outcome": {
+          "state": "present",
+          "claim_ids": [
+            "REAL_WF_0005_CL_023"
+          ]
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claim_ids": []
+        }
+      }
+    },
+    {
+      "step_id": "REAL_WF_0005_ST_004",
+      "display_order": 4,
+      "title": "Noise or vibration: rule out tooling, balance, alignment and belts",
+      "fields": {
+        "context": {
+          "state": "present",
+          "claim_ids": [
+            "REAL_WF_0005_CL_024"
+          ]
+        },
+        "observation": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "action": {
+          "state": "present",
+          "claim_ids": [
+            "REAL_WF_0005_CL_025",
+            "REAL_WF_0005_CL_026",
+            "REAL_WF_0005_CL_027",
+            "REAL_WF_0005_CL_028"
+          ]
+        },
+        "rationale": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "condition": {
+          "state": "present",
+          "claim_ids": [
+            "REAL_WF_0005_CL_029"
+          ]
+        },
+        "outcome": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claim_ids": []
+        }
+      }
+    },
+    {
+      "step_id": "REAL_WF_0005_ST_005",
+      "display_order": 5,
+      "title": "Stuck tool: check tooling, application and spindle temperature",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "observation": {
+          "state": "present",
+          "claim_ids": [
+            "REAL_WF_0005_CL_030"
+          ]
+        },
+        "action": {
+          "state": "present",
+          "claim_ids": [
+            "REAL_WF_0005_CL_031",
+            "REAL_WF_0005_CL_032",
+            "REAL_WF_0005_CL_033"
+          ]
+        },
+        "rationale": {
+          "state": "present",
+          "claim_ids": [
+            "REAL_WF_0005_CL_034",
+            "REAL_WF_0005_CL_035"
+          ]
+        },
+        "condition": {
+          "state": "present",
+          "claim_ids": [
+            "REAL_WF_0005_CL_036"
+          ]
+        },
+        "outcome": {
+          "state": "present",
+          "claim_ids": [
+            "REAL_WF_0005_CL_037"
+          ]
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claim_ids": []
+        }
+      }
+    },
+    {
+      "step_id": "REAL_WF_0005_ST_006",
+      "display_order": 6,
+      "title": "Correct orientation damage before replacing the spindle",
+      "fields": {
+        "context": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "observation": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "action": {
+          "state": "present",
+          "claim_ids": [
+            "REAL_WF_0005_CL_038"
+          ]
+        },
+        "rationale": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "condition": {
+          "state": "present",
+          "claim_ids": [
+            "REAL_WF_0005_CL_039"
+          ]
+        },
+        "outcome": {
+          "state": "missing",
+          "claim_ids": []
+        },
+        "acceptance_criteria": {
+          "state": "missing",
+          "claim_ids": []
+        }
+      }
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "REAL_WF_0005_CL_001",
+      "text": "The presenter says a spindle is all too often replaced without finding the root cause, which leads to another failure down the road.",
+      "role": "context",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_001",
+          "support_status": "supported",
+          "explanation": "The captions state this directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_002",
+      "text": "The presenter says to stop and do some troubleshooting to rule out other issues before going to the trouble of replacing the spindle.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_002",
+          "support_status": "supported",
+          "explanation": "The captions state this directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_003",
+      "text": "The presenter says that with a little troubleshooting there is a good chance the problem can be solved and the machine back up and running.",
+      "role": "outcome",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_003",
+          "support_status": "supported",
+          "explanation": "The captions state this directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_004",
+      "text": "The presenter says that if air bubbles can be seen, the pump is not properly lubricating the spindle.",
+      "role": "observation",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_004",
+          "support_status": "supported",
+          "explanation": "The captions state this directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_005",
+      "text": "The presenter says that if oil is leaking at the sight glass, the spindle is not being properly lubricated.",
+      "role": "observation",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_005",
+          "support_status": "supported",
+          "explanation": "The captions state this directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_006",
+      "text": "The presenter says to pay particular attention to the pump if the machine has a Bijur pump.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_007",
+          "support_status": "supported",
+          "explanation": "The captions state this directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_007",
+      "text": "The overlay 'LUBRICATION - CHECK THE BIJUR PUMP' appears over the presenter, who sits beside a white cabinet.",
+      "role": "action",
+      "evidence_type": "observed",
+      "attribution": {
+        "actor_id": null,
+        "label": "D1-A keyframe observation, pending human check",
+        "kind": "model"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_008",
+          "support_status": "supported",
+          "explanation": "The overlay text is legible in the frame."
+        },
+        {
+          "evidence_id": "REAL_WF_0005_EV_007",
+          "support_status": "supported",
+          "explanation": "The narration at this moment is about a Bijur pump."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_008",
+      "text": "The presenter says these pumps should always be rebuilt when a spindle problem is suspected, and that a rebuild is necessary anyway if the pump is over five years old.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_009",
+          "support_status": "supported",
+          "explanation": "The captions state this directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_009",
+      "text": "The presenter says to switch older pump oils out for the current spec oils, either Mobil SHC 625 or a high quality synthetic 5W-20 automotive-type oil, both of which are direct replacements.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_011",
+          "support_status": "supported",
+          "explanation": "The captions state this directly. The two older oils are garbled in the captions and are deliberately not named. Cue 11 is corrected from 'Mobil SH c6 25' to 'Mobil SHC 625' (the on-screen parts page reads 'OIL, REFILL MOBIL SHC 625')."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_010",
+      "text": "A Haas parts page for 'OIL, REFILL MOBIL SHC 625', part number 93-2220A, is shown with the overlay 'ALWAYS USE'.",
+      "role": "action",
+      "evidence_type": "observed",
+      "attribution": {
+        "actor_id": null,
+        "label": "D1-A keyframe observation, pending human check",
+        "kind": "model"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_012",
+          "support_status": "supported",
+          "explanation": "The product title, part number and overlay are legible in the frame."
+        },
+        {
+          "evidence_id": "REAL_WF_0005_EV_014",
+          "support_status": "supported",
+          "explanation": "The narration at this moment is about the current spec oils."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_011",
+      "text": "The presenter says that for a metering-valve-style pump the user should check for air leaks and bubbles inside the tank at the bottom of the valve body, and in the tube that carries oil into the sight glass.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_015",
+          "support_status": "supported",
+          "explanation": "The captions state this directly. The pump brand before 'metering valve' is garbled in the caption and is not repeated."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_012",
+      "text": "The overlay 'LUBRICATION - CHECK THE VALVE BODY' appears over a close-up of a reservoir with MIN and MAX marks.",
+      "role": "action",
+      "evidence_type": "observed",
+      "attribution": {
+        "actor_id": null,
+        "label": "D1-A keyframe observation, pending human check",
+        "kind": "model"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_016",
+          "support_status": "supported",
+          "explanation": "The overlay text and the reservoir markings are legible in the frame."
+        },
+        {
+          "evidence_id": "REAL_WF_0005_EV_017",
+          "support_status": "supported",
+          "explanation": "The narration at this moment is about checking air in the valve body tank."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_013",
+      "text": "The presenter says to check for oil leaks at the sight glass.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_005",
+          "support_status": "supported",
+          "explanation": "The captions state this directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_014",
+      "text": "The presenter says most often the root cause is lubrication, meaning the spindle is not getting enough oil.",
+      "role": "rationale",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_018",
+          "support_status": "supported",
+          "explanation": "The captions state this directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_015",
+      "text": "The presenter says pumps can work intermittently as they age, so even a successful lube test is no guarantee that the pump is good.",
+      "role": "rationale",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_020",
+          "support_status": "supported",
+          "explanation": "The captions state this directly. Cue 6 is corrected from 'busier pump' to 'Bijur pump' (the on-screen overlay reads 'CHECK THE BIJUR PUMP')."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_016",
+      "text": "The presenter says that if any of these problems are not corrected, the new spindle will seize just like the old one.",
+      "role": "rationale",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_021",
+          "support_status": "supported",
+          "explanation": "The captions state this directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_017",
+      "text": "The presenter starts from a spindle that has seized and quit running.",
+      "role": "condition",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_022",
+          "support_status": "supported",
+          "explanation": "The captions state this directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_018",
+      "text": "The presenter says to check the lubrication system and make sure the proper amount of oil is being delivered.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_023",
+          "support_status": "supported",
+          "explanation": "The captions state this directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_019",
+      "text": "The presenter says the procedure varies by machine model and pump type, and to refer to the pump documentation and follow its procedure.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_024",
+          "support_status": "supported",
+          "explanation": "The captions state this directly. The web address is garbled in the caption; the on-screen overlay reads 'REFER TO DIY.HAASCNC.COM'."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_020",
+      "text": "The overlay 'OVERHEATING - TOO MUCH OIL - PROPER AMOUNT OF OIL' appears over a lubrication reservoir with MIN and MAX marks, behind an open door.",
+      "role": "action",
+      "evidence_type": "observed",
+      "attribution": {
+        "actor_id": null,
+        "label": "D1-A keyframe observation, pending human check",
+        "kind": "model"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_025",
+          "support_status": "supported",
+          "explanation": "The overlay lines are legible in the frame."
+        },
+        {
+          "evidence_id": "REAL_WF_0005_EV_023",
+          "support_status": "supported",
+          "explanation": "The narration at this moment is about delivering the proper amount of oil."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_021",
+      "text": "The presenter says the most common reason for a hot spindle is too much oil reaching the spindle.",
+      "role": "rationale",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_026",
+          "support_status": "supported",
+          "explanation": "The captions state this directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_022",
+      "text": "The presenter turns to a spindle that is running hot.",
+      "role": "condition",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_027",
+          "support_status": "supported",
+          "explanation": "The captions state this directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_023",
+      "text": "The presenter says fixing this will most likely correct the problem and save replacing the spindle.",
+      "role": "outcome",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_028",
+          "support_status": "supported",
+          "explanation": "The captions state this directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_024",
+      "text": "The presenter says a video covers the balancing procedure for an inline spindle, and that the alignment check is also covered in the spindle balancing video.",
+      "role": "context",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_029",
+          "support_status": "supported",
+          "explanation": "The captions state this directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_025",
+      "text": "The presenter says to check that the tooling is not the problem and that the spindle is balanced properly before replacing the spindle.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_030",
+          "support_status": "supported",
+          "explanation": "The captions state this directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_026",
+      "text": "The presenter says to make sure the spindle and motor are properly aligned.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_029",
+          "support_status": "supported",
+          "explanation": "The captions state this directly. The caption puts 'on an inline spindle' just before this sentence, so it is not clear whether it limits the alignment check or only the balancing video; the claim leaves it out."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_027",
+      "text": "The presenter says that if the spindle is belt driven, to make sure the belt tension is correct and the belts and sprockets are clean and in good condition.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_031",
+          "support_status": "supported",
+          "explanation": "The captions state this directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_028",
+      "text": "The overlay 'NOISE/VIBRATION - CHECK YOUR TOOLING - SPINDLE IS BALANCED - CHECK ALIGNMENT / TENSION' appears beside the presenter holding a tool.",
+      "role": "action",
+      "evidence_type": "observed",
+      "attribution": {
+        "actor_id": null,
+        "label": "D1-A keyframe observation, pending human check",
+        "kind": "model"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_032",
+          "support_status": "supported",
+          "explanation": "The three overlay lines are legible in the frame."
+        },
+        {
+          "evidence_id": "REAL_WF_0005_EV_033",
+          "support_status": "supported",
+          "explanation": "The narration at this moment is about balance, alignment and belt tension."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_029",
+      "text": "The presenter turns to a spindle with a noise or vibration problem.",
+      "role": "condition",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_034",
+          "support_status": "supported",
+          "explanation": "The captions state this directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_030",
+      "text": "The presenter says that with a stuck tool the spindle is rarely the problem, and it is much more likely to be about the tools used and the application.",
+      "role": "observation",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_035",
+          "support_status": "supported",
+          "explanation": "The captions state this directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_031",
+      "text": "The presenter says to take a careful look at any applications using long or heavy tools to make sure they are not contributing to the problem.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_036",
+          "support_status": "supported",
+          "explanation": "The captions state this directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_032",
+      "text": "The presenter says to go back and look at the spindle temperature again, and to deal with the lubrication problem described earlier.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_037",
+          "support_status": "supported",
+          "explanation": "The captions state this directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_033",
+      "text": "The overlay 'STUCK TOOL - CHECK TOOLING / APPLICATION - CHECK LONG TOOLS - CHECK SPINDLE TEMPERATURE' appears over the presenter.",
+      "role": "action",
+      "evidence_type": "observed",
+      "attribution": {
+        "actor_id": null,
+        "label": "D1-A keyframe observation, pending human check",
+        "kind": "model"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_038",
+          "support_status": "supported",
+          "explanation": "The overlay lines are legible in the frame."
+        },
+        {
+          "evidence_id": "REAL_WF_0005_EV_039",
+          "support_status": "supported",
+          "explanation": "The narration at this moment is about spindle temperature and the lubrication problem."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_034",
+      "text": "The presenter says really long or heavy tools can lead to the tool fretting in the taper.",
+      "role": "rationale",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_040",
+          "support_status": "supported",
+          "explanation": "The captions state this directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_035",
+      "text": "The presenter says tools are more likely to stick in a hot spindle.",
+      "role": "rationale",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_041",
+          "support_status": "supported",
+          "explanation": "The captions state this directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_036",
+      "text": "The presenter turns to a spindle where the tool is sticking.",
+      "role": "condition",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_042",
+          "support_status": "supported",
+          "explanation": "The captions state this directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_037",
+      "text": "The presenter says dealing with the lubrication problem will probably solve the tool sticking problem as well.",
+      "role": "outcome",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_043",
+          "support_status": "supported",
+          "explanation": "The captions state this directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_038",
+      "text": "The presenter says the orientation problem must be corrected before the spindle is replaced.",
+      "role": "action",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_044",
+          "support_status": "supported",
+          "explanation": "The captions state this directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_039",
+      "text": "The presenter says this applies if the drive dogs or the spindle taper have been damaged by an orientation problem.",
+      "role": "condition",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_044",
+          "support_status": "supported",
+          "explanation": "The captions state this directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_040",
+      "text": "The presenter moves from the general advice to troubleshooting by symptom, starting with a spindle that has seized.",
+      "role": "relation",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_045",
+          "support_status": "supported",
+          "explanation": "The captions state this directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_041",
+      "text": "The presenter moves on to a spindle that is running hot.",
+      "role": "relation",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_046",
+          "support_status": "supported",
+          "explanation": "The captions state this directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_042",
+      "text": "The presenter next considers a spindle with a noise or vibration problem.",
+      "role": "relation",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_028",
+          "support_status": "supported",
+          "explanation": "The captions state this directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_043",
+      "text": "The presenter finally considers a spindle where the tool is sticking.",
+      "role": "relation",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_031",
+          "support_status": "supported",
+          "explanation": "The captions state this directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    },
+    {
+      "claim_id": "REAL_WF_0005_CL_044",
+      "text": "The presenter adds one last note about spindle damage caused by an orientation problem.",
+      "role": "relation",
+      "evidence_type": "stated",
+      "attribution": {
+        "actor_id": null,
+        "label": "Andrew (presenter)",
+        "kind": "speaker"
+      },
+      "scope": {
+        "level": "case",
+        "description": "Spindle symptom troubleshooting as demonstrated in SRC_HAAS_0009."
+      },
+      "evidence_links": [
+        {
+          "evidence_id": "REAL_WF_0005_EV_044",
+          "support_status": "supported",
+          "explanation": "The captions state this directly."
+        }
+      ],
+      "support_status": "supported",
+      "source_review": "source_checked",
+      "technical_review": "not_requested",
+      "conflicts_with": [],
+      "supersedes_claim_ids": []
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "REAL_WF_0005_EV_001",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 0,
+        "end_ms": 12920,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "[Music] all too often a spindle is replaced without getting to the root cause of the problem which leads to another failure down the road so before you go through the trouble of",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_002",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 7880,
+        "end_ms": 17840,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "problem which leads to another failure down the road so before you go through the trouble of replacing your spindle let's stop and do some troubleshooting to rule out any other issues",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_003",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 218420,
+        "end_ms": 230390,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "the result of a host of external issues with just a little troubleshooting there's a good chance you can solve the problem and be back up and running in no time thanks for watching you",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_004",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 86510,
+        "end_ms": 97700,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "valve body and the tube that carries oil into the sight glass if you can see air bubbles the pump isn't properly lubricating the spindle also be sure and check for oil leaks at the",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_005",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 92270,
+        "end_ms": 103940,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "pump isn't properly lubricating the spindle also be sure and check for oil leaks at the sight glass if oil is leaking here the spindle is not being properly lubricated remember if",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_006",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 26810,
+        "end_ms": 39410,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "the root causes lubrication as in the spindle is not getting enough oil pay particular attention if your machine has a busier pump as they age these pumps can sometimes work intermittently",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_007",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 26810,
+        "end_ms": 39410,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "the root causes lubrication as in the spindle is not getting enough oil pay particular attention if your machine has a Bijur pump as they age these pumps can sometimes work intermittently",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "human",
+      "parent_evidence_ids": [
+        "REAL_WF_0005_EV_006"
+      ]
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_008",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "visual",
+      "locator": {
+        "start_ms": 43999,
+        "end_ms": 44000,
+        "page": null,
+        "text_span": null
+      },
+      "quote": null,
+      "observation_note": "Overlay 'LUBRICATION - CHECK THE BIJUR PUMP' over the presenter, who sits beside a white cabinet.",
+      "asset_uri": "acquisition/preprocessing/keyframes/SRC_HAAS_0009/kf_0044000.jpg",
+      "transcript_origin": "none",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_009",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 39410,
+        "end_ms": 57140,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "so even a successful lube test is no guarantee that the Pope is good these pumps should always be rebuilt when a spindle problem is suspected and if the pump is over five years old a rebuild us necessary anyway check out Hoss parts comm or the rebuild kit that includes the gear motor and",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_010",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 57140,
+        "end_ms": 81020,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "don't skip this step and if you've got one of these older pumps that's using either back for two or G t25 oils switch those out for our current spec oils either Mobil SH c6 25 or a high quality synthetic 5w 20 Automotive type oil both of these are direct replacements if your machine has a hoss",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_011",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 57140,
+        "end_ms": 81020,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "don't skip this step and if you've got one of these older pumps that's using either back for two or G t25 oils switch those out for our current spec oils either Mobil SHC 625 or a high quality synthetic 5w 20 Automotive type oil both of these are direct replacements if your machine has a hoss",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "human",
+      "parent_evidence_ids": [
+        "REAL_WF_0005_EV_010"
+      ]
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_012",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "visual",
+      "locator": {
+        "start_ms": 67999,
+        "end_ms": 68000,
+        "page": null,
+        "text_span": null
+      },
+      "quote": null,
+      "observation_note": "Haas parts page for 'OIL, REFILL MOBIL SHC 625', part 93-2220A, with the overlay 'ALWAYS USE'.",
+      "asset_uri": "acquisition/preprocessing/keyframes/SRC_HAAS_0009/kf_0068000.jpg",
+      "transcript_origin": "none",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_013",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 62390,
+        "end_ms": 81020,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "two or G t25 oils switch those out for our current spec oils either Mobil SH c6 25 or a high quality synthetic 5w 20 Automotive type oil both of these are direct replacements if your machine has a hoss",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_014",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 62390,
+        "end_ms": 81020,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "two or G t25 oils switch those out for our current spec oils either Mobil SHC 625 or a high quality synthetic 5w 20 Automotive type oil both of these are direct replacements if your machine has a hoss",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "human",
+      "parent_evidence_ids": [
+        "REAL_WF_0005_EV_013"
+      ]
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_015",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 71600,
+        "end_ms": 92270,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "synthetic 5w 20 Automotive type oil both of these are direct replacements if your machine has a hoss metering valve style pump check for air leaks and bubbles inside the tank at the bottom of the valve body and the tube that carries oil into the sight glass if you can see air bubbles the",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_016",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "visual",
+      "locator": {
+        "start_ms": 87999,
+        "end_ms": 88000,
+        "page": null,
+        "text_span": null
+      },
+      "quote": null,
+      "observation_note": "Overlay 'LUBRICATION - CHECK THE VALVE BODY' over a close-up of a Bijur Delimon reservoir with MIN/MAX marks.",
+      "asset_uri": "acquisition/preprocessing/keyframes/SRC_HAAS_0009/kf_0088000.jpg",
+      "transcript_origin": "none",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_017",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 81020,
+        "end_ms": 92270,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "metering valve style pump check for air leaks and bubbles inside the tank at the bottom of the valve body and the tube that carries oil into the sight glass if you can see air bubbles the",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_018",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 17840,
+        "end_ms": 32810,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "here we have a spindle that's seized and quit running but what caused it to seize most often the root causes lubrication as in the spindle is not getting enough oil pay particular attention",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_019",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 32810,
+        "end_ms": 45380,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "if your machine has a busier pump as they age these pumps can sometimes work intermittently so even a successful lube test is no guarantee that the Pope is good these pumps should always",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_020",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 32810,
+        "end_ms": 45380,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "if your machine has a Bijur pump as they age these pumps can sometimes work intermittently so even a successful lube test is no guarantee that the Pope is good these pumps should always",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "human",
+      "parent_evidence_ids": [
+        "REAL_WF_0005_EV_019"
+      ]
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_021",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 97700,
+        "end_ms": 108830,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "sight glass if oil is leaking here the spindle is not being properly lubricated remember if any of these problems are not corrected your new spindle will seize just like the old one",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_022",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 17840,
+        "end_ms": 26810,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "here we have a spindle that's seized and quit running but what caused it to seize most often",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_023",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 115460,
+        "end_ms": 127340,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "oil reaching the spindle check your lubrication system and make sure that the proper amount of oil is being delivered the procedure for this varies depending on machine model and pump type refer to",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_024",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 120740,
+        "end_ms": 139130,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "is being delivered the procedure for this varies depending on machine model and pump type refer to the documentation for your pump that's available at DIY hasti and see calm and follow the proper teacher fixing this will most likely correct the problem and will save you from replacing",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_025",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "visual",
+      "locator": {
+        "start_ms": 121999,
+        "end_ms": 122000,
+        "page": null,
+        "text_span": null
+      },
+      "quote": null,
+      "observation_note": "Overlay 'OVERHEATING - TOO MUCH OIL - PROPER AMOUNT OF OIL' over a lubrication reservoir with MIN/MAX marks, behind an open door.",
+      "asset_uri": "acquisition/preprocessing/keyframes/SRC_HAAS_0009/kf_0122000.jpg",
+      "transcript_origin": "none",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_026",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 108830,
+        "end_ms": 120740,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "now let's talk about a spindle that is running hot the most common reason for this is too much oil reaching the spindle check your lubrication system and make sure that the proper amount of oil",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_027",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 108830,
+        "end_ms": 115460,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "now let's talk about a spindle that is running hot the most common reason for this is too much",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_028",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 134360,
+        "end_ms": 145160,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "teacher fixing this will most likely correct the problem and will save you from replacing the spindle next let's consider a spindle with a noise or vibration problem before replacing",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_029",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 150650,
+        "end_ms": 161870,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "is balanced properly we have a video that covers that procedure on an inline spindle make sure that the spindle and motor are properly aligned this is also covered in our spindle balancing video",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_030",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 139130,
+        "end_ms": 157070,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "the spindle next let's consider a spindle with a noise or vibration problem before replacing the spindle always check to make sure that your tooling isn't the problem and that the spindle is balanced properly we have a video that covers that procedure on an inline spindle make sure that",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_031",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 161870,
+        "end_ms": 172880,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "if your spindle is belt driven make sure that the belt tension is correct and that the belts and sprockets are clean and in good condition last let's talk about a spindle where the tool",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_032",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "visual",
+      "locator": {
+        "start_ms": 163999,
+        "end_ms": 164000,
+        "page": null,
+        "text_span": null
+      },
+      "quote": null,
+      "observation_note": "Overlay 'NOISE/VIBRATION - CHECK YOUR TOOLING - SPINDLE IS BALANCED - CHECK ALIGNMENT / TENSION' beside the presenter holding a tool.",
+      "asset_uri": "acquisition/preprocessing/keyframes/SRC_HAAS_0009/kf_0164000.jpg",
+      "transcript_origin": "none",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_033",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 150650,
+        "end_ms": 166670,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "is balanced properly we have a video that covers that procedure on an inline spindle make sure that the spindle and motor are properly aligned this is also covered in our spindle balancing video if your spindle is belt driven make sure that the belt tension is correct and that the belts",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_034",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 139130,
+        "end_ms": 145160,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "the spindle next let's consider a spindle with a noise or vibration problem before replacing",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_035",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 172880,
+        "end_ms": 183530,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "is sticking when dealing with a stuck tool the spindle is rarely the problem it's much more likely that it has to do with the tools being used and the application really long or heavy",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_036",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 183530,
+        "end_ms": 194900,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "tools can lead to the tool fretting in the taper you should take a careful look at any applications using these types of tools to ensure they aren't contributing to the problem also go back and take",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_037",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 188930,
+        "end_ms": 204620,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "using these types of tools to ensure they aren't contributing to the problem also go back and take another look at the spindle temperature tools are more likely to stick in a hot spindle deal with the lubrication problem we talked about earlier and you will probably solve your tool sticking",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_038",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "visual",
+      "locator": {
+        "start_ms": 204999,
+        "end_ms": 205000,
+        "page": null,
+        "text_span": null
+      },
+      "quote": null,
+      "observation_note": "Overlay 'STUCK TOOL - CHECK TOOLING / APPLICATION - CHECK LONG TOOLS - CHECK SPINDLE TEMPERATURE' over the presenter.",
+      "asset_uri": "acquisition/preprocessing/keyframes/SRC_HAAS_0009/kf_0205000.jpg",
+      "transcript_origin": "none",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_039",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 194900,
+        "end_ms": 211520,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "another look at the spindle temperature tools are more likely to stick in a hot spindle deal with the lubrication problem we talked about earlier and you will probably solve your tool sticking problem as well one last note if the drive dogs or spindle taper has been damaged by an orientation",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_040",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 178100,
+        "end_ms": 188930,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "likely that it has to do with the tools being used and the application really long or heavy tools can lead to the tool fretting in the taper you should take a careful look at any applications",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_041",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 194900,
+        "end_ms": 200300,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "another look at the spindle temperature tools are more likely to stick in a hot spindle deal with",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_042",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 166670,
+        "end_ms": 178100,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "and sprockets are clean and in good condition last let's talk about a spindle where the tool is sticking when dealing with a stuck tool the spindle is rarely the problem it's much more",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_043",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 200300,
+        "end_ms": 211520,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "the lubrication problem we talked about earlier and you will probably solve your tool sticking problem as well one last note if the drive dogs or spindle taper has been damaged by an orientation",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_044",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 204620,
+        "end_ms": 218420,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "problem as well one last note if the drive dogs or spindle taper has been damaged by an orientation problem this must be corrected before you replace the spindle bottom line spindle troubles offer",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_045",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 12920,
+        "end_ms": 26810,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "replacing your spindle let's stop and do some troubleshooting to rule out any other issues here we have a spindle that's seized and quit running but what caused it to seize most often",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    },
+    {
+      "evidence_id": "REAL_WF_0005_EV_046",
+      "source_id": "SRC_HAAS_0009",
+      "modality": "speech",
+      "locator": {
+        "start_ms": 103940,
+        "end_ms": 115460,
+        "page": null,
+        "text_span": null
+      },
+      "quote": "any of these problems are not corrected your new spindle will seize just like the old one now let's talk about a spindle that is running hot the most common reason for this is too much",
+      "observation_note": null,
+      "asset_uri": null,
+      "transcript_origin": "official_caption",
+      "parent_evidence_ids": []
+    }
+  ],
+  "relations": [
+    {
+      "relation_id": "REAL_WF_0005_RL_001",
+      "from_step_id": "REAL_WF_0005_ST_001",
+      "to_step_id": "REAL_WF_0005_ST_002",
+      "relation_type": "branch_if",
+      "claim_ids": [
+        "REAL_WF_0005_CL_040"
+      ],
+      "condition_claim_ids": [
+        "REAL_WF_0005_CL_017"
+      ]
+    },
+    {
+      "relation_id": "REAL_WF_0005_RL_002",
+      "from_step_id": "REAL_WF_0005_ST_002",
+      "to_step_id": "REAL_WF_0005_ST_003",
+      "relation_type": "branch_if",
+      "claim_ids": [
+        "REAL_WF_0005_CL_041"
+      ],
+      "condition_claim_ids": [
+        "REAL_WF_0005_CL_022"
+      ]
+    },
+    {
+      "relation_id": "REAL_WF_0005_RL_003",
+      "from_step_id": "REAL_WF_0005_ST_003",
+      "to_step_id": "REAL_WF_0005_ST_004",
+      "relation_type": "branch_if",
+      "claim_ids": [
+        "REAL_WF_0005_CL_042"
+      ],
+      "condition_claim_ids": [
+        "REAL_WF_0005_CL_029"
+      ]
+    },
+    {
+      "relation_id": "REAL_WF_0005_RL_004",
+      "from_step_id": "REAL_WF_0005_ST_004",
+      "to_step_id": "REAL_WF_0005_ST_005",
+      "relation_type": "branch_if",
+      "claim_ids": [
+        "REAL_WF_0005_CL_043"
+      ],
+      "condition_claim_ids": [
+        "REAL_WF_0005_CL_036"
+      ]
+    },
+    {
+      "relation_id": "REAL_WF_0005_RL_005",
+      "from_step_id": "REAL_WF_0005_ST_005",
+      "to_step_id": "REAL_WF_0005_ST_006",
+      "relation_type": "branch_if",
+      "claim_ids": [
+        "REAL_WF_0005_CL_044"
+      ],
+      "condition_claim_ids": [
+        "REAL_WF_0005_CL_039"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "REAL_WF_0005_Q_001",
+      "step_id": "REAL_WF_0005_ST_001",
+      "target_field": "acceptance_criteria",
+      "reason": "missing",
+      "question": "How do you confirm the root cause is found before deciding to replace the spindle?",
+      "status": "open",
+      "answer_source_ids": [],
+      "resolution_note": null
+    },
+    {
+      "question_id": "REAL_WF_0005_Q_002",
+      "step_id": "REAL_WF_0005_ST_002",
+      "target_field": "acceptance_criteria",
+      "reason": "missing",
+      "question": "How is the pump rebuild or oil change confirmed as having fixed the lubrication?",
+      "status": "open",
+      "answer_source_ids": [],
+      "resolution_note": null
+    },
+    {
+      "question_id": "REAL_WF_0005_Q_003",
+      "step_id": "REAL_WF_0005_ST_003",
+      "target_field": "acceptance_criteria",
+      "reason": "missing",
+      "question": "What oil amount or delivery rate is correct? The video defers to the pump documentation.",
+      "status": "open",
+      "answer_source_ids": [],
+      "resolution_note": null
+    },
+    {
+      "question_id": "REAL_WF_0005_Q_004",
+      "step_id": "REAL_WF_0005_ST_004",
+      "target_field": "acceptance_criteria",
+      "reason": "missing",
+      "question": "What balance or vibration reading counts as acceptable?",
+      "status": "open",
+      "answer_source_ids": [],
+      "resolution_note": null
+    },
+    {
+      "question_id": "REAL_WF_0005_Q_005",
+      "step_id": "REAL_WF_0005_ST_004",
+      "target_field": "action",
+      "reason": "ambiguous",
+      "question": "Does the alignment check apply only to inline spindles, or to every spindle with a separate motor?",
+      "status": "open",
+      "answer_source_ids": [],
+      "resolution_note": null
+    },
+    {
+      "question_id": "REAL_WF_0005_Q_006",
+      "step_id": "REAL_WF_0005_ST_006",
+      "target_field": "action",
+      "reason": "missing",
+      "question": "How is the orientation problem diagnosed and corrected? The video only says it must be corrected.",
+      "status": "open",
+      "answer_source_ids": [],
+      "resolution_note": null
+    }
+  ],
+  "review_events": [
+    {
+      "review_id": "REAL_WF_0005_RV_001",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_001",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_002",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_002",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_003",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_003",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_004",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_004",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_005",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_005",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_006",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_006",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_007",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_007",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_008",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_008",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_009",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_009",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_010",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_010",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_011",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_011",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_012",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_012",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_013",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_013",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_014",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_014",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_015",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_015",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_016",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_016",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_017",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_017",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_018",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_018",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_019",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_019",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_020",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_020",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_021",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_021",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_022",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_022",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_023",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_023",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_024",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_024",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_025",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_025",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_026",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_026",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_027",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_027",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_028",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_028",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_029",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_029",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_030",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_030",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_031",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_031",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_032",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_032",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_033",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_033",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_034",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_034",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_035",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_035",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_036",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_036",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_037",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_037",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_038",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_038",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_039",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_039",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_040",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_040",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_041",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_041",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_042",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_042",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_043",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_043",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    },
+    {
+      "review_id": "REAL_WF_0005_RV_044",
+      "target_type": "claim",
+      "target_id": "REAL_WF_0005_CL_044",
+      "dimension": "source",
+      "decision": "source_checked",
+      "reviewer_id": "d1c-source-review",
+      "reviewer_role": "D1-C source review (AI-assisted second pass; human sign-off pending)",
+      "reviewed_at": "2026-10-12T11:11:03Z",
+      "note": null
+    }
+  ],
+  "change_log": []
+}

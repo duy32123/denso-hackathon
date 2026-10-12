@@ -291,3 +291,96 @@ and `human_signoff: null`, since this pass's judgments were made by Claude Opus 
 the pixels, not by a person; (2) `REAL_WF_0001.r2` needs the normal D1-C source-review +
 promotion flow before it can supersede r1 in `dev/`; (3) `REAL_WF_0002.r1.draft.json`'s
 edits should be folded into its first D1-C review rather than reviewed twice.
+
+## 19. Five more dev sources (2026-10-12), SRC_HAAS_0008 to SRC_HAAS_0012
+
+Branch `team1/d1a-expand-dev-sources`. The same process as the pilot, applied to five more
+official Haas service videos, all in `dev`. The holdout sources SRC_HAAS_0006 and
+SRC_HAAS_0007 were not touched. This section updates the counts in sections 1, 4, 14 and 15
+(dev is now 10 sources and 12 published workflow revisions).
+
+| source_id | Video | Length | Workflow | Family |
+|---|---|---|---|---|
+| SRC_HAAS_0008 | Alarm 626 Tool Pocket Slide Error | 86 s | `REAL_WF_0004` | FAM-TOOL-POCKET-ALARM-626 |
+| SRC_HAAS_0009 | Spindle Troubleshooting | 236 s | `REAL_WF_0005` | FAM-SPINDLE-TROUBLESHOOTING |
+| SRC_HAAS_0010 | Alarm 254 Spindle Motor Overheat | 90 s | `REAL_WF_0006` | FAM-SPINDLE-MOTOR-OVERHEAT-254 |
+| SRC_HAAS_0011 | Alarm 9973 Unstable Incoming Power | 181 s | `REAL_WF_0007` | FAM-INCOMING-POWER-ALARM-9973 |
+| SRC_HAAS_0012 | X-Axis Mill Waycover Replacement | 411 s | `REAL_WF_0008` | FAM-X-AXIS-WAYCOVER-REPLACEMENT |
+
+### Playable video links (checked 2026-10-12)
+
+Each link was read from YouTube's own metadata (title, channel "Haas Automation, Inc.", duration),
+and the video id is compared character by character with `Source.url` by
+`tests/unit/test_d1a_dev_expansion.py`, because ids are case-sensitive (see section 1).
+
+| source_id | Watch |
+|---|---|
+| SRC_HAAS_0008 | https://www.youtube.com/watch?v=DXtocZX8hf0 |
+| SRC_HAAS_0009 | https://www.youtube.com/watch?v=cwYsbzAW3r0 |
+| SRC_HAAS_0010 | https://www.youtube.com/watch?v=M-VcwEodqP0 |
+| SRC_HAAS_0011 | https://www.youtube.com/watch?v=DgHQtvvf1kI |
+| SRC_HAAS_0012 | https://www.youtube.com/watch?v=ezplV3447C8 |
+
+The haascnc.com page was not fetched for any of them (Cloudflare); `Source.url` is the
+haascnc.com address built from the same video id, as for the pilot.
+
+### How they were chosen
+
+About 28 official service videos turned up in a metadata-only search. Only those with a
+**manual English caption** were eligible, so no speech recognition was run. `tsp_eLbb-UQ`
+(spindle orientation, side-mount) and `OrflTBq-JBo` (spindle encoder troubleshooting) were
+dropped because they have no manual captions. The five above cover three alarm diagnoses,
+one symptom triage and one replacement procedure, on subsystems the pilot did not reach.
+
+### What was added
+
+- `scripts/add_d1a_dev_sources.py` holds the curated values and builds the registry entries,
+  Source records, catalog rows, split families, transcripts and keyframes. It is idempotent.
+- `acquisition/preprocessing/captions.py` turns a caption file into utterances. Its tests
+  reproduce the existing SRC_HAAS_0005 transcript exactly.
+- Transcripts: `raw.json` is the uploader's caption; `corrected.json` carries terminology
+  fixes only, each cited in `corrections.diff` against the video's title, its official
+  description, an on-screen overlay, or the transcript's own usage. SRC_HAAS_0009's "Bijur pump"
+  and "Mobil SHC 625" are fixed from on-screen text, which is the stronger source.
+- 31 keyframes at 1080p, chosen by reading the frame against the claim it supports, not by
+  cue timing. Many of these videos carry on-screen captions and part labels, which make them
+  strong visual evidence. As in section 18, those judgments are AI vision review with
+  **no human sign-off yet**.
+- `Source.content_sha256` for these five is the SHA-256 of `raw_text`, so it can be checked from
+  the record. The pilot video records hold a different legacy value that nothing enforces.
+- Five workflows, 169 claims, all `source_checked` by reviewer id `d1c-source-review`. That
+  review was an **AI-assisted second pass** (a claim-by-claim read plus a script that flags any
+  number, code or proper noun not found in the cited cues). It is not `expert_validated`
+  and still needs a human reviewer to sign off.
+
+### Open items
+
+1. **Wye-Delta contactor guide.** The description of SRC_HAAS_0011 links a Haas DIY page. It is
+   recorded as deferred candidate CAND-018 with no source_id. Its text has to be copied by
+   ordinary browsing, as for TG0128, before it can become a companion source.
+2. **Retrieval gate is weaker on the larger corpus.** The term-coverage gate is corpus-dependent
+   (its own tests say so). With the new content, "How do I replace the hydraulic pump on a
+   press brake?" now passes it (coverage 0.40), and the old probe questions about a coolant
+   refractometer and a chip conveyor are partly in scope. `tests/unit/test_query.py` now uses
+   probes that are still out of domain. The threshold itself is a Team 2 decision.
+3. **Evaluation records name the old bundle id** (`BUNDLE_HAAS_SMTC_DEV_20382d7957b6` in
+   `data/eval/README.md`, `docs/retrieval_eval_real_dev.md`,
+   `docs/gold_review_worklist_real_dev.md`, `benchmarks/results/20261011_real_dev/`). They describe
+   runs on that bundle and remain true for it; the bundle is now
+   `BUNDLE_HAAS_SMTC_DEV_f1ffda495fd6`. The gold questions were written for the earlier workflows.
+4. **Each workflow lists open questions** (40 across the bundle) for fields the video does not
+   cover, such as acceptance thresholds. They are in the snapshots, not here.
+
+### Checksums (sha256)
+
+```
+9bb110009f680da6996d16947751cbf1e2644a758032d57d346c96c9242eca96  data/sources/haas_pilot_sources.jsonl
+7e1afb016ced366080ec86102010390e3df70cf4db058d3a40be31b8eaffcdfa  data/splits/haas_d1a_split_manifest.json
+ea85bea89b2889e9d22f2931a4735af9f1f748cb37c2d4df09684ce13de0c3bc  data/catalogs/haas_d1a_source_id_registry.json
+a35c48c36d067cba9c2ab36299395e15aef410cc7c6e68694c55f7535696823e  acquisition/video_catalog/haas_d1a_source_candidates.csv
+6859f68c0bfe7195a0f68422a2a67ab240aece000ca11e8cbbe07f783518df9f  acquisition/export/haas_pilot_dev_bundle/manifest.json
+9bb110009f680da6996d16947751cbf1e2644a758032d57d346c96c9242eca96  acquisition/export/haas_pilot_dev_bundle/sources.jsonl
+a796674a29e97d01a8b1f9fcf62cd91c8f52ed134cf66f5eb672d4d4dee57658  acquisition/export/haas_pilot_dev_bundle/workflows.jsonl
+8d1e67506668d6b89d21c129b2c0ad22df1f6e3723a307db7686a2bd5363d2a8  acquisition/preprocessing/haas_d1a_media_inventory.jsonl
+fd56d421bb3cabfa0c8f39e9aa57421b4c16ed6ccfb0259db66d27d8dec9e09e  docs/data_rights_register.md
+```

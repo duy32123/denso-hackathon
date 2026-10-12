@@ -1,0 +1,806 @@
+{
+  "workflow_id": "REAL_WF_0008",
+  "revision": 1,
+  "authored_by": "team1-d1a-draft",
+  "dataset_split": "dev",
+  "title": "Replace the X-axis way covers and wipers on a Haas vertical mill",
+  "language": "en",
+  "created_at": "2026-10-12T00:00:00Z",
+  "source_ids": [
+    "SRC_HAAS_0012"
+  ],
+  "attribution": {
+    "label": "Orville Collins (presenter)",
+    "kind": "speaker"
+  },
+  "scope": "X-axis way cover and wiper replacement as demonstrated in SRC_HAAS_0012.",
+  "context": {
+    "manufacturer": "Haas Automation",
+    "machine_family": "Haas VMC",
+    "subsystem": "X-axis way covers (mill)",
+    "task_type": "maintenance",
+    "symptoms": [
+      "popping noise from way covers",
+      "leaking way cover section",
+      "damaged wiper"
+    ],
+    "components": [
+      "x-axis way cover",
+      "wiper",
+      "retainer",
+      "guide bar",
+      "gasket",
+      "RTV silicone",
+      "red-eye grease",
+      "linear guides"
+    ],
+    "provenance": {
+      "manufacturer": {
+        "basis": "source",
+        "note": "Publisher is Haas Automation, Inc."
+      },
+      "machine_family": {
+        "basis": "source",
+        "note": "The official description says 'their Haas VMC'; the narration names VF-1 through VF-5 for the retrofit."
+      },
+      "subsystem": {
+        "basis": "source",
+        "note": "Named in the title and narration."
+      },
+      "task_type": {
+        "basis": "curated",
+        "note": "Team label: replacement/maintenance. Schema 1.0.0 has no separate 'replacement' task type."
+      },
+      "symptoms": {
+        "basis": "source",
+        "note": "Stated in the narration."
+      },
+      "components": {
+        "basis": "source",
+        "note": "Named in the narration or shown with labels on screen."
+      },
+      "machine_model": {
+        "basis": "unknown",
+        "note": "Only the retrofit applies to named models (VF-1 to VF-5); the demonstration machine is not named."
+      },
+      "alarm_codes": {
+        "basis": "unknown",
+        "note": "No alarm code is stated."
+      }
+    }
+  },
+  "steps": [
+    {
+      "title": "Know what the way covers do and what damages them",
+      "fields": {
+        "context": [
+          {
+            "text": "The presenter says the purpose of the X-axis way cover is to protect the ball screw and guideways from chips, coolant and any other debris inside the machine enclosure.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0002",
+                "SRC_HAAS_0012:U0003"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          },
+          {
+            "text": "The presenter says the video looks at replacing the X-axis way covers on a mill and doing some troubleshooting along the way.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0003",
+                "SRC_HAAS_0012:U0004"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          }
+        ]
+      },
+      "questions": []
+    },
+    {
+      "title": "Stop popping noises: tighten the rail fasteners and grease the guide rails",
+      "fields": {
+        "condition": [
+          {
+            "text": "The presenter says this applies if the bolts that hold the way cover rails to the castings are loose, so the way covers make a popping noise when they move.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0004",
+                "SRC_HAAS_0012:U0005",
+                "SRC_HAAS_0012:U0006"
+              ]
+            ],
+            "explanation": "The captions state this directly.",
+            "key": "popping"
+          }
+        ],
+        "rationale": [
+          {
+            "text": "The presenter says the popping will eventually damage the plastic tabs that slide on the rails, which will cause a section of the way covers to separate and leak.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0006",
+                "SRC_HAAS_0012:U0007"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          }
+        ],
+        "action": [
+          {
+            "text": "The presenter says that as soon as the way covers start making that popping noise, to pull the way covers back, inspect the rails for loose fasteners and tighten them.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0007",
+                "SRC_HAAS_0012:C0008",
+                "SRC_HAAS_0012:U0009"
+              ]
+            ],
+            "explanation": "The captions state this directly. Cue 8 is corrected from 'pulled away covers back' to 'pull the way covers back'."
+          },
+          {
+            "text": "The presenter says to apply a thin coat of red-eye grease to the guide rails to prevent that issue in the future.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0009",
+                "SRC_HAAS_0012:C0010"
+              ]
+            ],
+            "explanation": "The captions state this directly. Cue 10 is corrected from 'weight covers' to 'way covers'."
+          }
+        ]
+      },
+      "questions": [
+        {
+          "target_field": "acceptance_criteria",
+          "reason": "missing",
+          "question": "What torque or check shows the rail fasteners are tight enough?"
+        }
+      ]
+    },
+    {
+      "title": "Keep the way covers lubricated",
+      "fields": {
+        "context": [
+          {
+            "text": "The presenter says that in normal machine operation the way covers are lubricated by the coolant.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:C0010",
+                "SRC_HAAS_0012:U0011"
+              ]
+            ],
+            "explanation": "The captions state this directly. Cue 10 is corrected from 'weight covers' to 'way covers'."
+          }
+        ],
+        "action": [
+          {
+            "text": "The presenter says to use a refractometer to check the coolant concentration, which it is critical to keep correct.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0011",
+                "SRC_HAAS_0012:U0012"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          },
+          {
+            "text": "The presenter says that if parts have to be cut without flood cooling, to lubricate all the way covers with a lightweight oil: fully extend them and spray an even coat on the way covers.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0012",
+                "SRC_HAAS_0012:U0013",
+                "SRC_HAAS_0012:U0014"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          }
+        ],
+        "rationale": [
+          {
+            "text": "The presenter says that if the machine keeps running without lubricant, the rubber seals will break down prematurely.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0014",
+                "SRC_HAAS_0012:U0015"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          }
+        ]
+      },
+      "questions": [
+        {
+          "target_field": "acceptance_criteria",
+          "reason": "missing",
+          "question": "What coolant concentration is correct? The video does not give a number."
+        }
+      ]
+    },
+    {
+      "title": "Replace a damaged wiper on the new-style way cover",
+      "fields": {
+        "context": [
+          {
+            "text": "The presenter says that if only the way cover wipers are damaged they can be changed out on their own, and that both the old style and the new style of X-axis way covers are reviewed, starting with the new style.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0016",
+                "SRC_HAAS_0012:U0017",
+                "SRC_HAAS_0012:U0018"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          }
+        ],
+        "action": [
+          {
+            "text": "The presenter says to jog the X axis all the way to the end of travel, e-stop the machine, remove the X-axis way cover, turn it over and remove each section.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0018",
+                "SRC_HAAS_0012:C0019",
+                "SRC_HAAS_0012:U0020"
+              ]
+            ],
+            "explanation": "The captions state this directly. Cue 19 is corrected from 'he stopped the machine' to 'e-stop the machine' (cue 50 says 'put the machine in e-stop')."
+          },
+          {
+            "text": "The presenter, in work gloves, separates way cover sections laid out on a bench.",
+            "evidence_type": "observed",
+            "attribution": {
+              "label": "D1-A keyframe observation, pending human check",
+              "kind": "model"
+            },
+            "evidence": [
+              {
+                "keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0012/kf_0124000.jpg",
+                "source_id": "SRC_HAAS_0012",
+                "start_ms": 123500,
+                "end_ms": 124500,
+                "observation_note": "The presenter, in work gloves, separates way cover sections laid out on a bench.",
+                "explanation": "The sections and the gloved presenter are visible in the frame."
+              },
+              [
+                "SRC_HAAS_0012:C0019",
+                "SRC_HAAS_0012:U0020"
+              ]
+            ],
+            "explanation": "The narration at this moment is about turning the cover over and removing each section."
+          },
+          {
+            "text": "The presenter says to wipe away any excess grease, and to locate and remove the small Phillips screw.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0020",
+                "SRC_HAAS_0012:U0021"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          },
+          {
+            "text": "The presenter says to move the retaining strip toward the opposite end and remove it from the standoffs, and mentions a flathead screwdriver in the same run-on sentence.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0021",
+                "SRC_HAAS_0012:U0022"
+              ]
+            ],
+            "explanation": "The captions state this directly. The caption runs the screwdriver and the retaining strip together without a verb; the claim restates it as the most direct reading and a question is raised."
+          },
+          {
+            "text": "The presenter says to remove the damaged wiper, cut the new wiper to the exact length, and verify the holes are aligned with the new wiper.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0022",
+                "SRC_HAAS_0012:U0023"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          },
+          {
+            "text": "A black wiper strip with a row of holes is held against the edge of a sheet-metal part.",
+            "evidence_type": "observed",
+            "attribution": {
+              "label": "D1-A keyframe observation, pending human check",
+              "kind": "model"
+            },
+            "evidence": [
+              {
+                "keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0012/kf_0148000.jpg",
+                "source_id": "SRC_HAAS_0012",
+                "start_ms": 147500,
+                "end_ms": 148500,
+                "observation_note": "A black wiper strip with a row of holes held against the edge of a sheet-metal part.",
+                "explanation": "The strip and its holes are visible in the frame."
+              },
+              [
+                "SRC_HAAS_0012:U0022",
+                "SRC_HAAS_0012:U0023"
+              ]
+            ],
+            "explanation": "The narration at this moment is about cutting the new wiper and checking that the holes align."
+          },
+          {
+            "text": "The presenter says to clean up the way cover, apply a light coat of red-eye grease to the wiper and install the wiper correctly back on the way cover.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0023",
+                "SRC_HAAS_0012:U0024"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          },
+          {
+            "text": "The presenter says to install the retainer and make sure it captures all the standoffs, then with one hand apply a little pressure to the retainer and use a flathead screwdriver to slide it into the locking position on the standoff.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0024",
+                "SRC_HAAS_0012:U0025",
+                "SRC_HAAS_0012:U0026",
+                "SRC_HAAS_0012:U0027"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          },
+          {
+            "text": "The presenter says that once all the wipers are installed, to put the sections back together.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0027"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          }
+        ]
+      },
+      "questions": [
+        {
+          "target_field": "action",
+          "reason": "ambiguous",
+          "question": "Cues 20-21 read 'remove the small Phillips screw with a flathead screwdriver the retaining strip towards the opposite end'. Is the flathead screwdriver used on the screw or on the retaining strip?"
+        }
+      ]
+    },
+    {
+      "title": "Replace a damaged wiper on the old-style way cover",
+      "fields": {
+        "context": [
+          {
+            "text": "The presenter says the wiper replacement process is slightly different for the old-style way covers.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0027",
+                "SRC_HAAS_0012:U0028"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          }
+        ],
+        "action": [
+          {
+            "text": "The presenter says to use a flathead screwdriver to remove the way cover wiper and clean the channel out.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0028",
+                "SRC_HAAS_0012:U0029"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          },
+          {
+            "text": "The presenter says that with the sections apart is a good time to take care of any dents in the way covers.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0029",
+                "SRC_HAAS_0012:U0030"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          },
+          {
+            "text": "The presenter says to cut the replacement wiper to the same length as the original one, apply a light coat of red-eye grease to each replacement wiper, and install them using a mallet to tap the wiper firmly into the slot.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0030",
+                "SRC_HAAS_0012:U0031",
+                "SRC_HAAS_0012:U0032"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          },
+          {
+            "text": "A hand presses a black wiper strip along the top edge of a sheet-metal section.",
+            "evidence_type": "observed",
+            "attribution": {
+              "label": "D1-A keyframe observation, pending human check",
+              "kind": "model"
+            },
+            "evidence": [
+              {
+                "keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0012/kf_0209000.jpg",
+                "source_id": "SRC_HAAS_0012",
+                "start_ms": 208500,
+                "end_ms": 209500,
+                "observation_note": "A hand presses a black wiper strip along the top edge of a sheet-metal section.",
+                "explanation": "The strip and the section edge are visible in the frame; no mallet is visible and the slot itself is not seen."
+              },
+              [
+                "SRC_HAAS_0012:U0032"
+              ]
+            ],
+            "explanation": "The narration at this moment is about installing the wiper into the slot."
+          },
+          {
+            "text": "The presenter says to install each section back together.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0032",
+                "SRC_HAAS_0012:U0033"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          }
+        ]
+      },
+      "questions": []
+    },
+    {
+      "title": "Reinstall the X-axis way cover on the machine",
+      "fields": {
+        "context": [
+          {
+            "text": "The presenter says that at this point the steps are the same whether you are reinstalling the existing X-axis way covers or installing new ones.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0033",
+                "SRC_HAAS_0012:U0034"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          }
+        ],
+        "action": [
+          {
+            "text": "The presenter says to remove any chips and debris from the linear guides, remove the used gasket and sealant from the table mounting surface and clean it.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0034",
+                "SRC_HAAS_0012:U0035"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          },
+          {
+            "text": "The presenter says to apply a thin coat of red-eye grease to the way cover guide bar and install the way cover over the guide bars.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0036",
+                "SRC_HAAS_0012:U0037"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          },
+          {
+            "text": "A red grease cartridge is held over the open machine bed; the linear guides carry red grease.",
+            "evidence_type": "observed",
+            "attribution": {
+              "label": "D1-A keyframe observation, pending human check",
+              "kind": "model"
+            },
+            "evidence": [
+              {
+                "keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0012/kf_0238000.jpg",
+                "source_id": "SRC_HAAS_0012",
+                "start_ms": 237500,
+                "end_ms": 238500,
+                "observation_note": "A red grease cartridge held over the open machine bed; the linear guides carry red grease.",
+                "explanation": "The cartridge and the greased guides are visible in the frame."
+              },
+              [
+                "SRC_HAAS_0012:U0036",
+                "SRC_HAAS_0012:U0037"
+              ]
+            ],
+            "explanation": "The narration at this moment is about greasing the guide bar."
+          },
+          {
+            "text": "The presenter says to attach the way cover and panel to the way cover bracket with the fasteners, then fully extend the way cover one leaf at a time to make sure the sections do not separate.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0037",
+                "SRC_HAAS_0012:C0038"
+              ]
+            ],
+            "explanation": "The captions state this directly. Cue 38 is corrected from 'away cover one leaf' to 'the way cover one leaf'."
+          },
+          {
+            "text": "A way cover section is fitted over the ball screw and the linear guides.",
+            "evidence_type": "observed",
+            "attribution": {
+              "label": "D1-A keyframe observation, pending human check",
+              "kind": "model"
+            },
+            "evidence": [
+              {
+                "keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0012/kf_0252000.jpg",
+                "source_id": "SRC_HAAS_0012",
+                "start_ms": 251500,
+                "end_ms": 252500,
+                "observation_note": "A way cover section being fitted over the ball screw and linear guides.",
+                "explanation": "The section, the ball screw and the guides are visible in the frame."
+              },
+              [
+                "SRC_HAAS_0012:U0037",
+                "SRC_HAAS_0012:C0038"
+              ]
+            ],
+            "explanation": "The narration at this moment is about attaching and extending the way cover."
+          },
+          {
+            "text": "The presenter says to put a bead of RTV silicone followed by the new gasket on the face of the way cover, with the largest leaf of the way cover away from the table.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:C0038",
+                "SRC_HAAS_0012:U0039",
+                "SRC_HAAS_0012:U0040"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          },
+          {
+            "text": "The presenter says to attach the way cover to the table, install the fasteners and wipe away any excess silicone from the table.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0040",
+                "SRC_HAAS_0012:U0041"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          },
+          {
+            "text": "The presenter says to release the e-stop and press reset a couple of times to clear the alarms.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0041",
+                "SRC_HAAS_0012:U0042"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          },
+          {
+            "text": "The presenter says to apply a light coat of oil to all sections of the way cover and jog the X axis slowly to make sure the way cover does not bind.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0042",
+                "SRC_HAAS_0012:U0043"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          },
+          {
+            "text": "The presenter says to follow the same process for the other side.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0043"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          }
+        ],
+        "acceptance_criteria": [
+          {
+            "text": "The presenter says the way cover should not bind when the X axis is jogged slowly.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0042",
+                "SRC_HAAS_0012:U0043"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          }
+        ]
+      },
+      "questions": [
+        {
+          "target_field": "action",
+          "reason": "ambiguous",
+          "question": "The captions say the largest leaf is 'away from the table' while the bead is applied. Is the largest leaf lifted off the table, or is the bead on the face farthest from it?"
+        }
+      ]
+    },
+    {
+      "title": "Retrofit the new-style way cover to an older VF machine",
+      "fields": {
+        "context": [
+          {
+            "text": "The presenter says that in August 2013 the VF-1 through VF-5 machines changed to a new revision of X-axis way covers, which attach directly to the guide bars for stronger support.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0043",
+                "SRC_HAAS_0012:U0044",
+                "SRC_HAAS_0012:U0045",
+                "SRC_HAAS_0012:U0046"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          },
+          {
+            "text": "The presenter says some slight modification may be needed for machines built when this was first introduced.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0046",
+                "SRC_HAAS_0012:U0047"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          }
+        ],
+        "action": [
+          {
+            "text": "The presenter lists the tools required as a way cover kit, a number 21 drill bit, a 1032 tap, a tube of black RTV silicone, a red-eye grease cartridge and a scraper.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0047",
+                "SRC_HAAS_0012:U0048",
+                "SRC_HAAS_0012:U0049"
+              ]
+            ],
+            "explanation": "The captions state this directly. The caption's '1032 tap' is shown on screen as '10/32 TAP'."
+          },
+          {
+            "text": "A caption lists 'PARTS/TOOLS REQUIRED': waycover kit (new style), #21 drill bit, 10/32 tap, RTV silicone, RED-i grease and scraper.",
+            "evidence_type": "observed",
+            "attribution": {
+              "label": "D1-A keyframe observation, pending human check",
+              "kind": "model"
+            },
+            "evidence": [
+              {
+                "keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0012/kf_0330000.jpg",
+                "source_id": "SRC_HAAS_0012",
+                "start_ms": 329500,
+                "end_ms": 330500,
+                "observation_note": "Caption 'PARTS/TOOLS REQUIRED': waycover kit (new style), #21 drill bit, 10/32 tap, RTV silicone, RED-i grease, scraper.",
+                "explanation": "The six numbered items are legible in the frame."
+              },
+              [
+                "SRC_HAAS_0012:U0047",
+                "SRC_HAAS_0012:U0048",
+                "SRC_HAAS_0012:U0049"
+              ]
+            ],
+            "explanation": "The narration at this moment is about the required tools."
+          },
+          {
+            "text": "The presenter says to jog the X axis all the way to the opposite end of travel, put the machine in e-stop, and remove the old X-axis way cover and L bracket.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0049",
+                "SRC_HAAS_0012:U0050"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          },
+          {
+            "text": "The presenter says to locate the two holes on the way cover mounting bar, and if the holes are not drilled all the way through, to break through with the number 21 drill bit and then tap the holes all the way with the 1032 tap.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0050",
+                "SRC_HAAS_0012:U0051",
+                "SRC_HAAS_0012:U0052"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          },
+          {
+            "text": "A graphic shows a #21 drill bit and a 10/32 tap over a way cover mounting bar.",
+            "evidence_type": "observed",
+            "attribution": {
+              "label": "D1-A keyframe observation, pending human check",
+              "kind": "model"
+            },
+            "evidence": [
+              {
+                "keyframe": "acquisition/preprocessing/keyframes/SRC_HAAS_0012/kf_0352000.jpg",
+                "source_id": "SRC_HAAS_0012",
+                "start_ms": 351500,
+                "end_ms": 352500,
+                "observation_note": "Graphic of a #21 drill bit and a 10/32 tap over a way cover mounting bar.",
+                "explanation": "The labels and the two tools are visible in the frame."
+              },
+              [
+                "SRC_HAAS_0012:U0051",
+                "SRC_HAAS_0012:U0052"
+              ]
+            ],
+            "explanation": "The narration at this moment is about drilling through and tapping the holes."
+          },
+          {
+            "text": "The presenter says to remove the guide bars from the machine and install them in the way cover, then install the way cover and guide bars on the machine as an assembly.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0053",
+                "SRC_HAAS_0012:U0054",
+                "SRC_HAAS_0012:U0055"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          },
+          {
+            "text": "The presenter says to check the transition between the way cover guide bar and the casting for smoothness.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0055",
+                "SRC_HAAS_0012:U0056"
+              ]
+            ],
+            "explanation": "The captions state this directly."
+          },
+          {
+            "text": "The presenter says to reinstall the way covers and jog the axis around a couple of times to make sure it is not binding.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:C0057",
+                "SRC_HAAS_0012:U0058"
+              ]
+            ],
+            "explanation": "The captions state this directly. Cue 57 is corrected from 'away covers once' to 'way covers once'."
+          }
+        ],
+        "rationale": [
+          {
+            "text": "The presenter says that if the surface is not smooth, the tabs on the bottom of the way covers will get caught and damaged.",
+            "evidence": [
+              [
+                "SRC_HAAS_0012:U0056",
+                "SRC_HAAS_0012:C0057"
+              ]
+            ],
+            "explanation": "The captions state this directly. Cue 57 is corrected from 'away covers once' to 'way covers once'."
+          }
+        ]
+      },
+      "questions": [
+        {
+          "target_field": "condition",
+          "reason": "ambiguous",
+          "question": "The narration says VF-1 through VF-5 changed in August 2013, while an on-screen caption elsewhere in the video gives a retrofit window of August 2013 to February 2016. Which machines need the retrofit?"
+        }
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "type": "requires",
+      "from_step": 4,
+      "to_step": 6,
+      "claim": {
+        "text": "The presenter says the reinstall steps are the same whether the existing way covers are reinstalled or new ones are installed.",
+        "evidence": [
+          [
+            "SRC_HAAS_0012:U0033",
+            "SRC_HAAS_0012:U0034"
+          ]
+        ],
+        "explanation": "The captions state this directly."
+      }
+    },
+    {
+      "type": "observed_next",
+      "from_step": 6,
+      "to_step": 7,
+      "claim": {
+        "text": "The presenter follows the same-process-for-the-other-side line with the newer way cover revision for VF-1 through VF-5 machines.",
+        "evidence": [
+          [
+            "SRC_HAAS_0012:U0043",
+            "SRC_HAAS_0012:U0044"
+          ]
+        ],
+        "explanation": "The captions state this directly."
+      }
+    }
+  ]
+}

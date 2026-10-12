@@ -109,7 +109,9 @@ def test_untranslated_vietnamese_question_skips_the_gate(real_db):
     assert never.calls == 0 and result["trace"]["relevance"]["gate"] == "skipped"
 
 
-OUT_OF_SCOPE = "How do I calibrate the coolant refractometer?"  # no term shared with the SMTC corpus
+# No term shared with the Haas service corpus. This used to be "How do I calibrate the coolant
+# refractometer?", until the way-cover video (SRC_HAAS_0012) put coolant and refractometer into the corpus.
+OUT_OF_SCOPE = "How do I tune the PID loop of a reflow oven?"
 
 
 def test_out_of_scope_question_rejected_before_embedding(real_db):
@@ -121,7 +123,7 @@ def test_out_of_scope_question_rejected_before_embedding(real_db):
     relevance = result["trace"]["relevance"]
     assert {key: relevance[key] for key in ("term_coverage", "unseen_terms", "min_term_coverage", "gate")} == {
                                             "term_coverage": 0.0,
-                                            "unseen_terms": ["calibr", "coolant", "refractomet"],
+                                            "unseen_terms": ["loop", "oven", "pid", "reflow", "tune"],
                                             "min_term_coverage": RetrievalConfig().min_term_coverage,
                                             "gate": "rejected"}
     assert embedder.calls == 0
@@ -230,7 +232,7 @@ def test_relevance_policy_is_validated():
 @pytest.mark.parametrize("question", [
     "How to measure spindle runout with a dial indicator?",
     "How can a dial indicator measure spindle runout?",
-    "How to clean the chip conveyor periodically?",
+    "How do I weld a stainless steel bracket with a TIG torch?",  # was the chip conveyor: chips and cleaning entered the corpus with SRC_HAAS_0012
 ])
 def test_unrelated_claim_matches_do_not_pass_relevance_gate(real_db, question, strategy):
     embedder = CountingEmbedder()

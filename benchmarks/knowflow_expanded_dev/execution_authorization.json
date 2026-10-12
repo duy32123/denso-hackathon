@@ -1,0 +1,10 @@
+{
+  "kind": "user_execution_authorization",
+  "user_instruction": "x?c nh?n r?i ch?y benchmark ?i",
+  "recorded_at": "2026-10-12T14:29:45.669+00:00",
+  "human_source_review": false,
+  "label_decisions_submitted": 0,
+  "labels_changed": false,
+  "questions_sha256": "59af8902bad10c266e5d6718963cd5bd5d70d7c62d1ffeef6b8b703382b945a4",
+  "interpretation": "Run all 81 existing human-labelled questions. Expanded-corpus negative revalidation remains pending; do not create human review records from this execution approval."
+}

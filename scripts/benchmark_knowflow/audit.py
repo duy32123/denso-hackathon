@@ -23,6 +23,16 @@ def git(*args):
 
 
 def verify_label_approval(config):
+    if config.get("label_revalidation_pending"):
+        # Execution approval on existing gold is distinct from source review.
+        authorization = json.loads((ROOT / config["execution_authorization"]).read_text(encoding="utf-8"))
+        if (authorization.get("kind") != "user_execution_authorization" or
+                authorization.get("human_source_review") is not False or
+                authorization.get("questions_sha256") != sha_file(ROOT / config["questions"])):
+            raise ValueError("Missing authorization to measure unchanged labels with pending source revalidation")
+        if config.get("expanded_label_review"):
+            raise ValueError("Pending revalidation cannot be marked completed human review")
+        return
     if not config.get("expanded_label_review"):
         return
     path = ROOT / config["expanded_label_review"]
@@ -57,6 +67,8 @@ def audit(config, db):
         files.append(ROOT / config["expanded_label_review"])
         files.extend((ROOT / config["expanded_label_review"]).parent / name for name in
                      ("label_changes.jsonl", "negative_label_review.csv", "manifest.json"))
+    if config.get("execution_authorization"):
+        files.append(ROOT / config["execution_authorization"])
     sources = []
     for source in corpus["sources"].values():
         transcript = ROOT / f"acquisition/preprocessing/transcripts/{source.source_id}/corrected.json"
@@ -83,6 +95,9 @@ def audit(config, db):
         "import_result": imported, "active_workflows": workflows, "sources": sources,
         "questions": len(questions), "questions_sha256": qhash, "corpus_files_sha256": digest(hashes),
         "input_files": hashes, "labels": dict(labels),
+        "expanded_negative_label_revalidation": {"pending": bool(config.get("label_revalidation_pending")),
+            "human_source_revalidated_questions": 0 if config.get("label_revalidation_pending") else None,
+            "note": "Existing label review is preserved; user execution approval is not human source review"},
         "reviewers": dict(Counter(q.label.reviewed_by for q in questions)),
         "languages": dict(Counter(q.language for q in questions)),
         "expected_status": dict(Counter(str(q.expected_status) for q in questions)),

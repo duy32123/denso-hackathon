@@ -37,6 +37,7 @@ def write(run_dir, frozen):
               "questions_sha256": audit["questions_sha256"], "corpus_sha256": audit["corpus_files_sha256"],
               "pricing": config["pricing"], "summaries": {}, "by_cohort": {}, "by_language": {},
               "semantic_review_status": "pending_human", "holdout_opened": False, "synthetic_included": False,
+              "label_revalidation_pending": bool(config.get("label_revalidation_pending")),
               "unfinished_provider_calls": unfinished,
               "all_experiment_api_cost_including_index_smoke_interruption": costs(calls, config),
               "index_build_cost": {arm: costs([c for c in calls if c["phase"] == "preparation" and c["arm"] == arm], config) for arm in ARMS[:2]},
@@ -159,6 +160,13 @@ def write(run_dir, frozen):
               *[f".\\.venv\\Scripts\\python.exe -m scripts.benchmark_knowflow {command} --config benchmarks/knowflow_expanded_dev/config.json --run-dir benchmarks/results/<NEW_RUN>" for command in ("prepare", "smoke", "run", "report")], "```", "",
               f"Config SHA {frozen['config_sha256']}; questions SHA {audit['questions_sha256']}; corpus SHA {audit['corpus_files_sha256']}. Dependency versions và active revisions trong audit.json. Lượt cũ giữ nguyên."]
     (run_dir / "REPORT.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    if config.get("label_revalidation_pending"):
+        report_path = run_dir / "REPORT.md"
+        text = report_path.read_text(encoding="utf-8")
+        text = text.replace("Phiếu human review nhãn phủ định, hash trước/sau và label_changes.jsonl được pin trong cấu hình.",
+                            "Lượt này giữ nguyên 81 nhãn hiện có; 20 nhãn phủ định chưa được người kiểm lại trên corpus mở rộng. Không có label_changes hoặc human approval mới. Xác nhận chạy của người dùng được lưu riêng, không phải review nguồn.")
+        banner = "**Nhãn phủ định chưa tái kiểm:** người dùng cho phép chạy trên gold hiện có. Không đánh dấu đề xuất AI thành human-reviewed; không coi status match là chất lượng đáp án đã được người chấm. Kỳ vọng retrieval Q041/Q049 còn cần xác nhận nguồn; expected answer của chúng hiện là insufficient_evidence.\n\n"
+        report_path.write_text(banner + text, encoding="utf-8")
     sa = result["summaries"][ARMS[0]]
     (run_dir / "SLIDE.md").write_text("# Số liệu có thể đưa lên slide\n\n"
         f"- Corpus Haas real/dev mở rộng: {len(audit['active_workflows'])} workflow; {len(questions)} câu có nhãn người kiểm, {len(rows)} terminal attempts A/B/C.\n"
@@ -166,4 +174,7 @@ def write(run_dir, frozen):
         f"- Status đúng A/B/C: {' / '.join(str(result['summaries'][a]['status_accuracy']['numerator']) for a in ARMS)} trên {len(questions)} câu/arm.\n"
         f"- A/C cùng ứng viên: {result['paired_A_C']['same_candidate_pairs']} cặp; không mặc nhiên kết luận graph tốt hơn RAG.\n"
         "- Chấm nghĩa chờ người đối chiếu nguồn; không dùng số liệu này cho giảm 30% thời gian hay ROI.\n", encoding="utf-8")
+    if config.get("label_revalidation_pending"):
+        slide_path = run_dir / "SLIDE.md"
+        slide_path.write_text("**Giới hạn:** giữ nguyên 81 nhãn hiện có; 20 nhãn phủ định chờ kiểm lại trên corpus mới.\n\n" + slide_path.read_text(encoding="utf-8"), encoding="utf-8")
     return result

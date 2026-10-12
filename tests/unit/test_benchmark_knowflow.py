@@ -203,3 +203,20 @@ def test_interrupted_call_start_retains_unknown_expense():
     assert unfinished[0]["elapsed_ms"] is None
     completed = {**started, "kind": "provider_call", "ok": False}
     assert accounting_calls([started, completed]) == ([completed], [])
+
+
+def test_execution_approval_does_not_become_human_source_review(tmp_path, monkeypatch):
+    import json
+    import scripts.benchmark_knowflow.audit as audit_module
+    monkeypatch.setattr(audit_module, "ROOT", tmp_path)
+    (tmp_path / "q.jsonl").write_text("existing gold")
+    cfg = {"questions": "q.jsonl", "label_revalidation_pending": True, "execution_authorization": "authorization.json"}
+    authorization = {"kind": "user_execution_authorization", "human_source_review": False,
+                     "questions_sha256": audit_module.sha_file(tmp_path / "q.jsonl")}
+    (tmp_path / "authorization.json").write_text(json.dumps(authorization))
+    verify_label_approval(cfg)
+    with pytest.raises(ValueError, match="cannot be marked"):
+        verify_label_approval(cfg | {"expanded_label_review": "fake_human_review.json"})
+    (tmp_path / "q.jsonl").write_text("gold was edited")
+    with pytest.raises(ValueError, match="Missing authorization"):
+        verify_label_approval(cfg)

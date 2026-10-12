@@ -146,6 +146,31 @@ class MeasuredTranslator(GeminiTranslator):
             return super().to_english(text)
 
 
+class IndexEmbedder(MeasuredEmbedder):
+    """Operational index pacing; preserves text chunks, vectors and aggregation.
+
+    Query adapters remain unchanged. This class only reduces the batch sent to
+    the real provider while creating the two indexes; no vector is synthesized.
+    """
+    def __init__(self, recorder, dimensions=768, *, batch_size=32, min_interval_seconds=0):
+        super().__init__(recorder, dimensions)
+        if not 1 <= batch_size <= 32 or min_interval_seconds < 0:
+            raise ValueError("Invalid index batching/pacing")
+        self.batch_size, self.min_interval_seconds = batch_size, min_interval_seconds
+        self._last_index_call = None
+
+    def _embed(self, texts, task):
+        output = []
+        for start in range(0, len(texts), self.batch_size):
+            if self._last_index_call is not None:
+                delay = self.min_interval_seconds - (time.perf_counter() - self._last_index_call)
+                if delay > 0:
+                    time.sleep(delay)
+            self._last_index_call = time.perf_counter()
+            output.extend(super()._embed(texts[start:start+self.batch_size], task))
+        return output
+
+
 class MeasuredAnswerModel(GeminiAnswerModel):
     def __init__(self, recorder, config, payloads):
         super().__init__(config["answer_model"], timeout_ms=config["execution"]["provider_timeout_ms"])

@@ -6,5 +6,8 @@
   "label_decisions_submitted": 0,
   "labels_changed": false,
   "questions_sha256": "59af8902bad10c266e5d6718963cd5bd5d70d7c62d1ffeef6b8b703382b945a4",
-  "interpretation": "Run all 81 existing human-labelled questions. Expanded-corpus negative revalidation remains pending; do not create human review records from this execution approval."
+  "interpretation": "Run all 81 existing human-labelled questions. Expanded-corpus negative revalidation remains pending; do not create human review records from this execution approval.",
+  "reported_reviewer_id": "duy32123",
+  "user_reported_source_review": true,
+  "explicit_label_decisions_received": 0
 }

@@ -27,7 +27,7 @@ from retrieval.retrieval.engine import RetrievalConfig, retrieve
 
 from .audit import ROOT, audit, sha_file, verify_label_approval
 from .baseline import TranscriptRAG, build_raw_index, public_chunk, RAW_DRAFT_POLICY, RAW_VERIFY_POLICY
-from .providers import MeasuredAnswerModel, MeasuredEmbedder, MeasuredTranslator, Recorder, now
+from .providers import MeasuredAnswerModel, MeasuredEmbedder, MeasuredTranslator, IndexEmbedder, Recorder, now
 from .pairing import PairedRetrieval, without_graph
 
 ARMS = ("A_knowflow", "B_transcript_rag", "C_no_graph")
@@ -46,7 +46,7 @@ def measurement_files():
     return [*sorted((ROOT / "retrieval").rglob("*.py")),
             *sorted((ROOT / "contracts/schema/knowflow_contracts").rglob("*.py")),
             *[ROOT / f"scripts/benchmark_knowflow/{f}.py" for f in
-              ("__main__", "audit", "baseline", "providers", "pairing")], ROOT / "pyproject.toml"]
+              ("__main__", "audit", "baseline", "providers", "pairing", "resume_preparation")], ROOT / "pyproject.toml"]
 
 
 def freeze(config, run_dir, audit_result):
@@ -92,7 +92,8 @@ def prepare(config, run_dir):
                       "active_workflows": metadata["active_workflows"],
                       "offline_bm25": offline_report["strategies"]["lexical"]["retrieval"]}), flush=True)
     recorder = Recorder(run_dir / "provider_calls.jsonl")
-    embedder = MeasuredEmbedder(recorder, config["embedding_dimensions"])
+    embedder = IndexEmbedder(recorder, config["embedding_dimensions"],
+                            **config.get("index_pacing", {}))
     start = time.perf_counter()
     try:
         recorder.arm = "A_knowflow"

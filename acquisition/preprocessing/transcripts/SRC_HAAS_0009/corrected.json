@@ -1,0 +1,199 @@
+{
+  "source_id": "SRC_HAAS_0009",
+  "transcript_origin": "official_caption",
+  "timestamp_basis": "original_video_ms",
+  "producer": "yt-dlp 2026.x + youtube official uploader captions (en)",
+  "processed_at": "2026-10-12T10:51:00Z",
+  "utterances": [
+    {
+      "start_ms": 0,
+      "end_ms": 7880,
+      "text": "[Music] all too often a spindle is replaced without getting to the root cause of the"
+    },
+    {
+      "start_ms": 7880,
+      "end_ms": 12920,
+      "text": "problem which leads to another failure down the road so before you go through the trouble of"
+    },
+    {
+      "start_ms": 12920,
+      "end_ms": 17840,
+      "text": "replacing your spindle let's stop and do some troubleshooting to rule out any other issues"
+    },
+    {
+      "start_ms": 17840,
+      "end_ms": 26810,
+      "text": "here we have a spindle that's seized and quit running but what caused it to seize most often"
+    },
+    {
+      "start_ms": 26810,
+      "end_ms": 32810,
+      "text": "the root causes lubrication as in the spindle is not getting enough oil pay particular attention"
+    },
+    {
+      "start_ms": 32810,
+      "end_ms": 39410,
+      "text": "if your machine has a Bijur pump as they age these pumps can sometimes work intermittently"
+    },
+    {
+      "start_ms": 39410,
+      "end_ms": 45380,
+      "text": "so even a successful lube test is no guarantee that the Pope is good these pumps should always"
+    },
+    {
+      "start_ms": 45380,
+      "end_ms": 51440,
+      "text": "be rebuilt when a spindle problem is suspected and if the pump is over five years old a rebuild"
+    },
+    {
+      "start_ms": 51440,
+      "end_ms": 57140,
+      "text": "us necessary anyway check out Hoss parts comm or the rebuild kit that includes the gear motor and"
+    },
+    {
+      "start_ms": 57140,
+      "end_ms": 62390,
+      "text": "don't skip this step and if you've got one of these older pumps that's using either back for"
+    },
+    {
+      "start_ms": 62390,
+      "end_ms": 71600,
+      "text": "two or G t25 oils switch those out for our current spec oils either Mobil SHC 625 or a high quality"
+    },
+    {
+      "start_ms": 71600,
+      "end_ms": 81020,
+      "text": "synthetic 5w 20 Automotive type oil both of these are direct replacements if your machine has a hoss"
+    },
+    {
+      "start_ms": 81020,
+      "end_ms": 86510,
+      "text": "metering valve style pump check for air leaks and bubbles inside the tank at the bottom of the"
+    },
+    {
+      "start_ms": 86510,
+      "end_ms": 92270,
+      "text": "valve body and the tube that carries oil into the sight glass if you can see air bubbles the"
+    },
+    {
+      "start_ms": 92270,
+      "end_ms": 97700,
+      "text": "pump isn't properly lubricating the spindle also be sure and check for oil leaks at the"
+    },
+    {
+      "start_ms": 97700,
+      "end_ms": 103940,
+      "text": "sight glass if oil is leaking here the spindle is not being properly lubricated remember if"
+    },
+    {
+      "start_ms": 103940,
+      "end_ms": 108830,
+      "text": "any of these problems are not corrected your new spindle will seize just like the old one"
+    },
+    {
+      "start_ms": 108830,
+      "end_ms": 115460,
+      "text": "now let's talk about a spindle that is running hot the most common reason for this is too much"
+    },
+    {
+      "start_ms": 115460,
+      "end_ms": 120740,
+      "text": "oil reaching the spindle check your lubrication system and make sure that the proper amount of oil"
+    },
+    {
+      "start_ms": 120740,
+      "end_ms": 127340,
+      "text": "is being delivered the procedure for this varies depending on machine model and pump type refer to"
+    },
+    {
+      "start_ms": 127340,
+      "end_ms": 134360,
+      "text": "the documentation for your pump that's available at DIY hasti and see calm and follow the proper"
+    },
+    {
+      "start_ms": 134360,
+      "end_ms": 139130,
+      "text": "teacher fixing this will most likely correct the problem and will save you from replacing"
+    },
+    {
+      "start_ms": 139130,
+      "end_ms": 145160,
+      "text": "the spindle next let's consider a spindle with a noise or vibration problem before replacing"
+    },
+    {
+      "start_ms": 145160,
+      "end_ms": 150650,
+      "text": "the spindle always check to make sure that your tooling isn't the problem and that the spindle"
+    },
+    {
+      "start_ms": 150650,
+      "end_ms": 157070,
+      "text": "is balanced properly we have a video that covers that procedure on an inline spindle make sure that"
+    },
+    {
+      "start_ms": 157070,
+      "end_ms": 161870,
+      "text": "the spindle and motor are properly aligned this is also covered in our spindle balancing video"
+    },
+    {
+      "start_ms": 161870,
+      "end_ms": 166670,
+      "text": "if your spindle is belt driven make sure that the belt tension is correct and that the belts"
+    },
+    {
+      "start_ms": 166670,
+      "end_ms": 172880,
+      "text": "and sprockets are clean and in good condition last let's talk about a spindle where the tool"
+    },
+    {
+      "start_ms": 172880,
+      "end_ms": 178100,
+      "text": "is sticking when dealing with a stuck tool the spindle is rarely the problem it's much more"
+    },
+    {
+      "start_ms": 178100,
+      "end_ms": 183530,
+      "text": "likely that it has to do with the tools being used and the application really long or heavy"
+    },
+    {
+      "start_ms": 183530,
+      "end_ms": 188930,
+      "text": "tools can lead to the tool fretting in the taper you should take a careful look at any applications"
+    },
+    {
+      "start_ms": 188930,
+      "end_ms": 194900,
+      "text": "using these types of tools to ensure they aren't contributing to the problem also go back and take"
+    },
+    {
+      "start_ms": 194900,
+      "end_ms": 200300,
+      "text": "another look at the spindle temperature tools are more likely to stick in a hot spindle deal with"
+    },
+    {
+      "start_ms": 200300,
+      "end_ms": 204620,
+      "text": "the lubrication problem we talked about earlier and you will probably solve your tool sticking"
+    },
+    {
+      "start_ms": 204620,
+      "end_ms": 211520,
+      "text": "problem as well one last note if the drive dogs or spindle taper has been damaged by an orientation"
+    },
+    {
+      "start_ms": 211520,
+      "end_ms": 218420,
+      "text": "problem this must be corrected before you replace the spindle bottom line spindle troubles offer"
+    },
+    {
+      "start_ms": 218420,
+      "end_ms": 223280,
+      "text": "the result of a host of external issues with just a little troubleshooting there's a good"
+    },
+    {
+      "start_ms": 223280,
+      "end_ms": 230390,
+      "text": "chance you can solve the problem and be back up and running in no time thanks for watching you"
+    }
+  ]
+}

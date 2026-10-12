@@ -1,0 +1,79 @@
+{
+  "source_id": "SRC_HAAS_0010",
+  "transcript_origin": "official_caption",
+  "timestamp_basis": "original_video_ms",
+  "producer": "yt-dlp 2026.x + youtube official uploader captions (en)",
+  "processed_at": "2026-10-12T10:51:00Z",
+  "utterances": [
+    {
+      "start_ms": 130,
+      "end_ms": 10630,
+      "text": "[Music] if you're in the middle of a job and you get alarmed 2:54 spin the motor overheat here are"
+    },
+    {
+      "start_ms": 10630,
+      "end_ms": 15730,
+      "text": "a couple things you can do the spindle motor has a temperature sensor built into it usually in the"
+    },
+    {
+      "start_ms": 15730,
+      "end_ms": 21490,
+      "text": "junction box there are temperature limits for the spindle motor that's preset from the factory if"
+    },
+    {
+      "start_ms": 21490,
+      "end_ms": 27760,
+      "text": "the spindle motor temperature begins to reach those limits this sensor triggers alarm to 54"
+    },
+    {
+      "start_ms": 27760,
+      "end_ms": 33280,
+      "text": "to begin with check that the spindle loads are not way over a hundred percent for long"
+    },
+    {
+      "start_ms": 33280,
+      "end_ms": 38560,
+      "text": "extended periods because you're running a long super-aggressive program this alarm"
+    },
+    {
+      "start_ms": 38560,
+      "end_ms": 44590,
+      "text": "can be triggered if there are problems with the spindle fan the fan should turn on as soon as"
+    },
+    {
+      "start_ms": 44590,
+      "end_ms": 49810,
+      "text": "the spindle starts turning if the fan is working make sure it's running in the right direction on"
+    },
+    {
+      "start_ms": 49810,
+      "end_ms": 56020,
+      "text": "a vertical mill it should pull air up through the spindle head and push it out through the top on a"
+    },
+    {
+      "start_ms": 56020,
+      "end_ms": 61720,
+      "text": "horizontal mill it pushes air out through the back of the spindle head if the machine has a"
+    },
+    {
+      "start_ms": 61720,
+      "end_ms": 69280,
+      "text": "next-gen Control open the control cabinet and look at the cable connected to p39 on the i/o PC board"
+    },
+    {
+      "start_ms": 69280,
+      "end_ms": 74140,
+      "text": "it should have a ferrite filter on it remove the spindle head cover and examine the temperature"
+    },
+    {
+      "start_ms": 74140,
+      "end_ms": 80500,
+      "text": "sensor itself make sure that it's not damaged and the cable is firmly connected if the alarm"
+    },
+    {
+      "start_ms": 80500,
+      "end_ms": 86800,
+      "text": "persists it's time to contact your local hospital outlet for assistance thanks for watching [Music]"
+    }
+  ]
+}

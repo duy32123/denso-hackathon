@@ -1,0 +1,23 @@
+# Corrections applied 2026-10-12 (terminology only; every one cites a primary source
+# or the same transcript's own usage; timestamps and sentence structure are unchanged).
+
+utterance start_ms=150 end_ms=9930
+
+- [Music] alarm 626 occurs when the tool pocket failed to reach the proper up in
++ [Music] alarm 626 occurs when the tool pocket failed to reach the proper up and
+
+Basis: self-consistency: the same transcript says "pocket up and down" in cues 8, 10 and 11.
+
+utterance start_ms=15930 end_ms=22080
+
+- change then command several - changes to make sure the tool change is working correctly if
++ change then command several tool changes to make sure the tool change is working correctly if
+
+Basis: self-consistency: the same sentence ends "make sure the tool change is working correctly".
+
+utterance start_ms=77220 end_ms=82950
+
+- getting alarm 626 you will need to contact your ha spectra outlet and thanks for watching [Music]
++ getting alarm 626 you will need to contact your HFO and thanks for watching [Music]
+
+Basis: the description ends "please contact your local HFO".

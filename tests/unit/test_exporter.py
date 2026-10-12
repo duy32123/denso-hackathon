@@ -140,7 +140,8 @@ def test_new_workflow_produces_a_valid_bundle_with_a_new_id(workspace):
     assert validate_bundle(workspace["out"]).ok
     manifest = json.loads((workspace["out"] / "manifest.json").read_text(encoding="utf-8"))
     assert manifest["created_at"] == "2026-09-12T00:00:00Z"
-    assert {f["path"]: f["record_count"] for f in manifest["files"]} == {"sources.jsonl": 5, "workflows.jsonl": 1}
+    canonical_sources = sum(1 for line in workspace["sources"].read_text(encoding="utf-8").splitlines() if line.strip())
+    assert {f["path"]: f["record_count"] for f in manifest["files"]} == {"sources.jsonl": canonical_sources, "workflows.jsonl": 1}
 
 
 def test_reexport_is_a_byte_identical_noop(workspace):

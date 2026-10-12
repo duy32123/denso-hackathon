@@ -1,0 +1,16 @@
+# Corrections applied 2026-10-12 (terminology only; every one cites a primary source
+# or the same transcript's own usage; timestamps and sentence structure are unchanged).
+
+utterance start_ms=32810 end_ms=39410
+
+- if your machine has a busier pump as they age these pumps can sometimes work intermittently
++ if your machine has a Bijur pump as they age these pumps can sometimes work intermittently
+
+Basis: the on-screen overlay "LUBRICATION - CHECK THE BIJUR PUMP" shown at 00:00:44.
+
+utterance start_ms=62390 end_ms=71600
+
+- two or G t25 oils switch those out for our current spec oils either Mobil SH c6 25 or a high quality
++ two or G t25 oils switch those out for our current spec oils either Mobil SHC 625 or a high quality
+
+Basis: the on-screen Haas parts page "OIL, REFILL MOBIL SHC 625" shown at 00:01:08.

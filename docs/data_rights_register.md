@@ -57,3 +57,23 @@ redistribution.
   defeat — repeated automated fetches were stopped rather than retried aggressively or
   worked around. The one guide page recovered was obtained through ordinary manual
   browsing by the operator, not by circumventing the interstitial.
+
+## Dev sources added 2026-10-12 (SRC_HAAS_0008 to SRC_HAAS_0012)
+
+Owner/publisher for every row: **Haas Automation, Inc.** (the YouTube channel name and the video descriptions both say so). Access date: **2026-10-12**.
+
+Operator authorization of record: on 2026-10-12 the operator (Team 1) asked for five more official Haas service videos to be added to the dev set and taken through the same process as the pilot, which includes keeping the official English captions and downloading the video for keyframe extraction. Recorded here as the **operator's own assertion for this prototype**, not as a grant of rights from Haas Automation or YouTube, and it does not authorize redistribution.
+
+| source_id | Canonical video | Public? | Download permitted? | Local retention | Committed | Redistribution? | Decision |
+|---|---|---|---|---|---|---|---|
+| SRC_HAAS_0008 | youtube.com/watch?v=DXtocZX8hf0 | Yes | Unclear (YouTube ToS restricts downloading without permission; operator authorized for this prototype) | Caption text + a 1080p video-only stream, local, gitignored | Caption transcript, 5 keyframes | **No** | `asset_uri=null` |
+| SRC_HAAS_0009 | youtube.com/watch?v=cwYsbzAW3r0 | Yes | Same as above | Same as above | Caption transcript, 6 keyframes | **No** | `asset_uri=null` |
+| SRC_HAAS_0010 | youtube.com/watch?v=M-VcwEodqP0 | Yes | Same as above | Same as above | Caption transcript, 6 keyframes | **No** | `asset_uri=null` |
+| SRC_HAAS_0011 | youtube.com/watch?v=DgHQtvvf1kI | Yes | Same as above | Same as above | Caption transcript, 7 keyframes | **No** | `asset_uri=null` |
+| SRC_HAAS_0012 | youtube.com/watch?v=ezplV3447C8 | Yes | Same as above | Same as above | Caption transcript, 7 keyframes | **No** | `asset_uri=null` |
+
+- The haascnc.com page for each video was **not** fetched: the canonical URL is built from the YouTube video id and the site answers automated requests with a Cloudflare challenge, which was treated as an access boundary and not worked around. Nothing was bypassed.
+- Only videos with manual (uploader-provided) English captions were taken. Two candidates without them (`tsp_eLbb-UQ`, `OrflTBq-JBo`) were dropped and no speech recognition was run.
+- The video files are kept under `data/media/haas_d1a/`, which `.gitignore` already excludes. Their hashes are in `acquisition/preprocessing/haas_d1a_media_inventory.jsonl` for provenance only.
+- SRC_HAAS_0011's description links a Haas DIY page, the Wye-Delta Contactor Troubleshooting Guide. It was not retrieved and has no source_id (candidate CAND-018, deferred) until its text is copied by ordinary manual browsing, as was done for TG0128.
+- The holdout sources SRC_HAAS_0006 and SRC_HAAS_0007 were not touched.

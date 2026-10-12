@@ -1,0 +1,163 @@
+{
+  "key": "e94a8f5c4058281f78a389b18b641dfa44a5e15dea45f6947016ced4096715c6",
+  "result": {
+    "status": "insufficient_evidence",
+    "index_build_id": "IDX_SEARCH_151f7d6dfcc821966e669bd1842c59f5d1d2c8eb7210fb4e998ef46e36857389",
+    "record_build_id": "IDX_WP1_f2e98bbf552b45e119f633b6de9f6469a9592f2494a4dc74b44f59b655527dd4",
+    "source_type": "real",
+    "dataset_split": "dev",
+    "context": {
+      "manufacturer": "Haas",
+      "machine_family": null,
+      "machine_model": null,
+      "subsystem": null,
+      "task_type": null,
+      "symptoms": [],
+      "alarm_codes": [],
+      "components": []
+    },
+    "missing_context": [],
+    "selected_workflow": null,
+    "workflow_candidates": [],
+    "steps": [],
+    "claims": [],
+    "conflicts": [],
+    "blocked_claims": [],
+    "questions": [],
+    "relations": [],
+    "related_steps": [],
+    "related_claims": [],
+    "evidence_openability_checked": false,
+    "trace": {
+      "config": {
+        "strategy": "hybrid",
+        "top_k": 5,
+        "candidate_k": 20,
+        "rrf_k": 60,
+        "min_cosine": 0.25,
+        "intent": "auto",
+        "min_term_coverage": 0.2,
+        "relevance_policy": "claim_coherence",
+        "query_translation": "auto",
+        "neighbor_depth": 1,
+        "max_related_steps": 5,
+        "workflow_routing": "best_step"
+      },
+      "intent": "detail",
+      "detected_context": {
+        "manufacturer": [
+          "Haas",
+          "Haas"
+        ]
+      },
+      "filters": [
+        {
+          "workflow_id": "B0_SRC_HAAS_0005",
+          "revision": 2,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0001",
+          "revision": 1,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0002",
+          "revision": 2,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0003",
+          "revision": 2,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0004",
+          "revision": 1,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0005",
+          "revision": 1,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0006",
+          "revision": 1,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0007",
+          "revision": 1,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0008",
+          "revision": 1,
+          "mismatches": [],
+          "unknown_context": []
+        }
+      ],
+      "workflow_ranking": [],
+      "step_ranking": [],
+      "embedding_calls": 0,
+      "cache": "disabled",
+      "eligible_documents": 76,
+      "query_translation": null,
+      "relevance": {
+        "policy": "claim-coherence-2",
+        "unit": "claim",
+        "background_ratio": 0.75,
+        "ignored_terms": [],
+        "context_terms": [
+          "haa"
+        ],
+        "protected_component_terms": [],
+        "query_terms": [
+          "calibr",
+          "lath",
+          "probe"
+        ],
+        "matched_terms": [
+          "probe"
+        ],
+        "unseen_terms": [
+          "calibr",
+          "lath"
+        ],
+        "min_matches": 2,
+        "term_coverage": 0.3333,
+        "min_term_coverage": 0.2,
+        "support_refs": [
+          {
+            "workflow_id": "REAL_WF_0006",
+            "revision": 1,
+            "step_id": "REAL_WF_0006_ST_005",
+            "claim_id": "REAL_WF_0006_CL_018",
+            "purpose": "answer"
+          }
+        ],
+        "gate": "rejected",
+        "exact_alarm_lookup": false,
+        "corpus_term_coverage": 0.28
+      },
+      "latency_ms": 442.88
+    }
+  },
+  "result_sha256": "4921bef1461c2c717c161b06758c262ed21c026fd7c001650d9fd9addb900d0e",
+  "error_class": null,
+  "latency_ms": 447.6481000019703,
+  "provider_call_ids": [],
+  "backoff_seconds": 0.0,
+  "owner_arm": "C_no_graph",
+  "pre_graph_sha256": "32ac0710ecb8639b604cd4208c57127e8dac4adca61daa8b4597664996ccaeea",
+  "translation_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+}

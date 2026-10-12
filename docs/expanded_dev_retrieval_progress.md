@@ -113,22 +113,73 @@ cho arm thứ hai thêm ngân sách sinh đáp án.
   engine. Regression kiểm lookup alarm, code sai/claim bị loại, sai bộ phận,
   quá trình procedure đủ Step, A/C mutation isolation, shared error và ledger cost.
 
-**Chưa chạy full 81 × 3.** Cần phiếu nhãn thật đã điền và tên người kiểm. Sau đó
-áp dụng, commit nhãn/mã, `prepare` khóa hash/config → smoke → full A/B/C → report.
-[Lệnh chạy](../benchmarks/knowflow_expanded_dev/README.md). Không ghi phí/tokens,
-p50/p95 hoặc độ đúng nghĩa của full run chưa chạy thành 0.
+## Full API 81 × 3: đã hoàn thành, giữ nguyên nhãn
+
+[Run 20261012](../benchmarks/results/20261012_expanded_dev/REPORT.md) đã hoàn thành
+243/243 lượt, sau smoke 12/12 HTTP 200. Mã đo tại `d47308e`, dựa trên main PR #53;
+không sử dụng nhánh 3D cũ. Mỗi cặp A/C tái dùng một retrieval thật, hash ứng viên
+và bản dịch giống nhau ở 81/81 cặp. C bỏ đúng các trường cạnh/mở rộng; không bỏ
+claim chuẩn hóa. Không mở holdout và không chạy lại câu lỗi để chọn kết quả.
+
+Người dùng yêu cầu chạy, báo đã kiểm nguồn và cung cấp GitHub `duy32123`, nhưng
+chưa gửi quyết định trong phiếu 20 nhãn. Run dùng `config_existing_labels.json`,
+giữ nguyên hash gold `59af8902…`; 0 thay đổi nhãn, không tạo human approval mới.
+Q041/Q049 retrieval=retrieved, answer=insufficient_evidence; hai status cần được
+review riêng. Đề xuất AI không chuyển thành nhãn do người kiểm.
+
+| Tập | Status đúng A/B/C | Recall@5 A/C (n) | MRR@5 A/C |
+|---|---|---|---|
+| 66 câu cũ | 53 / 53 / 53 trên 66 | 94.59% (37) | 83.87% |
+| 15 câu mới, đều En | 14 / 14 / 14 trên 15 | 100% (15) | 93.33% |
+| Toàn bộ 81 | 67 / 67 / 67 trên 81 | 96.15% (52) | 86.60% |
+
+B chưa có raw-chunk gold do người kiểm: Recall/MRR=null. Cả ba trả answered ở
+42/56 câu expected answered; đây chưa phải độ đúng nghĩa. Citation hợp lệ bằng
+code A/B/C: 65/65, 90/90, 66/66. Có 4 timeout: A Q059/Q062, B Q001/Q074; provider
+full run có 30 HTTP 429/retries quan sát. Lỗi giữ trong tất cả mẫu số status và
+latency, không biến timeout thành false abstention. A có 12 false abstention,
+B 12, C 14 theo gold hiện có; 0 false answer theo gold, không gọi là 0 hallucination.
+
+So với run cũ trên cùng 66 ID: A 49→53, B 56→53, C 48→53 status đúng. A Recall
+giữ nguyên 94.59%; MRR 86.58%→83.87%. Corpus, dịch, pairing và điều kiện API đã
+đổi; đây là so sánh mô tả, không cô lập tác động bản sửa. A/C status thắng 3–3;
+Q029 còn đổi status khi không có relations trong prompt, cho thấy biến thiên
+generation ngoài graph. Chưa chứng minh graph hoặc KnowFlow vượt transcript RAG.
+
+Q069 answered ở cả ba arm, gold ở hạng 3 trong A/C. Q015/Q031 chọn đúng pocket
+slider B0 r2; Q031 không dùng sai loại mỡ bộ phận khác, Q015 vẫn từ chối oan ở
+draft. Q012/Q056 còn vướng dịch/relevance gate. Q083 bị guard số vì `21` khác
+`twenty one` trong quote. Các điều tra AI có hash, không phải human semantic verdict.
+
+Subtotal API đã biết của toàn thí nghiệm **$0.976087**, riêng full QA **$0.937048**;
+tổng phí và hóa đơn **null**. Known subtotal tham chiếu một QA độc lập A/B/C:
+**$0.004910 / $0.001617 / $0.005095** trên mỗi câu planned; phần shared A/C chỉ
+tính một lần trong tổng thí nghiệm. Thiếu embedding usage/rate, usage lần lỗi;
+chưa gồm hosting, extraction/preprocessing, công chuyên gia. Index/smoke/probe
+tách riêng. Batch index 32 gặp 429; đổi pacing/batch trước smoke/full và đóng
+băng lại, giữ toàn bộ lỗi cũ, không đổi nội dung/model/gold/retrieval.
+
+HTTP local p50/p95 A/B/C: 3.974/35.976s, 3.365/44.241s, 4.186/30.014s, n=81/arm,
+gồm retry và lỗi. A/C có arm replay nên không dùng các chênh lệch này để đo lợi
+ích graph; tổng thành phần tái dựng được lưu riêng, không phải hosting latency.
+
+[JSONL gốc](../benchmarks/results/20261012_expanded_dev/rows.jsonl),
+[CSV theo câu](../benchmarks/results/20261012_expanded_dev/per_question.csv),
+[phiếu chấm nghĩa](../benchmarks/results/20261012_expanded_dev/human_review.csv),
+[lệnh chạy lại](../benchmarks/knowflow_expanded_dev/README.md). Hash mã/corpus/gold,
+revision và dependency versions được pin. Chấm nghĩa 0 người, các chỉ số nghĩa=null.
 
 ## Dùng được trên slide lúc này
 
-“Kho tri thức demo mở rộng đến 9 workflow / 67 bước. Đã có 81 câu do người kiểm
-và 40 câu khó mới chờ kiểm. Chẩn đoán lexical dùng bản dịch thật đã lưu cho thấy
-Recall@5 92.31% → 98.08%, n=52; benchmark API A/B/C mới chờ khóa nhãn. Độ đúng
-nghĩa phải được chấm độc lập.”
+“Kho tri thức demo: 9 workflow / 67 bước / 303 claim. Benchmark API thật 81 câu
+× 3 cấu hình: KnowFlow Recall@5 96.15%, n=52; status khớp 67/81 ở cả A/B/C.
+Nhãn giữ nguyên, 20 nhãn phủ định chờ quyết định review mở rộng; 40 câu khó nháp
+tách riêng. Chấm nghĩa phải được thực hiện độc lập.”
 
 Không tuyên bố graph vượt transcript RAG, giảm 30% thời gian hay ROI DENSO. Full
-benchmark/chi phí và chấm nghĩa chưa có bằng chứng. Run cũ giữ nguyên.
+benchmark có dữ liệu thật, chi phí chỉ có subtotal đã biết, chấm nghĩa còn null. Run cũ giữ nguyên.
 
-Smoke phát sinh 9 provider calls thật; phần giá standard đã biết **$0.008359**,
+Smoke chẩn đoán 3 câu ở trên phát sinh 9 provider calls thật; phần giá standard đã biết **$0.008359**,
 tổng đầy đủ **null** do embedding usage/rate chưa biết. Đây là phí của 3 câu smoke,
 không phải phí trung bình benchmark 81 câu. Chi tiết và URL/ngày tra giá trong
 [costs.json](../benchmarks/diagnostics/20261012_live_fix_smoke/costs.json).

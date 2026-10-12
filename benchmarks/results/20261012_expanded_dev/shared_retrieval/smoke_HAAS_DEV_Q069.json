@@ -1,0 +1,2716 @@
+{
+  "key": "f6817724817b68cdcd2e033704a9eeabb94a7fc7162d9add7cdb22bfa5e31e1f",
+  "result": {
+    "status": "retrieved",
+    "index_build_id": "IDX_SEARCH_151f7d6dfcc821966e669bd1842c59f5d1d2c8eb7210fb4e998ef46e36857389",
+    "record_build_id": "IDX_WP1_f2e98bbf552b45e119f633b6de9f6469a9592f2494a4dc74b44f59b655527dd4",
+    "source_type": "real",
+    "dataset_split": "dev",
+    "context": {
+      "manufacturer": null,
+      "machine_family": null,
+      "machine_model": null,
+      "subsystem": null,
+      "task_type": null,
+      "symptoms": [],
+      "alarm_codes": [
+        "626"
+      ],
+      "components": []
+    },
+    "missing_context": [],
+    "selected_workflow": {
+      "workflow_id": "REAL_WF_0004",
+      "revision": 1,
+      "title": "Troubleshoot alarm 626 tool pocket slide error on a Haas tool changer",
+      "score": 0.03252247488101534
+    },
+    "workflow_candidates": [
+      {
+        "workflow_id": "REAL_WF_0004",
+        "revision": 1,
+        "title": "Troubleshoot alarm 626 tool pocket slide error on a Haas tool changer",
+        "score": 0.03252247488101534
+      }
+    ],
+    "steps": [
+      {
+        "workflow_id": "REAL_WF_0004",
+        "revision": 1,
+        "step_id": "REAL_WF_0004_ST_005",
+        "display_order": 5,
+        "title": "Contact the service outlet if the alarm persists",
+        "fields": {
+          "context": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "observation": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "action": {
+            "state": "present",
+            "claim_ids": [
+              "REAL_WF_0004_CL_020"
+            ]
+          },
+          "rationale": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "condition": {
+            "state": "present",
+            "claim_ids": [
+              "REAL_WF_0004_CL_021"
+            ]
+          },
+          "outcome": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "acceptance_criteria": {
+            "state": "missing",
+            "claim_ids": []
+          }
+        },
+        "claim_ids": [
+          "REAL_WF_0004_CL_020",
+          "REAL_WF_0004_CL_021"
+        ],
+        "score": 0.03252247488101534,
+        "lexical_score": 2.027770804311329,
+        "vector_score": 0.7679852345330268
+      },
+      {
+        "workflow_id": "REAL_WF_0004",
+        "revision": 1,
+        "step_id": "REAL_WF_0004_ST_001",
+        "display_order": 1,
+        "title": "Recover from alarm 626",
+        "fields": {
+          "context": {
+            "state": "present",
+            "claim_ids": [
+              "REAL_WF_0004_CL_001"
+            ]
+          },
+          "observation": {
+            "state": "present",
+            "claim_ids": [
+              "REAL_WF_0004_CL_002"
+            ]
+          },
+          "action": {
+            "state": "present",
+            "claim_ids": [
+              "REAL_WF_0004_CL_003",
+              "REAL_WF_0004_CL_004"
+            ]
+          },
+          "rationale": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "condition": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "outcome": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "acceptance_criteria": {
+            "state": "present",
+            "claim_ids": [
+              "REAL_WF_0004_CL_005"
+            ]
+          }
+        },
+        "claim_ids": [
+          "REAL_WF_0004_CL_001",
+          "REAL_WF_0004_CL_002",
+          "REAL_WF_0004_CL_003",
+          "REAL_WF_0004_CL_004",
+          "REAL_WF_0004_CL_005",
+          "REAL_WF_0004_CL_022",
+          "REAL_WF_0004_CL_012"
+        ],
+        "score": 0.032266458495966696,
+        "lexical_score": 1.564282200333231,
+        "vector_score": 0.7753522681662587
+      },
+      {
+        "workflow_id": "REAL_WF_0004",
+        "revision": 1,
+        "step_id": "REAL_WF_0004_ST_004",
+        "display_order": 4,
+        "title": "Test the pocket up and down solenoid",
+        "fields": {
+          "context": {
+            "state": "present",
+            "claim_ids": [
+              "REAL_WF_0004_CL_016"
+            ]
+          },
+          "observation": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "action": {
+            "state": "present",
+            "claim_ids": [
+              "REAL_WF_0004_CL_017",
+              "REAL_WF_0004_CL_018"
+            ]
+          },
+          "rationale": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "condition": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "outcome": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "acceptance_criteria": {
+            "state": "present",
+            "claim_ids": [
+              "REAL_WF_0004_CL_019"
+            ]
+          }
+        },
+        "claim_ids": [
+          "REAL_WF_0004_CL_016",
+          "REAL_WF_0004_CL_017",
+          "REAL_WF_0004_CL_018",
+          "REAL_WF_0004_CL_019"
+        ],
+        "score": 0.031754032258064516,
+        "lexical_score": 1.7789822390085968,
+        "vector_score": 0.7513477616246169
+      },
+      {
+        "workflow_id": "REAL_WF_0004",
+        "revision": 1,
+        "step_id": "REAL_WF_0004_ST_002",
+        "display_order": 2,
+        "title": "Inspect the pocket, carousel and air supply",
+        "fields": {
+          "context": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "observation": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "action": {
+            "state": "present",
+            "claim_ids": [
+              "REAL_WF_0004_CL_006",
+              "REAL_WF_0004_CL_007",
+              "REAL_WF_0004_CL_008",
+              "REAL_WF_0004_CL_009",
+              "REAL_WF_0004_CL_010"
+            ]
+          },
+          "rationale": {
+            "state": "present",
+            "claim_ids": [
+              "REAL_WF_0004_CL_011"
+            ]
+          },
+          "condition": {
+            "state": "present",
+            "claim_ids": [
+              "REAL_WF_0004_CL_012"
+            ]
+          },
+          "outcome": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "acceptance_criteria": {
+            "state": "missing",
+            "claim_ids": []
+          }
+        },
+        "claim_ids": [
+          "REAL_WF_0004_CL_006",
+          "REAL_WF_0004_CL_007",
+          "REAL_WF_0004_CL_008",
+          "REAL_WF_0004_CL_009",
+          "REAL_WF_0004_CL_010",
+          "REAL_WF_0004_CL_011",
+          "REAL_WF_0004_CL_012",
+          "REAL_WF_0004_CL_022"
+        ],
+        "score": 0.03149801587301587,
+        "lexical_score": 0.33817011082423376,
+        "vector_score": 0.7613207084355088
+      },
+      {
+        "workflow_id": "REAL_WF_0004",
+        "revision": 1,
+        "step_id": "REAL_WF_0004_ST_003",
+        "display_order": 3,
+        "title": "Check the pocket up and down proximity switches",
+        "fields": {
+          "context": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "observation": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "action": {
+            "state": "present",
+            "claim_ids": [
+              "REAL_WF_0004_CL_013",
+              "REAL_WF_0004_CL_014"
+            ]
+          },
+          "rationale": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "condition": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "outcome": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "acceptance_criteria": {
+            "state": "present",
+            "claim_ids": [
+              "REAL_WF_0004_CL_015"
+            ]
+          }
+        },
+        "claim_ids": [
+          "REAL_WF_0004_CL_013",
+          "REAL_WF_0004_CL_014",
+          "REAL_WF_0004_CL_015"
+        ],
+        "score": 0.03076923076923077,
+        "lexical_score": 0.3266003017129092,
+        "vector_score": 0.7501071378142746
+      }
+    ],
+    "claims": [
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0004",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0004_CL_020"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0004_CL_020",
+          "text": "The presenter says to contact your HFO.",
+          "role": "action",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville Collins (presenter)",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 626 troubleshooting as demonstrated in SRC_HAAS_0008."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0004_EV_025",
+              "support_status": "supported",
+              "explanation": "The captions state this directly. Corrected as above."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0004_ST_005"
+        ],
+        "score": 0.03252247488101534,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0004_EV_025",
+              "source_id": "SRC_HAAS_0008",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 77220,
+                "end_ms": 82950,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "getting alarm 626 you will need to contact your HFO and thanks for watching [Music]",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "human",
+              "parent_evidence_ids": [
+                "REAL_WF_0004_EV_024"
+              ]
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0004_EV_025",
+              "support_status": "supported",
+              "explanation": "The captions state this directly. Corrected as above."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0008",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 626 Tool Pocket Slide Error",
+              "url": "https://www.haascnc.com/video/service/DXtocZX8hf0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 86000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-08-24T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] alarm 626 occurs when the tool pocket failed to reach the proper up in down location press the recovery button and follow the instruction to recover the tool change then command several - changes to make sure the tool change is working correctly if you're still getting alarm 626 follow these steps to troubleshoot the issue first give the pocket and carousel a good look for loose or damaged component make sure the machine has sufficient air pressure and volume during the tool change low air can prevent the tool pocket from reaching the proper position take a look at the air line to the pocket air cylinder look for kinks or broken lines examine the pocket up and down proximity switches look for contamination or damage touch the face of each switch with a small flat blade screwdriver the switch should change state if possible manually activate the pocket up and down solenoid to verify that it's working correctly make sure the pocket up and down switches change state at the appropriate time you'll find a link in the description of this video that shows you how to do it if you're still getting alarm 626 you will need to contact your ha spectra outlet and thanks for watching [Music]",
+              "content_sha256": "c4314a64fa1c126f08957626d710384944303a916ca4034c1a6b3446a4e26f72",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=DXtocZX8hf0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0004",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0004_CL_021"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0004_CL_021",
+          "text": "The presenter says this applies if the machine is still getting alarm 626 after these checks.",
+          "role": "condition",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville Collins (presenter)",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 626 troubleshooting as demonstrated in SRC_HAAS_0008."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0004_EV_027",
+              "support_status": "supported",
+              "explanation": "The captions state this directly. Cue 13 is corrected from 'ha spectra outlet' to 'HFO' (the description says 'contact your local HFO')."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0004_ST_005"
+        ],
+        "score": 0.03252247488101534,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0004_EV_027",
+              "source_id": "SRC_HAAS_0008",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 71580,
+                "end_ms": 82950,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "time you'll find a link in the description of this video that shows you how to do it if you're still getting alarm 626 you will need to contact your HFO and thanks for watching [Music]",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "human",
+              "parent_evidence_ids": [
+                "REAL_WF_0004_EV_026"
+              ]
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0004_EV_027",
+              "support_status": "supported",
+              "explanation": "The captions state this directly. Cue 13 is corrected from 'ha spectra outlet' to 'HFO' (the description says 'contact your local HFO')."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0008",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 626 Tool Pocket Slide Error",
+              "url": "https://www.haascnc.com/video/service/DXtocZX8hf0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 86000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-08-24T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] alarm 626 occurs when the tool pocket failed to reach the proper up in down location press the recovery button and follow the instruction to recover the tool change then command several - changes to make sure the tool change is working correctly if you're still getting alarm 626 follow these steps to troubleshoot the issue first give the pocket and carousel a good look for loose or damaged component make sure the machine has sufficient air pressure and volume during the tool change low air can prevent the tool pocket from reaching the proper position take a look at the air line to the pocket air cylinder look for kinks or broken lines examine the pocket up and down proximity switches look for contamination or damage touch the face of each switch with a small flat blade screwdriver the switch should change state if possible manually activate the pocket up and down solenoid to verify that it's working correctly make sure the pocket up and down switches change state at the appropriate time you'll find a link in the description of this video that shows you how to do it if you're still getting alarm 626 you will need to contact your ha spectra outlet and thanks for watching [Music]",
+              "content_sha256": "c4314a64fa1c126f08957626d710384944303a916ca4034c1a6b3446a4e26f72",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=DXtocZX8hf0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0004",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0004_CL_001"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0004_CL_001",
+          "text": "The presenter says alarm 626 occurs when the tool pocket failed to reach the proper up and down location.",
+          "role": "context",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville Collins (presenter)",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 626 troubleshooting as demonstrated in SRC_HAAS_0008."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0004_EV_002",
+              "support_status": "supported",
+              "explanation": "The captions state this directly. Cue 1 is corrected from 'up in' to 'up and' (same transcript says 'pocket up and down')."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0004_ST_001"
+        ],
+        "score": 0.032266458495966696,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0004_EV_002",
+              "source_id": "SRC_HAAS_0008",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 150,
+                "end_ms": 15930,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "[Music] alarm 626 occurs when the tool pocket failed to reach the proper up and down location press the recovery button and follow the instruction to recover the tool",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "human",
+              "parent_evidence_ids": [
+                "REAL_WF_0004_EV_001"
+              ]
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0004_EV_002",
+              "support_status": "supported",
+              "explanation": "The captions state this directly. Cue 1 is corrected from 'up in' to 'up and' (same transcript says 'pocket up and down')."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0008",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 626 Tool Pocket Slide Error",
+              "url": "https://www.haascnc.com/video/service/DXtocZX8hf0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 86000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-08-24T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] alarm 626 occurs when the tool pocket failed to reach the proper up in down location press the recovery button and follow the instruction to recover the tool change then command several - changes to make sure the tool change is working correctly if you're still getting alarm 626 follow these steps to troubleshoot the issue first give the pocket and carousel a good look for loose or damaged component make sure the machine has sufficient air pressure and volume during the tool change low air can prevent the tool pocket from reaching the proper position take a look at the air line to the pocket air cylinder look for kinks or broken lines examine the pocket up and down proximity switches look for contamination or damage touch the face of each switch with a small flat blade screwdriver the switch should change state if possible manually activate the pocket up and down solenoid to verify that it's working correctly make sure the pocket up and down switches change state at the appropriate time you'll find a link in the description of this video that shows you how to do it if you're still getting alarm 626 you will need to contact your ha spectra outlet and thanks for watching [Music]",
+              "content_sha256": "c4314a64fa1c126f08957626d710384944303a916ca4034c1a6b3446a4e26f72",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=DXtocZX8hf0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0004",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0004_CL_002"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0004_CL_002",
+          "text": "The control shows a list of active alarms and a red banner reading '626 TOOL-POCKET SLIDE ERROR'.",
+          "role": "observation",
+          "evidence_type": "observed",
+          "attribution": {
+            "actor_id": null,
+            "label": "D1-A keyframe observation, pending human check",
+            "kind": "model"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 626 troubleshooting as demonstrated in SRC_HAAS_0008."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0004_EV_003",
+              "support_status": "supported",
+              "explanation": "The frame is of the control screen and the banner text is legible."
+            },
+            {
+              "evidence_id": "REAL_WF_0004_EV_002",
+              "support_status": "supported",
+              "explanation": "The presenter names this alarm at the start of the video."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0004_ST_001"
+        ],
+        "score": 0.032266458495966696,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0004_EV_003",
+              "source_id": "SRC_HAAS_0008",
+              "modality": "visual",
+              "locator": {
+                "start_ms": 21499,
+                "end_ms": 21500,
+                "page": null,
+                "text_span": null
+              },
+              "quote": null,
+              "observation_note": "Control screen: Active Alarms list and a red banner '626 TOOL-POCKET SLIDE ERROR'.",
+              "asset_uri": "acquisition/preprocessing/keyframes/SRC_HAAS_0008/kf_0021500.jpg",
+              "transcript_origin": "none",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0004_EV_003",
+              "support_status": "supported",
+              "explanation": "The frame is of the control screen and the banner text is legible."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0008",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 626 Tool Pocket Slide Error",
+              "url": "https://www.haascnc.com/video/service/DXtocZX8hf0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 86000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-08-24T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] alarm 626 occurs when the tool pocket failed to reach the proper up in down location press the recovery button and follow the instruction to recover the tool change then command several - changes to make sure the tool change is working correctly if you're still getting alarm 626 follow these steps to troubleshoot the issue first give the pocket and carousel a good look for loose or damaged component make sure the machine has sufficient air pressure and volume during the tool change low air can prevent the tool pocket from reaching the proper position take a look at the air line to the pocket air cylinder look for kinks or broken lines examine the pocket up and down proximity switches look for contamination or damage touch the face of each switch with a small flat blade screwdriver the switch should change state if possible manually activate the pocket up and down solenoid to verify that it's working correctly make sure the pocket up and down switches change state at the appropriate time you'll find a link in the description of this video that shows you how to do it if you're still getting alarm 626 you will need to contact your ha spectra outlet and thanks for watching [Music]",
+              "content_sha256": "c4314a64fa1c126f08957626d710384944303a916ca4034c1a6b3446a4e26f72",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=DXtocZX8hf0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          },
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0004_EV_002",
+              "source_id": "SRC_HAAS_0008",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 150,
+                "end_ms": 15930,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "[Music] alarm 626 occurs when the tool pocket failed to reach the proper up and down location press the recovery button and follow the instruction to recover the tool",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "human",
+              "parent_evidence_ids": [
+                "REAL_WF_0004_EV_001"
+              ]
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0004_EV_002",
+              "support_status": "supported",
+              "explanation": "The presenter names this alarm at the start of the video."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0008",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 626 Tool Pocket Slide Error",
+              "url": "https://www.haascnc.com/video/service/DXtocZX8hf0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 86000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-08-24T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] alarm 626 occurs when the tool pocket failed to reach the proper up in down location press the recovery button and follow the instruction to recover the tool change then command several - changes to make sure the tool change is working correctly if you're still getting alarm 626 follow these steps to troubleshoot the issue first give the pocket and carousel a good look for loose or damaged component make sure the machine has sufficient air pressure and volume during the tool change low air can prevent the tool pocket from reaching the proper position take a look at the air line to the pocket air cylinder look for kinks or broken lines examine the pocket up and down proximity switches look for contamination or damage touch the face of each switch with a small flat blade screwdriver the switch should change state if possible manually activate the pocket up and down solenoid to verify that it's working correctly make sure the pocket up and down switches change state at the appropriate time you'll find a link in the description of this video that shows you how to do it if you're still getting alarm 626 you will need to contact your ha spectra outlet and thanks for watching [Music]",
+              "content_sha256": "c4314a64fa1c126f08957626d710384944303a916ca4034c1a6b3446a4e26f72",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=DXtocZX8hf0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0004",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0004_CL_003"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0004_CL_003",
+          "text": "The presenter says to press the recovery button and follow the instruction to recover the tool change.",
+          "role": "action",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville Collins (presenter)",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 626 troubleshooting as demonstrated in SRC_HAAS_0008."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0004_EV_005",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0004_ST_001"
+        ],
+        "score": 0.032266458495966696,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0004_EV_005",
+              "source_id": "SRC_HAAS_0008",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 9930,
+                "end_ms": 22080,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "down location press the recovery button and follow the instruction to recover the tool change then command several tool changes to make sure the tool change is working correctly if",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "human",
+              "parent_evidence_ids": [
+                "REAL_WF_0004_EV_004"
+              ]
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0004_EV_005",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0008",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 626 Tool Pocket Slide Error",
+              "url": "https://www.haascnc.com/video/service/DXtocZX8hf0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 86000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-08-24T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] alarm 626 occurs when the tool pocket failed to reach the proper up in down location press the recovery button and follow the instruction to recover the tool change then command several - changes to make sure the tool change is working correctly if you're still getting alarm 626 follow these steps to troubleshoot the issue first give the pocket and carousel a good look for loose or damaged component make sure the machine has sufficient air pressure and volume during the tool change low air can prevent the tool pocket from reaching the proper position take a look at the air line to the pocket air cylinder look for kinks or broken lines examine the pocket up and down proximity switches look for contamination or damage touch the face of each switch with a small flat blade screwdriver the switch should change state if possible manually activate the pocket up and down solenoid to verify that it's working correctly make sure the pocket up and down switches change state at the appropriate time you'll find a link in the description of this video that shows you how to do it if you're still getting alarm 626 you will need to contact your ha spectra outlet and thanks for watching [Music]",
+              "content_sha256": "c4314a64fa1c126f08957626d710384944303a916ca4034c1a6b3446a4e26f72",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=DXtocZX8hf0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0004",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0004_CL_004"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0004_CL_004",
+          "text": "An 'Automatic Recovery' dialog on the control reads 'Waiting for the pocket to push up'.",
+          "role": "action",
+          "evidence_type": "observed",
+          "attribution": {
+            "actor_id": null,
+            "label": "D1-A keyframe observation, pending human check",
+            "kind": "model"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 626 troubleshooting as demonstrated in SRC_HAAS_0008."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0004_EV_006",
+              "support_status": "supported",
+              "explanation": "The dialog title and its first line of text are legible in the frame."
+            },
+            {
+              "evidence_id": "REAL_WF_0004_EV_005",
+              "support_status": "supported",
+              "explanation": "The narration at this moment is about pressing the recovery button and following the instruction."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0004_ST_001"
+        ],
+        "score": 0.032266458495966696,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0004_EV_006",
+              "source_id": "SRC_HAAS_0008",
+              "modality": "visual",
+              "locator": {
+                "start_ms": 17499,
+                "end_ms": 17500,
+                "page": null,
+                "text_span": null
+              },
+              "quote": null,
+              "observation_note": "Control screen with an 'Automatic Recovery' dialog reading 'Waiting for the pocket to push up'.",
+              "asset_uri": "acquisition/preprocessing/keyframes/SRC_HAAS_0008/kf_0017500.jpg",
+              "transcript_origin": "none",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0004_EV_006",
+              "support_status": "supported",
+              "explanation": "The dialog title and its first line of text are legible in the frame."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0008",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 626 Tool Pocket Slide Error",
+              "url": "https://www.haascnc.com/video/service/DXtocZX8hf0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 86000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-08-24T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] alarm 626 occurs when the tool pocket failed to reach the proper up in down location press the recovery button and follow the instruction to recover the tool change then command several - changes to make sure the tool change is working correctly if you're still getting alarm 626 follow these steps to troubleshoot the issue first give the pocket and carousel a good look for loose or damaged component make sure the machine has sufficient air pressure and volume during the tool change low air can prevent the tool pocket from reaching the proper position take a look at the air line to the pocket air cylinder look for kinks or broken lines examine the pocket up and down proximity switches look for contamination or damage touch the face of each switch with a small flat blade screwdriver the switch should change state if possible manually activate the pocket up and down solenoid to verify that it's working correctly make sure the pocket up and down switches change state at the appropriate time you'll find a link in the description of this video that shows you how to do it if you're still getting alarm 626 you will need to contact your ha spectra outlet and thanks for watching [Music]",
+              "content_sha256": "c4314a64fa1c126f08957626d710384944303a916ca4034c1a6b3446a4e26f72",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=DXtocZX8hf0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          },
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0004_EV_005",
+              "source_id": "SRC_HAAS_0008",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 9930,
+                "end_ms": 22080,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "down location press the recovery button and follow the instruction to recover the tool change then command several tool changes to make sure the tool change is working correctly if",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "human",
+              "parent_evidence_ids": [
+                "REAL_WF_0004_EV_004"
+              ]
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0004_EV_005",
+              "support_status": "supported",
+              "explanation": "The narration at this moment is about pressing the recovery button and following the instruction."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0008",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 626 Tool Pocket Slide Error",
+              "url": "https://www.haascnc.com/video/service/DXtocZX8hf0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 86000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-08-24T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] alarm 626 occurs when the tool pocket failed to reach the proper up in down location press the recovery button and follow the instruction to recover the tool change then command several - changes to make sure the tool change is working correctly if you're still getting alarm 626 follow these steps to troubleshoot the issue first give the pocket and carousel a good look for loose or damaged component make sure the machine has sufficient air pressure and volume during the tool change low air can prevent the tool pocket from reaching the proper position take a look at the air line to the pocket air cylinder look for kinks or broken lines examine the pocket up and down proximity switches look for contamination or damage touch the face of each switch with a small flat blade screwdriver the switch should change state if possible manually activate the pocket up and down solenoid to verify that it's working correctly make sure the pocket up and down switches change state at the appropriate time you'll find a link in the description of this video that shows you how to do it if you're still getting alarm 626 you will need to contact your ha spectra outlet and thanks for watching [Music]",
+              "content_sha256": "c4314a64fa1c126f08957626d710384944303a916ca4034c1a6b3446a4e26f72",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=DXtocZX8hf0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0004",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0004_CL_005"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0004_CL_005",
+          "text": "The presenter says to command several tool changes to make sure the tool change is working correctly.",
+          "role": "acceptance_criteria",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville Collins (presenter)",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 626 troubleshooting as demonstrated in SRC_HAAS_0008."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0004_EV_008",
+              "support_status": "supported",
+              "explanation": "The captions state this directly. Corrected from 'several - changes' (same sentence ends 'make sure the tool change is working correctly')."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0004_ST_001"
+        ],
+        "score": 0.032266458495966696,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0004_EV_008",
+              "source_id": "SRC_HAAS_0008",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 15930,
+                "end_ms": 22080,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "change then command several tool changes to make sure the tool change is working correctly if",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "human",
+              "parent_evidence_ids": [
+                "REAL_WF_0004_EV_007"
+              ]
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0004_EV_008",
+              "support_status": "supported",
+              "explanation": "The captions state this directly. Corrected from 'several - changes' (same sentence ends 'make sure the tool change is working correctly')."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0008",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 626 Tool Pocket Slide Error",
+              "url": "https://www.haascnc.com/video/service/DXtocZX8hf0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 86000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-08-24T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] alarm 626 occurs when the tool pocket failed to reach the proper up in down location press the recovery button and follow the instruction to recover the tool change then command several - changes to make sure the tool change is working correctly if you're still getting alarm 626 follow these steps to troubleshoot the issue first give the pocket and carousel a good look for loose or damaged component make sure the machine has sufficient air pressure and volume during the tool change low air can prevent the tool pocket from reaching the proper position take a look at the air line to the pocket air cylinder look for kinks or broken lines examine the pocket up and down proximity switches look for contamination or damage touch the face of each switch with a small flat blade screwdriver the switch should change state if possible manually activate the pocket up and down solenoid to verify that it's working correctly make sure the pocket up and down switches change state at the appropriate time you'll find a link in the description of this video that shows you how to do it if you're still getting alarm 626 you will need to contact your ha spectra outlet and thanks for watching [Music]",
+              "content_sha256": "c4314a64fa1c126f08957626d710384944303a916ca4034c1a6b3446a4e26f72",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=DXtocZX8hf0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0004",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0004_CL_022"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0004_CL_022",
+          "text": "The presenter treats the inspection steps as what to do if alarm 626 continues after recovery and several test tool changes.",
+          "role": "relation",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville Collins (presenter)",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 626 troubleshooting as demonstrated in SRC_HAAS_0008."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0004_EV_016",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0004_ST_001",
+          "REAL_WF_0004_ST_002"
+        ],
+        "score": 0.032266458495966696,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0004_EV_016",
+              "source_id": "SRC_HAAS_0008",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 15930,
+                "end_ms": 28320,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "change then command several tool changes to make sure the tool change is working correctly if you're still getting alarm 626 follow these steps to troubleshoot the issue first give",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "human",
+              "parent_evidence_ids": [
+                "REAL_WF_0004_EV_015"
+              ]
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0004_EV_016",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0008",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 626 Tool Pocket Slide Error",
+              "url": "https://www.haascnc.com/video/service/DXtocZX8hf0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 86000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-08-24T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] alarm 626 occurs when the tool pocket failed to reach the proper up in down location press the recovery button and follow the instruction to recover the tool change then command several - changes to make sure the tool change is working correctly if you're still getting alarm 626 follow these steps to troubleshoot the issue first give the pocket and carousel a good look for loose or damaged component make sure the machine has sufficient air pressure and volume during the tool change low air can prevent the tool pocket from reaching the proper position take a look at the air line to the pocket air cylinder look for kinks or broken lines examine the pocket up and down proximity switches look for contamination or damage touch the face of each switch with a small flat blade screwdriver the switch should change state if possible manually activate the pocket up and down solenoid to verify that it's working correctly make sure the pocket up and down switches change state at the appropriate time you'll find a link in the description of this video that shows you how to do it if you're still getting alarm 626 you will need to contact your ha spectra outlet and thanks for watching [Music]",
+              "content_sha256": "c4314a64fa1c126f08957626d710384944303a916ca4034c1a6b3446a4e26f72",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=DXtocZX8hf0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0004",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0004_CL_012"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0004_CL_012",
+          "text": "The presenter says to follow these troubleshooting steps if the machine is still getting alarm 626.",
+          "role": "condition",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville Collins (presenter)",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 626 troubleshooting as demonstrated in SRC_HAAS_0008."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0004_EV_016",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0004_ST_001",
+          "REAL_WF_0004_ST_002"
+        ],
+        "score": 0.032266458495966696,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0004_EV_016",
+              "source_id": "SRC_HAAS_0008",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 15930,
+                "end_ms": 28320,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "change then command several tool changes to make sure the tool change is working correctly if you're still getting alarm 626 follow these steps to troubleshoot the issue first give",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "human",
+              "parent_evidence_ids": [
+                "REAL_WF_0004_EV_015"
+              ]
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0004_EV_016",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0008",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 626 Tool Pocket Slide Error",
+              "url": "https://www.haascnc.com/video/service/DXtocZX8hf0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 86000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-08-24T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] alarm 626 occurs when the tool pocket failed to reach the proper up in down location press the recovery button and follow the instruction to recover the tool change then command several - changes to make sure the tool change is working correctly if you're still getting alarm 626 follow these steps to troubleshoot the issue first give the pocket and carousel a good look for loose or damaged component make sure the machine has sufficient air pressure and volume during the tool change low air can prevent the tool pocket from reaching the proper position take a look at the air line to the pocket air cylinder look for kinks or broken lines examine the pocket up and down proximity switches look for contamination or damage touch the face of each switch with a small flat blade screwdriver the switch should change state if possible manually activate the pocket up and down solenoid to verify that it's working correctly make sure the pocket up and down switches change state at the appropriate time you'll find a link in the description of this video that shows you how to do it if you're still getting alarm 626 you will need to contact your ha spectra outlet and thanks for watching [Music]",
+              "content_sha256": "c4314a64fa1c126f08957626d710384944303a916ca4034c1a6b3446a4e26f72",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=DXtocZX8hf0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0004",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0004_CL_016"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0004_CL_016",
+          "text": "The presenter says a link in the video description shows how to test the solenoid and switches.",
+          "role": "context",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville Collins (presenter)",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 626 troubleshooting as demonstrated in SRC_HAAS_0008."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0004_EV_020",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0004_ST_004"
+        ],
+        "score": 0.031754032258064516,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0004_EV_020",
+              "source_id": "SRC_HAAS_0008",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 71580,
+                "end_ms": 77220,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "time you'll find a link in the description of this video that shows you how to do it if you're still",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0004_EV_020",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0008",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 626 Tool Pocket Slide Error",
+              "url": "https://www.haascnc.com/video/service/DXtocZX8hf0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 86000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-08-24T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] alarm 626 occurs when the tool pocket failed to reach the proper up in down location press the recovery button and follow the instruction to recover the tool change then command several - changes to make sure the tool change is working correctly if you're still getting alarm 626 follow these steps to troubleshoot the issue first give the pocket and carousel a good look for loose or damaged component make sure the machine has sufficient air pressure and volume during the tool change low air can prevent the tool pocket from reaching the proper position take a look at the air line to the pocket air cylinder look for kinks or broken lines examine the pocket up and down proximity switches look for contamination or damage touch the face of each switch with a small flat blade screwdriver the switch should change state if possible manually activate the pocket up and down solenoid to verify that it's working correctly make sure the pocket up and down switches change state at the appropriate time you'll find a link in the description of this video that shows you how to do it if you're still getting alarm 626 you will need to contact your ha spectra outlet and thanks for watching [Music]",
+              "content_sha256": "c4314a64fa1c126f08957626d710384944303a916ca4034c1a6b3446a4e26f72",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=DXtocZX8hf0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0004",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0004_CL_017"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0004_CL_017",
+          "text": "The presenter says to manually activate the pocket up and down solenoid, if possible, to verify that it is working correctly.",
+          "role": "action",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville Collins (presenter)",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 626 troubleshooting as demonstrated in SRC_HAAS_0008."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0004_EV_021",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0004_ST_004"
+        ],
+        "score": 0.031754032258064516,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0004_EV_021",
+              "source_id": "SRC_HAAS_0008",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 58800,
+                "end_ms": 71580,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "change state if possible manually activate the pocket up and down solenoid to verify that it's working correctly make sure the pocket up and down switches change state at the appropriate",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0004_EV_021",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0008",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 626 Tool Pocket Slide Error",
+              "url": "https://www.haascnc.com/video/service/DXtocZX8hf0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 86000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-08-24T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] alarm 626 occurs when the tool pocket failed to reach the proper up in down location press the recovery button and follow the instruction to recover the tool change then command several - changes to make sure the tool change is working correctly if you're still getting alarm 626 follow these steps to troubleshoot the issue first give the pocket and carousel a good look for loose or damaged component make sure the machine has sufficient air pressure and volume during the tool change low air can prevent the tool pocket from reaching the proper position take a look at the air line to the pocket air cylinder look for kinks or broken lines examine the pocket up and down proximity switches look for contamination or damage touch the face of each switch with a small flat blade screwdriver the switch should change state if possible manually activate the pocket up and down solenoid to verify that it's working correctly make sure the pocket up and down switches change state at the appropriate time you'll find a link in the description of this video that shows you how to do it if you're still getting alarm 626 you will need to contact your ha spectra outlet and thanks for watching [Music]",
+              "content_sha256": "c4314a64fa1c126f08957626d710384944303a916ca4034c1a6b3446a4e26f72",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=DXtocZX8hf0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0004",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0004_CL_018"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0004_CL_018",
+          "text": "A thin tool tip is pressed into a recess on the face of a solenoid valve.",
+          "role": "action",
+          "evidence_type": "observed",
+          "attribution": {
+            "actor_id": null,
+            "label": "D1-A keyframe observation, pending human check",
+            "kind": "model"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 626 troubleshooting as demonstrated in SRC_HAAS_0008."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0004_EV_022",
+              "support_status": "supported",
+              "explanation": "The tool tip and the valve's manual override are visible in the frame."
+            },
+            {
+              "evidence_id": "REAL_WF_0004_EV_021",
+              "support_status": "supported",
+              "explanation": "The narration at this moment is about manually activating the solenoid."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0004_ST_004"
+        ],
+        "score": 0.031754032258064516,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0004_EV_022",
+              "source_id": "SRC_HAAS_0008",
+              "modality": "visual",
+              "locator": {
+                "start_ms": 60999,
+                "end_ms": 61000,
+                "page": null,
+                "text_span": null
+              },
+              "quote": null,
+              "observation_note": "Close-up of a solenoid valve with a thin tool tip pressed into a recess on its face.",
+              "asset_uri": "acquisition/preprocessing/keyframes/SRC_HAAS_0008/kf_0061000.jpg",
+              "transcript_origin": "none",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0004_EV_022",
+              "support_status": "supported",
+              "explanation": "The tool tip and the valve's manual override are visible in the frame."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0008",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 626 Tool Pocket Slide Error",
+              "url": "https://www.haascnc.com/video/service/DXtocZX8hf0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 86000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-08-24T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] alarm 626 occurs when the tool pocket failed to reach the proper up in down location press the recovery button and follow the instruction to recover the tool change then command several - changes to make sure the tool change is working correctly if you're still getting alarm 626 follow these steps to troubleshoot the issue first give the pocket and carousel a good look for loose or damaged component make sure the machine has sufficient air pressure and volume during the tool change low air can prevent the tool pocket from reaching the proper position take a look at the air line to the pocket air cylinder look for kinks or broken lines examine the pocket up and down proximity switches look for contamination or damage touch the face of each switch with a small flat blade screwdriver the switch should change state if possible manually activate the pocket up and down solenoid to verify that it's working correctly make sure the pocket up and down switches change state at the appropriate time you'll find a link in the description of this video that shows you how to do it if you're still getting alarm 626 you will need to contact your ha spectra outlet and thanks for watching [Music]",
+              "content_sha256": "c4314a64fa1c126f08957626d710384944303a916ca4034c1a6b3446a4e26f72",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=DXtocZX8hf0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          },
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0004_EV_021",
+              "source_id": "SRC_HAAS_0008",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 58800,
+                "end_ms": 71580,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "change state if possible manually activate the pocket up and down solenoid to verify that it's working correctly make sure the pocket up and down switches change state at the appropriate",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0004_EV_021",
+              "support_status": "supported",
+              "explanation": "The narration at this moment is about manually activating the solenoid."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0008",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 626 Tool Pocket Slide Error",
+              "url": "https://www.haascnc.com/video/service/DXtocZX8hf0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 86000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-08-24T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] alarm 626 occurs when the tool pocket failed to reach the proper up in down location press the recovery button and follow the instruction to recover the tool change then command several - changes to make sure the tool change is working correctly if you're still getting alarm 626 follow these steps to troubleshoot the issue first give the pocket and carousel a good look for loose or damaged component make sure the machine has sufficient air pressure and volume during the tool change low air can prevent the tool pocket from reaching the proper position take a look at the air line to the pocket air cylinder look for kinks or broken lines examine the pocket up and down proximity switches look for contamination or damage touch the face of each switch with a small flat blade screwdriver the switch should change state if possible manually activate the pocket up and down solenoid to verify that it's working correctly make sure the pocket up and down switches change state at the appropriate time you'll find a link in the description of this video that shows you how to do it if you're still getting alarm 626 you will need to contact your ha spectra outlet and thanks for watching [Music]",
+              "content_sha256": "c4314a64fa1c126f08957626d710384944303a916ca4034c1a6b3446a4e26f72",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=DXtocZX8hf0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0004",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0004_CL_019"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0004_CL_019",
+          "text": "The presenter says to make sure the pocket up and down switches change state at the appropriate time.",
+          "role": "acceptance_criteria",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville Collins (presenter)",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 626 troubleshooting as demonstrated in SRC_HAAS_0008."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0004_EV_023",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0004_ST_004"
+        ],
+        "score": 0.031754032258064516,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0004_EV_023",
+              "source_id": "SRC_HAAS_0008",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 65760,
+                "end_ms": 77220,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "working correctly make sure the pocket up and down switches change state at the appropriate time you'll find a link in the description of this video that shows you how to do it if you're still",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0004_EV_023",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0008",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 626 Tool Pocket Slide Error",
+              "url": "https://www.haascnc.com/video/service/DXtocZX8hf0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 86000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-08-24T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] alarm 626 occurs when the tool pocket failed to reach the proper up in down location press the recovery button and follow the instruction to recover the tool change then command several - changes to make sure the tool change is working correctly if you're still getting alarm 626 follow these steps to troubleshoot the issue first give the pocket and carousel a good look for loose or damaged component make sure the machine has sufficient air pressure and volume during the tool change low air can prevent the tool pocket from reaching the proper position take a look at the air line to the pocket air cylinder look for kinks or broken lines examine the pocket up and down proximity switches look for contamination or damage touch the face of each switch with a small flat blade screwdriver the switch should change state if possible manually activate the pocket up and down solenoid to verify that it's working correctly make sure the pocket up and down switches change state at the appropriate time you'll find a link in the description of this video that shows you how to do it if you're still getting alarm 626 you will need to contact your ha spectra outlet and thanks for watching [Music]",
+              "content_sha256": "c4314a64fa1c126f08957626d710384944303a916ca4034c1a6b3446a4e26f72",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=DXtocZX8hf0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0004",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0004_CL_006"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0004_CL_006",
+          "text": "The presenter says to give the pocket and carousel a good look for loose or damaged components.",
+          "role": "action",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville Collins (presenter)",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 626 troubleshooting as demonstrated in SRC_HAAS_0008."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0004_EV_009",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0004_ST_002"
+        ],
+        "score": 0.03149801587301587,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0004_EV_009",
+              "source_id": "SRC_HAAS_0008",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 22080,
+                "end_ms": 33300,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "you're still getting alarm 626 follow these steps to troubleshoot the issue first give the pocket and carousel a good look for loose or damaged component make sure the machine has",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0004_EV_009",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0008",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 626 Tool Pocket Slide Error",
+              "url": "https://www.haascnc.com/video/service/DXtocZX8hf0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 86000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-08-24T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] alarm 626 occurs when the tool pocket failed to reach the proper up in down location press the recovery button and follow the instruction to recover the tool change then command several - changes to make sure the tool change is working correctly if you're still getting alarm 626 follow these steps to troubleshoot the issue first give the pocket and carousel a good look for loose or damaged component make sure the machine has sufficient air pressure and volume during the tool change low air can prevent the tool pocket from reaching the proper position take a look at the air line to the pocket air cylinder look for kinks or broken lines examine the pocket up and down proximity switches look for contamination or damage touch the face of each switch with a small flat blade screwdriver the switch should change state if possible manually activate the pocket up and down solenoid to verify that it's working correctly make sure the pocket up and down switches change state at the appropriate time you'll find a link in the description of this video that shows you how to do it if you're still getting alarm 626 you will need to contact your ha spectra outlet and thanks for watching [Music]",
+              "content_sha256": "c4314a64fa1c126f08957626d710384944303a916ca4034c1a6b3446a4e26f72",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=DXtocZX8hf0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0004",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0004_CL_007"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0004_CL_007",
+          "text": "The presenter says to make sure the machine has sufficient air pressure and volume during the tool change.",
+          "role": "action",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville Collins (presenter)",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 626 troubleshooting as demonstrated in SRC_HAAS_0008."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0004_EV_010",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0004_ST_002"
+        ],
+        "score": 0.03149801587301587,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0004_EV_010",
+              "source_id": "SRC_HAAS_0008",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 28320,
+                "end_ms": 38970,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "the pocket and carousel a good look for loose or damaged component make sure the machine has sufficient air pressure and volume during the tool change low air can prevent the tool pocket",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0004_EV_010",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0008",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 626 Tool Pocket Slide Error",
+              "url": "https://www.haascnc.com/video/service/DXtocZX8hf0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 86000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-08-24T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] alarm 626 occurs when the tool pocket failed to reach the proper up in down location press the recovery button and follow the instruction to recover the tool change then command several - changes to make sure the tool change is working correctly if you're still getting alarm 626 follow these steps to troubleshoot the issue first give the pocket and carousel a good look for loose or damaged component make sure the machine has sufficient air pressure and volume during the tool change low air can prevent the tool pocket from reaching the proper position take a look at the air line to the pocket air cylinder look for kinks or broken lines examine the pocket up and down proximity switches look for contamination or damage touch the face of each switch with a small flat blade screwdriver the switch should change state if possible manually activate the pocket up and down solenoid to verify that it's working correctly make sure the pocket up and down switches change state at the appropriate time you'll find a link in the description of this video that shows you how to do it if you're still getting alarm 626 you will need to contact your ha spectra outlet and thanks for watching [Music]",
+              "content_sha256": "c4314a64fa1c126f08957626d710384944303a916ca4034c1a6b3446a4e26f72",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=DXtocZX8hf0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0004",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0004_CL_008"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0004_CL_008",
+          "text": "A pressure gauge is mounted on a panel of solenoid valves and air lines, beside an 'AIR - LUBRICATION' diagram label.",
+          "role": "action",
+          "evidence_type": "observed",
+          "attribution": {
+            "actor_id": null,
+            "label": "D1-A keyframe observation, pending human check",
+            "kind": "model"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 626 troubleshooting as demonstrated in SRC_HAAS_0008."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0004_EV_011",
+              "support_status": "supported",
+              "explanation": "The gauge, valves and tubing are visible in the frame."
+            },
+            {
+              "evidence_id": "REAL_WF_0004_EV_010",
+              "support_status": "supported",
+              "explanation": "The narration at this moment is about air pressure and volume."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0004_ST_002"
+        ],
+        "score": 0.03149801587301587,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0004_EV_011",
+              "source_id": "SRC_HAAS_0008",
+              "modality": "visual",
+              "locator": {
+                "start_ms": 34999,
+                "end_ms": 35000,
+                "page": null,
+                "text_span": null
+              },
+              "quote": null,
+              "observation_note": "Pneumatics panel with an air pressure gauge and a bank of solenoid valves, beside an 'AIR - LUBRICATION' diagram label.",
+              "asset_uri": "acquisition/preprocessing/keyframes/SRC_HAAS_0008/kf_0035000.jpg",
+              "transcript_origin": "none",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0004_EV_011",
+              "support_status": "supported",
+              "explanation": "The gauge, valves and tubing are visible in the frame."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0008",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 626 Tool Pocket Slide Error",
+              "url": "https://www.haascnc.com/video/service/DXtocZX8hf0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 86000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-08-24T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] alarm 626 occurs when the tool pocket failed to reach the proper up in down location press the recovery button and follow the instruction to recover the tool change then command several - changes to make sure the tool change is working correctly if you're still getting alarm 626 follow these steps to troubleshoot the issue first give the pocket and carousel a good look for loose or damaged component make sure the machine has sufficient air pressure and volume during the tool change low air can prevent the tool pocket from reaching the proper position take a look at the air line to the pocket air cylinder look for kinks or broken lines examine the pocket up and down proximity switches look for contamination or damage touch the face of each switch with a small flat blade screwdriver the switch should change state if possible manually activate the pocket up and down solenoid to verify that it's working correctly make sure the pocket up and down switches change state at the appropriate time you'll find a link in the description of this video that shows you how to do it if you're still getting alarm 626 you will need to contact your ha spectra outlet and thanks for watching [Music]",
+              "content_sha256": "c4314a64fa1c126f08957626d710384944303a916ca4034c1a6b3446a4e26f72",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=DXtocZX8hf0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          },
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0004_EV_010",
+              "source_id": "SRC_HAAS_0008",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 28320,
+                "end_ms": 38970,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "the pocket and carousel a good look for loose or damaged component make sure the machine has sufficient air pressure and volume during the tool change low air can prevent the tool pocket",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0004_EV_010",
+              "support_status": "supported",
+              "explanation": "The narration at this moment is about air pressure and volume."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0008",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 626 Tool Pocket Slide Error",
+              "url": "https://www.haascnc.com/video/service/DXtocZX8hf0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 86000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-08-24T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] alarm 626 occurs when the tool pocket failed to reach the proper up in down location press the recovery button and follow the instruction to recover the tool change then command several - changes to make sure the tool change is working correctly if you're still getting alarm 626 follow these steps to troubleshoot the issue first give the pocket and carousel a good look for loose or damaged component make sure the machine has sufficient air pressure and volume during the tool change low air can prevent the tool pocket from reaching the proper position take a look at the air line to the pocket air cylinder look for kinks or broken lines examine the pocket up and down proximity switches look for contamination or damage touch the face of each switch with a small flat blade screwdriver the switch should change state if possible manually activate the pocket up and down solenoid to verify that it's working correctly make sure the pocket up and down switches change state at the appropriate time you'll find a link in the description of this video that shows you how to do it if you're still getting alarm 626 you will need to contact your ha spectra outlet and thanks for watching [Music]",
+              "content_sha256": "c4314a64fa1c126f08957626d710384944303a916ca4034c1a6b3446a4e26f72",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=DXtocZX8hf0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0004",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0004_CL_009"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0004_CL_009",
+          "text": "The presenter says to look at the air line to the pocket air cylinder, and to look for kinks or broken lines.",
+          "role": "action",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville Collins (presenter)",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 626 troubleshooting as demonstrated in SRC_HAAS_0008."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0004_EV_012",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0004_ST_002"
+        ],
+        "score": 0.03149801587301587,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0004_EV_012",
+              "source_id": "SRC_HAAS_0008",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 38970,
+                "end_ms": 51930,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "from reaching the proper position take a look at the air line to the pocket air cylinder look for kinks or broken lines examine the pocket up and down proximity switches look for contamination",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0004_EV_012",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0008",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 626 Tool Pocket Slide Error",
+              "url": "https://www.haascnc.com/video/service/DXtocZX8hf0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 86000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-08-24T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] alarm 626 occurs when the tool pocket failed to reach the proper up in down location press the recovery button and follow the instruction to recover the tool change then command several - changes to make sure the tool change is working correctly if you're still getting alarm 626 follow these steps to troubleshoot the issue first give the pocket and carousel a good look for loose or damaged component make sure the machine has sufficient air pressure and volume during the tool change low air can prevent the tool pocket from reaching the proper position take a look at the air line to the pocket air cylinder look for kinks or broken lines examine the pocket up and down proximity switches look for contamination or damage touch the face of each switch with a small flat blade screwdriver the switch should change state if possible manually activate the pocket up and down solenoid to verify that it's working correctly make sure the pocket up and down switches change state at the appropriate time you'll find a link in the description of this video that shows you how to do it if you're still getting alarm 626 you will need to contact your ha spectra outlet and thanks for watching [Music]",
+              "content_sha256": "c4314a64fa1c126f08957626d710384944303a916ca4034c1a6b3446a4e26f72",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=DXtocZX8hf0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0004",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0004_CL_010"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0004_CL_010",
+          "text": "A pneumatic cylinder with a thin air line is mounted in a cast housing.",
+          "role": "action",
+          "evidence_type": "observed",
+          "attribution": {
+            "actor_id": null,
+            "label": "D1-A keyframe observation, pending human check",
+            "kind": "model"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 626 troubleshooting as demonstrated in SRC_HAAS_0008."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0004_EV_013",
+              "support_status": "supported",
+              "explanation": "The cylinder body, its rod and the air line are visible in the frame; the frame alone does not show which cylinder this is."
+            },
+            {
+              "evidence_id": "REAL_WF_0004_EV_012",
+              "support_status": "supported",
+              "explanation": "The narration at this moment is about the air line to the pocket air cylinder."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0004_ST_002"
+        ],
+        "score": 0.03149801587301587,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0004_EV_013",
+              "source_id": "SRC_HAAS_0008",
+              "modality": "visual",
+              "locator": {
+                "start_ms": 40999,
+                "end_ms": 41000,
+                "page": null,
+                "text_span": null
+              },
+              "quote": null,
+              "observation_note": "Close-up of a pneumatic cylinder with a thin air line, mounted in a cast housing.",
+              "asset_uri": "acquisition/preprocessing/keyframes/SRC_HAAS_0008/kf_0041000.jpg",
+              "transcript_origin": "none",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0004_EV_013",
+              "support_status": "supported",
+              "explanation": "The cylinder body, its rod and the air line are visible in the frame; the frame alone does not show which cylinder this is."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0008",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 626 Tool Pocket Slide Error",
+              "url": "https://www.haascnc.com/video/service/DXtocZX8hf0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 86000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-08-24T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] alarm 626 occurs when the tool pocket failed to reach the proper up in down location press the recovery button and follow the instruction to recover the tool change then command several - changes to make sure the tool change is working correctly if you're still getting alarm 626 follow these steps to troubleshoot the issue first give the pocket and carousel a good look for loose or damaged component make sure the machine has sufficient air pressure and volume during the tool change low air can prevent the tool pocket from reaching the proper position take a look at the air line to the pocket air cylinder look for kinks or broken lines examine the pocket up and down proximity switches look for contamination or damage touch the face of each switch with a small flat blade screwdriver the switch should change state if possible manually activate the pocket up and down solenoid to verify that it's working correctly make sure the pocket up and down switches change state at the appropriate time you'll find a link in the description of this video that shows you how to do it if you're still getting alarm 626 you will need to contact your ha spectra outlet and thanks for watching [Music]",
+              "content_sha256": "c4314a64fa1c126f08957626d710384944303a916ca4034c1a6b3446a4e26f72",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=DXtocZX8hf0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          },
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0004_EV_012",
+              "source_id": "SRC_HAAS_0008",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 38970,
+                "end_ms": 51930,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "from reaching the proper position take a look at the air line to the pocket air cylinder look for kinks or broken lines examine the pocket up and down proximity switches look for contamination",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0004_EV_012",
+              "support_status": "supported",
+              "explanation": "The narration at this moment is about the air line to the pocket air cylinder."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0008",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 626 Tool Pocket Slide Error",
+              "url": "https://www.haascnc.com/video/service/DXtocZX8hf0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 86000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-08-24T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] alarm 626 occurs when the tool pocket failed to reach the proper up in down location press the recovery button and follow the instruction to recover the tool change then command several - changes to make sure the tool change is working correctly if you're still getting alarm 626 follow these steps to troubleshoot the issue first give the pocket and carousel a good look for loose or damaged component make sure the machine has sufficient air pressure and volume during the tool change low air can prevent the tool pocket from reaching the proper position take a look at the air line to the pocket air cylinder look for kinks or broken lines examine the pocket up and down proximity switches look for contamination or damage touch the face of each switch with a small flat blade screwdriver the switch should change state if possible manually activate the pocket up and down solenoid to verify that it's working correctly make sure the pocket up and down switches change state at the appropriate time you'll find a link in the description of this video that shows you how to do it if you're still getting alarm 626 you will need to contact your ha spectra outlet and thanks for watching [Music]",
+              "content_sha256": "c4314a64fa1c126f08957626d710384944303a916ca4034c1a6b3446a4e26f72",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=DXtocZX8hf0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0004",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0004_CL_011"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0004_CL_011",
+          "text": "The presenter says low air can prevent the tool pocket from reaching the proper position.",
+          "role": "rationale",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville Collins (presenter)",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 626 troubleshooting as demonstrated in SRC_HAAS_0008."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0004_EV_014",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0004_ST_002"
+        ],
+        "score": 0.03149801587301587,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0004_EV_014",
+              "source_id": "SRC_HAAS_0008",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 33300,
+                "end_ms": 45360,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "sufficient air pressure and volume during the tool change low air can prevent the tool pocket from reaching the proper position take a look at the air line to the pocket air cylinder look for",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0004_EV_014",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0008",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 626 Tool Pocket Slide Error",
+              "url": "https://www.haascnc.com/video/service/DXtocZX8hf0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 86000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-08-24T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] alarm 626 occurs when the tool pocket failed to reach the proper up in down location press the recovery button and follow the instruction to recover the tool change then command several - changes to make sure the tool change is working correctly if you're still getting alarm 626 follow these steps to troubleshoot the issue first give the pocket and carousel a good look for loose or damaged component make sure the machine has sufficient air pressure and volume during the tool change low air can prevent the tool pocket from reaching the proper position take a look at the air line to the pocket air cylinder look for kinks or broken lines examine the pocket up and down proximity switches look for contamination or damage touch the face of each switch with a small flat blade screwdriver the switch should change state if possible manually activate the pocket up and down solenoid to verify that it's working correctly make sure the pocket up and down switches change state at the appropriate time you'll find a link in the description of this video that shows you how to do it if you're still getting alarm 626 you will need to contact your ha spectra outlet and thanks for watching [Music]",
+              "content_sha256": "c4314a64fa1c126f08957626d710384944303a916ca4034c1a6b3446a4e26f72",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=DXtocZX8hf0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0004",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0004_CL_013"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0004_CL_013",
+          "text": "The presenter says to examine the pocket up and down proximity switches and look for contamination or damage.",
+          "role": "action",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville Collins (presenter)",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 626 troubleshooting as demonstrated in SRC_HAAS_0008."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0004_EV_017",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0004_ST_003"
+        ],
+        "score": 0.03076923076923077,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0004_EV_017",
+              "source_id": "SRC_HAAS_0008",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 45360,
+                "end_ms": 58800,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "kinks or broken lines examine the pocket up and down proximity switches look for contamination or damage touch the face of each switch with a small flat blade screwdriver the switch should",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0004_EV_017",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0008",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 626 Tool Pocket Slide Error",
+              "url": "https://www.haascnc.com/video/service/DXtocZX8hf0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 86000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-08-24T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] alarm 626 occurs when the tool pocket failed to reach the proper up in down location press the recovery button and follow the instruction to recover the tool change then command several - changes to make sure the tool change is working correctly if you're still getting alarm 626 follow these steps to troubleshoot the issue first give the pocket and carousel a good look for loose or damaged component make sure the machine has sufficient air pressure and volume during the tool change low air can prevent the tool pocket from reaching the proper position take a look at the air line to the pocket air cylinder look for kinks or broken lines examine the pocket up and down proximity switches look for contamination or damage touch the face of each switch with a small flat blade screwdriver the switch should change state if possible manually activate the pocket up and down solenoid to verify that it's working correctly make sure the pocket up and down switches change state at the appropriate time you'll find a link in the description of this video that shows you how to do it if you're still getting alarm 626 you will need to contact your ha spectra outlet and thanks for watching [Music]",
+              "content_sha256": "c4314a64fa1c126f08957626d710384944303a916ca4034c1a6b3446a4e26f72",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=DXtocZX8hf0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0004",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0004_CL_014"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0004_CL_014",
+          "text": "The presenter says to touch the face of each switch with a small flat blade screwdriver.",
+          "role": "action",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville Collins (presenter)",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 626 troubleshooting as demonstrated in SRC_HAAS_0008."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0004_EV_018",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0004_ST_003"
+        ],
+        "score": 0.03076923076923077,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0004_EV_018",
+              "source_id": "SRC_HAAS_0008",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 51930,
+                "end_ms": 58800,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "or damage touch the face of each switch with a small flat blade screwdriver the switch should",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0004_EV_018",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0008",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 626 Tool Pocket Slide Error",
+              "url": "https://www.haascnc.com/video/service/DXtocZX8hf0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 86000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-08-24T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] alarm 626 occurs when the tool pocket failed to reach the proper up in down location press the recovery button and follow the instruction to recover the tool change then command several - changes to make sure the tool change is working correctly if you're still getting alarm 626 follow these steps to troubleshoot the issue first give the pocket and carousel a good look for loose or damaged component make sure the machine has sufficient air pressure and volume during the tool change low air can prevent the tool pocket from reaching the proper position take a look at the air line to the pocket air cylinder look for kinks or broken lines examine the pocket up and down proximity switches look for contamination or damage touch the face of each switch with a small flat blade screwdriver the switch should change state if possible manually activate the pocket up and down solenoid to verify that it's working correctly make sure the pocket up and down switches change state at the appropriate time you'll find a link in the description of this video that shows you how to do it if you're still getting alarm 626 you will need to contact your ha spectra outlet and thanks for watching [Music]",
+              "content_sha256": "c4314a64fa1c126f08957626d710384944303a916ca4034c1a6b3446a4e26f72",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=DXtocZX8hf0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0004",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0004_CL_015"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0004_CL_015",
+          "text": "The presenter says the switch should change state when its face is touched.",
+          "role": "acceptance_criteria",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville Collins (presenter)",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 626 troubleshooting as demonstrated in SRC_HAAS_0008."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0004_EV_019",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0004_ST_003"
+        ],
+        "score": 0.03076923076923077,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0004_EV_019",
+              "source_id": "SRC_HAAS_0008",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 51930,
+                "end_ms": 65760,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "or damage touch the face of each switch with a small flat blade screwdriver the switch should change state if possible manually activate the pocket up and down solenoid to verify that it's",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0004_EV_019",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0008",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 626 Tool Pocket Slide Error",
+              "url": "https://www.haascnc.com/video/service/DXtocZX8hf0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 86000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-08-24T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] alarm 626 occurs when the tool pocket failed to reach the proper up in down location press the recovery button and follow the instruction to recover the tool change then command several - changes to make sure the tool change is working correctly if you're still getting alarm 626 follow these steps to troubleshoot the issue first give the pocket and carousel a good look for loose or damaged component make sure the machine has sufficient air pressure and volume during the tool change low air can prevent the tool pocket from reaching the proper position take a look at the air line to the pocket air cylinder look for kinks or broken lines examine the pocket up and down proximity switches look for contamination or damage touch the face of each switch with a small flat blade screwdriver the switch should change state if possible manually activate the pocket up and down solenoid to verify that it's working correctly make sure the pocket up and down switches change state at the appropriate time you'll find a link in the description of this video that shows you how to do it if you're still getting alarm 626 you will need to contact your ha spectra outlet and thanks for watching [Music]",
+              "content_sha256": "c4314a64fa1c126f08957626d710384944303a916ca4034c1a6b3446a4e26f72",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=DXtocZX8hf0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      }
+    ],
+    "conflicts": [],
+    "blocked_claims": [],
+    "questions": [
+      {
+        "question_id": "REAL_WF_0004_Q_001",
+        "step_id": "REAL_WF_0004_ST_001",
+        "target_field": "rationale",
+        "reason": "missing",
+        "question": "Why is the recovery button the first thing to try before inspecting anything?",
+        "status": "open",
+        "answer_source_ids": [],
+        "resolution_note": null
+      },
+      {
+        "question_id": "REAL_WF_0004_Q_002",
+        "step_id": "REAL_WF_0004_ST_002",
+        "target_field": "acceptance_criteria",
+        "reason": "missing",
+        "question": "What pressure counts as sufficient air pressure and volume?",
+        "status": "open",
+        "answer_source_ids": [],
+        "resolution_note": null
+      },
+      {
+        "question_id": "REAL_WF_0004_Q_003",
+        "step_id": "REAL_WF_0004_ST_003",
+        "target_field": "rationale",
+        "reason": "missing",
+        "question": "Why does a switch that fails to change state point to the alarm?",
+        "status": "open",
+        "answer_source_ids": [],
+        "resolution_note": null
+      },
+      {
+        "question_id": "REAL_WF_0004_Q_004",
+        "step_id": "REAL_WF_0004_ST_004",
+        "target_field": "action",
+        "reason": "ambiguous",
+        "question": "The captions say 'if possible': when is manual activation not possible?",
+        "status": "open",
+        "answer_source_ids": [],
+        "resolution_note": null
+      },
+      {
+        "question_id": "REAL_WF_0004_Q_005",
+        "step_id": "REAL_WF_0004_ST_005",
+        "target_field": "outcome",
+        "reason": "missing",
+        "question": "What does the HFO do next, and what should be reported to them?",
+        "status": "open",
+        "answer_source_ids": [],
+        "resolution_note": null
+      }
+    ],
+    "relations": [
+      {
+        "relation_id": "REAL_WF_0004_RL_001",
+        "from_step_id": "REAL_WF_0004_ST_001",
+        "to_step_id": "REAL_WF_0004_ST_002",
+        "relation_type": "branch_if",
+        "claim_ids": [
+          "REAL_WF_0004_CL_022"
+        ],
+        "condition_claim_ids": [
+          "REAL_WF_0004_CL_012"
+        ]
+      }
+    ],
+    "related_steps": [],
+    "related_claims": [],
+    "evidence_openability_checked": false,
+    "trace": {
+      "config": {
+        "strategy": "hybrid",
+        "top_k": 5,
+        "candidate_k": 20,
+        "rrf_k": 60,
+        "min_cosine": 0.25,
+        "intent": "auto",
+        "min_term_coverage": 0.2,
+        "relevance_policy": "claim_coherence",
+        "query_translation": "auto",
+        "neighbor_depth": 1,
+        "max_related_steps": 5,
+        "workflow_routing": "best_step"
+      },
+      "intent": "detail",
+      "detected_context": {},
+      "filters": [
+        {
+          "workflow_id": "B0_SRC_HAAS_0005",
+          "revision": 2,
+          "mismatches": [],
+          "unknown_context": [
+            "alarm_codes"
+          ]
+        },
+        {
+          "workflow_id": "REAL_WF_0001",
+          "revision": 1,
+          "mismatches": [],
+          "unknown_context": [
+            "alarm_codes"
+          ]
+        },
+        {
+          "workflow_id": "REAL_WF_0002",
+          "revision": 2,
+          "mismatches": [
+            "alarm_codes"
+          ],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0003",
+          "revision": 2,
+          "mismatches": [
+            "alarm_codes"
+          ],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0004",
+          "revision": 1,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0005",
+          "revision": 1,
+          "mismatches": [],
+          "unknown_context": [
+            "alarm_codes"
+          ]
+        },
+        {
+          "workflow_id": "REAL_WF_0006",
+          "revision": 1,
+          "mismatches": [
+            "alarm_codes"
+          ],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0007",
+          "revision": 1,
+          "mismatches": [
+            "alarm_codes"
+          ],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0008",
+          "revision": 1,
+          "mismatches": [],
+          "unknown_context": [
+            "alarm_codes"
+          ]
+        }
+      ],
+      "workflow_ranking": [
+        {
+          "document_id": "[\"workflow\",\"REAL_WF_0004\",1,\"\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.03252247488101534,
+          "lexical_score": 2.027770804311329,
+          "vector_score": 0.7679852345330268
+        }
+      ],
+      "step_ranking": [
+        {
+          "document_id": "[\"step\",\"REAL_WF_0004\",1,\"REAL_WF_0004_ST_005\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.03252247488101534,
+          "lexical_score": 2.027770804311329,
+          "vector_score": 0.7679852345330268
+        },
+        {
+          "document_id": "[\"step\",\"REAL_WF_0004\",1,\"REAL_WF_0004_ST_001\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.032266458495966696,
+          "lexical_score": 1.564282200333231,
+          "vector_score": 0.7753522681662587
+        },
+        {
+          "document_id": "[\"step\",\"REAL_WF_0004\",1,\"REAL_WF_0004_ST_004\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.031754032258064516,
+          "lexical_score": 1.7789822390085968,
+          "vector_score": 0.7513477616246169
+        },
+        {
+          "document_id": "[\"step\",\"REAL_WF_0004\",1,\"REAL_WF_0004_ST_002\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.03149801587301587,
+          "lexical_score": 0.33817011082423376,
+          "vector_score": 0.7613207084355088
+        },
+        {
+          "document_id": "[\"step\",\"REAL_WF_0004\",1,\"REAL_WF_0004_ST_003\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.03076923076923077,
+          "lexical_score": 0.3266003017129092,
+          "vector_score": 0.7501071378142746
+        }
+      ],
+      "embedding_calls": 1,
+      "cache": "disabled",
+      "eligible_documents": 6,
+      "query_translation": null,
+      "relevance": {
+        "policy": "claim-coherence-2",
+        "unit": "claim",
+        "background_ratio": 0.75,
+        "ignored_terms": [],
+        "context_terms": [
+          "626",
+          "alarm"
+        ],
+        "protected_component_terms": [],
+        "query_terms": [
+          "accord",
+          "occur",
+          "servic",
+          "video"
+        ],
+        "matched_terms": [
+          "occur"
+        ],
+        "unseen_terms": [
+          "accord",
+          "servic",
+          "video"
+        ],
+        "min_matches": 2,
+        "term_coverage": 0.25,
+        "min_term_coverage": 0.2,
+        "support_refs": [
+          {
+            "workflow_id": "REAL_WF_0004",
+            "revision": 1,
+            "step_id": "REAL_WF_0004_ST_001",
+            "claim_id": "REAL_WF_0004_CL_001",
+            "purpose": "answer"
+          }
+        ],
+        "gate": "passed",
+        "exact_alarm_lookup": true,
+        "corpus_term_coverage": 0.6355
+      },
+      "routing_steps": {
+        "REAL_WF_0004": "REAL_WF_0004_ST_005"
+      },
+      "neighbors": {
+        "depth": 1,
+        "relations": [
+          "branch_if",
+          "corrects",
+          "requires"
+        ],
+        "unavailable_step_ids": [],
+        "truncated_step_ids": []
+      },
+      "conflict_ranking": [],
+      "latency_ms": 618.31
+    }
+  },
+  "result_sha256": "b72df4fb130f1039b9a3d3bce0774d1b6f2a415ddfe012750fb7e698314b8497",
+  "error_class": null,
+  "latency_ms": 626.3538999919547,
+  "provider_call_ids": [
+    "call-000084"
+  ],
+  "backoff_seconds": 0.0,
+  "owner_arm": "C_no_graph",
+  "pre_graph_sha256": "2658e16b502087d0a24d951791392f48fb2fbcd442d5ab1979c4836bbab38e63",
+  "translation_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+}

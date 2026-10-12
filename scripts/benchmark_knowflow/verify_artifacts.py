@@ -31,7 +31,9 @@ def verify(run_dir, require_complete=True):
                for name, value in frozen[group].items() if sha_file(ROOT / name) != value]
     if changed:
         raise ValueError(f"Frozen files changed: {changed}")
-    product = subprocess.run(["git", "diff", "--quiet", frozen["product_commit"], "--", "retrieval", "data", "acquisition", "contracts"],
+    documentation_exclusions = ["retrieval/README.md"]
+    product = subprocess.run(["git", "diff", "--quiet", frozen["product_commit"], "--", "retrieval", "data", "acquisition", "contracts",
+                              *[f":(exclude){name}" for name in documentation_exclusions]],
                              cwd=ROOT, check=False)
     if product.returncode:
         raise ValueError("Product or canonical data changed from measured commit")
@@ -107,6 +109,7 @@ def verify(run_dir, require_complete=True):
         raise ValueError(f"Credential detected in generated files: {secret_hits}")
     result = {"planned_tasks": len(expected), "recorded_tasks": len(observed), "missing_tasks": len(expected - set(observed)),
               "duplicates": 0, "frozen_files_changed": [], "product_unchanged": True,
+              "documentation_only_diff_exclusions": documentation_exclusions,
               "review_rows": len(review), "answer_hashes_valid": True, "provider_journal_matches_rows": True,
               "cost_includes_interrupted_calls": True, "per_question_cost_matches_complete_ledger": True,
               "credential_findings": 0, "retained_evidence": dict(Counter(e["access_kind"] for e in evidence)),
@@ -114,6 +117,8 @@ def verify(run_dir, require_complete=True):
               "evidence_asset_files": assets, "evidence_assets_sha256": digest(assets),
               "evidence_assets_match_product_commit": True, "holdout_opened": False,
               "report_code_sha256": sha_file(Path(__file__).with_name("report.py")),
+              "expanded_report_code_sha256": sha_file(Path(__file__).with_name("expanded_report.py")) if config.get("benchmark_version") == "2.0.0" else None,
+              "expanded_analysis_code_sha256": sha_file(Path(__file__).with_name("expanded_analysis.py")) if config.get("benchmark_version") == "2.0.0" else None,
               "review_import_code_sha256": sha_file(Path(__file__).with_name("review.py"))}
     (run_dir / "artifact_verification.json").write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({k: result[k] for k in ("planned_tasks", "recorded_tasks", "missing_tasks", "product_unchanged", "credential_findings", "retained_evidence")}))

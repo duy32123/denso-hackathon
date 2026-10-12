@@ -1,0 +1,201 @@
+{
+  "key": "be1fa9637bae9f1b5980c143161410a27930633dae76fa103a7261c61670d62b",
+  "result": {
+    "status": "insufficient_evidence",
+    "index_build_id": "IDX_SEARCH_151f7d6dfcc821966e669bd1842c59f5d1d2c8eb7210fb4e998ef46e36857389",
+    "record_build_id": "IDX_WP1_f2e98bbf552b45e119f633b6de9f6469a9592f2494a4dc74b44f59b655527dd4",
+    "source_type": "real",
+    "dataset_split": "dev",
+    "context": {
+      "manufacturer": "Haas",
+      "machine_family": null,
+      "machine_model": null,
+      "subsystem": "SMTC",
+      "task_type": null,
+      "symptoms": [],
+      "alarm_codes": [],
+      "components": []
+    },
+    "missing_context": [],
+    "selected_workflow": null,
+    "workflow_candidates": [],
+    "steps": [],
+    "claims": [],
+    "conflicts": [],
+    "blocked_claims": [],
+    "questions": [],
+    "relations": [],
+    "related_steps": [],
+    "related_claims": [],
+    "evidence_openability_checked": false,
+    "trace": {
+      "config": {
+        "strategy": "hybrid",
+        "top_k": 5,
+        "candidate_k": 20,
+        "rrf_k": 60,
+        "min_cosine": 0.25,
+        "intent": "auto",
+        "min_term_coverage": 0.2,
+        "relevance_policy": "claim_coherence",
+        "query_translation": "auto",
+        "neighbor_depth": 1,
+        "max_related_steps": 5,
+        "workflow_routing": "best_step"
+      },
+      "intent": "detail",
+      "detected_context": {
+        "subsystem": [
+          "SMTC"
+        ]
+      },
+      "filters": [
+        {
+          "workflow_id": "B0_SRC_HAAS_0005",
+          "revision": 2,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0001",
+          "revision": 1,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0002",
+          "revision": 2,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0003",
+          "revision": 2,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0004",
+          "revision": 1,
+          "mismatches": [
+            "subsystem"
+          ],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0005",
+          "revision": 1,
+          "mismatches": [
+            "subsystem"
+          ],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0006",
+          "revision": 1,
+          "mismatches": [
+            "subsystem"
+          ],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0007",
+          "revision": 1,
+          "mismatches": [
+            "subsystem"
+          ],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0008",
+          "revision": 1,
+          "mismatches": [
+            "subsystem"
+          ],
+          "unknown_context": []
+        }
+      ],
+      "workflow_ranking": [],
+      "step_ranking": [],
+      "embedding_calls": 0,
+      "cache": "disabled",
+      "eligible_documents": 42,
+      "query_translation": {
+        "text": "SMTC double-arm gripper is heavily worn, what does this suggest about the height, and what other motion symptom does the manual mention when the double-arm engages with the tool?",
+        "provider": "gemini",
+        "model": "gemini-3.5-flash-lite",
+        "prompt_version": "q2en-3",
+        "temperature": 0,
+        "sdk_version": "2.29.0"
+      },
+      "relevance": {
+        "policy": "claim-coherence-2",
+        "unit": "claim",
+        "background_ratio": 0.75,
+        "ignored_terms": [
+          "symptom",
+          "tool"
+        ],
+        "context_terms": [
+          "smtc"
+        ],
+        "protected_component_terms": [],
+        "query_terms": [
+          "double-arm",
+          "engag",
+          "gripper",
+          "heavili",
+          "height",
+          "manual",
+          "mention",
+          "motion",
+          "other",
+          "suggest",
+          "worn"
+        ],
+        "matched_terms": [
+          "engag",
+          "height"
+        ],
+        "unseen_terms": [
+          "double-arm",
+          "gripper",
+          "heavili",
+          "manual",
+          "mention",
+          "motion",
+          "other",
+          "suggest",
+          "worn"
+        ],
+        "min_matches": 2,
+        "term_coverage": 0.1818,
+        "min_term_coverage": 0.2,
+        "support_refs": [
+          {
+            "workflow_id": "REAL_WF_0002",
+            "revision": 2,
+            "step_id": "REAL_WF_0002_ST_003",
+            "claim_id": "REAL_WF_0002_CL_008",
+            "purpose": "answer"
+          }
+        ],
+        "gate": "rejected",
+        "exact_alarm_lookup": false,
+        "corpus_term_coverage": 0.5005
+      },
+      "latency_ms": 25044.69
+    }
+  },
+  "result_sha256": "4db2551f170e5b06f129f35a9377fc56c3b4020b1b8a9790d0bdc78acd92803b",
+  "error_class": null,
+  "latency_ms": 25044.947599992156,
+  "provider_call_ids": [
+    "call-000170",
+    "call-000171"
+  ],
+  "backoff_seconds": 23.0,
+  "owner_arm": "C_no_graph",
+  "pre_graph_sha256": "d0eb759d0e51804330ec7ab6d2bc595ad9c8beb49d3cf08e3d9515d9e82212f4",
+  "translation_sha256": "f8dc0792dff0864706516313b951d3adda830e0baa4ac7d0e97515426df795ed"
+}

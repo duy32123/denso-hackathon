@@ -1,0 +1,4 @@
+{
+  "db": "out/benchmark_knowflow/20261012_expanded_dev/real_dev.sqlite",
+  "raw_index": "out/benchmark_knowflow/20261012_expanded_dev/raw_index.json"
+}

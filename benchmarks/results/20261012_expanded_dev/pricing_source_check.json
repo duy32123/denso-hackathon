@@ -1,0 +1,15 @@
+{
+  "checked_at_utc": "2026-10-12T15:13:18.941911+00:00",
+  "url": "https://ai.google.dev/gemini-api/docs/pricing#gemini-3.5-flash-lite",
+  "provider": "Google Gemini Developer API",
+  "answer_model_and_observed_version": "gemini-3.5-flash-lite",
+  "rate_basis": "Standard paid tier, USD per 1M tokens; invoice and account billing tier unknown",
+  "input_per_million": 0.3,
+  "output_including_thinking_per_million": 2.5,
+  "cached_input_per_million": 0.03,
+  "embedding_model": "gemini-embedding-001",
+  "embedding_price_per_million": null,
+  "embedding_price_reason": "Exact legacy model rate not present in the official pricing page inspected. Do not substitute embedding-2 price. Responses do not supply embedding usage metadata.",
+  "rate_limits_url": "https://ai.google.dev/gemini-api/docs/rate-limits",
+  "key_replacement_note": "Limits are per project, not per API key. Current key completes real provider calls; 429 retries and terminal timeouts remain in the benchmark."
+}

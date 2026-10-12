@@ -4,6 +4,23 @@ Cấu hình đề xuất `config.json`: 81 câu đã có review, corpus 9 workfl
 40 câu nháp Vietnamese/hard. Cấu hình này chưa được khóa vào run khi phiếu 20 nhãn
 phủ định trên corpus mới chưa được người kiểm hoàn tất.
 
+## Lượt chạy trên nhãn hiện có
+
+Người dùng yêu cầu chạy và cung cấp GitHub `duy32123`, nhưng chưa gửi quyết định
+nhãn trong phiếu. Lượt `20261012_expanded_dev` dùng `config_existing_labels.json`,
+giữ nguyên 81 gold và ghi `label_revalidation_pending=true`. Quyền chạy lưu trong
+`execution_authorization.json`, không phải human approval. Không đánh dấu 20 đề
+xuất AI thành nhãn do người kiểm. Không thay file của run cũ.
+
+Đã hoàn thành 243/243 lượt API thật. [Báo cáo](../results/20261012_expanded_dev/REPORT.md),
+[CSV tổng hợp](../results/20261012_expanded_dev/summary.csv) và
+[phiếu chấm nghĩa](../results/20261012_expanded_dev/human_review.csv).
+
+Index ban đầu gặp 429 ở batch 32. Trước smoke/full, chỉ giảm batch index về 4 và
+pacing 1 giây, đóng băng lại tại `d47308e`; cấu hình trước, log lỗi và probe thật
+được giữ ở run. Không thay chunk/model/corpus/gold/retrieval. Khi chạy lại, dùng
+thư mục mới và cấu hình tương ứng trạng thái nhãn; không ghi đè lượt đã đo.
+
 ## Thứ tự chạy
 
 1. Nhóm đọc nguồn ở `data/eval/reviews/20261012_expanded`, điền tất cả 20 dòng
@@ -18,12 +35,13 @@ phủ định trên corpus mới chưa được người kiểm hoàn tất.
    chạy API, không dùng điểm chất lượng làm gate; `run` chạy cả 81 × 3.
 
 ```powershell
+$benchmarkRunDir = 'benchmarks/results/20261012_expanded_reviewed_v1'
 .\.venv\Scripts\python.exe -m scripts.review_expanded_dev apply --reviewer-id <human-id>
-.\.venv\Scripts\python.exe -m scripts.benchmark_knowflow prepare --config benchmarks/knowflow_expanded_dev/config.json --run-dir benchmarks/results/20261012_expanded_dev
-.\.venv\Scripts\python.exe -m scripts.benchmark_knowflow smoke --run-dir benchmarks/results/20261012_expanded_dev
-.\.venv\Scripts\python.exe -m scripts.benchmark_knowflow run --run-dir benchmarks/results/20261012_expanded_dev
-.\.venv\Scripts\python.exe -m scripts.benchmark_knowflow report --run-dir benchmarks/results/20261012_expanded_dev
-.\.venv\Scripts\python.exe -m scripts.benchmark_knowflow.verify_artifacts --run-dir benchmarks/results/20261012_expanded_dev
+.\.venv\Scripts\python.exe -m scripts.benchmark_knowflow prepare --config benchmarks/knowflow_expanded_dev/config.json --run-dir $benchmarkRunDir
+.\.venv\Scripts\python.exe -m scripts.benchmark_knowflow smoke --run-dir $benchmarkRunDir
+.\.venv\Scripts\python.exe -m scripts.benchmark_knowflow run --run-dir $benchmarkRunDir
+.\.venv\Scripts\python.exe -m scripts.benchmark_knowflow report --run-dir $benchmarkRunDir
+.\.venv\Scripts\python.exe -m scripts.benchmark_knowflow.verify_artifacts --run-dir $benchmarkRunDir
 ```
 
 Mỗi lần đo độc lập dùng một tên thư mục mới. Key chỉ ở môi trường/.env.

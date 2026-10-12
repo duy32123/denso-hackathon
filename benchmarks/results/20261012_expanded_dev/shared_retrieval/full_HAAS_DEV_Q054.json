@@ -1,0 +1,170 @@
+{
+  "key": "3daeac2f13b66e7b8108addf93154ba2c14edf08df850238448b3d270f90613f",
+  "result": {
+    "status": "insufficient_evidence",
+    "index_build_id": "IDX_SEARCH_151f7d6dfcc821966e669bd1842c59f5d1d2c8eb7210fb4e998ef46e36857389",
+    "record_build_id": "IDX_WP1_f2e98bbf552b45e119f633b6de9f6469a9592f2494a4dc74b44f59b655527dd4",
+    "source_type": "real",
+    "dataset_split": "dev",
+    "context": {
+      "manufacturer": "Haas",
+      "machine_family": null,
+      "machine_model": null,
+      "subsystem": "SMTC",
+      "task_type": null,
+      "symptoms": [],
+      "alarm_codes": [],
+      "components": []
+    },
+    "missing_context": [],
+    "selected_workflow": null,
+    "workflow_candidates": [],
+    "steps": [],
+    "claims": [],
+    "conflicts": [],
+    "blocked_claims": [],
+    "questions": [],
+    "relations": [],
+    "related_steps": [],
+    "related_claims": [],
+    "evidence_openability_checked": false,
+    "trace": {
+      "config": {
+        "strategy": "hybrid",
+        "top_k": 5,
+        "candidate_k": 20,
+        "rrf_k": 60,
+        "min_cosine": 0.25,
+        "intent": "auto",
+        "min_term_coverage": 0.2,
+        "relevance_policy": "claim_coherence",
+        "query_translation": "auto",
+        "neighbor_depth": 1,
+        "max_related_steps": 5,
+        "workflow_routing": "best_step"
+      },
+      "intent": "detail",
+      "detected_context": {},
+      "filters": [
+        {
+          "workflow_id": "B0_SRC_HAAS_0005",
+          "revision": 2,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0001",
+          "revision": 1,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0002",
+          "revision": 2,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0003",
+          "revision": 2,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0004",
+          "revision": 1,
+          "mismatches": [
+            "subsystem"
+          ],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0005",
+          "revision": 1,
+          "mismatches": [
+            "subsystem"
+          ],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0006",
+          "revision": 1,
+          "mismatches": [
+            "subsystem"
+          ],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0007",
+          "revision": 1,
+          "mismatches": [
+            "subsystem"
+          ],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0008",
+          "revision": 1,
+          "mismatches": [
+            "subsystem"
+          ],
+          "unknown_context": []
+        }
+      ],
+      "workflow_ranking": [],
+      "step_ranking": [],
+      "embedding_calls": 0,
+      "cache": "disabled",
+      "eligible_documents": 42,
+      "query_translation": null,
+      "relevance": {
+        "policy": "claim-coherence-2",
+        "unit": "claim",
+        "background_ratio": 0.75,
+        "ignored_terms": [
+          "tool"
+        ],
+        "context_terms": [],
+        "protected_component_terms": [],
+        "query_terms": [
+          "length",
+          "offset",
+          "probe",
+          "set"
+        ],
+        "matched_terms": [
+          "set"
+        ],
+        "unseen_terms": [
+          "length",
+          "offset",
+          "probe"
+        ],
+        "min_matches": 2,
+        "term_coverage": 0.25,
+        "min_term_coverage": 0.2,
+        "support_refs": [
+          {
+            "workflow_id": "B0_SRC_HAAS_0005",
+            "revision": 2,
+            "step_id": "B0_SRC_HAAS_0005_ST_001",
+            "claim_id": "B0_SRC_HAAS_0005_CL_002",
+            "purpose": "answer"
+          }
+        ],
+        "gate": "rejected",
+        "exact_alarm_lookup": false,
+        "corpus_term_coverage": 0.1425
+      },
+      "latency_ms": 97.42
+    }
+  },
+  "result_sha256": "8bfaac0ef1cf291dd3ba805686f65ef08cd0d2318a25f9c9eae7d8a6e6a253f2",
+  "error_class": null,
+  "latency_ms": 99.21800000302028,
+  "provider_call_ids": [],
+  "backoff_seconds": 0.0,
+  "owner_arm": "A_knowflow",
+  "pre_graph_sha256": "d0eb759d0e51804330ec7ab6d2bc595ad9c8beb49d3cf08e3d9515d9e82212f4",
+  "translation_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+}

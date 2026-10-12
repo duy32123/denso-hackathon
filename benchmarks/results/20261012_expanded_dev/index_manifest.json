@@ -1,0 +1,54 @@
+{
+  "structured": {
+    "status": "built",
+    "index_version": "wp2-1",
+    "policy_version": "contract-1.0.0-eligibility-1",
+    "tokenizer_version": "unicode-fold-2+snowball-en",
+    "lexical": "BM25",
+    "embedding": {
+      "provider": "gemini",
+      "model": "gemini-embedding-001",
+      "version": "gemini-embedding-001",
+      "dimensions": 768,
+      "adapter_version": "2",
+      "sdk_version": "2.29.0",
+      "document_task": "RETRIEVAL_DOCUMENT",
+      "query_task": "RETRIEVAL_QUERY",
+      "chunk_utf8_bytes": 1800,
+      "aggregation": "length-weighted-unit-mean"
+    },
+    "source_type": "real",
+    "dataset_split": "dev",
+    "record_build_id": "IDX_WP1_f2e98bbf552b45e119f633b6de9f6469a9592f2494a4dc74b44f59b655527dd4",
+    "config_hash": "5df9bc8c3f28e69c820767973cc4628f345e283b60065318005bf75118723ec4",
+    "index_build_id": "IDX_SEARCH_151f7d6dfcc821966e669bd1842c59f5d1d2c8eb7210fb4e998ef46e36857389",
+    "documents_sha256": "0b4046a3afa052a92bf7e18ca0fb3c92a0abdfb2144a94ad72f6233b1a3178e7",
+    "record_count": 76,
+    "workflow_records": 9,
+    "step_records": 67,
+    "conflict_records": 0,
+    "embedding_calls": 47
+  },
+  "structured_index_latency_ms": 135912.79360000044,
+  "raw_index_latency_ms": 12983.632600007695,
+  "raw_chunks": 50,
+  "raw_index_sha256": "34ff4e6cc264ae9339ca2feb0b4abd31cb54d63034ce33179ee9be023f08f609",
+  "raw_chunk_projection_sha256": "e431cdd7f34afcffd7318c1e0a95e8836072bcc825ea95b8c9bf329187d25023",
+  "raw_preprocessing": {
+    "chunk_words": 180,
+    "overlap_words": 30,
+    "video_text": "existing_corrected_transcript",
+    "document_text": "source_raw_text",
+    "retrieval": "same_hybrid_ranker_on_raw_chunks",
+    "procedure_scope": "one_source_selected_by_highest_raw_chunk_score",
+    "detail_scope": "top_5_raw_chunks_across_sources",
+    "gold_step_metrics": "not_applicable_without_human_chunk_gold"
+  },
+  "index_pacing": {
+    "batch_size": 4,
+    "min_interval_seconds": 1
+  },
+  "previous_preparation_failure_retained": true,
+  "previous_failed_preparation_total_latency_ms": null,
+  "ablation": "One real retrieval per A/C pair, identical pre-ablation candidates; C removes graph fields"
+}

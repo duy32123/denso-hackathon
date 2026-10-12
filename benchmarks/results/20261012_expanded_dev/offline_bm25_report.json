@@ -1,0 +1,225 @@
+{
+  "run_id": "EVAL_20261012T143117Z_3b17e8cf",
+  "created_at": "2026-10-12T14:31:17+00:00",
+  "git": {
+    "commit": "2bc3052feee393799c485c1a0c39ce54e5039a7c",
+    "dirty": true
+  },
+  "db": "C:\\Users\\PC\\Documents\\denso_final\\denso-hackathon\\out\\benchmark_knowflow\\20261012_expanded_dev\\real_dev.sqlite",
+  "source_type": "real",
+  "dataset_split": "dev",
+  "index_build_id": "IDX_SEARCH_306dbafee2a62764557f3c7619553dc9b9643a156fc3d16c180f00f8b603c7cd",
+  "record_build_id": "IDX_WP1_f2e98bbf552b45e119f633b6de9f6469a9592f2494a4dc74b44f59b655527dd4",
+  "embedding": null,
+  "questions_path": "C:\\Users\\PC\\Documents\\denso_final\\denso-hackathon\\data\\eval\\haas_real_dev.retrieval.v0.jsonl",
+  "questions_sha256": "59af8902bad10c266e5d6718963cd5bd5d70d7c62d1ffeef6b8b703382b945a4",
+  "questions": 81,
+  "gold_labels": {
+    "draft": 0,
+    "ai_reviewed": 0,
+    "reviewed": 81
+  },
+  "config": {
+    "top_k": 5,
+    "candidate_k": 20,
+    "min_cosine": 0.25,
+    "rrf_k": 60,
+    "min_term_coverage": 0.2,
+    "query_translation": "never",
+    "workflow_routing": "best_step",
+    "relevance_policy": "claim_coherence",
+    "strategies": [
+      "lexical"
+    ]
+  },
+  "query_embedding_calls": 0,
+  "query_cache": null,
+  "translation": null,
+  "query_translation_calls": 0,
+  "translation_cache": null,
+  "strategies": {
+    "lexical": {
+      "questions": 81,
+      "retrieval": {
+        "questions": 52,
+        "recall_at_5": 0.6827,
+        "mrr_at_5": 0.6138,
+        "hit_at_1": 0.5769,
+        "answer_coverage": 0.8269,
+        "incomplete_recall": [
+          "HAAS_DEV_Q001",
+          "HAAS_DEV_Q003",
+          "HAAS_DEV_Q008",
+          "HAAS_DEV_Q009",
+          "HAAS_DEV_Q010",
+          "HAAS_DEV_Q011",
+          "HAAS_DEV_Q013",
+          "HAAS_DEV_Q014",
+          "HAAS_DEV_Q015",
+          "HAAS_DEV_Q016",
+          "HAAS_DEV_Q018",
+          "HAAS_DEV_Q025",
+          "HAAS_DEV_Q026",
+          "HAAS_DEV_Q055",
+          "HAAS_DEV_Q056",
+          "HAAS_DEV_Q057",
+          "HAAS_DEV_Q066"
+        ]
+      },
+      "workflow_selection": {
+        "questions": 60,
+        "accuracy": 0.6833,
+        "selected": {
+          "B0_SRC_HAAS_0005": 16,
+          "REAL_WF_0007": 6,
+          "REAL_WF_0001": 4,
+          "REAL_WF_0003": 9,
+          "REAL_WF_0002": 12,
+          "REAL_WF_0005": 5,
+          "REAL_WF_0008": 4,
+          "REAL_WF_0004": 3,
+          "REAL_WF_0006": 3
+        }
+      },
+      "status": {
+        "accuracy": 0.7037,
+        "confusion": {
+          "insufficient_evidence": {
+            "insufficient_evidence": 7,
+            "retrieved": 13
+          },
+          "needs_clarification": {
+            "needs_clarification": 1
+          },
+          "retrieved": {
+            "insufficient_evidence": 11,
+            "retrieved": 49
+          }
+        },
+        "false_retrieved": [
+          "HAAS_DEV_Q033",
+          "HAAS_DEV_Q039",
+          "HAAS_DEV_Q040",
+          "HAAS_DEV_Q042",
+          "HAAS_DEV_Q043",
+          "HAAS_DEV_Q044",
+          "HAAS_DEV_Q045",
+          "HAAS_DEV_Q046",
+          "HAAS_DEV_Q047",
+          "HAAS_DEV_Q049",
+          "HAAS_DEV_Q051",
+          "HAAS_DEV_Q052",
+          "HAAS_DEV_Q053"
+        ],
+        "missed": [
+          "HAAS_DEV_Q001",
+          "HAAS_DEV_Q009",
+          "HAAS_DEV_Q010",
+          "HAAS_DEV_Q011",
+          "HAAS_DEV_Q014",
+          "HAAS_DEV_Q015",
+          "HAAS_DEV_Q016",
+          "HAAS_DEV_Q025",
+          "HAAS_DEV_Q026",
+          "HAAS_DEV_Q030",
+          "HAAS_DEV_Q031"
+        ],
+        "wrong_status": [
+          "HAAS_DEV_Q001",
+          "HAAS_DEV_Q009",
+          "HAAS_DEV_Q010",
+          "HAAS_DEV_Q011",
+          "HAAS_DEV_Q014",
+          "HAAS_DEV_Q015",
+          "HAAS_DEV_Q016",
+          "HAAS_DEV_Q025",
+          "HAAS_DEV_Q026",
+          "HAAS_DEV_Q030",
+          "HAAS_DEV_Q031",
+          "HAAS_DEV_Q033",
+          "HAAS_DEV_Q039",
+          "HAAS_DEV_Q040",
+          "HAAS_DEV_Q042",
+          "HAAS_DEV_Q043",
+          "HAAS_DEV_Q044",
+          "HAAS_DEV_Q045",
+          "HAAS_DEV_Q046",
+          "HAAS_DEV_Q047",
+          "HAAS_DEV_Q049",
+          "HAAS_DEV_Q051",
+          "HAAS_DEV_Q052",
+          "HAAS_DEV_Q053"
+        ]
+      },
+      "by_category": {
+        "abstain_detail": {
+          "questions": 4,
+          "status_accuracy": 0.5,
+          "recall_at_5": null
+        },
+        "clarification": {
+          "questions": 1,
+          "status_accuracy": 1.0,
+          "recall_at_5": null
+        },
+        "context_mismatch": {
+          "questions": 1,
+          "status_accuracy": 1.0,
+          "recall_at_5": null
+        },
+        "detail": {
+          "questions": 42,
+          "status_accuracy": 0.9048,
+          "recall_at_5": 0.7857
+        },
+        "multi_unit": {
+          "questions": 3,
+          "status_accuracy": 0.3333,
+          "recall_at_5": 0.1667
+        },
+        "no_diacritics": {
+          "questions": 4,
+          "status_accuracy": 0.5,
+          "recall_at_5": 0.25
+        },
+        "off_topic": {
+          "questions": 1,
+          "status_accuracy": 1.0,
+          "recall_at_5": null
+        },
+        "out_of_scope": {
+          "questions": 18,
+          "status_accuracy": 0.2778,
+          "recall_at_5": null
+        },
+        "paraphrase": {
+          "questions": 3,
+          "status_accuracy": 0.6667,
+          "recall_at_5": 0.3333
+        },
+        "procedure": {
+          "questions": 4,
+          "status_accuracy": 1.0,
+          "recall_at_5": null
+        }
+      },
+      "by_language": {
+        "en": {
+          "questions": 31,
+          "status_accuracy": 0.871,
+          "recall_at_5": 1.0
+        },
+        "vi": {
+          "questions": 50,
+          "status_accuracy": 0.6,
+          "recall_at_5": 0.431
+        }
+      },
+      "latency_ms": {
+        "p50": 252.43,
+        "p95": 497.45
+      },
+      "embedding_calls": 0
+    }
+  }
+}

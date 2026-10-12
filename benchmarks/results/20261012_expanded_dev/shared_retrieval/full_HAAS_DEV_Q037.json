@@ -1,0 +1,71 @@
+{
+  "key": "2dc6e18df22d8fef053a02a95c9499f2610847cb15c67272cd97fca35c147e5d",
+  "result": {
+    "status": "needs_clarification",
+    "index_build_id": "IDX_SEARCH_151f7d6dfcc821966e669bd1842c59f5d1d2c8eb7210fb4e998ef46e36857389",
+    "record_build_id": "IDX_WP1_f2e98bbf552b45e119f633b6de9f6469a9592f2494a4dc74b44f59b655527dd4",
+    "source_type": "real",
+    "dataset_split": "dev",
+    "context": {
+      "manufacturer": null,
+      "machine_family": null,
+      "machine_model": "UMC-750",
+      "subsystem": null,
+      "task_type": null,
+      "symptoms": [],
+      "alarm_codes": [],
+      "components": []
+    },
+    "missing_context": [
+      "machine_model"
+    ],
+    "selected_workflow": null,
+    "workflow_candidates": [],
+    "steps": [],
+    "claims": [],
+    "conflicts": [],
+    "blocked_claims": [],
+    "questions": [],
+    "relations": [],
+    "related_steps": [],
+    "related_claims": [],
+    "evidence_openability_checked": false,
+    "trace": {
+      "config": {
+        "strategy": "hybrid",
+        "top_k": 5,
+        "candidate_k": 20,
+        "rrf_k": 60,
+        "min_cosine": 0.25,
+        "intent": "auto",
+        "min_term_coverage": 0.2,
+        "relevance_policy": "claim_coherence",
+        "query_translation": "auto",
+        "neighbor_depth": 1,
+        "max_related_steps": 5,
+        "workflow_routing": "best_step"
+      },
+      "intent": "detail",
+      "detected_context": {
+        "machine_model": [
+          "vf-2"
+        ]
+      },
+      "filters": [],
+      "workflow_ranking": [],
+      "step_ranking": [],
+      "embedding_calls": 0,
+      "cache": "disabled",
+      "context_error": "question and supplied context disagree, or multiple identities were named",
+      "latency_ms": 249.22
+    }
+  },
+  "result_sha256": "40e6b975c6b3a7a772258c9a788ed46dad1f934e885de62d485828d00c67afbe",
+  "error_class": null,
+  "latency_ms": 253.9621000032639,
+  "provider_call_ids": [],
+  "backoff_seconds": 0.0,
+  "owner_arm": "C_no_graph",
+  "pre_graph_sha256": "950aff639dd60fcc9ad86c29d40c60d3ff5fadc5ce2c89a09173da176c5c6eb3",
+  "translation_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+}

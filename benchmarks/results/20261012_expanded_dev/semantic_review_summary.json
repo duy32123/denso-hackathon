@@ -1,0 +1,77 @@
+{
+  "A_knowflow": {
+    "human_reviewed_questions": 0,
+    "human_reviewed_answered_questions": 0,
+    "ai_assisted_reviewed_questions": 0,
+    "answers_question": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "conditions_correct": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "source_supported": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "citation_correctness": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    }
+  },
+  "B_transcript_rag": {
+    "human_reviewed_questions": 0,
+    "human_reviewed_answered_questions": 0,
+    "ai_assisted_reviewed_questions": 0,
+    "answers_question": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "conditions_correct": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "source_supported": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "citation_correctness": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    }
+  },
+  "C_no_graph": {
+    "human_reviewed_questions": 0,
+    "human_reviewed_answered_questions": 0,
+    "ai_assisted_reviewed_questions": 0,
+    "answers_question": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "conditions_correct": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "source_supported": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    },
+    "citation_correctness": {
+      "numerator": 0,
+      "denominator": 0,
+      "rate": null
+    }
+  }
+}

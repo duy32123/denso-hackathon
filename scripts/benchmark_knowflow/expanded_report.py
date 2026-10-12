@@ -1,6 +1,7 @@
 """Expanded-corpus reports with explicit cohorts and paired retrieval costs."""
 import csv
 import json
+from collections import Counter
 from pathlib import Path
 
 from retrieval.evaluation.harness import percentile
@@ -22,6 +23,59 @@ def accounting_calls(events):
     return list(complete.values()) + unfinished, unfinished
 
 
+def ledger_summary(summary, own, shared, config, planned):
+    """Keep measured expense distinct from a standalone A/C reference."""
+    summary["cost"] = costs(own, config)
+    summary["cost_by_stage"] = {s: costs([c for c in own if c["stage"] == s], config) for s in STAGES}
+    reference = costs(own + shared, config)
+    summary["standalone_reference_cost_including_one_shared_retrieval"] = reference
+    summary["standalone_reference_cost_by_stage"] = {
+        s: costs([c for c in own + shared if c["stage"] == s], config) for s in STAGES}
+    for prefix, expense in (("", summary["cost"]), ("standalone_reference_", reference)):
+        summary[prefix + "known_list_price_usd_per_planned_task"] = (
+            expense["known_list_price_subtotal_usd"] / planned if planned else None)
+        summary[prefix + "total_api_usd_per_planned_task"] = (
+            expense["standard_list_price_usd"] / planned
+            if planned and expense["standard_list_price_usd"] is not None else None)
+    summary["cost_interpretation"] = (
+        "own measured ledger; AC shared retrieval charged once separately; "
+        "standalone reference is not additional actual expense")
+    return summary
+
+
+def transport_summary(calls, events):
+    """Observed SDK responses, including retrieval shared by both graph arms."""
+    ids = {c["call_id"] for c in calls}
+    http = [e for e in events if e["kind"] == "http_attempt" and e.get("call_id") in ids]
+    attempts = Counter(e["call_id"] for e in http)
+    groups = Counter()
+    for c in calls:
+        groups[(c["phase"], c["arm"], c["question_id"], c["stage"], c["model"], c.get("input_sha256", c["call_id"]))] += max(1, attempts[c["call_id"]])
+    return {"logical_provider_calls": len(calls), "observed_http_attempts": len(http),
+            "http_status_counts": dict(Counter(str(e["status_code"]) for e in http)),
+            "observed_retries": sum(max(0, n - 1) for n in groups.values()),
+            "failed_logical_calls": [{"call_id": c["call_id"], "question_id": c["question_id"],
+                "stage": c["stage"], "error_class": c.get("error_class"), "http_code": c.get("http_code")}
+                for c in calls if not c.get("ok")],
+            "provider_timeouts": [c["call_id"] for c in calls if "timeout" in (c.get("error_class") or "").casefold()],
+            "unobserved_network_attempts": None}
+
+
+def candidate_review_sources(row):
+    """Expose sources to review abstentions without treating candidates as proof."""
+    retrieval = row.get("retrieval") or {}
+    if row["arm"] == ARMS[1]:
+        return retrieval.get("chunks", [])
+    return [{"claim_ref": c["claim_ref"], "claim_text": c["text"], "evidence": c["evidence"]}
+            for c in retrieval.get("claims", [])]
+
+
+def known_amount(expense):
+    if expense["provider_calls"] and expense["unknown_cost_calls"] == expense["provider_calls"]:
+        return "null"
+    return f"{expense['known_list_price_subtotal_usd']:.6f}"
+
+
 def write(run_dir, frozen):
     config = frozen["config"]
     audit = json.loads((run_dir / "audit.json").read_text(encoding="utf-8"))
@@ -29,6 +83,17 @@ def write(run_dir, frozen):
     rows = read_jsonl(run_dir / "rows.jsonl")
     events = read_jsonl(run_dir / "provider_calls.jsonl")
     calls, unfinished = accounting_calls(events)
+    probe_calls = []
+    probe_path = run_dir / "provider_preflight.json"
+    if probe_path.exists():
+        for model, probe in json.loads(probe_path.read_text(encoding="utf-8")).items():
+            usage = probe.get("usage") or {}
+            total, inputs = usage.get("total_token_count"), usage.get("prompt_token_count")
+            probe_calls.append({"ok": probe.get("ok"), "model": model,
+                "operation": "embed_content" if "embedding" in model else "generate_content",
+                "input_tokens": inputs, "output_tokens": usage.get("candidates_token_count"),
+                "billed_output_tokens": total-inputs if total is not None and inputs is not None else None,
+                "total_tokens": total, "usage_metadata": usage})
     full = [c for c in calls if c["phase"] == "full"]
     groups = {"all_81": {q["question_id"] for q in questions},
               **{name: {q["question_id"] for q in questions if cohort(q["question_id"]) == name}
@@ -39,13 +104,32 @@ def write(run_dir, frozen):
               "semantic_review_status": "pending_human", "holdout_opened": False, "synthetic_included": False,
               "label_revalidation_pending": bool(config.get("label_revalidation_pending")),
               "unfinished_provider_calls": unfinished,
-              "all_experiment_api_cost_including_index_smoke_interruption": costs(calls, config),
+              "all_experiment_api_cost_including_index_smoke_interruption": costs(calls + probe_calls, config),
+              "availability_probe_cost_separate": costs(probe_calls, config),
               "index_build_cost": {arm: costs([c for c in calls if c["phase"] == "preparation" and c["arm"] == arm], config) for arm in ARMS[:2]},
               "smoke_cost_separate": costs([c for c in calls if c["phase"] == "smoke"], config),
               "AC_shared_retrieval_cost": costs([c for c in full if c["arm"] == "AC_shared_retrieval"], config),
               "AC_shared_retrieval_cost_by_stage": {s: costs([c for c in full if c["arm"] == "AC_shared_retrieval" and c["stage"] == s], config) for s in STAGES},
               "missing_tasks": [{"arm": a, "question_id": q["question_id"]} for a in ARMS for q in questions
                                 if not any(r["arm"] == a and r["question_id"] == q["question_id"] for r in rows)]}
+    result["provider_transport_by_phase_arm"] = {
+        phase: {arm: transport_summary([c for c in calls if c["phase"] == phase and c["arm"] == arm], events)
+                for arm in (*ARMS, "AC_shared_retrieval")}
+        for phase in ("preparation", "smoke", "full")}
+    result["full_api_cost_measured_once"] = costs(full, config)
+    result["full_api_cost_by_stage_measured_once"] = {
+        stage: costs([c for c in full if c["stage"] == stage], config) for stage in STAGES}
+    result["full_provider_transport_measured_once"] = transport_summary(full, events)
+    bm25_path = run_dir / "offline_bm25_report.json"
+    if bm25_path.exists():
+        offline = json.loads(bm25_path.read_text(encoding="utf-8"))
+        if offline["questions_sha256"] != audit["questions_sha256"]:
+            raise ValueError("Offline comparison has different questions")
+        result["offline_bm25_comparison"] = {
+            "run_id": offline["run_id"], "artifact": bm25_path.name,
+            "retrieval": offline["strategies"]["lexical"]["retrieval"],
+            "translation": "never", "embedding": None,
+            "comparison_kind": "multiple_pipeline_components_changed_not_graph_ablation"}
     flat = []
     for name, ids in groups.items():
         result["by_cohort"][name] = {}
@@ -54,10 +138,7 @@ def write(run_dir, frozen):
             own = [c for c in full if c["arm"] == arm and c["question_id"] in ids]
             shared = [c for c in full if c["arm"] == "AC_shared_retrieval" and c["question_id"] in ids] if arm != ARMS[1] else []
             s = summarize(subset, config, len(ids))
-            s["cost"] = costs(own, config)
-            s["cost_by_stage"] = {stage: costs([c for c in own if c["stage"] == stage], config) for stage in STAGES}
-            s["standalone_reference_cost_including_one_shared_retrieval"] = costs(own + shared, config)
-            s["cost_interpretation"] = "own measured ledger; AC shared retrieval charged once separately; standalone reference is not additional actual expense"
+            ledger_summary(s, own, shared, config, len(ids))
             component_latency = [r["latency_ms_standalone_component_sum"] for r in subset]
             s["latency_ms_standalone_component_sum"] = {"p50": percentile(component_latency, .5), "p95": percentile(component_latency, .95),
                                                        "denominator": len(component_latency), "observed_end_to_end": False,
@@ -77,12 +158,27 @@ def write(run_dir, frozen):
                          "standalone_component_sum_p50_ms": s["latency_ms_standalone_component_sum"]["p50"],
                          "standalone_component_sum_p95_ms": s["latency_ms_standalone_component_sum"]["p95"],
                          "api_cost_usd": s["cost"]["standard_list_price_usd"],
-                         "known_cost_subtotal_usd": s["cost"]["known_list_price_subtotal_usd"], "human_semantic_reviewed": 0,
+                         "known_cost_subtotal_usd": s["cost"]["known_list_price_subtotal_usd"],
+                         "known_own_cost_usd_per_planned_task": s["known_list_price_usd_per_planned_task"],
+                         "standalone_reference_api_cost_usd": s["standalone_reference_cost_including_one_shared_retrieval"]["standard_list_price_usd"],
+                         "standalone_reference_known_subtotal_usd": s["standalone_reference_cost_including_one_shared_retrieval"]["known_list_price_subtotal_usd"],
+                         "standalone_reference_known_usd_per_planned_task": s["standalone_reference_known_list_price_usd_per_planned_task"],
+                         "standalone_reference_total_usd_per_planned_task": s["standalone_reference_total_api_usd_per_planned_task"],
+                         "human_semantic_reviewed": 0,
                          "source_supported": None, "conditions_correct": None})
     for arm in ARMS:
-        result["by_language"][arm] = {lang: summarize([r for r in rows if r["arm"] == arm and r["language"] == lang], config,
-                                   sum(q["language"] == lang for q in questions)) for lang in ("vi", "en")}
+        result["by_language"][arm] = {}
+        for lang in ("vi", "en"):
+            ids = {q["question_id"] for q in questions if q["language"] == lang}
+            own = [c for c in full if c["arm"] == arm and c["question_id"] in ids]
+            shared = [c for c in full if c["arm"] == "AC_shared_retrieval" and c["question_id"] in ids] if arm != ARMS[1] else []
+            s = summarize([r for r in rows if r["arm"] == arm and r["language"] == lang], config, len(ids))
+            result["by_language"][arm][lang] = ledger_summary(s, own, shared, config, len(ids))
     result["paired_A_B"], result["paired_A_C"] = paired(rows, ARMS[0], ARMS[1]), paired(rows, ARMS[0], ARMS[2])
+    exposed = set(result["paired_A_C"]["graph_exposed_questions"])
+    result["paired_A_C_by_graph_exposure"] = {
+        label: paired([r for r in rows if (r["question_id"] in exposed) == has_graph], ARMS[0], ARMS[2])
+        for label, has_graph in (("relations_present", True), ("no_relations_in_prompt", False))}
     pair_meta = {arm: {r["question_id"]: r.get("shared_retrieval") for r in rows if r["arm"] == arm} for arm in (ARMS[0], ARMS[2])}
     mismatches = [qid for qid in pair_meta[ARMS[0]].keys() & pair_meta[ARMS[2]].keys()
                   if not pair_meta[ARMS[0]][qid] or not pair_meta[ARMS[2]][qid] or any(
@@ -96,17 +192,27 @@ def write(run_dir, frozen):
     per_question = []
     for r in rows:
         own = [c for c in full if c["arm"] == r["arm"] and c["question_id"] == r["question_id"]]
+        shared = [c for c in full if c["arm"] == "AC_shared_retrieval" and c["question_id"] == r["question_id"]] if r["arm"] != ARMS[1] else []
         expense = costs(own, config)
+        reference = costs(own + shared, config)
         per_question.append({**r, "cohort": cohort(r["question_id"]), "answer": r["response"].get("answer"),
                              "citations_json": json.dumps(r["response"].get("citations", []), ensure_ascii=False),
                              "api_cost_usd": expense["standard_list_price_usd"], "known_subtotal_usd": expense["known_list_price_subtotal_usd"],
                              "provider_call_count": len(own), "shared_provider_call_ids": json.dumps((r.get("shared_retrieval") or {}).get("provider_call_ids", [])),
+                             "standalone_reference_api_cost_usd": reference["standard_list_price_usd"],
+                             "standalone_reference_known_subtotal_usd": reference["known_list_price_subtotal_usd"],
+                             "standalone_reference_provider_call_count": len(own + shared),
+                             "standalone_reference_input_tokens": reference["input_tokens"],
+                             "standalone_reference_output_tokens": reference["output_tokens"],
+                             "standalone_reference_total_tokens": reference["total_tokens"],
                              **{k: expense[k] for k in ("input_tokens", "output_tokens", "total_tokens")}})
-    csv_file(run_dir / "per_question.csv", ["cohort", "arm", "question_id", "question", "language", "expected_status", "expected_retrieval_status", "status", "http_status", "answer", "citations_json", "answer_sha256", "status_ok", "false_answer", "false_abstention", "recall_at_5", "reciprocal_rank_at_5", "latency_ms", "latency_ms_standalone_component_sum", "latency_interpretation", "model", "api_cost_usd", "known_subtotal_usd", "provider_call_count", "input_tokens", "output_tokens", "total_tokens", "shared_provider_call_ids"], per_question)
+    csv_file(run_dir / "per_question.csv", ["cohort", "arm", "question_id", "question", "language", "expected_status", "expected_retrieval_status", "status", "http_status", "answer", "citations_json", "answer_sha256", "status_ok", "false_answer", "false_abstention", "recall_at_5", "reciprocal_rank_at_5", "latency_ms", "latency_ms_standalone_component_sum", "latency_interpretation", "model", "api_cost_usd", "known_subtotal_usd", "provider_call_count", "input_tokens", "output_tokens", "total_tokens", "shared_provider_call_ids", "standalone_reference_api_cost_usd", "standalone_reference_known_subtotal_usd", "standalone_reference_provider_call_count", "standalone_reference_input_tokens", "standalone_reference_output_tokens", "standalone_reference_total_tokens"], per_question)
     csv_file(run_dir / "api_calls.csv", ["phase", "arm", "question_id", "call_id", "stage", "model", "operation", "started_at", "elapsed_ms", "ok", "http_code", "error_class", "input_tokens", "output_tokens", "billed_output_tokens", "total_tokens", "standard_list_price_usd", "input_sha256"], [{**c, "standard_list_price_usd": call_cost(c, config)} for c in calls])
     review = [{"arm": r["arm"], "question_id": r["question_id"], "answer_sha256": r["answer_sha256"],
                "question": r["question"], "expected_status": r["expected_status"], "status": r["status"], "answer": r["response"].get("answer"),
                "citations_json": json.dumps(r["response"].get("citations", []), ensure_ascii=False), "sources_json": json.dumps(review_sources(r), ensure_ascii=False),
+               "candidate_sources_json": json.dumps(candidate_review_sources(r), ensure_ascii=False),
+               "raw_output": f"rows.jsonl ({r['arm']}, {r['question_id']})",
                **{k: "" for k in ("reviewer_kind", "reviewer_id", "reviewed_at", "answers_question", "conditions_correct", "source_supported", "citations_supported_json", "note")}} for r in rows]
     review_path = run_dir / "human_review.csv"
     if not review_path.exists():
@@ -126,7 +232,7 @@ def write(run_dir, frozen):
             with review_path.open("a", encoding="utf-8", newline="") as stream:
                 writer = csv.DictWriter(stream, fieldnames=list(missing[0]))
                 writer.writerows(missing)
-    (run_dir / "review_instructions.md").write_text("# Chấm nghĩa độc lập\n\nGiữ arm/question_id/answer_sha256. Điền reviewer_kind=human chỉ khi người thật đối chiếu toàn nguồn, câu hỏi và điều kiện. AI hỗ trợ ghi ai. Verifier trong pipeline không phải evaluator. Các cột answers_question/conditions_correct/source_supported là true/false; citations_supported_json có một true/false cho mỗi citation. Lỗi API không tự chuyển thành đáp án sai nghĩa. Không thay gold hay sinh lại đáp án.\n", encoding="utf-8")
+    (run_dir / "review_instructions.md").write_text("# Chấm nghĩa độc lập\n\nGiữ arm/question_id/answer_sha256. Điền reviewer_kind=human chỉ khi người thật đối chiếu toàn nguồn, câu hỏi và điều kiện. AI hỗ trợ ghi ai. Verifier trong pipeline không phải evaluator. Các cột answers_question/conditions_correct/source_supported là true/false; citations_supported_json có một true/false cho mỗi citation. sources_json chứa nguồn đã trích; candidate_sources_json là nguồn truy xuất để xem xét từ chối oan, không tự chứng minh đáp án đúng. Mở URL/timestamp/keyframe hoặc transcript gốc; không chấm chỉ bằng claim chuẩn hóa. Xem rows.jsonl theo arm/question_id và source_inventory trong data/eval/reviews/20261012_expanded. Lỗi API không tự chuyển thành đáp án sai nghĩa. Không thay gold hay sinh lại đáp án.\n", encoding="utf-8")
     verdict_path = run_dir / "semantic_verdicts.jsonl"
     if not verdict_path.exists():
         verdict_path.write_text("", encoding="utf-8")
@@ -135,46 +241,110 @@ def write(run_dir, frozen):
         from .review import import_reviews
         _, semantic_summary = import_reviews(rows, [])
         semantic_path.write_text(json.dumps(semantic_summary, indent=2) + "\n", encoding="utf-8")
+    historical_dir = ROOT / "benchmarks/results/20261011_real_dev"
+    history = None
+    if (historical_dir / "summary.json").exists():
+        from .expanded_analysis import write as write_analysis
+        history = write_analysis(run_dir, historical_dir)
+    inventory = audit["active_workflows"]
     lines = ["# KnowFlow: benchmark corpus mở rộng sau PR #53", "", f"Commit `{frozen['product_commit']}`; {len(questions)} câu, {len(rows)}/{len(questions)*3} terminal rows.", "",
+             f"Corpus real/dev: {len(inventory)} workflow active, {sum(w['steps'] for w in inventory)} Step, {sum(w['claims'] for w in inventory)} claim, {sum(w['relations'] for w in inventory)} relations; revision và review flags trong audit.json. Model trả lời/dịch `{config['answer_model']}`, embedding `{config['embedding_model']}` ({config['embedding_dimensions']} chiều). Không mở holdout, không cộng synthetic.", "",
+             f"Gold có {sum(q['expected_status'] == 'answered' for q in questions)} câu expected answered; Recall/MRR dùng {result['summaries'][ARMS[0]]['retrieval']['denominator']} câu answered/detail có gold Step, không chấm procedure bằng top-5. Status dùng tất cả {len(questions)} câu, gồm lỗi API.", "",
              "## Kết quả theo cohort", "", "| Cohort | Arm | Đúng status | Recall@5 / MRR@5 (n) | API lỗi | False answer / abstention |", "|---|---|---:|---|---:|---:|"]
     for entry in flat:
         lines.append(f"| {entry['cohort']} | {entry['arm']} | {entry['status_correct']}/{entry['planned']} | {percent(entry['recall_at_5'])} / {percent(entry['mrr_at_5'])} ({entry['retrieval_denominator']}) | {entry['api_errors']} | {entry['false_answer']} / {entry['false_abstention']} |")
-    lines += ["", "## Phương pháp và nhãn", "", "66 câu cũ, 15 câu mới (Q069–Q083) được báo riêng. 40 câu Vietnamese/hard draft tách file, không chạy/cộng vào kết quả này. Phiếu human review nhãn phủ định, hash trước/sau và label_changes.jsonl được pin trong cấu hình. Expected retrieval và expected answer là hai phép kiểm riêng; Recall/MRR chỉ chấm answered/detail có gold Step, không chấm raw chunks của B.", "",
+    lines += ["", "## So sánh và lỗi cần xử lý", ""]
+    if result.get("offline_bm25_comparison"):
+        bm25 = result["offline_bm25_comparison"]["retrieval"]
+        live = result["summaries"][ARMS[0]]["retrieval"]
+        lines += [f"BM25 không dịch đã chạy lại trên chính corpus mở rộng: Recall@5 {percent(bm25['recall_at_5'])}, MRR@5 {percent(bm25['mrr_at_5'])}, n={bm25['questions']}. A có dịch/embedding/hybrid: {percent(live['recall_at_5'])} / {percent(live['mrr_at_5'])}, n={live['denominator']}. Đây là thay đổi nhiều thành phần, không cô lập graph. [Đầu ra BM25 mới](offline_bm25_report.json); không sao chép mốc 58.1% từ corpus cũ.", ""]
+    if history:
+        lines += ["So sánh mô tả với run 20261011 trên cùng 66 ID, giữ nguyên nhãn status. Corpus, bản dịch, pairing A/C và điều kiện API đã đổi, nên không quy chênh lệch cho riêng bản sửa.", "",
+                  "| Arm | Status đúng run cũ → mới, n=66 | Recall@5 cũ → mới, n=37 | MRR@5 cũ → mới, n=37 |", "|---|---:|---|---|"]
+        for arm, h in history["arms"].items():
+            lines.append(f"| {arm} | {h['historical_status_correct']} → {h['current_status_correct']} | {percent(h['historical_retrieval']['recall_at_5'])} → {percent(h['current_retrieval']['recall_at_5'])} | {percent(h['historical_retrieval']['mrr_at_5'])} → {percent(h['current_retrieval']['mrr_at_5'])} |")
+        deltas = {arm: h['current_status_correct'] - h['historical_status_correct'] for arm, h in history['arms'].items()}
+        lines += ["", f"Chi tiết từng câu cải thiện/hồi quy: [historical_comparison.csv](historical_comparison.csv). Chênh lệch ròng status đúng: {deltas}. So sánh retrieval/MRR trong bảng; không chỉ chọn các câu cải thiện để báo.", ""]
+    pairing = result["paired_A_C"]
+    no_edges = result["paired_A_C_by_graph_exposure"]["no_relations_in_prompt"]
+    lines += [f"Status đúng A/B/C: {' / '.join(str(result['summaries'][a]['status_accuracy']['numerator']) for a in ARMS)}, mỗi arm n={len(questions)}. Đây chưa phải độ đúng nghĩa của đáp án. A/C có {pairing['same_candidate_pairs']} cặp cùng ứng viên, {len(pairing['pre_ablation_mismatches'])} hash mismatch; A thắng status {len(pairing['left_only_status_correct'])} câu, C thắng {len(pairing['right_only_status_correct'])}. Có {len(pairing['graph_exposed_questions'])} câu đưa relations vào prompt. Trong {no_edges['paired_questions']} câu không có relations, đáp án đổi {len(no_edges['answer_changed'])} câu; status đổi ở {no_edges['left_only_status_correct'] + no_edges['right_only_status_correct']}. Những cặp không có cạnh giúp quan sát biến thiên generation ngoài can thiệp graph.", ""]
+    if run_dir.name == "20261012_expanded_dev":
+        lines += ["Điều tra các ca của riêng run này (AI, chưa có người chấm nghĩa):", "",
+              "| Ca | Quan sát và giới hạn |", "|---|---|",
+              "| Q069 | A/B/C answered; A/C gold Step ở hạng 3. Cổng exact alarm lookup đã qua với claim đúng mã 626. Chấm nghĩa vẫn chờ người. |",
+              "| Q015 / Q031 | A/C chọn B0 r2 cho pocket slider. Q031 giữ insufficient_evidence cho câu hỏi loại mỡ; Q015 vẫn false abstention ở draft. Chọn đúng workflow chưa bảo đảm trả lời được. |",
+              "| Q012 / Q056 | A/C bị relevance gate từ chối: Q012 bản dịch dùng return, chỉ carousel khớp trong một claim; Q056 nhiều từ phụ/biến thể làm coverage=.1818 dưới .20. Không thay ngưỡng trong run. |",
+              "| Q083 | A/C draft dùng 21; quote viết twenty one. Guard số thấy 1032 nhưng không thấy 21, dừng trước verifier. B dùng chữ twenty one và answered. Ký hiệu tap 1032 cũng cần người đối chiếu nguồn. |",
+              "| Q041 / Q049 | A/C retrieval=retrieved, answer=insufficient_evidence. Gold retrieval hiện vẫn insufficient_evidence; đề xuất sửa đang chờ quyết định người kiểm. Hai câu không nằm trong mẫu số Recall/MRR. |",
+              "| Q039 / Q050 | Context SMTC được giữ; khác các câu Q049/Q041 context trống. Không bỏ filter để sửa nhãn theo prediction. |",
+              "| Q064 | A/C có keyframe annotation, B chỉ có transcript. Khác biệt phương thức dữ liệu cần được tách khỏi kết luận về graph. |",
+              "| Q005 / Q021 | Cần đối chiếu mức độ khẳng định nguyên nhân/điều kiện và phạm vi screw/screws; ID citation hợp lệ chưa chứng minh toàn bộ nghĩa. |", "",
+              "Nhận xét các ca trên có hash trong [ai_case_notes.jsonl](ai_case_notes.jsonl), không cộng vào human verdict.", ""]
+    lines += ["Xem [human_review.csv](human_review.csv) và [hướng dẫn chấm](review_instructions.md).", "",
+              "## Phương pháp và nhãn", "", "66 câu cũ, 15 câu mới (Q069–Q083) được báo riêng. 40 câu Vietnamese/hard draft tách file, không chạy/cộng vào kết quả này. Phiếu human review nhãn phủ định, hash trước/sau và label_changes.jsonl được pin trong cấu hình. Expected retrieval và expected answer là hai phép kiểm riêng; Recall/MRR chỉ chấm answered/detail có gold Step, không chấm raw chunks của B.", "",
               "A/B dùng cùng nguồn, model, output/context budget, ngôn ngữ và chính sách nguồn/citation. B chunk corrected captions/Source.raw_text, không nhận Step/claim/relations/gold. A có annotation keyframe, metadata bước và hard filters; khác biệt này không thể quy hết cho graph.", "",
-              "A/C chạy QAService qua API; chỉ một retrieval thật mỗi câu được lưu với hash. C tái sử dụng đúng bản dịch/embedding/ứng viên trước khi bỏ relations/related_steps/related_claims. Không chạy lại retrieval để chọn kết quả đẹp hơn. Nếu retrieval lỗi, cả cặp giữ lỗi đó. Generation/verifier chạy độc lập, temperature=0 không bảo đảm tất định. Product chưa đưa related_claims vào generation candidates; phạm vi graph intervention hữu ích ở prompt là relations.", "",
+              "A/C chạy QAService qua API; chỉ một retrieval thật mỗi câu được lưu với hash. C tái sử dụng đúng bản dịch/embedding/ứng viên trước khi bỏ relations/related_steps/related_claims. Không chạy lại retrieval để chọn kết quả đẹp hơn. Nếu retrieval lỗi, cả cặp giữ lỗi đó. Generation/verifier chạy độc lập, temperature=0 không bảo đảm tất định. Product chưa đưa related_claims vào generation candidates; phạm vi graph intervention hữu ích ở prompt là relations. C giữ nguyên claim đã chuẩn hóa kể cả nội dung nói về quan hệ: phép đo cô lập cạnh tường minh/mở rộng, không bỏ toàn bộ tác động của tiền xử lý tri thức.", "",
               f"A/C: {json.dumps(result['paired_A_C'], ensure_ascii=False)}", "", f"A/B: {json.dumps(result['paired_A_B'], ensure_ascii=False)}", "",
-              "## Latency và chi phí", "", "latency_ms là HTTP quan sát thật, bao gồm retry. Arm A/C replay trừ thời gian retrieval gốc khỏi timeout endpoint để giữ tổng deadline 90s như arm đầu/B; effective_api_timeout_seconds lưu từng câu. HTTP arm replay ngắn hơn về retrieval; không dùng chênh này để khẳng định graph tăng/giảm latency. latency_ms_standalone_component_sum cộng lại thời gian retrieval gốc cho arm replay: đây là tổng thành phần tái dựng, không phải latency toàn luồng quan sát trong deployment. p50/p95 của cả hai được báo riêng trong summary.csv, giữ lỗi/timeouts.", "",
+              "## Latency và chi phí", "", "latency_ms là thời gian HTTP local qua FastAPI TestClient và QAService thật, bao gồm API Gemini/retry; không gồm browser/đường truyền tới hosting. Arm A/C replay trừ thời gian retrieval gốc khỏi timeout endpoint để giữ tổng deadline 90s như arm đầu/B; effective_api_timeout_seconds lưu từng câu. HTTP arm replay ngắn hơn về retrieval; không dùng chênh này để khẳng định graph tăng/giảm latency. latency_ms_standalone_component_sum cộng lại thời gian retrieval gốc cho arm replay: đây là tổng thành phần tái dựng, không phải latency toàn luồng quan sát trong deployment. p50/p95 của cả hai được báo riêng trong summary.csv, giữ lỗi/timeouts.", "",
               "Chi phí shared retrieval ghi một lần dưới AC_shared_retrieval, tách khỏi generation/verifier của A/C. standalone_reference_cost cộng shared retrieval cho mỗi arm chỉ để tham chiếu một tác vụ độc lập, không cộng hai lần vào chi phí thí nghiệm. Call mới có journal started trước khi gọi provider; started chưa có completion được giữ là InterruptedUnfinishedCall, token/cost/elapsed=null, không coi là miễn phí. Build index và smoke tách riêng. Token/giá/chi phí chưa biết là null; hóa đơn thực, server, extraction/preprocessing và công chuyên gia chưa đo. Giá standard là quy đổi từ usage, không phải hóa đơn.", "",
-              f"Tổng known subtotal thí nghiệm: ${result['all_experiment_api_cost_including_index_smoke_interruption']['known_list_price_subtotal_usd']:.6f}; tổng đầy đủ {result['all_experiment_api_cost_including_index_smoke_interruption']['standard_list_price_usd']}.", "",
+              f"Tổng known subtotal thí nghiệm: ${result['all_experiment_api_cost_including_index_smoke_interruption']['known_list_price_subtotal_usd']:.6f}; tổng đầy đủ {json.dumps(result['all_experiment_api_cost_including_index_smoke_interruption']['standard_list_price_usd'])}.", "",
               f"Giá tra {config['pricing']['checked_date']}: [Gemini official pricing]({config['pricing'][config['answer_model']]['url']}). Exact embedding-001 rate chưa xác minh, giữ null.", "",
+              "| Arm | HTTP p50 / p95 (s) | Tổng thành phần p50 / p95 (s) | Known QA USD, tham chiếu độc lập | Known USD / câu | Phí QA đầy đủ |", "|---|---:|---:|---:|---:|---|" ]
+    for arm in ARMS:
+        s = result["summaries"][arm]
+        observed = s["latency_ms_all_attempts"]
+        component = s["latency_ms_standalone_component_sum"]
+        reference = s["standalone_reference_cost_including_one_shared_retrieval"]
+        fmt_latency = lambda latency: " / ".join(f"{latency[k]/1000:.3f}" if latency[k] is not None else "null" for k in ("p50", "p95"))
+        lines.append(f"| {arm} | {fmt_latency(observed)} | {fmt_latency(component)} | {reference['known_list_price_subtotal_usd']:.6f} | {s['standalone_reference_known_list_price_usd_per_planned_task']:.6f} | {json.dumps(reference['standard_list_price_usd'])} |")
+    lines += ["", "Phí trong bảng là subtotal đã biết; không phải tổng phí hoặc hóa đơn. Cột tham chiếu độc lập của A/C tính một retrieval cho mỗi câu; không cộng hai cột này để tính phí thí nghiệm.", "",
+              "| Hạng mục | Calls | Token tổng | Known USD | Phí đầy đủ USD |", "|---|---:|---:|---:|---|" ]
+    expenses = [("full: " + stage, result["full_api_cost_by_stage_measured_once"][stage]) for stage in STAGES]
+    expenses += [("index: " + arm, result["index_build_cost"][arm]) for arm in ARMS[:2]]
+    expenses += [("smoke (riêng)", result["smoke_cost_separate"]), ("availability probe (riêng)", result["availability_probe_cost_separate"])]
+    for name, expense in expenses:
+        lines.append(f"| {name} | {expense['provider_calls']} | {json.dumps(expense['total_tokens'])} | {known_amount(expense)} | {json.dumps(expense['standard_list_price_usd'])} |")
+    transport = result["full_provider_transport_measured_once"]
+    lines += ["", f"Full run có {transport['logical_provider_calls']} logical provider calls, {transport['observed_http_attempts']} HTTP attempts quan sát; HTTP status {transport['http_status_counts']}; {transport['observed_retries']} retries quan sát. Transport log không quan sát được mọi lỗi mạng nên số attempts không biết giữ null. Lỗi provider chưa biết usage không được tính là miễn phí.", "",
+              "Build index lần đầu batch 32 đã thất bại vì 429; journal và cấu hình trước điều chỉnh được giữ nguyên. Trước smoke/full, chỉ đổi batching index thành 4 và pacing 1 giây, đóng băng lại tại commit trên. Không đổi nội dung chunk, embedding model/dimensions, gold hay tham số retrieval. Xem freeze_amendments.json và preparation_status_before_index_pacing.json; thời gian phần chuẩn bị thất bại không đo đủ, giữ null.", "",
               "## Lỗi, ngôn ngữ và hồi quy", ""]
     for arm in ARMS:
         s = result["summaries"][arm]
-        lines += [f"### {arm}", "", f"- API errors: {json.dumps(s['api_errors'], ensure_ascii=False)}", f"- False answer: {s['false_answer']}; false abstention: {s['false_abstention']}."]
+        coverage = s["answerable_status_coverage"]
+        citations = s["citation_mechanical_validity"]
+        lines += [f"### {arm}", "", f"- HTTP 200: {s['completed']}/{s['planned_questions']}; answered khi gold answered: {coverage['numerator']}/{coverage['denominator']} (không phải độ đúng nghĩa).",
+                  f"- Citation hợp lệ bằng code: {citations['numerator']}/{citations['denominator']}; độ hỗ trợ nghĩa vẫn null.",
+                  f"- API errors: {json.dumps(s['api_errors'], ensure_ascii=False)}", f"- False answer: {s['false_answer']}; false abstention: {s['false_abstention']}."]
         for lang in ("vi", "en"):
             ls = result["by_language"][arm][lang]
             lines.append(f"- {lang}: status {ls['status_accuracy']['numerator']}/{ls['planned_questions']}; lỗi API {len(ls['api_errors'])}.")
         lines.append("")
     lines += ["## Kết luận chưa chứng minh", "", "Code chỉ kiểm ID, revision, link, phạm vi và số trong citation. answers_question/conditions_correct/source_supported/citation correctness đang null, 0 người chấm; không dùng model verifier tự xác nhận. Một lượt A/C với ứng viên giống nhau vẫn chịu biến thiên sinh câu trả lời. Không khẳng định graph vượt RAG, không đổi latency thành thời gian người tiết kiệm, không khẳng định giảm 30% hoặc ROI DENSO. Lượt cũ khác corpus/prompt/pairing, không phải đối chứng causal cho bản sửa này.", "",
-              "## Tái lập", "", "```powershell", ".\\.venv\\Scripts\\python.exe -m scripts.review_expanded_dev apply --reviewer-id <human-id>",
-              *[f".\\.venv\\Scripts\\python.exe -m scripts.benchmark_knowflow {command} --config benchmarks/knowflow_expanded_dev/config.json --run-dir benchmarks/results/<NEW_RUN>" for command in ("prepare", "smoke", "run", "report")], "```", "",
+              "## Tái lập", "", "```powershell",
+              "$benchmarkRunDir = 'benchmarks/results/20261012_expanded_repeat_v1'  # tên mới, không ghi đè run đã đo",
+              *[f".\\.venv\\Scripts\\python.exe -m scripts.benchmark_knowflow {command} --config benchmarks/knowflow_expanded_dev/{'config_existing_labels.json' if config.get('label_revalidation_pending') else 'config.json'} --run-dir $benchmarkRunDir" for command in ("prepare", "smoke", "run", "report")],
+              ".\\.venv\\Scripts\\python.exe -m scripts.benchmark_knowflow.expanded_analysis --run-dir $benchmarkRunDir",
+              ".\\.venv\\Scripts\\python.exe -m scripts.benchmark_knowflow.verify_artifacts --run-dir $benchmarkRunDir", "```", "",
               f"Config SHA {frozen['config_sha256']}; questions SHA {audit['questions_sha256']}; corpus SHA {audit['corpus_files_sha256']}. Dependency versions và active revisions trong audit.json. Lượt cũ giữ nguyên."]
     (run_dir / "REPORT.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
     if config.get("label_revalidation_pending"):
         report_path = run_dir / "REPORT.md"
         text = report_path.read_text(encoding="utf-8")
         text = text.replace("Phiếu human review nhãn phủ định, hash trước/sau và label_changes.jsonl được pin trong cấu hình.",
-                            "Lượt này giữ nguyên 81 nhãn hiện có; 20 nhãn phủ định chưa được người kiểm lại trên corpus mở rộng. Không có label_changes hoặc human approval mới. Xác nhận chạy của người dùng được lưu riêng, không phải review nguồn.")
-        banner = "**Nhãn phủ định chưa tái kiểm:** người dùng cho phép chạy trên gold hiện có. Không đánh dấu đề xuất AI thành human-reviewed; không coi status match là chất lượng đáp án đã được người chấm. Kỳ vọng retrieval Q041/Q049 còn cần xác nhận nguồn; expected answer của chúng hiện là insufficient_evidence.\n\n"
+                            "Lượt này giữ nguyên 81 nhãn hiện có; 20 nhãn phủ định chưa có quyết định review trên corpus mở rộng để áp dụng. Người dùng báo đã kiểm nguồn và cung cấp GitHub duy32123; phiếu quyết định vẫn trống. Không có label_changes hoặc human approval mới. Xác nhận chạy được lưu riêng, không biến thành quyết định nhãn.")
+        banner = "**Review nhãn mở rộng chờ quyết định:** lượt đo giữ nguyên gold hiện có. Không đánh dấu đề xuất AI thành human-reviewed; không coi status match là chất lượng đáp án đã được người chấm. Kỳ vọng retrieval Q041/Q049 còn cần quyết định riêng; expected answer của chúng hiện là insufficient_evidence.\n\n"
         report_path.write_text(banner + text, encoding="utf-8")
     sa = result["summaries"][ARMS[0]]
     (run_dir / "SLIDE.md").write_text("# Số liệu có thể đưa lên slide\n\n"
         f"- Corpus Haas real/dev mở rộng: {len(audit['active_workflows'])} workflow; {len(questions)} câu có nhãn người kiểm, {len(rows)} terminal attempts A/B/C.\n"
         f"- KnowFlow Recall@5 {percent(sa['retrieval']['recall_at_5'])}, n={sa['retrieval']['denominator']}; đây là retrieval, chưa chứng minh đáp án đúng.\n"
         f"- Status đúng A/B/C: {' / '.join(str(result['summaries'][a]['status_accuracy']['numerator']) for a in ARMS)} trên {len(questions)} câu/arm.\n"
+        f"- 15 câu mới (đều tiếng Anh): A khớp status {result['by_cohort']['new_15'][ARMS[0]]['status_accuracy']['numerator']}/15; Recall@5 {percent(result['by_cohort']['new_15'][ARMS[0]]['retrieval']['recall_at_5'])}, n=15.\n"
+        f"- Citation A hợp lệ bằng code: {sa['citation_mechanical_validity']['numerator']}/{sa['citation_mechanical_validity']['denominator']}; chưa chấm độ hỗ trợ nghĩa.\n"
         f"- A/C cùng ứng viên: {result['paired_A_C']['same_candidate_pairs']} cặp; không mặc nhiên kết luận graph tốt hơn RAG.\n"
+        f"- Known API subtotal của một QA A độc lập: ${sa['standalone_reference_known_list_price_usd_per_planned_task']:.6f}/câu; tổng phí và hóa đơn null vì thiếu usage/giá embedding, usage lần lỗi. Chưa gồm hosting/công chuyên gia.\n"
         "- Chấm nghĩa chờ người đối chiếu nguồn; không dùng số liệu này cho giảm 30% thời gian hay ROI.\n", encoding="utf-8")
     if config.get("label_revalidation_pending"):
         slide_path = run_dir / "SLIDE.md"
-        slide_path.write_text("**Giới hạn:** giữ nguyên 81 nhãn hiện có; 20 nhãn phủ định chờ kiểm lại trên corpus mới.\n\n" + slide_path.read_text(encoding="utf-8"), encoding="utf-8")
+        slide_path.write_text("**Giới hạn:** giữ nguyên 81 nhãn hiện có; 20 nhãn phủ định chờ quyết định review trên corpus mới.\n\n" + slide_path.read_text(encoding="utf-8"), encoding="utf-8")
     return result

@@ -1,0 +1,587 @@
+{
+  "key": "cc6c7d984fbaba935d3c82a0112e35e0091f443ec128ec25b8b263caa726f60a",
+  "result": {
+    "status": "retrieved",
+    "index_build_id": "IDX_SEARCH_151f7d6dfcc821966e669bd1842c59f5d1d2c8eb7210fb4e998ef46e36857389",
+    "record_build_id": "IDX_WP1_f2e98bbf552b45e119f633b6de9f6469a9592f2494a4dc74b44f59b655527dd4",
+    "source_type": "real",
+    "dataset_split": "dev",
+    "context": {
+      "manufacturer": "Haas",
+      "machine_family": null,
+      "machine_model": null,
+      "subsystem": "SMTC",
+      "task_type": null,
+      "symptoms": [],
+      "alarm_codes": [],
+      "components": []
+    },
+    "missing_context": [],
+    "selected_workflow": {
+      "workflow_id": "B0_SRC_HAAS_0005",
+      "revision": 2,
+      "title": "Replace a Tool Pocket on Your Haas Side Mount Tool Changer (SMTC)",
+      "score": 0.03278688524590164
+    },
+    "workflow_candidates": [
+      {
+        "workflow_id": "B0_SRC_HAAS_0005",
+        "revision": 2,
+        "title": "Replace a Tool Pocket on Your Haas Side Mount Tool Changer (SMTC)",
+        "score": 0.03278688524590164
+      },
+      {
+        "workflow_id": "REAL_WF_0001",
+        "revision": 1,
+        "title": "Replace a damaged pocket on a Haas side-mount tool changer (SMTC)",
+        "score": 0.03225806451612903
+      }
+    ],
+    "steps": [
+      {
+        "workflow_id": "B0_SRC_HAAS_0005",
+        "revision": 2,
+        "step_id": "B0_SRC_HAAS_0005_ST_006",
+        "display_order": 6,
+        "title": "Inspect Components and Lubricate Pocket Slider",
+        "fields": {
+          "context": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "observation": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "action": {
+            "state": "present",
+            "claim_ids": [
+              "B0_SRC_HAAS_0005_CL_018",
+              "B0_SRC_HAAS_0005_CL_019",
+              "B0_SRC_HAAS_0005_CL_020"
+            ]
+          },
+          "rationale": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "condition": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "outcome": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "acceptance_criteria": {
+            "state": "missing",
+            "claim_ids": []
+          }
+        },
+        "claim_ids": [
+          "B0_SRC_HAAS_0005_CL_018",
+          "B0_SRC_HAAS_0005_CL_019",
+          "B0_SRC_HAAS_0005_CL_020"
+        ],
+        "score": 0.03278688524590164,
+        "lexical_score": 1.170091506222147,
+        "vector_score": 0.7455178618544693
+      }
+    ],
+    "claims": [
+      {
+        "claim_ref": {
+          "workflow_id": "B0_SRC_HAAS_0005",
+          "revision": 2,
+          "entity_type": "claim",
+          "entity_id": "B0_SRC_HAAS_0005_CL_018"
+        },
+        "claim": {
+          "claim_id": "B0_SRC_HAAS_0005_CL_018",
+          "text": "Rotate the cam follower to confirm it spins freely.",
+          "role": "action",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Procedure described in B0_SRC_HAAS_0005"
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_017",
+              "support_status": "supported",
+              "explanation": "Presenter instructs rotating cam follower to check free movement."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "B0_SRC_HAAS_0005_ST_006"
+        ],
+        "score": 0.03278688524590164,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_017",
+              "source_id": "SRC_HAAS_0005",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 134010,
+                "end_ms": 147840,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "before we install the new pocket there's a few things we need to check rotate that cam follower make sure that it's spinning freely we also want to check the plunger",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_017",
+              "support_status": "supported",
+              "explanation": "Presenter instructs rotating cam follower to check free movement."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0005",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Replace a Tool Pocket on Your Haas Side Mount Tool Changer (SMTC)",
+              "url": "https://www.haascnc.com/video/service/cs-BvWsKXyU.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 261000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville",
+              "presenter_role": null,
+              "published_at": "2016-05-31T00:00:00Z",
+              "retrieved_at": "2026-09-11T08:15:26Z",
+              "raw_text": "hi I'm Orville and today we're going to replace a damaged pocket on the side mount tool changer set your Rapids down to 25% and then rotate to the damaged pocket press e stop once the pocket is in position okay we need to remove three pieces of sheet metal from the bottom of the cam box this larger piece to my left and also two smaller piece right below the double arm in order to gain access to the damaged pocket and the switches behind it but before we can move this larger panel there are four of those fasteners on top of the machine we'll start with those four first we'll be working in this area for a few minutes so we'll remove all the tools from the carousel and mark their location we want to make sure we installed it carousel disk correctly so we'll put a mark on the disk and on the pocket for reinstallation now we're going to remove the number ring and now we're going to disconnect the main air to the machine and now we're going to remove the pilot check valve now with this check valve remove now I can move the pocket up and down freely to get to that screw now we're going to remove the four bolts from the pocket stop so we can continue with it removal of the pocket now with this pocket stop remove we'll remove the shoulder bolt on the backside of the carousel right next to the lower proximity switch with the shoulder bolts remove will then remove the retaining bolt and remove the pocket before we install the new pocket there's a few things we need to check rotate that cam follower make sure that it's spinning freely we also want to check the plunger inside the pocket to make sure they're not worn out now with the pocket slider we'll apply some grease in there now we're ready to reinstall the pocket install the pocket to the slider and install both of them back in position now we're going to reinstall it retainer bolt and tighten it so now we will install the shoulder boat lower the pocket and attach the shoulder bolt and screw it in now the pocket is moving freely and I'm also reading the switches which is the pocket up and pocket down switches so now let's install the pocket stop with the pocket stop and the new pocket installed now let's install the check valve now reinstall the number disc by lining up the dot on the number disc with the dot on the pocket now we'll install the remaining three panels now with the panels all in place we'll install the tools and then test the system with the new pocket installed the panels are secured the main air is turned on let's release the e-stop and run the tool changer run the tool changer through several two changes to ensure everything is working correctly thanks for watching",
+              "content_sha256": "5d8ecf73a6b6b4ee6a80cdd271cbdb767b5e075d642c8c1917557eeff8d2f292",
+              "related_source_ids": [],
+              "access_note": "Public YouTube video on the official 'Haas Automation, Inc.' channel. The haascnc.com video page (which may state a role for 'Orville') could not be fetched this session (Cloudflare 403); presenter_role left null rather than inferred from third-party search snippets. Manual English captions downloaded via yt-dlp (official_caption); no video file retained."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "B0_SRC_HAAS_0005",
+          "revision": 2,
+          "entity_type": "claim",
+          "entity_id": "B0_SRC_HAAS_0005_CL_019"
+        },
+        "claim": {
+          "claim_id": "B0_SRC_HAAS_0005_CL_019",
+          "text": "Check the plungers inside the pocket to ensure they are not worn out.",
+          "role": "action",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Procedure described in B0_SRC_HAAS_0005"
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_018",
+              "support_status": "supported",
+              "explanation": "Presenter instructs checking internal plungers for wear."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "B0_SRC_HAAS_0005_ST_006"
+        ],
+        "score": 0.03278688524590164,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_018",
+              "source_id": "SRC_HAAS_0005",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 142680,
+                "end_ms": 153660,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "cam follower make sure that it's spinning freely we also want to check the plunger inside the pocket to make sure they're not worn out now with the pocket slider we'll apply some",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_018",
+              "support_status": "supported",
+              "explanation": "Presenter instructs checking internal plungers for wear."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0005",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Replace a Tool Pocket on Your Haas Side Mount Tool Changer (SMTC)",
+              "url": "https://www.haascnc.com/video/service/cs-BvWsKXyU.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 261000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville",
+              "presenter_role": null,
+              "published_at": "2016-05-31T00:00:00Z",
+              "retrieved_at": "2026-09-11T08:15:26Z",
+              "raw_text": "hi I'm Orville and today we're going to replace a damaged pocket on the side mount tool changer set your Rapids down to 25% and then rotate to the damaged pocket press e stop once the pocket is in position okay we need to remove three pieces of sheet metal from the bottom of the cam box this larger piece to my left and also two smaller piece right below the double arm in order to gain access to the damaged pocket and the switches behind it but before we can move this larger panel there are four of those fasteners on top of the machine we'll start with those four first we'll be working in this area for a few minutes so we'll remove all the tools from the carousel and mark their location we want to make sure we installed it carousel disk correctly so we'll put a mark on the disk and on the pocket for reinstallation now we're going to remove the number ring and now we're going to disconnect the main air to the machine and now we're going to remove the pilot check valve now with this check valve remove now I can move the pocket up and down freely to get to that screw now we're going to remove the four bolts from the pocket stop so we can continue with it removal of the pocket now with this pocket stop remove we'll remove the shoulder bolt on the backside of the carousel right next to the lower proximity switch with the shoulder bolts remove will then remove the retaining bolt and remove the pocket before we install the new pocket there's a few things we need to check rotate that cam follower make sure that it's spinning freely we also want to check the plunger inside the pocket to make sure they're not worn out now with the pocket slider we'll apply some grease in there now we're ready to reinstall the pocket install the pocket to the slider and install both of them back in position now we're going to reinstall it retainer bolt and tighten it so now we will install the shoulder boat lower the pocket and attach the shoulder bolt and screw it in now the pocket is moving freely and I'm also reading the switches which is the pocket up and pocket down switches so now let's install the pocket stop with the pocket stop and the new pocket installed now let's install the check valve now reinstall the number disc by lining up the dot on the number disc with the dot on the pocket now we'll install the remaining three panels now with the panels all in place we'll install the tools and then test the system with the new pocket installed the panels are secured the main air is turned on let's release the e-stop and run the tool changer run the tool changer through several two changes to ensure everything is working correctly thanks for watching",
+              "content_sha256": "5d8ecf73a6b6b4ee6a80cdd271cbdb767b5e075d642c8c1917557eeff8d2f292",
+              "related_source_ids": [],
+              "access_note": "Public YouTube video on the official 'Haas Automation, Inc.' channel. The haascnc.com video page (which may state a role for 'Orville') could not be fetched this session (Cloudflare 403); presenter_role left null rather than inferred from third-party search snippets. Manual English captions downloaded via yt-dlp (official_caption); no video file retained."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "B0_SRC_HAAS_0005",
+          "revision": 2,
+          "entity_type": "claim",
+          "entity_id": "B0_SRC_HAAS_0005_CL_020"
+        },
+        "claim": {
+          "claim_id": "B0_SRC_HAAS_0005_CL_020",
+          "text": "Apply grease to the pocket slider.",
+          "role": "action",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Procedure described in B0_SRC_HAAS_0005"
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_033",
+              "support_status": "supported",
+              "explanation": "Presenter states applying grease inside pocket slider."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "B0_SRC_HAAS_0005_ST_006"
+        ],
+        "score": 0.03278688524590164,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_033",
+              "source_id": "SRC_HAAS_0005",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 147840,
+                "end_ms": 165270,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "inside the pocket to make sure they're not worn out now with the pocket slider we'll apply some grease in there now we're ready to reinstall the pocket install the pocket to the slider",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_033",
+              "support_status": "supported",
+              "explanation": "Presenter states applying grease inside pocket slider."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0005",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Replace a Tool Pocket on Your Haas Side Mount Tool Changer (SMTC)",
+              "url": "https://www.haascnc.com/video/service/cs-BvWsKXyU.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 261000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville",
+              "presenter_role": null,
+              "published_at": "2016-05-31T00:00:00Z",
+              "retrieved_at": "2026-09-11T08:15:26Z",
+              "raw_text": "hi I'm Orville and today we're going to replace a damaged pocket on the side mount tool changer set your Rapids down to 25% and then rotate to the damaged pocket press e stop once the pocket is in position okay we need to remove three pieces of sheet metal from the bottom of the cam box this larger piece to my left and also two smaller piece right below the double arm in order to gain access to the damaged pocket and the switches behind it but before we can move this larger panel there are four of those fasteners on top of the machine we'll start with those four first we'll be working in this area for a few minutes so we'll remove all the tools from the carousel and mark their location we want to make sure we installed it carousel disk correctly so we'll put a mark on the disk and on the pocket for reinstallation now we're going to remove the number ring and now we're going to disconnect the main air to the machine and now we're going to remove the pilot check valve now with this check valve remove now I can move the pocket up and down freely to get to that screw now we're going to remove the four bolts from the pocket stop so we can continue with it removal of the pocket now with this pocket stop remove we'll remove the shoulder bolt on the backside of the carousel right next to the lower proximity switch with the shoulder bolts remove will then remove the retaining bolt and remove the pocket before we install the new pocket there's a few things we need to check rotate that cam follower make sure that it's spinning freely we also want to check the plunger inside the pocket to make sure they're not worn out now with the pocket slider we'll apply some grease in there now we're ready to reinstall the pocket install the pocket to the slider and install both of them back in position now we're going to reinstall it retainer bolt and tighten it so now we will install the shoulder boat lower the pocket and attach the shoulder bolt and screw it in now the pocket is moving freely and I'm also reading the switches which is the pocket up and pocket down switches so now let's install the pocket stop with the pocket stop and the new pocket installed now let's install the check valve now reinstall the number disc by lining up the dot on the number disc with the dot on the pocket now we'll install the remaining three panels now with the panels all in place we'll install the tools and then test the system with the new pocket installed the panels are secured the main air is turned on let's release the e-stop and run the tool changer run the tool changer through several two changes to ensure everything is working correctly thanks for watching",
+              "content_sha256": "5d8ecf73a6b6b4ee6a80cdd271cbdb767b5e075d642c8c1917557eeff8d2f292",
+              "related_source_ids": [],
+              "access_note": "Public YouTube video on the official 'Haas Automation, Inc.' channel. The haascnc.com video page (which may state a role for 'Orville') could not be fetched this session (Cloudflare 403); presenter_role left null rather than inferred from third-party search snippets. Manual English captions downloaded via yt-dlp (official_caption); no video file retained."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      }
+    ],
+    "conflicts": [],
+    "blocked_claims": [],
+    "questions": [],
+    "relations": [],
+    "related_steps": [],
+    "related_claims": [],
+    "evidence_openability_checked": false,
+    "trace": {
+      "config": {
+        "strategy": "hybrid",
+        "top_k": 5,
+        "candidate_k": 20,
+        "rrf_k": 60,
+        "min_cosine": 0.25,
+        "intent": "auto",
+        "min_term_coverage": 0.2,
+        "relevance_policy": "claim_coherence",
+        "query_translation": "auto",
+        "neighbor_depth": 1,
+        "max_related_steps": 5,
+        "workflow_routing": "best_step"
+      },
+      "intent": "detail",
+      "detected_context": {},
+      "filters": [
+        {
+          "workflow_id": "B0_SRC_HAAS_0005",
+          "revision": 2,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0001",
+          "revision": 1,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0002",
+          "revision": 2,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0003",
+          "revision": 2,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0004",
+          "revision": 1,
+          "mismatches": [
+            "subsystem"
+          ],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0005",
+          "revision": 1,
+          "mismatches": [
+            "subsystem"
+          ],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0006",
+          "revision": 1,
+          "mismatches": [
+            "subsystem"
+          ],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0007",
+          "revision": 1,
+          "mismatches": [
+            "subsystem"
+          ],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0008",
+          "revision": 1,
+          "mismatches": [
+            "subsystem"
+          ],
+          "unknown_context": []
+        }
+      ],
+      "workflow_ranking": [
+        {
+          "document_id": "[\"workflow\",\"B0_SRC_HAAS_0005\",2,\"\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.03278688524590164,
+          "lexical_score": 1.4232576359318467,
+          "vector_score": 0.7455178618544693
+        },
+        {
+          "document_id": "[\"workflow\",\"REAL_WF_0001\",1,\"\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.03225806451612903,
+          "lexical_score": 0.6582624014885443,
+          "vector_score": 0.7106065670101441
+        }
+      ],
+      "step_ranking": [
+        {
+          "document_id": "[\"step\",\"B0_SRC_HAAS_0005\",2,\"B0_SRC_HAAS_0005_ST_006\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.03278688524590164,
+          "lexical_score": 1.170091506222147,
+          "vector_score": 0.7455178618544693
+        }
+      ],
+      "embedding_calls": 1,
+      "cache": "disabled",
+      "eligible_documents": 42,
+      "query_translation": null,
+      "component_identity": {
+        "policy": "component-identity-1",
+        "requested": [
+          "pocket_slider"
+        ],
+        "eligible_step_ids": [
+          "[\"step\",\"B0_SRC_HAAS_0005\",2,\"B0_SRC_HAAS_0005_ST_006\",\"answer\"]",
+          "[\"step\",\"REAL_WF_0001\",1,\"REAL_WF_0001_ST_007\",\"answer\"]"
+        ],
+        "excluded_document_ids": [
+          "[\"step\",\"B0_SRC_HAAS_0005\",2,\"B0_SRC_HAAS_0005_ST_001\",\"answer\"]",
+          "[\"step\",\"B0_SRC_HAAS_0005\",2,\"B0_SRC_HAAS_0005_ST_002\",\"answer\"]",
+          "[\"step\",\"B0_SRC_HAAS_0005\",2,\"B0_SRC_HAAS_0005_ST_003\",\"answer\"]",
+          "[\"step\",\"B0_SRC_HAAS_0005\",2,\"B0_SRC_HAAS_0005_ST_004\",\"answer\"]",
+          "[\"step\",\"B0_SRC_HAAS_0005\",2,\"B0_SRC_HAAS_0005_ST_005\",\"answer\"]",
+          "[\"step\",\"B0_SRC_HAAS_0005\",2,\"B0_SRC_HAAS_0005_ST_007\",\"answer\"]",
+          "[\"step\",\"B0_SRC_HAAS_0005\",2,\"B0_SRC_HAAS_0005_ST_008\",\"answer\"]",
+          "[\"step\",\"B0_SRC_HAAS_0005\",2,\"B0_SRC_HAAS_0005_ST_009\",\"answer\"]",
+          "[\"step\",\"REAL_WF_0001\",1,\"REAL_WF_0001_ST_001\",\"answer\"]",
+          "[\"step\",\"REAL_WF_0001\",1,\"REAL_WF_0001_ST_002\",\"answer\"]",
+          "[\"step\",\"REAL_WF_0001\",1,\"REAL_WF_0001_ST_003\",\"answer\"]",
+          "[\"step\",\"REAL_WF_0001\",1,\"REAL_WF_0001_ST_004\",\"answer\"]",
+          "[\"step\",\"REAL_WF_0001\",1,\"REAL_WF_0001_ST_005\",\"answer\"]",
+          "[\"step\",\"REAL_WF_0001\",1,\"REAL_WF_0001_ST_006\",\"answer\"]",
+          "[\"step\",\"REAL_WF_0001\",1,\"REAL_WF_0001_ST_008\",\"answer\"]",
+          "[\"step\",\"REAL_WF_0001\",1,\"REAL_WF_0001_ST_009\",\"answer\"]",
+          "[\"step\",\"REAL_WF_0001\",1,\"REAL_WF_0001_ST_010\",\"answer\"]",
+          "[\"step\",\"REAL_WF_0001\",1,\"REAL_WF_0001_ST_011\",\"answer\"]",
+          "[\"step\",\"REAL_WF_0002\",2,\"REAL_WF_0002_ST_001\",\"answer\"]",
+          "[\"step\",\"REAL_WF_0002\",2,\"REAL_WF_0002_ST_002\",\"answer\"]",
+          "[\"step\",\"REAL_WF_0002\",2,\"REAL_WF_0002_ST_003\",\"answer\"]",
+          "[\"step\",\"REAL_WF_0002\",2,\"REAL_WF_0002_ST_004\",\"answer\"]",
+          "[\"step\",\"REAL_WF_0002\",2,\"REAL_WF_0002_ST_005\",\"answer\"]",
+          "[\"step\",\"REAL_WF_0002\",2,\"REAL_WF_0002_ST_006\",\"answer\"]",
+          "[\"step\",\"REAL_WF_0002\",2,\"REAL_WF_0002_ST_007\",\"answer\"]",
+          "[\"step\",\"REAL_WF_0002\",2,\"REAL_WF_0002_ST_008\",\"answer\"]",
+          "[\"step\",\"REAL_WF_0002\",2,\"REAL_WF_0002_ST_009\",\"answer\"]",
+          "[\"step\",\"REAL_WF_0003\",2,\"REAL_WF_0003_ST_001\",\"answer\"]",
+          "[\"step\",\"REAL_WF_0003\",2,\"REAL_WF_0003_ST_002\",\"answer\"]",
+          "[\"step\",\"REAL_WF_0003\",2,\"REAL_WF_0003_ST_003\",\"answer\"]",
+          "[\"step\",\"REAL_WF_0003\",2,\"REAL_WF_0003_ST_004\",\"answer\"]",
+          "[\"step\",\"REAL_WF_0003\",2,\"REAL_WF_0003_ST_005\",\"answer\"]",
+          "[\"step\",\"REAL_WF_0003\",2,\"REAL_WF_0003_ST_006\",\"answer\"]",
+          "[\"step\",\"REAL_WF_0003\",2,\"REAL_WF_0003_ST_007\",\"answer\"]",
+          "[\"step\",\"REAL_WF_0003\",2,\"REAL_WF_0003_ST_008\",\"answer\"]",
+          "[\"step\",\"REAL_WF_0003\",2,\"REAL_WF_0003_ST_009\",\"answer\"]"
+        ],
+        "action_terms": [
+          "greas",
+          "lubric"
+        ],
+        "basis": "eligible_heading_and_claim_text",
+        "semantic_support": null
+      },
+      "relevance": {
+        "policy": "claim-coherence-2",
+        "unit": "claim",
+        "background_ratio": 0.75,
+        "ignored_terms": [],
+        "context_terms": [],
+        "protected_component_terms": [
+          "pocket",
+          "slide"
+        ],
+        "query_terms": [
+          "lubric",
+          "pocket",
+          "slide"
+        ],
+        "matched_terms": [
+          "lubric",
+          "pocket",
+          "slide"
+        ],
+        "unseen_terms": [],
+        "min_matches": 2,
+        "term_coverage": 1.0,
+        "min_term_coverage": 0.2,
+        "support_refs": [
+          {
+            "workflow_id": "B0_SRC_HAAS_0005",
+            "revision": 2,
+            "step_id": "B0_SRC_HAAS_0005_ST_006",
+            "claim_id": "B0_SRC_HAAS_0005_CL_018",
+            "purpose": "answer"
+          }
+        ],
+        "gate": "passed",
+        "exact_alarm_lookup": false,
+        "corpus_term_coverage": 1.0
+      },
+      "routing_steps": {
+        "B0_SRC_HAAS_0005": "B0_SRC_HAAS_0005_ST_006",
+        "REAL_WF_0001": "REAL_WF_0001_ST_007"
+      },
+      "workflow_margin": 0.0005288207297726097,
+      "neighbors": {
+        "depth": 1,
+        "relations": [
+          "branch_if",
+          "corrects",
+          "requires"
+        ],
+        "unavailable_step_ids": [],
+        "truncated_step_ids": []
+      },
+      "conflict_ranking": [],
+      "latency_ms": 737.04
+    }
+  },
+  "result_sha256": "55f9dbf01ab032e79c597bdbc71dc2d9f9b5368fb9edfd5a5093f841163a143d",
+  "error_class": null,
+  "latency_ms": 741.8598000076599,
+  "provider_call_ids": [
+    "call-000446"
+  ],
+  "backoff_seconds": 0.0,
+  "owner_arm": "C_no_graph",
+  "pre_graph_sha256": "c835d410e89845a53535e235360668914cc889f9f6e7dd0ecdf0eaa98122672e",
+  "translation_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+}

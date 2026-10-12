@@ -1,0 +1,173 @@
+{
+  "key": "1144e8582ede3c76d096dd8a6cd496e28bae7ea3d02258b89d1281f370cf79c3",
+  "result": {
+    "status": "insufficient_evidence",
+    "index_build_id": "IDX_SEARCH_151f7d6dfcc821966e669bd1842c59f5d1d2c8eb7210fb4e998ef46e36857389",
+    "record_build_id": "IDX_WP1_f2e98bbf552b45e119f633b6de9f6469a9592f2494a4dc74b44f59b655527dd4",
+    "source_type": "real",
+    "dataset_split": "dev",
+    "context": {
+      "manufacturer": "Haas",
+      "machine_family": null,
+      "machine_model": null,
+      "subsystem": "SMTC",
+      "task_type": null,
+      "symptoms": [],
+      "alarm_codes": [],
+      "components": []
+    },
+    "missing_context": [],
+    "selected_workflow": null,
+    "workflow_candidates": [],
+    "steps": [],
+    "claims": [],
+    "conflicts": [],
+    "blocked_claims": [],
+    "questions": [],
+    "relations": [],
+    "related_steps": [],
+    "related_claims": [],
+    "evidence_openability_checked": false,
+    "trace": {
+      "config": {
+        "strategy": "hybrid",
+        "top_k": 5,
+        "candidate_k": 20,
+        "rrf_k": 60,
+        "min_cosine": 0.25,
+        "intent": "auto",
+        "min_term_coverage": 0.2,
+        "relevance_policy": "claim_coherence",
+        "query_translation": "auto",
+        "neighbor_depth": 1,
+        "max_related_steps": 5,
+        "workflow_routing": "best_step"
+      },
+      "intent": "detail",
+      "detected_context": {},
+      "filters": [
+        {
+          "workflow_id": "B0_SRC_HAAS_0005",
+          "revision": 2,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0001",
+          "revision": 1,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0002",
+          "revision": 2,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0003",
+          "revision": 2,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0004",
+          "revision": 1,
+          "mismatches": [
+            "subsystem"
+          ],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0005",
+          "revision": 1,
+          "mismatches": [
+            "subsystem"
+          ],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0006",
+          "revision": 1,
+          "mismatches": [
+            "subsystem"
+          ],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0007",
+          "revision": 1,
+          "mismatches": [
+            "subsystem"
+          ],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0008",
+          "revision": 1,
+          "mismatches": [
+            "subsystem"
+          ],
+          "unknown_context": []
+        }
+      ],
+      "workflow_ranking": [],
+      "step_ranking": [],
+      "embedding_calls": 0,
+      "cache": "disabled",
+      "eligible_documents": 42,
+      "query_translation": {
+        "text": "How to level the machine after relocating it?",
+        "provider": "gemini",
+        "model": "gemini-3.5-flash-lite",
+        "prompt_version": "q2en-3",
+        "temperature": 0,
+        "sdk_version": "2.29.0"
+      },
+      "relevance": {
+        "policy": "claim-coherence-2",
+        "unit": "claim",
+        "background_ratio": 0.75,
+        "ignored_terms": [
+          "level",
+          "machin"
+        ],
+        "context_terms": [],
+        "protected_component_terms": [],
+        "query_terms": [
+          "reloc"
+        ],
+        "matched_terms": [],
+        "unseen_terms": [
+          "reloc"
+        ],
+        "min_matches": 1,
+        "term_coverage": 0.0,
+        "min_term_coverage": 0.2,
+        "support_refs": [
+          {
+            "workflow_id": "B0_SRC_HAAS_0005",
+            "revision": 2,
+            "step_id": "B0_SRC_HAAS_0005_ST_001",
+            "claim_id": "B0_SRC_HAAS_0005_CL_001",
+            "purpose": "answer"
+          }
+        ],
+        "gate": "rejected",
+        "exact_alarm_lookup": false,
+        "corpus_term_coverage": 0.0429
+      },
+      "latency_ms": 2250.09
+    }
+  },
+  "result_sha256": "83d28a4b621d0355af353736d5991d4c290b41932d59d82ca28c13407cc5d991",
+  "error_class": null,
+  "latency_ms": 2254.8672999982955,
+  "provider_call_ids": [
+    "call-000580"
+  ],
+  "backoff_seconds": 0.0,
+  "owner_arm": "C_no_graph",
+  "pre_graph_sha256": "d0eb759d0e51804330ec7ab6d2bc595ad9c8beb49d3cf08e3d9515d9e82212f4",
+  "translation_sha256": "5ffc9c37a86b7bdcb698ebe854bdcac38dad13937ed6274ac35823762dc62988"
+}

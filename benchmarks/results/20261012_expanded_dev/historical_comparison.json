@@ -1,0 +1,181 @@
+{
+  "comparison_kind": "historical_descriptive_not_causal",
+  "historical_run": "20261011_real_dev",
+  "current_run": "20261012_expanded_dev",
+  "historical_commit": "dfde6f43704b532053c74e09701d1e978d5d12f9",
+  "current_commit": "d47308e959b1ced6841689cb5d6dacbfb1b5b42f",
+  "confounders": [
+    "expanded corpus and annotations",
+    "component/alarm retrieval fixes",
+    "q2en-3 translation",
+    "shared A/C retrieval instead of independent retrieval",
+    "independent generation and rate-limit conditions"
+  ],
+  "arms": {
+    "A_knowflow": {
+      "matched_questions": 66,
+      "status_labels_changed": [],
+      "historical_status_correct": 49,
+      "current_status_correct": 53,
+      "historical_retrieval": {
+        "denominator": 37,
+        "gold_kind": "human_reviewed_step_units",
+        "recall_at_5": 0.9459459459459459,
+        "mrr_at_5": 0.8657657657657657,
+        "baseline_limitation": null
+      },
+      "current_retrieval": {
+        "denominator": 37,
+        "gold_kind": "human_reviewed_step_units",
+        "recall_at_5": 0.9459459459459459,
+        "mrr_at_5": 0.8387387387387388,
+        "baseline_limitation": null
+      },
+      "improved_status_questions": [
+        "HAAS_DEV_Q001",
+        "HAAS_DEV_Q007",
+        "HAAS_DEV_Q014",
+        "HAAS_DEV_Q016",
+        "HAAS_DEV_Q027",
+        "HAAS_DEV_Q029",
+        "HAAS_DEV_Q031",
+        "HAAS_DEV_Q058"
+      ],
+      "regressed_status_questions": [
+        "HAAS_DEV_Q010",
+        "HAAS_DEV_Q056",
+        "HAAS_DEV_Q062",
+        "HAAS_DEV_Q066"
+      ],
+      "historical_api_errors": [
+        {
+          "question_id": "HAAS_DEV_Q016",
+          "http_status": 503,
+          "error_class": "GenerationError",
+          "latency_ms": 14298.396
+        }
+      ],
+      "current_api_errors": [
+        {
+          "question_id": "HAAS_DEV_Q062",
+          "http_status": 504,
+          "error_class": null,
+          "latency_ms": 87761.025
+        },
+        {
+          "question_id": "HAAS_DEV_Q059",
+          "http_status": 504,
+          "error_class": null,
+          "latency_ms": 88394.187
+        }
+      ]
+    },
+    "B_transcript_rag": {
+      "matched_questions": 66,
+      "status_labels_changed": [],
+      "historical_status_correct": 56,
+      "current_status_correct": 53,
+      "historical_retrieval": {
+        "denominator": 0,
+        "gold_kind": null,
+        "recall_at_5": null,
+        "mrr_at_5": null,
+        "baseline_limitation": "No human-reviewed raw-chunk gold; Step gold cannot score raw chunks"
+      },
+      "current_retrieval": {
+        "denominator": 0,
+        "gold_kind": null,
+        "recall_at_5": null,
+        "mrr_at_5": null,
+        "baseline_limitation": "No human-reviewed raw-chunk gold; Step gold cannot score raw chunks"
+      },
+      "improved_status_questions": [
+        "HAAS_DEV_Q017",
+        "HAAS_DEV_Q028",
+        "HAAS_DEV_Q063"
+      ],
+      "regressed_status_questions": [
+        "HAAS_DEV_Q001",
+        "HAAS_DEV_Q004",
+        "HAAS_DEV_Q011",
+        "HAAS_DEV_Q016",
+        "HAAS_DEV_Q021",
+        "HAAS_DEV_Q025"
+      ],
+      "historical_api_errors": [
+        {
+          "question_id": "HAAS_DEV_Q063",
+          "http_status": 504,
+          "error_class": null,
+          "latency_ms": 90010.731
+        },
+        {
+          "question_id": "HAAS_DEV_Q017",
+          "http_status": 504,
+          "error_class": null,
+          "latency_ms": 90014.916
+        }
+      ],
+      "current_api_errors": [
+        {
+          "question_id": "HAAS_DEV_Q001",
+          "http_status": 504,
+          "error_class": null,
+          "latency_ms": 90006.731
+        }
+      ]
+    },
+    "C_no_graph": {
+      "matched_questions": 66,
+      "status_labels_changed": [],
+      "historical_status_correct": 48,
+      "current_status_correct": 53,
+      "historical_retrieval": {
+        "denominator": 37,
+        "gold_kind": "human_reviewed_step_units",
+        "recall_at_5": 0.9459459459459459,
+        "mrr_at_5": 0.8792792792792792,
+        "baseline_limitation": null
+      },
+      "current_retrieval": {
+        "denominator": 37,
+        "gold_kind": "human_reviewed_step_units",
+        "recall_at_5": 0.9459459459459459,
+        "mrr_at_5": 0.8387387387387388,
+        "baseline_limitation": null
+      },
+      "improved_status_questions": [
+        "HAAS_DEV_Q001",
+        "HAAS_DEV_Q007",
+        "HAAS_DEV_Q014",
+        "HAAS_DEV_Q016",
+        "HAAS_DEV_Q017",
+        "HAAS_DEV_Q031"
+      ],
+      "regressed_status_questions": [
+        "HAAS_DEV_Q005"
+      ],
+      "historical_api_errors": [
+        {
+          "question_id": "HAAS_DEV_Q059",
+          "http_status": 504,
+          "error_class": null,
+          "latency_ms": 90008.295
+        },
+        {
+          "question_id": "HAAS_DEV_Q012",
+          "http_status": 504,
+          "error_class": null,
+          "latency_ms": 90008.079
+        },
+        {
+          "question_id": "HAAS_DEV_Q016",
+          "http_status": 504,
+          "error_class": "GenerationError",
+          "latency_ms": 921754.993
+        }
+      ],
+      "current_api_errors": []
+    }
+  }
+}

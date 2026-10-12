@@ -1,0 +1,10 @@
+[
+  {
+    "at": "2026-10-12T14:43:03.395+00:00",
+    "reason": "HTTP429 in index build at batch32; tiny embedding/query and generation probe succeeded. Index-only batches reduced to4 with1s spacing before any smoke/full answers. Text chunks, aggregation, model, retrieval, corpus and gold unchanged.",
+    "before_smoke_full": true,
+    "old_config_sha256": "4a515796213bf322db14b967ae8d3f5766250e9d0db9edca27c77a99b3ffe48b",
+    "new_config_sha256": "689a612491ec9682303d178c18584769f6ccc54627b06a33a6bc7ef15adc6be5",
+    "all_preparation_calls_retained": true
+  }
+]

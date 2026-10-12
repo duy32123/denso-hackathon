@@ -1,0 +1,2815 @@
+{
+  "key": "5924ec4dfe217eb7970d89b6099d33856765bdb71bfd06c5d0764831e25bedc4",
+  "result": {
+    "status": "retrieved",
+    "index_build_id": "IDX_SEARCH_151f7d6dfcc821966e669bd1842c59f5d1d2c8eb7210fb4e998ef46e36857389",
+    "record_build_id": "IDX_WP1_f2e98bbf552b45e119f633b6de9f6469a9592f2494a4dc74b44f59b655527dd4",
+    "source_type": "real",
+    "dataset_split": "dev",
+    "context": {
+      "manufacturer": null,
+      "machine_family": null,
+      "machine_model": null,
+      "subsystem": null,
+      "task_type": null,
+      "symptoms": [],
+      "alarm_codes": [],
+      "components": []
+    },
+    "missing_context": [],
+    "selected_workflow": {
+      "workflow_id": "REAL_WF_0006",
+      "revision": 1,
+      "title": "Troubleshoot alarm 254 spindle motor overheat on a Haas mill",
+      "score": 0.03278688524590164
+    },
+    "workflow_candidates": [
+      {
+        "workflow_id": "REAL_WF_0006",
+        "revision": 1,
+        "title": "Troubleshoot alarm 254 spindle motor overheat on a Haas mill",
+        "score": 0.03278688524590164
+      },
+      {
+        "workflow_id": "REAL_WF_0005",
+        "revision": 1,
+        "title": "Troubleshoot a Haas mill spindle before replacing it",
+        "score": 0.030776515151515152
+      },
+      {
+        "workflow_id": "REAL_WF_0008",
+        "revision": 1,
+        "title": "Replace the X-axis way covers and wipers on a Haas vertical mill",
+        "score": 0.029206349206349208
+      },
+      {
+        "workflow_id": "REAL_WF_0004",
+        "revision": 1,
+        "title": "Troubleshoot alarm 626 tool pocket slide error on a Haas tool changer",
+        "score": 0.025158227848101268
+      },
+      {
+        "workflow_id": "REAL_WF_0003",
+        "revision": 2,
+        "title": "Recover a Haas SMTC after a tool changer alarm",
+        "score": 0.012987012987012988
+      },
+      {
+        "workflow_id": "B0_SRC_HAAS_0005",
+        "revision": 2,
+        "title": "Replace a Tool Pocket on Your Haas Side Mount Tool Changer (SMTC)",
+        "score": 0.01282051282051282
+      }
+    ],
+    "steps": [
+      {
+        "workflow_id": "REAL_WF_0006",
+        "revision": 1,
+        "step_id": "REAL_WF_0006_ST_003",
+        "display_order": 3,
+        "title": "Check the spindle fan",
+        "fields": {
+          "context": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "observation": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "action": {
+            "state": "present",
+            "claim_ids": [
+              "REAL_WF_0006_CL_007",
+              "REAL_WF_0006_CL_008"
+            ]
+          },
+          "rationale": {
+            "state": "present",
+            "claim_ids": [
+              "REAL_WF_0006_CL_009"
+            ]
+          },
+          "condition": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "outcome": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "acceptance_criteria": {
+            "state": "present",
+            "claim_ids": [
+              "REAL_WF_0006_CL_010",
+              "REAL_WF_0006_CL_011"
+            ]
+          }
+        },
+        "claim_ids": [
+          "REAL_WF_0006_CL_007",
+          "REAL_WF_0006_CL_008",
+          "REAL_WF_0006_CL_009",
+          "REAL_WF_0006_CL_010",
+          "REAL_WF_0006_CL_011",
+          "REAL_WF_0006_CL_022",
+          "REAL_WF_0006_CL_015"
+        ],
+        "score": 0.03278688524590164,
+        "lexical_score": 3.7692522597970193,
+        "vector_score": 0.7104225795627712
+      },
+      {
+        "workflow_id": "REAL_WF_0006",
+        "revision": 1,
+        "step_id": "REAL_WF_0006_ST_002",
+        "display_order": 2,
+        "title": "Check the spindle load",
+        "fields": {
+          "context": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "observation": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "action": {
+            "state": "present",
+            "claim_ids": [
+              "REAL_WF_0006_CL_004",
+              "REAL_WF_0006_CL_005"
+            ]
+          },
+          "rationale": {
+            "state": "present",
+            "claim_ids": [
+              "REAL_WF_0006_CL_006"
+            ]
+          },
+          "condition": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "outcome": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "acceptance_criteria": {
+            "state": "missing",
+            "claim_ids": []
+          }
+        },
+        "claim_ids": [
+          "REAL_WF_0006_CL_004",
+          "REAL_WF_0006_CL_005",
+          "REAL_WF_0006_CL_006"
+        ],
+        "score": 0.03200204813108039,
+        "lexical_score": 2.1736524335940763,
+        "vector_score": 0.6432401138477739
+      },
+      {
+        "workflow_id": "REAL_WF_0006",
+        "revision": 1,
+        "step_id": "REAL_WF_0006_ST_001",
+        "display_order": 1,
+        "title": "Understand what triggers alarm 254",
+        "fields": {
+          "context": {
+            "state": "present",
+            "claim_ids": [
+              "REAL_WF_0006_CL_001",
+              "REAL_WF_0006_CL_002"
+            ]
+          },
+          "observation": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "action": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "rationale": {
+            "state": "present",
+            "claim_ids": [
+              "REAL_WF_0006_CL_003"
+            ]
+          },
+          "condition": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "outcome": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "acceptance_criteria": {
+            "state": "missing",
+            "claim_ids": []
+          }
+        },
+        "claim_ids": [
+          "REAL_WF_0006_CL_001",
+          "REAL_WF_0006_CL_002",
+          "REAL_WF_0006_CL_003"
+        ],
+        "score": 0.0315136476426799,
+        "lexical_score": 0.490666020064843,
+        "vector_score": 0.65571316663353
+      },
+      {
+        "workflow_id": "REAL_WF_0006",
+        "revision": 1,
+        "step_id": "REAL_WF_0006_ST_004",
+        "display_order": 4,
+        "title": "Next-gen control: check the P39 cable",
+        "fields": {
+          "context": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "observation": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "action": {
+            "state": "present",
+            "claim_ids": [
+              "REAL_WF_0006_CL_012",
+              "REAL_WF_0006_CL_013",
+              "REAL_WF_0006_CL_014"
+            ]
+          },
+          "rationale": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "condition": {
+            "state": "present",
+            "claim_ids": [
+              "REAL_WF_0006_CL_015"
+            ]
+          },
+          "outcome": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "acceptance_criteria": {
+            "state": "present",
+            "claim_ids": [
+              "REAL_WF_0006_CL_016"
+            ]
+          }
+        },
+        "claim_ids": [
+          "REAL_WF_0006_CL_012",
+          "REAL_WF_0006_CL_013",
+          "REAL_WF_0006_CL_014",
+          "REAL_WF_0006_CL_015",
+          "REAL_WF_0006_CL_016",
+          "REAL_WF_0006_CL_022"
+        ],
+        "score": 0.03125763125763126,
+        "lexical_score": 1.4336569662766254,
+        "vector_score": 0.6271726253567635
+      },
+      {
+        "workflow_id": "REAL_WF_0006",
+        "revision": 1,
+        "step_id": "REAL_WF_0006_ST_005",
+        "display_order": 5,
+        "title": "Inspect the temperature sensor",
+        "fields": {
+          "context": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "observation": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "action": {
+            "state": "present",
+            "claim_ids": [
+              "REAL_WF_0006_CL_017",
+              "REAL_WF_0006_CL_018"
+            ]
+          },
+          "rationale": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "condition": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "outcome": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "acceptance_criteria": {
+            "state": "present",
+            "claim_ids": [
+              "REAL_WF_0006_CL_019"
+            ]
+          }
+        },
+        "claim_ids": [
+          "REAL_WF_0006_CL_017",
+          "REAL_WF_0006_CL_018",
+          "REAL_WF_0006_CL_019",
+          "REAL_WF_0006_CL_023",
+          "REAL_WF_0006_CL_021"
+        ],
+        "score": 0.030776515151515152,
+        "lexical_score": 0.4616077984896986,
+        "vector_score": 0.6351177292619842
+      }
+    ],
+    "claims": [
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0006",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0006_CL_007"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0006_CL_007",
+          "text": "The presenter says that if the fan is working, to make sure it is running in the right direction.",
+          "role": "action",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville Collins (presenter)",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 254 troubleshooting as demonstrated in SRC_HAAS_0010."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0006_EV_011",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0006_ST_003"
+        ],
+        "score": 0.03278688524590164,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0006_EV_011",
+              "source_id": "SRC_HAAS_0010",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 44590,
+                "end_ms": 49810,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "the spindle starts turning if the fan is working make sure it's running in the right direction on",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0006_EV_011",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0010",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 254 Spindle Motor Overheat",
+              "url": "https://www.haascnc.com/video/service/M-VcwEodqP0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 90000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-07-11T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] if you're in the middle of a job and you get alarmed 2:54 spin the motor overheat here are a couple things you can do the spindle motor has a temperature sensor built into it usually in the junction box there are temperature limits for the spindle motor that's preset from the factory if the spindle motor temperature begins to reach those limits this sensor triggers alarm to 54 to begin with check that the spindle loads are not way over a hundred percent for long extended periods because you're running a long super-aggressive program this alarm can be triggered if there are problems with the spindle fan the fan should turn on as soon as the spindle starts turning if the fan is working make sure it's running in the right direction on a vertical mill it should pull air up through the spindle head and push it out through the top on a horizontal mill it pushes air out through the back of the spindle head if the machine has a next-gen Control open the control cabinet and look at the cable connected to p39 on the i/o PC board it should have a ferrite filter on it remove the spindle head cover and examine the temperature sensor itself make sure that it's not damaged and the cable is firmly connected if the alarm persists it's time to contact your local hospital outlet for assistance thanks for watching [Music]",
+              "content_sha256": "dbe5b403695923879eb17a19f73842375c2a62f71845cd82a9cd857b6b6d0b97",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=M-VcwEodqP0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0006",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0006_CL_008"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0006_CL_008",
+          "text": "A close-up shows a fan inside a sheet-metal housing.",
+          "role": "action",
+          "evidence_type": "observed",
+          "attribution": {
+            "actor_id": null,
+            "label": "D1-A keyframe observation, pending human check",
+            "kind": "model"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 254 troubleshooting as demonstrated in SRC_HAAS_0010."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0006_EV_012",
+              "support_status": "supported",
+              "explanation": "The fan housing and its blades are visible in the frame; the frame alone does not show that this is the spindle fan."
+            },
+            {
+              "evidence_id": "REAL_WF_0006_EV_013",
+              "support_status": "supported",
+              "explanation": "The narration at this moment is about the spindle fan turning on."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0006_ST_003"
+        ],
+        "score": 0.03278688524590164,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0006_EV_012",
+              "source_id": "SRC_HAAS_0010",
+              "modality": "visual",
+              "locator": {
+                "start_ms": 40499,
+                "end_ms": 40500,
+                "page": null,
+                "text_span": null
+              },
+              "quote": null,
+              "observation_note": "Close-up of a fan inside a sheet-metal housing, shown while the spindle fan is discussed.",
+              "asset_uri": "acquisition/preprocessing/keyframes/SRC_HAAS_0010/kf_0040500.jpg",
+              "transcript_origin": "none",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0006_EV_012",
+              "support_status": "supported",
+              "explanation": "The fan housing and its blades are visible in the frame; the frame alone does not show that this is the spindle fan."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0010",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 254 Spindle Motor Overheat",
+              "url": "https://www.haascnc.com/video/service/M-VcwEodqP0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 90000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-07-11T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] if you're in the middle of a job and you get alarmed 2:54 spin the motor overheat here are a couple things you can do the spindle motor has a temperature sensor built into it usually in the junction box there are temperature limits for the spindle motor that's preset from the factory if the spindle motor temperature begins to reach those limits this sensor triggers alarm to 54 to begin with check that the spindle loads are not way over a hundred percent for long extended periods because you're running a long super-aggressive program this alarm can be triggered if there are problems with the spindle fan the fan should turn on as soon as the spindle starts turning if the fan is working make sure it's running in the right direction on a vertical mill it should pull air up through the spindle head and push it out through the top on a horizontal mill it pushes air out through the back of the spindle head if the machine has a next-gen Control open the control cabinet and look at the cable connected to p39 on the i/o PC board it should have a ferrite filter on it remove the spindle head cover and examine the temperature sensor itself make sure that it's not damaged and the cable is firmly connected if the alarm persists it's time to contact your local hospital outlet for assistance thanks for watching [Music]",
+              "content_sha256": "dbe5b403695923879eb17a19f73842375c2a62f71845cd82a9cd857b6b6d0b97",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=M-VcwEodqP0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          },
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0006_EV_013",
+              "source_id": "SRC_HAAS_0010",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 38560,
+                "end_ms": 49810,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "can be triggered if there are problems with the spindle fan the fan should turn on as soon as the spindle starts turning if the fan is working make sure it's running in the right direction on",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0006_EV_013",
+              "support_status": "supported",
+              "explanation": "The narration at this moment is about the spindle fan turning on."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0010",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 254 Spindle Motor Overheat",
+              "url": "https://www.haascnc.com/video/service/M-VcwEodqP0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 90000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-07-11T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] if you're in the middle of a job and you get alarmed 2:54 spin the motor overheat here are a couple things you can do the spindle motor has a temperature sensor built into it usually in the junction box there are temperature limits for the spindle motor that's preset from the factory if the spindle motor temperature begins to reach those limits this sensor triggers alarm to 54 to begin with check that the spindle loads are not way over a hundred percent for long extended periods because you're running a long super-aggressive program this alarm can be triggered if there are problems with the spindle fan the fan should turn on as soon as the spindle starts turning if the fan is working make sure it's running in the right direction on a vertical mill it should pull air up through the spindle head and push it out through the top on a horizontal mill it pushes air out through the back of the spindle head if the machine has a next-gen Control open the control cabinet and look at the cable connected to p39 on the i/o PC board it should have a ferrite filter on it remove the spindle head cover and examine the temperature sensor itself make sure that it's not damaged and the cable is firmly connected if the alarm persists it's time to contact your local hospital outlet for assistance thanks for watching [Music]",
+              "content_sha256": "dbe5b403695923879eb17a19f73842375c2a62f71845cd82a9cd857b6b6d0b97",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=M-VcwEodqP0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0006",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0006_CL_009"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0006_CL_009",
+          "text": "The presenter says this alarm can be triggered if there are problems with the spindle fan.",
+          "role": "rationale",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville Collins (presenter)",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 254 troubleshooting as demonstrated in SRC_HAAS_0010."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0006_EV_014",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0006_ST_003"
+        ],
+        "score": 0.03278688524590164,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0006_EV_014",
+              "source_id": "SRC_HAAS_0010",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 33280,
+                "end_ms": 44590,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "extended periods because you're running a long super-aggressive program this alarm can be triggered if there are problems with the spindle fan the fan should turn on as soon as",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0006_EV_014",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0010",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 254 Spindle Motor Overheat",
+              "url": "https://www.haascnc.com/video/service/M-VcwEodqP0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 90000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-07-11T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] if you're in the middle of a job and you get alarmed 2:54 spin the motor overheat here are a couple things you can do the spindle motor has a temperature sensor built into it usually in the junction box there are temperature limits for the spindle motor that's preset from the factory if the spindle motor temperature begins to reach those limits this sensor triggers alarm to 54 to begin with check that the spindle loads are not way over a hundred percent for long extended periods because you're running a long super-aggressive program this alarm can be triggered if there are problems with the spindle fan the fan should turn on as soon as the spindle starts turning if the fan is working make sure it's running in the right direction on a vertical mill it should pull air up through the spindle head and push it out through the top on a horizontal mill it pushes air out through the back of the spindle head if the machine has a next-gen Control open the control cabinet and look at the cable connected to p39 on the i/o PC board it should have a ferrite filter on it remove the spindle head cover and examine the temperature sensor itself make sure that it's not damaged and the cable is firmly connected if the alarm persists it's time to contact your local hospital outlet for assistance thanks for watching [Music]",
+              "content_sha256": "dbe5b403695923879eb17a19f73842375c2a62f71845cd82a9cd857b6b6d0b97",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=M-VcwEodqP0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0006",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0006_CL_010"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0006_CL_010",
+          "text": "The presenter says the fan should turn on as soon as the spindle starts turning.",
+          "role": "acceptance_criteria",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville Collins (presenter)",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 254 troubleshooting as demonstrated in SRC_HAAS_0010."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0006_EV_013",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0006_ST_003"
+        ],
+        "score": 0.03278688524590164,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0006_EV_013",
+              "source_id": "SRC_HAAS_0010",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 38560,
+                "end_ms": 49810,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "can be triggered if there are problems with the spindle fan the fan should turn on as soon as the spindle starts turning if the fan is working make sure it's running in the right direction on",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0006_EV_013",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0010",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 254 Spindle Motor Overheat",
+              "url": "https://www.haascnc.com/video/service/M-VcwEodqP0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 90000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-07-11T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] if you're in the middle of a job and you get alarmed 2:54 spin the motor overheat here are a couple things you can do the spindle motor has a temperature sensor built into it usually in the junction box there are temperature limits for the spindle motor that's preset from the factory if the spindle motor temperature begins to reach those limits this sensor triggers alarm to 54 to begin with check that the spindle loads are not way over a hundred percent for long extended periods because you're running a long super-aggressive program this alarm can be triggered if there are problems with the spindle fan the fan should turn on as soon as the spindle starts turning if the fan is working make sure it's running in the right direction on a vertical mill it should pull air up through the spindle head and push it out through the top on a horizontal mill it pushes air out through the back of the spindle head if the machine has a next-gen Control open the control cabinet and look at the cable connected to p39 on the i/o PC board it should have a ferrite filter on it remove the spindle head cover and examine the temperature sensor itself make sure that it's not damaged and the cable is firmly connected if the alarm persists it's time to contact your local hospital outlet for assistance thanks for watching [Music]",
+              "content_sha256": "dbe5b403695923879eb17a19f73842375c2a62f71845cd82a9cd857b6b6d0b97",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=M-VcwEodqP0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0006",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0006_CL_011"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0006_CL_011",
+          "text": "The presenter says that on a vertical mill the fan should pull air up through the spindle head and push it out through the top, and on a horizontal mill it pushes air out through the back of the spindle head.",
+          "role": "acceptance_criteria",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville Collins (presenter)",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 254 troubleshooting as demonstrated in SRC_HAAS_0010."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0006_EV_015",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0006_ST_003"
+        ],
+        "score": 0.03278688524590164,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0006_EV_015",
+              "source_id": "SRC_HAAS_0010",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 44590,
+                "end_ms": 61720,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "the spindle starts turning if the fan is working make sure it's running in the right direction on a vertical mill it should pull air up through the spindle head and push it out through the top on a horizontal mill it pushes air out through the back of the spindle head if the machine has a",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0006_EV_015",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0010",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 254 Spindle Motor Overheat",
+              "url": "https://www.haascnc.com/video/service/M-VcwEodqP0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 90000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-07-11T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] if you're in the middle of a job and you get alarmed 2:54 spin the motor overheat here are a couple things you can do the spindle motor has a temperature sensor built into it usually in the junction box there are temperature limits for the spindle motor that's preset from the factory if the spindle motor temperature begins to reach those limits this sensor triggers alarm to 54 to begin with check that the spindle loads are not way over a hundred percent for long extended periods because you're running a long super-aggressive program this alarm can be triggered if there are problems with the spindle fan the fan should turn on as soon as the spindle starts turning if the fan is working make sure it's running in the right direction on a vertical mill it should pull air up through the spindle head and push it out through the top on a horizontal mill it pushes air out through the back of the spindle head if the machine has a next-gen Control open the control cabinet and look at the cable connected to p39 on the i/o PC board it should have a ferrite filter on it remove the spindle head cover and examine the temperature sensor itself make sure that it's not damaged and the cable is firmly connected if the alarm persists it's time to contact your local hospital outlet for assistance thanks for watching [Music]",
+              "content_sha256": "dbe5b403695923879eb17a19f73842375c2a62f71845cd82a9cd857b6b6d0b97",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=M-VcwEodqP0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0006",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0006_CL_022"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0006_CL_022",
+          "text": "The presenter makes the P39 cable check conditional on the machine having a next-gen control.",
+          "role": "relation",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville Collins (presenter)",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 254 troubleshooting as demonstrated in SRC_HAAS_0010."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0006_EV_019",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0006_ST_003",
+          "REAL_WF_0006_ST_004"
+        ],
+        "score": 0.03278688524590164,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0006_EV_019",
+              "source_id": "SRC_HAAS_0010",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 56020,
+                "end_ms": 69280,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "horizontal mill it pushes air out through the back of the spindle head if the machine has a next-gen Control open the control cabinet and look at the cable connected to p39 on the i/o PC board",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0006_EV_019",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0010",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 254 Spindle Motor Overheat",
+              "url": "https://www.haascnc.com/video/service/M-VcwEodqP0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 90000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-07-11T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] if you're in the middle of a job and you get alarmed 2:54 spin the motor overheat here are a couple things you can do the spindle motor has a temperature sensor built into it usually in the junction box there are temperature limits for the spindle motor that's preset from the factory if the spindle motor temperature begins to reach those limits this sensor triggers alarm to 54 to begin with check that the spindle loads are not way over a hundred percent for long extended periods because you're running a long super-aggressive program this alarm can be triggered if there are problems with the spindle fan the fan should turn on as soon as the spindle starts turning if the fan is working make sure it's running in the right direction on a vertical mill it should pull air up through the spindle head and push it out through the top on a horizontal mill it pushes air out through the back of the spindle head if the machine has a next-gen Control open the control cabinet and look at the cable connected to p39 on the i/o PC board it should have a ferrite filter on it remove the spindle head cover and examine the temperature sensor itself make sure that it's not damaged and the cable is firmly connected if the alarm persists it's time to contact your local hospital outlet for assistance thanks for watching [Music]",
+              "content_sha256": "dbe5b403695923879eb17a19f73842375c2a62f71845cd82a9cd857b6b6d0b97",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=M-VcwEodqP0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0006",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0006_CL_015"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0006_CL_015",
+          "text": "The presenter says this check applies if the machine has a next-gen control.",
+          "role": "condition",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville Collins (presenter)",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 254 troubleshooting as demonstrated in SRC_HAAS_0010."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0006_EV_019",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0006_ST_003",
+          "REAL_WF_0006_ST_004"
+        ],
+        "score": 0.03278688524590164,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0006_EV_019",
+              "source_id": "SRC_HAAS_0010",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 56020,
+                "end_ms": 69280,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "horizontal mill it pushes air out through the back of the spindle head if the machine has a next-gen Control open the control cabinet and look at the cable connected to p39 on the i/o PC board",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0006_EV_019",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0010",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 254 Spindle Motor Overheat",
+              "url": "https://www.haascnc.com/video/service/M-VcwEodqP0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 90000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-07-11T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] if you're in the middle of a job and you get alarmed 2:54 spin the motor overheat here are a couple things you can do the spindle motor has a temperature sensor built into it usually in the junction box there are temperature limits for the spindle motor that's preset from the factory if the spindle motor temperature begins to reach those limits this sensor triggers alarm to 54 to begin with check that the spindle loads are not way over a hundred percent for long extended periods because you're running a long super-aggressive program this alarm can be triggered if there are problems with the spindle fan the fan should turn on as soon as the spindle starts turning if the fan is working make sure it's running in the right direction on a vertical mill it should pull air up through the spindle head and push it out through the top on a horizontal mill it pushes air out through the back of the spindle head if the machine has a next-gen Control open the control cabinet and look at the cable connected to p39 on the i/o PC board it should have a ferrite filter on it remove the spindle head cover and examine the temperature sensor itself make sure that it's not damaged and the cable is firmly connected if the alarm persists it's time to contact your local hospital outlet for assistance thanks for watching [Music]",
+              "content_sha256": "dbe5b403695923879eb17a19f73842375c2a62f71845cd82a9cd857b6b6d0b97",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=M-VcwEodqP0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0006",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0006_CL_004"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0006_CL_004",
+          "text": "The presenter says to begin by checking that the spindle loads are not way over a hundred percent for extended periods.",
+          "role": "action",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville Collins (presenter)",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 254 troubleshooting as demonstrated in SRC_HAAS_0010."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0006_EV_008",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0006_ST_002"
+        ],
+        "score": 0.03200204813108039,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0006_EV_008",
+              "source_id": "SRC_HAAS_0010",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 27760,
+                "end_ms": 38560,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "to begin with check that the spindle loads are not way over a hundred percent for long extended periods because you're running a long super-aggressive program this alarm",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0006_EV_008",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0010",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 254 Spindle Motor Overheat",
+              "url": "https://www.haascnc.com/video/service/M-VcwEodqP0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 90000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-07-11T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] if you're in the middle of a job and you get alarmed 2:54 spin the motor overheat here are a couple things you can do the spindle motor has a temperature sensor built into it usually in the junction box there are temperature limits for the spindle motor that's preset from the factory if the spindle motor temperature begins to reach those limits this sensor triggers alarm to 54 to begin with check that the spindle loads are not way over a hundred percent for long extended periods because you're running a long super-aggressive program this alarm can be triggered if there are problems with the spindle fan the fan should turn on as soon as the spindle starts turning if the fan is working make sure it's running in the right direction on a vertical mill it should pull air up through the spindle head and push it out through the top on a horizontal mill it pushes air out through the back of the spindle head if the machine has a next-gen Control open the control cabinet and look at the cable connected to p39 on the i/o PC board it should have a ferrite filter on it remove the spindle head cover and examine the temperature sensor itself make sure that it's not damaged and the cable is firmly connected if the alarm persists it's time to contact your local hospital outlet for assistance thanks for watching [Music]",
+              "content_sha256": "dbe5b403695923879eb17a19f73842375c2a62f71845cd82a9cd857b6b6d0b97",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=M-VcwEodqP0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0006",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0006_CL_005"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0006_CL_005",
+          "text": "The Main Spindle panel shows spindle speed 2700 RPM, spindle power 18.7 KW and a Spindle Load bar reading 149%.",
+          "role": "action",
+          "evidence_type": "observed",
+          "attribution": {
+            "actor_id": null,
+            "label": "D1-A keyframe observation, pending human check",
+            "kind": "model"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 254 troubleshooting as demonstrated in SRC_HAAS_0010."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0006_EV_009",
+              "support_status": "supported",
+              "explanation": "The panel values and the load percentage are legible in the frame."
+            },
+            {
+              "evidence_id": "REAL_WF_0006_EV_010",
+              "support_status": "supported",
+              "explanation": "The narration at this moment is about spindle load going well over a hundred percent."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0006_ST_002"
+        ],
+        "score": 0.03200204813108039,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0006_EV_009",
+              "source_id": "SRC_HAAS_0010",
+              "modality": "visual",
+              "locator": {
+                "start_ms": 30999,
+                "end_ms": 31000,
+                "page": null,
+                "text_span": null
+              },
+              "quote": null,
+              "observation_note": "Main Spindle panel: spindle speed 2700 RPM, spindle power 18.7 KW, Spindle Load bar reading 149%.",
+              "asset_uri": "acquisition/preprocessing/keyframes/SRC_HAAS_0010/kf_0031000.jpg",
+              "transcript_origin": "none",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0006_EV_009",
+              "support_status": "supported",
+              "explanation": "The panel values and the load percentage are legible in the frame."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0010",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 254 Spindle Motor Overheat",
+              "url": "https://www.haascnc.com/video/service/M-VcwEodqP0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 90000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-07-11T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] if you're in the middle of a job and you get alarmed 2:54 spin the motor overheat here are a couple things you can do the spindle motor has a temperature sensor built into it usually in the junction box there are temperature limits for the spindle motor that's preset from the factory if the spindle motor temperature begins to reach those limits this sensor triggers alarm to 54 to begin with check that the spindle loads are not way over a hundred percent for long extended periods because you're running a long super-aggressive program this alarm can be triggered if there are problems with the spindle fan the fan should turn on as soon as the spindle starts turning if the fan is working make sure it's running in the right direction on a vertical mill it should pull air up through the spindle head and push it out through the top on a horizontal mill it pushes air out through the back of the spindle head if the machine has a next-gen Control open the control cabinet and look at the cable connected to p39 on the i/o PC board it should have a ferrite filter on it remove the spindle head cover and examine the temperature sensor itself make sure that it's not damaged and the cable is firmly connected if the alarm persists it's time to contact your local hospital outlet for assistance thanks for watching [Music]",
+              "content_sha256": "dbe5b403695923879eb17a19f73842375c2a62f71845cd82a9cd857b6b6d0b97",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=M-VcwEodqP0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          },
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0006_EV_010",
+              "source_id": "SRC_HAAS_0010",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 27760,
+                "end_ms": 33280,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "to begin with check that the spindle loads are not way over a hundred percent for long",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0006_EV_010",
+              "support_status": "supported",
+              "explanation": "The narration at this moment is about spindle load going well over a hundred percent."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0010",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 254 Spindle Motor Overheat",
+              "url": "https://www.haascnc.com/video/service/M-VcwEodqP0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 90000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-07-11T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] if you're in the middle of a job and you get alarmed 2:54 spin the motor overheat here are a couple things you can do the spindle motor has a temperature sensor built into it usually in the junction box there are temperature limits for the spindle motor that's preset from the factory if the spindle motor temperature begins to reach those limits this sensor triggers alarm to 54 to begin with check that the spindle loads are not way over a hundred percent for long extended periods because you're running a long super-aggressive program this alarm can be triggered if there are problems with the spindle fan the fan should turn on as soon as the spindle starts turning if the fan is working make sure it's running in the right direction on a vertical mill it should pull air up through the spindle head and push it out through the top on a horizontal mill it pushes air out through the back of the spindle head if the machine has a next-gen Control open the control cabinet and look at the cable connected to p39 on the i/o PC board it should have a ferrite filter on it remove the spindle head cover and examine the temperature sensor itself make sure that it's not damaged and the cable is firmly connected if the alarm persists it's time to contact your local hospital outlet for assistance thanks for watching [Music]",
+              "content_sha256": "dbe5b403695923879eb17a19f73842375c2a62f71845cd82a9cd857b6b6d0b97",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=M-VcwEodqP0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0006",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0006_CL_006"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0006_CL_006",
+          "text": "The presenter ties spindle load that stays far over a hundred percent for long periods to running a long, super-aggressive program.",
+          "role": "rationale",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville Collins (presenter)",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 254 troubleshooting as demonstrated in SRC_HAAS_0010."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0006_EV_008",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0006_ST_002"
+        ],
+        "score": 0.03200204813108039,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0006_EV_008",
+              "source_id": "SRC_HAAS_0010",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 27760,
+                "end_ms": 38560,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "to begin with check that the spindle loads are not way over a hundred percent for long extended periods because you're running a long super-aggressive program this alarm",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0006_EV_008",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0010",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 254 Spindle Motor Overheat",
+              "url": "https://www.haascnc.com/video/service/M-VcwEodqP0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 90000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-07-11T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] if you're in the middle of a job and you get alarmed 2:54 spin the motor overheat here are a couple things you can do the spindle motor has a temperature sensor built into it usually in the junction box there are temperature limits for the spindle motor that's preset from the factory if the spindle motor temperature begins to reach those limits this sensor triggers alarm to 54 to begin with check that the spindle loads are not way over a hundred percent for long extended periods because you're running a long super-aggressive program this alarm can be triggered if there are problems with the spindle fan the fan should turn on as soon as the spindle starts turning if the fan is working make sure it's running in the right direction on a vertical mill it should pull air up through the spindle head and push it out through the top on a horizontal mill it pushes air out through the back of the spindle head if the machine has a next-gen Control open the control cabinet and look at the cable connected to p39 on the i/o PC board it should have a ferrite filter on it remove the spindle head cover and examine the temperature sensor itself make sure that it's not damaged and the cable is firmly connected if the alarm persists it's time to contact your local hospital outlet for assistance thanks for watching [Music]",
+              "content_sha256": "dbe5b403695923879eb17a19f73842375c2a62f71845cd82a9cd857b6b6d0b97",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=M-VcwEodqP0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0006",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0006_CL_001"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0006_CL_001",
+          "text": "The presenter says the alarm can come up in the middle of a job, and names it as alarm 254 spindle motor overheat.",
+          "role": "context",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville Collins (presenter)",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 254 troubleshooting as demonstrated in SRC_HAAS_0010."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0006_EV_002",
+              "support_status": "supported",
+              "explanation": "The captions state this directly. Cue 1 is corrected from 'alarmed 2:54 spin the motor overheat' to 'alarm 254 spindle motor overheat' (the video's title)."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0006_ST_001"
+        ],
+        "score": 0.0315136476426799,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0006_EV_002",
+              "source_id": "SRC_HAAS_0010",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 130,
+                "end_ms": 15730,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "[Music] if you're in the middle of a job and you get alarm 254 spindle motor overheat here are a couple things you can do the spindle motor has a temperature sensor built into it usually in the",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "human",
+              "parent_evidence_ids": [
+                "REAL_WF_0006_EV_001"
+              ]
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0006_EV_002",
+              "support_status": "supported",
+              "explanation": "The captions state this directly. Cue 1 is corrected from 'alarmed 2:54 spin the motor overheat' to 'alarm 254 spindle motor overheat' (the video's title)."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0010",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 254 Spindle Motor Overheat",
+              "url": "https://www.haascnc.com/video/service/M-VcwEodqP0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 90000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-07-11T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] if you're in the middle of a job and you get alarmed 2:54 spin the motor overheat here are a couple things you can do the spindle motor has a temperature sensor built into it usually in the junction box there are temperature limits for the spindle motor that's preset from the factory if the spindle motor temperature begins to reach those limits this sensor triggers alarm to 54 to begin with check that the spindle loads are not way over a hundred percent for long extended periods because you're running a long super-aggressive program this alarm can be triggered if there are problems with the spindle fan the fan should turn on as soon as the spindle starts turning if the fan is working make sure it's running in the right direction on a vertical mill it should pull air up through the spindle head and push it out through the top on a horizontal mill it pushes air out through the back of the spindle head if the machine has a next-gen Control open the control cabinet and look at the cable connected to p39 on the i/o PC board it should have a ferrite filter on it remove the spindle head cover and examine the temperature sensor itself make sure that it's not damaged and the cable is firmly connected if the alarm persists it's time to contact your local hospital outlet for assistance thanks for watching [Music]",
+              "content_sha256": "dbe5b403695923879eb17a19f73842375c2a62f71845cd82a9cd857b6b6d0b97",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=M-VcwEodqP0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0006",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0006_CL_002"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0006_CL_002",
+          "text": "The control shows an orange banner reading '254 SPINDLE MOTOR OVERHEAT'.",
+          "role": "context",
+          "evidence_type": "observed",
+          "attribution": {
+            "actor_id": null,
+            "label": "D1-A keyframe observation, pending human check",
+            "kind": "model"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 254 troubleshooting as demonstrated in SRC_HAAS_0010."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0006_EV_003",
+              "support_status": "supported",
+              "explanation": "The banner text is legible in the frame."
+            },
+            {
+              "evidence_id": "REAL_WF_0006_EV_005",
+              "support_status": "supported",
+              "explanation": "The narration around this moment names the alarm and how it is triggered."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0006_ST_001"
+        ],
+        "score": 0.0315136476426799,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0006_EV_003",
+              "source_id": "SRC_HAAS_0010",
+              "modality": "visual",
+              "locator": {
+                "start_ms": 26499,
+                "end_ms": 26500,
+                "page": null,
+                "text_span": null
+              },
+              "quote": null,
+              "observation_note": "Control screen with an orange banner '254 SPINDLE MOTOR OVERHEAT'.",
+              "asset_uri": "acquisition/preprocessing/keyframes/SRC_HAAS_0010/kf_0026500.jpg",
+              "transcript_origin": "none",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0006_EV_003",
+              "support_status": "supported",
+              "explanation": "The banner text is legible in the frame."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0010",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 254 Spindle Motor Overheat",
+              "url": "https://www.haascnc.com/video/service/M-VcwEodqP0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 90000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-07-11T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] if you're in the middle of a job and you get alarmed 2:54 spin the motor overheat here are a couple things you can do the spindle motor has a temperature sensor built into it usually in the junction box there are temperature limits for the spindle motor that's preset from the factory if the spindle motor temperature begins to reach those limits this sensor triggers alarm to 54 to begin with check that the spindle loads are not way over a hundred percent for long extended periods because you're running a long super-aggressive program this alarm can be triggered if there are problems with the spindle fan the fan should turn on as soon as the spindle starts turning if the fan is working make sure it's running in the right direction on a vertical mill it should pull air up through the spindle head and push it out through the top on a horizontal mill it pushes air out through the back of the spindle head if the machine has a next-gen Control open the control cabinet and look at the cable connected to p39 on the i/o PC board it should have a ferrite filter on it remove the spindle head cover and examine the temperature sensor itself make sure that it's not damaged and the cable is firmly connected if the alarm persists it's time to contact your local hospital outlet for assistance thanks for watching [Music]",
+              "content_sha256": "dbe5b403695923879eb17a19f73842375c2a62f71845cd82a9cd857b6b6d0b97",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=M-VcwEodqP0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          },
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0006_EV_005",
+              "source_id": "SRC_HAAS_0010",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 130,
+                "end_ms": 27760,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "[Music] if you're in the middle of a job and you get alarm 254 spindle motor overheat here are a couple things you can do the spindle motor has a temperature sensor built into it usually in the junction box there are temperature limits for the spindle motor that's preset from the factory if the spindle motor temperature begins to reach those limits this sensor triggers alarm 254",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "human",
+              "parent_evidence_ids": [
+                "REAL_WF_0006_EV_004"
+              ]
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0006_EV_005",
+              "support_status": "supported",
+              "explanation": "The narration around this moment names the alarm and how it is triggered."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0010",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 254 Spindle Motor Overheat",
+              "url": "https://www.haascnc.com/video/service/M-VcwEodqP0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 90000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-07-11T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] if you're in the middle of a job and you get alarmed 2:54 spin the motor overheat here are a couple things you can do the spindle motor has a temperature sensor built into it usually in the junction box there are temperature limits for the spindle motor that's preset from the factory if the spindle motor temperature begins to reach those limits this sensor triggers alarm to 54 to begin with check that the spindle loads are not way over a hundred percent for long extended periods because you're running a long super-aggressive program this alarm can be triggered if there are problems with the spindle fan the fan should turn on as soon as the spindle starts turning if the fan is working make sure it's running in the right direction on a vertical mill it should pull air up through the spindle head and push it out through the top on a horizontal mill it pushes air out through the back of the spindle head if the machine has a next-gen Control open the control cabinet and look at the cable connected to p39 on the i/o PC board it should have a ferrite filter on it remove the spindle head cover and examine the temperature sensor itself make sure that it's not damaged and the cable is firmly connected if the alarm persists it's time to contact your local hospital outlet for assistance thanks for watching [Music]",
+              "content_sha256": "dbe5b403695923879eb17a19f73842375c2a62f71845cd82a9cd857b6b6d0b97",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=M-VcwEodqP0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0006",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0006_CL_003"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0006_CL_003",
+          "text": "The presenter says the spindle motor has a temperature sensor built into it, usually in the junction box, with factory-preset temperature limits, and that the sensor triggers alarm 254 when the motor temperature begins to reach those limits.",
+          "role": "rationale",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville Collins (presenter)",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 254 troubleshooting as demonstrated in SRC_HAAS_0010."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0006_EV_007",
+              "support_status": "supported",
+              "explanation": "The captions state this directly. Cue 4 is corrected from 'alarm to 54' to 'alarm 254'."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0006_ST_001"
+        ],
+        "score": 0.0315136476426799,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0006_EV_007",
+              "source_id": "SRC_HAAS_0010",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 10630,
+                "end_ms": 27760,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "a couple things you can do the spindle motor has a temperature sensor built into it usually in the junction box there are temperature limits for the spindle motor that's preset from the factory if the spindle motor temperature begins to reach those limits this sensor triggers alarm 254",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "human",
+              "parent_evidence_ids": [
+                "REAL_WF_0006_EV_006"
+              ]
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0006_EV_007",
+              "support_status": "supported",
+              "explanation": "The captions state this directly. Cue 4 is corrected from 'alarm to 54' to 'alarm 254'."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0010",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 254 Spindle Motor Overheat",
+              "url": "https://www.haascnc.com/video/service/M-VcwEodqP0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 90000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-07-11T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] if you're in the middle of a job and you get alarmed 2:54 spin the motor overheat here are a couple things you can do the spindle motor has a temperature sensor built into it usually in the junction box there are temperature limits for the spindle motor that's preset from the factory if the spindle motor temperature begins to reach those limits this sensor triggers alarm to 54 to begin with check that the spindle loads are not way over a hundred percent for long extended periods because you're running a long super-aggressive program this alarm can be triggered if there are problems with the spindle fan the fan should turn on as soon as the spindle starts turning if the fan is working make sure it's running in the right direction on a vertical mill it should pull air up through the spindle head and push it out through the top on a horizontal mill it pushes air out through the back of the spindle head if the machine has a next-gen Control open the control cabinet and look at the cable connected to p39 on the i/o PC board it should have a ferrite filter on it remove the spindle head cover and examine the temperature sensor itself make sure that it's not damaged and the cable is firmly connected if the alarm persists it's time to contact your local hospital outlet for assistance thanks for watching [Music]",
+              "content_sha256": "dbe5b403695923879eb17a19f73842375c2a62f71845cd82a9cd857b6b6d0b97",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=M-VcwEodqP0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0006",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0006_CL_012"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0006_CL_012",
+          "text": "The presenter says to open the control cabinet and look at the cable connected to P39 on the I/O PC board.",
+          "role": "action",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville Collins (presenter)",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 254 troubleshooting as demonstrated in SRC_HAAS_0010."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0006_EV_016",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0006_ST_004"
+        ],
+        "score": 0.03125763125763126,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0006_EV_016",
+              "source_id": "SRC_HAAS_0010",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 61720,
+                "end_ms": 69280,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "next-gen Control open the control cabinet and look at the cable connected to p39 on the i/o PC board",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0006_EV_016",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0010",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 254 Spindle Motor Overheat",
+              "url": "https://www.haascnc.com/video/service/M-VcwEodqP0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 90000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-07-11T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] if you're in the middle of a job and you get alarmed 2:54 spin the motor overheat here are a couple things you can do the spindle motor has a temperature sensor built into it usually in the junction box there are temperature limits for the spindle motor that's preset from the factory if the spindle motor temperature begins to reach those limits this sensor triggers alarm to 54 to begin with check that the spindle loads are not way over a hundred percent for long extended periods because you're running a long super-aggressive program this alarm can be triggered if there are problems with the spindle fan the fan should turn on as soon as the spindle starts turning if the fan is working make sure it's running in the right direction on a vertical mill it should pull air up through the spindle head and push it out through the top on a horizontal mill it pushes air out through the back of the spindle head if the machine has a next-gen Control open the control cabinet and look at the cable connected to p39 on the i/o PC board it should have a ferrite filter on it remove the spindle head cover and examine the temperature sensor itself make sure that it's not damaged and the cable is firmly connected if the alarm persists it's time to contact your local hospital outlet for assistance thanks for watching [Music]",
+              "content_sha256": "dbe5b403695923879eb17a19f73842375c2a62f71845cd82a9cd857b6b6d0b97",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=M-VcwEodqP0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0006",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0006_CL_013"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0006_CL_013",
+          "text": "A technician crouches at an open control cabinet, with drives, boards and a 40 horsepower vector drive visible.",
+          "role": "action",
+          "evidence_type": "observed",
+          "attribution": {
+            "actor_id": null,
+            "label": "D1-A keyframe observation, pending human check",
+            "kind": "model"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 254 troubleshooting as demonstrated in SRC_HAAS_0010."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0006_EV_017",
+              "support_status": "supported",
+              "explanation": "The open cabinet and its contents are visible in the frame."
+            },
+            {
+              "evidence_id": "REAL_WF_0006_EV_016",
+              "support_status": "supported",
+              "explanation": "The narration at this moment is about opening the control cabinet."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0006_ST_004"
+        ],
+        "score": 0.03125763125763126,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0006_EV_017",
+              "source_id": "SRC_HAAS_0010",
+              "modality": "visual",
+              "locator": {
+                "start_ms": 63999,
+                "end_ms": 64000,
+                "page": null,
+                "text_span": null
+              },
+              "quote": null,
+              "observation_note": "A technician crouches at an open control cabinet; drives, boards and a 40 horsepower vector drive are visible.",
+              "asset_uri": "acquisition/preprocessing/keyframes/SRC_HAAS_0010/kf_0064000.jpg",
+              "transcript_origin": "none",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0006_EV_017",
+              "support_status": "supported",
+              "explanation": "The open cabinet and its contents are visible in the frame."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0010",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 254 Spindle Motor Overheat",
+              "url": "https://www.haascnc.com/video/service/M-VcwEodqP0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 90000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-07-11T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] if you're in the middle of a job and you get alarmed 2:54 spin the motor overheat here are a couple things you can do the spindle motor has a temperature sensor built into it usually in the junction box there are temperature limits for the spindle motor that's preset from the factory if the spindle motor temperature begins to reach those limits this sensor triggers alarm to 54 to begin with check that the spindle loads are not way over a hundred percent for long extended periods because you're running a long super-aggressive program this alarm can be triggered if there are problems with the spindle fan the fan should turn on as soon as the spindle starts turning if the fan is working make sure it's running in the right direction on a vertical mill it should pull air up through the spindle head and push it out through the top on a horizontal mill it pushes air out through the back of the spindle head if the machine has a next-gen Control open the control cabinet and look at the cable connected to p39 on the i/o PC board it should have a ferrite filter on it remove the spindle head cover and examine the temperature sensor itself make sure that it's not damaged and the cable is firmly connected if the alarm persists it's time to contact your local hospital outlet for assistance thanks for watching [Music]",
+              "content_sha256": "dbe5b403695923879eb17a19f73842375c2a62f71845cd82a9cd857b6b6d0b97",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=M-VcwEodqP0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          },
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0006_EV_016",
+              "source_id": "SRC_HAAS_0010",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 61720,
+                "end_ms": 69280,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "next-gen Control open the control cabinet and look at the cable connected to p39 on the i/o PC board",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0006_EV_016",
+              "support_status": "supported",
+              "explanation": "The narration at this moment is about opening the control cabinet."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0010",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 254 Spindle Motor Overheat",
+              "url": "https://www.haascnc.com/video/service/M-VcwEodqP0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 90000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-07-11T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] if you're in the middle of a job and you get alarmed 2:54 spin the motor overheat here are a couple things you can do the spindle motor has a temperature sensor built into it usually in the junction box there are temperature limits for the spindle motor that's preset from the factory if the spindle motor temperature begins to reach those limits this sensor triggers alarm to 54 to begin with check that the spindle loads are not way over a hundred percent for long extended periods because you're running a long super-aggressive program this alarm can be triggered if there are problems with the spindle fan the fan should turn on as soon as the spindle starts turning if the fan is working make sure it's running in the right direction on a vertical mill it should pull air up through the spindle head and push it out through the top on a horizontal mill it pushes air out through the back of the spindle head if the machine has a next-gen Control open the control cabinet and look at the cable connected to p39 on the i/o PC board it should have a ferrite filter on it remove the spindle head cover and examine the temperature sensor itself make sure that it's not damaged and the cable is firmly connected if the alarm persists it's time to contact your local hospital outlet for assistance thanks for watching [Music]",
+              "content_sha256": "dbe5b403695923879eb17a19f73842375c2a62f71845cd82a9cd857b6b6d0b97",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=M-VcwEodqP0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0006",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0006_CL_014"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0006_CL_014",
+          "text": "A 3D model of a circuit board shows a connector labelled 'P39'.",
+          "role": "action",
+          "evidence_type": "observed",
+          "attribution": {
+            "actor_id": null,
+            "label": "D1-A keyframe observation, pending human check",
+            "kind": "model"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 254 troubleshooting as demonstrated in SRC_HAAS_0010."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0006_EV_018",
+              "support_status": "supported",
+              "explanation": "The 'P39' label is legible in the frame."
+            },
+            {
+              "evidence_id": "REAL_WF_0006_EV_016",
+              "support_status": "supported",
+              "explanation": "The narration at this moment names P39 on the I/O PC board."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0006_ST_004"
+        ],
+        "score": 0.03125763125763126,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0006_EV_018",
+              "source_id": "SRC_HAAS_0010",
+              "modality": "visual",
+              "locator": {
+                "start_ms": 66499,
+                "end_ms": 66500,
+                "page": null,
+                "text_span": null
+              },
+              "quote": null,
+              "observation_note": "3D model of a circuit board with the connector labelled 'P39'.",
+              "asset_uri": "acquisition/preprocessing/keyframes/SRC_HAAS_0010/kf_0066500.jpg",
+              "transcript_origin": "none",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0006_EV_018",
+              "support_status": "supported",
+              "explanation": "The 'P39' label is legible in the frame."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0010",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 254 Spindle Motor Overheat",
+              "url": "https://www.haascnc.com/video/service/M-VcwEodqP0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 90000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-07-11T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] if you're in the middle of a job and you get alarmed 2:54 spin the motor overheat here are a couple things you can do the spindle motor has a temperature sensor built into it usually in the junction box there are temperature limits for the spindle motor that's preset from the factory if the spindle motor temperature begins to reach those limits this sensor triggers alarm to 54 to begin with check that the spindle loads are not way over a hundred percent for long extended periods because you're running a long super-aggressive program this alarm can be triggered if there are problems with the spindle fan the fan should turn on as soon as the spindle starts turning if the fan is working make sure it's running in the right direction on a vertical mill it should pull air up through the spindle head and push it out through the top on a horizontal mill it pushes air out through the back of the spindle head if the machine has a next-gen Control open the control cabinet and look at the cable connected to p39 on the i/o PC board it should have a ferrite filter on it remove the spindle head cover and examine the temperature sensor itself make sure that it's not damaged and the cable is firmly connected if the alarm persists it's time to contact your local hospital outlet for assistance thanks for watching [Music]",
+              "content_sha256": "dbe5b403695923879eb17a19f73842375c2a62f71845cd82a9cd857b6b6d0b97",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=M-VcwEodqP0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          },
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0006_EV_016",
+              "source_id": "SRC_HAAS_0010",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 61720,
+                "end_ms": 69280,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "next-gen Control open the control cabinet and look at the cable connected to p39 on the i/o PC board",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0006_EV_016",
+              "support_status": "supported",
+              "explanation": "The narration at this moment names P39 on the I/O PC board."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0010",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 254 Spindle Motor Overheat",
+              "url": "https://www.haascnc.com/video/service/M-VcwEodqP0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 90000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-07-11T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] if you're in the middle of a job and you get alarmed 2:54 spin the motor overheat here are a couple things you can do the spindle motor has a temperature sensor built into it usually in the junction box there are temperature limits for the spindle motor that's preset from the factory if the spindle motor temperature begins to reach those limits this sensor triggers alarm to 54 to begin with check that the spindle loads are not way over a hundred percent for long extended periods because you're running a long super-aggressive program this alarm can be triggered if there are problems with the spindle fan the fan should turn on as soon as the spindle starts turning if the fan is working make sure it's running in the right direction on a vertical mill it should pull air up through the spindle head and push it out through the top on a horizontal mill it pushes air out through the back of the spindle head if the machine has a next-gen Control open the control cabinet and look at the cable connected to p39 on the i/o PC board it should have a ferrite filter on it remove the spindle head cover and examine the temperature sensor itself make sure that it's not damaged and the cable is firmly connected if the alarm persists it's time to contact your local hospital outlet for assistance thanks for watching [Music]",
+              "content_sha256": "dbe5b403695923879eb17a19f73842375c2a62f71845cd82a9cd857b6b6d0b97",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=M-VcwEodqP0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0006",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0006_CL_016"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0006_CL_016",
+          "text": "The presenter says the cable should have a ferrite filter on it.",
+          "role": "acceptance_criteria",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville Collins (presenter)",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 254 troubleshooting as demonstrated in SRC_HAAS_0010."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0006_EV_020",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0006_ST_004"
+        ],
+        "score": 0.03125763125763126,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0006_EV_020",
+              "source_id": "SRC_HAAS_0010",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 69280,
+                "end_ms": 74140,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "it should have a ferrite filter on it remove the spindle head cover and examine the temperature",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0006_EV_020",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0010",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 254 Spindle Motor Overheat",
+              "url": "https://www.haascnc.com/video/service/M-VcwEodqP0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 90000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-07-11T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] if you're in the middle of a job and you get alarmed 2:54 spin the motor overheat here are a couple things you can do the spindle motor has a temperature sensor built into it usually in the junction box there are temperature limits for the spindle motor that's preset from the factory if the spindle motor temperature begins to reach those limits this sensor triggers alarm to 54 to begin with check that the spindle loads are not way over a hundred percent for long extended periods because you're running a long super-aggressive program this alarm can be triggered if there are problems with the spindle fan the fan should turn on as soon as the spindle starts turning if the fan is working make sure it's running in the right direction on a vertical mill it should pull air up through the spindle head and push it out through the top on a horizontal mill it pushes air out through the back of the spindle head if the machine has a next-gen Control open the control cabinet and look at the cable connected to p39 on the i/o PC board it should have a ferrite filter on it remove the spindle head cover and examine the temperature sensor itself make sure that it's not damaged and the cable is firmly connected if the alarm persists it's time to contact your local hospital outlet for assistance thanks for watching [Music]",
+              "content_sha256": "dbe5b403695923879eb17a19f73842375c2a62f71845cd82a9cd857b6b6d0b97",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=M-VcwEodqP0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0006",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0006_CL_017"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0006_CL_017",
+          "text": "The presenter says to remove the spindle head cover and examine the temperature sensor itself.",
+          "role": "action",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville Collins (presenter)",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 254 troubleshooting as demonstrated in SRC_HAAS_0010."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0006_EV_021",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0006_ST_005"
+        ],
+        "score": 0.030776515151515152,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0006_EV_021",
+              "source_id": "SRC_HAAS_0010",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 69280,
+                "end_ms": 80500,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "it should have a ferrite filter on it remove the spindle head cover and examine the temperature sensor itself make sure that it's not damaged and the cable is firmly connected if the alarm",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0006_EV_021",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0010",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 254 Spindle Motor Overheat",
+              "url": "https://www.haascnc.com/video/service/M-VcwEodqP0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 90000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-07-11T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] if you're in the middle of a job and you get alarmed 2:54 spin the motor overheat here are a couple things you can do the spindle motor has a temperature sensor built into it usually in the junction box there are temperature limits for the spindle motor that's preset from the factory if the spindle motor temperature begins to reach those limits this sensor triggers alarm to 54 to begin with check that the spindle loads are not way over a hundred percent for long extended periods because you're running a long super-aggressive program this alarm can be triggered if there are problems with the spindle fan the fan should turn on as soon as the spindle starts turning if the fan is working make sure it's running in the right direction on a vertical mill it should pull air up through the spindle head and push it out through the top on a horizontal mill it pushes air out through the back of the spindle head if the machine has a next-gen Control open the control cabinet and look at the cable connected to p39 on the i/o PC board it should have a ferrite filter on it remove the spindle head cover and examine the temperature sensor itself make sure that it's not damaged and the cable is firmly connected if the alarm persists it's time to contact your local hospital outlet for assistance thanks for watching [Music]",
+              "content_sha256": "dbe5b403695923879eb17a19f73842375c2a62f71845cd82a9cd857b6b6d0b97",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=M-VcwEodqP0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0006",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0006_CL_018"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0006_CL_018",
+          "text": "A close-up shows a black cable labelled 'THERM PROBE' clamped to a brass fitting.",
+          "role": "action",
+          "evidence_type": "observed",
+          "attribution": {
+            "actor_id": null,
+            "label": "D1-A keyframe observation, pending human check",
+            "kind": "model"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 254 troubleshooting as demonstrated in SRC_HAAS_0010."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0006_EV_022",
+              "support_status": "supported",
+              "explanation": "The cable label and brass fitting are legible in the frame."
+            },
+            {
+              "evidence_id": "REAL_WF_0006_EV_021",
+              "support_status": "supported",
+              "explanation": "The narration at this moment is about examining the temperature sensor and its cable."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0006_ST_005"
+        ],
+        "score": 0.030776515151515152,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0006_EV_022",
+              "source_id": "SRC_HAAS_0010",
+              "modality": "visual",
+              "locator": {
+                "start_ms": 78499,
+                "end_ms": 78500,
+                "page": null,
+                "text_span": null
+              },
+              "quote": null,
+              "observation_note": "Close-up of a black cable labelled 'THERM PROBE' clamped to a brass fitting.",
+              "asset_uri": "acquisition/preprocessing/keyframes/SRC_HAAS_0010/kf_0078500.jpg",
+              "transcript_origin": "none",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0006_EV_022",
+              "support_status": "supported",
+              "explanation": "The cable label and brass fitting are legible in the frame."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0010",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 254 Spindle Motor Overheat",
+              "url": "https://www.haascnc.com/video/service/M-VcwEodqP0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 90000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-07-11T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] if you're in the middle of a job and you get alarmed 2:54 spin the motor overheat here are a couple things you can do the spindle motor has a temperature sensor built into it usually in the junction box there are temperature limits for the spindle motor that's preset from the factory if the spindle motor temperature begins to reach those limits this sensor triggers alarm to 54 to begin with check that the spindle loads are not way over a hundred percent for long extended periods because you're running a long super-aggressive program this alarm can be triggered if there are problems with the spindle fan the fan should turn on as soon as the spindle starts turning if the fan is working make sure it's running in the right direction on a vertical mill it should pull air up through the spindle head and push it out through the top on a horizontal mill it pushes air out through the back of the spindle head if the machine has a next-gen Control open the control cabinet and look at the cable connected to p39 on the i/o PC board it should have a ferrite filter on it remove the spindle head cover and examine the temperature sensor itself make sure that it's not damaged and the cable is firmly connected if the alarm persists it's time to contact your local hospital outlet for assistance thanks for watching [Music]",
+              "content_sha256": "dbe5b403695923879eb17a19f73842375c2a62f71845cd82a9cd857b6b6d0b97",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=M-VcwEodqP0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          },
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0006_EV_021",
+              "source_id": "SRC_HAAS_0010",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 69280,
+                "end_ms": 80500,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "it should have a ferrite filter on it remove the spindle head cover and examine the temperature sensor itself make sure that it's not damaged and the cable is firmly connected if the alarm",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0006_EV_021",
+              "support_status": "supported",
+              "explanation": "The narration at this moment is about examining the temperature sensor and its cable."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0010",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 254 Spindle Motor Overheat",
+              "url": "https://www.haascnc.com/video/service/M-VcwEodqP0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 90000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-07-11T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] if you're in the middle of a job and you get alarmed 2:54 spin the motor overheat here are a couple things you can do the spindle motor has a temperature sensor built into it usually in the junction box there are temperature limits for the spindle motor that's preset from the factory if the spindle motor temperature begins to reach those limits this sensor triggers alarm to 54 to begin with check that the spindle loads are not way over a hundred percent for long extended periods because you're running a long super-aggressive program this alarm can be triggered if there are problems with the spindle fan the fan should turn on as soon as the spindle starts turning if the fan is working make sure it's running in the right direction on a vertical mill it should pull air up through the spindle head and push it out through the top on a horizontal mill it pushes air out through the back of the spindle head if the machine has a next-gen Control open the control cabinet and look at the cable connected to p39 on the i/o PC board it should have a ferrite filter on it remove the spindle head cover and examine the temperature sensor itself make sure that it's not damaged and the cable is firmly connected if the alarm persists it's time to contact your local hospital outlet for assistance thanks for watching [Music]",
+              "content_sha256": "dbe5b403695923879eb17a19f73842375c2a62f71845cd82a9cd857b6b6d0b97",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=M-VcwEodqP0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0006",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0006_CL_019"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0006_CL_019",
+          "text": "The presenter says to make sure the sensor is not damaged and the cable is firmly connected.",
+          "role": "acceptance_criteria",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville Collins (presenter)",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 254 troubleshooting as demonstrated in SRC_HAAS_0010."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0006_EV_023",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0006_ST_005"
+        ],
+        "score": 0.030776515151515152,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0006_EV_023",
+              "source_id": "SRC_HAAS_0010",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 74140,
+                "end_ms": 80500,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "sensor itself make sure that it's not damaged and the cable is firmly connected if the alarm",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0006_EV_023",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0010",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 254 Spindle Motor Overheat",
+              "url": "https://www.haascnc.com/video/service/M-VcwEodqP0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 90000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-07-11T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] if you're in the middle of a job and you get alarmed 2:54 spin the motor overheat here are a couple things you can do the spindle motor has a temperature sensor built into it usually in the junction box there are temperature limits for the spindle motor that's preset from the factory if the spindle motor temperature begins to reach those limits this sensor triggers alarm to 54 to begin with check that the spindle loads are not way over a hundred percent for long extended periods because you're running a long super-aggressive program this alarm can be triggered if there are problems with the spindle fan the fan should turn on as soon as the spindle starts turning if the fan is working make sure it's running in the right direction on a vertical mill it should pull air up through the spindle head and push it out through the top on a horizontal mill it pushes air out through the back of the spindle head if the machine has a next-gen Control open the control cabinet and look at the cable connected to p39 on the i/o PC board it should have a ferrite filter on it remove the spindle head cover and examine the temperature sensor itself make sure that it's not damaged and the cable is firmly connected if the alarm persists it's time to contact your local hospital outlet for assistance thanks for watching [Music]",
+              "content_sha256": "dbe5b403695923879eb17a19f73842375c2a62f71845cd82a9cd857b6b6d0b97",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=M-VcwEodqP0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0006",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0006_CL_023"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0006_CL_023",
+          "text": "The presenter ends the checks with a hand-off to the local HFO if the alarm persists.",
+          "role": "relation",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville Collins (presenter)",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 254 troubleshooting as demonstrated in SRC_HAAS_0010."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0006_EV_027",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0006_ST_005"
+        ],
+        "score": 0.030776515151515152,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0006_EV_027",
+              "source_id": "SRC_HAAS_0010",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 74140,
+                "end_ms": 86800,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "sensor itself make sure that it's not damaged and the cable is firmly connected if the alarm persists it's time to contact your local HFO for assistance thanks for watching [Music]",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "human",
+              "parent_evidence_ids": [
+                "REAL_WF_0006_EV_026"
+              ]
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0006_EV_027",
+              "support_status": "supported",
+              "explanation": "The captions state this directly."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0010",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 254 Spindle Motor Overheat",
+              "url": "https://www.haascnc.com/video/service/M-VcwEodqP0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 90000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-07-11T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] if you're in the middle of a job and you get alarmed 2:54 spin the motor overheat here are a couple things you can do the spindle motor has a temperature sensor built into it usually in the junction box there are temperature limits for the spindle motor that's preset from the factory if the spindle motor temperature begins to reach those limits this sensor triggers alarm to 54 to begin with check that the spindle loads are not way over a hundred percent for long extended periods because you're running a long super-aggressive program this alarm can be triggered if there are problems with the spindle fan the fan should turn on as soon as the spindle starts turning if the fan is working make sure it's running in the right direction on a vertical mill it should pull air up through the spindle head and push it out through the top on a horizontal mill it pushes air out through the back of the spindle head if the machine has a next-gen Control open the control cabinet and look at the cable connected to p39 on the i/o PC board it should have a ferrite filter on it remove the spindle head cover and examine the temperature sensor itself make sure that it's not damaged and the cable is firmly connected if the alarm persists it's time to contact your local hospital outlet for assistance thanks for watching [Music]",
+              "content_sha256": "dbe5b403695923879eb17a19f73842375c2a62f71845cd82a9cd857b6b6d0b97",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=M-VcwEodqP0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "REAL_WF_0006",
+          "revision": 1,
+          "entity_type": "claim",
+          "entity_id": "REAL_WF_0006_CL_021"
+        },
+        "claim": {
+          "claim_id": "REAL_WF_0006_CL_021",
+          "text": "The presenter says this applies if the alarm persists after these checks.",
+          "role": "condition",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville Collins (presenter)",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Alarm 254 troubleshooting as demonstrated in SRC_HAAS_0010."
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "REAL_WF_0006_EV_027",
+              "support_status": "supported",
+              "explanation": "The captions state this directly. Cue 14 is corrected from 'local hospital outlet' to 'local HFO' (the description says 'contact your local HFO')."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "REAL_WF_0006_ST_005"
+        ],
+        "score": 0.030776515151515152,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "REAL_WF_0006_EV_027",
+              "source_id": "SRC_HAAS_0010",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 74140,
+                "end_ms": 86800,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "sensor itself make sure that it's not damaged and the cable is firmly connected if the alarm persists it's time to contact your local HFO for assistance thanks for watching [Music]",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "human",
+              "parent_evidence_ids": [
+                "REAL_WF_0006_EV_026"
+              ]
+            },
+            "link": {
+              "evidence_id": "REAL_WF_0006_EV_027",
+              "support_status": "supported",
+              "explanation": "The captions state this directly. Cue 14 is corrected from 'local hospital outlet' to 'local HFO' (the description says 'contact your local HFO')."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0010",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Alarm 254 Spindle Motor Overheat",
+              "url": "https://www.haascnc.com/video/service/M-VcwEodqP0.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 90000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville Collins",
+              "presenter_role": "Service Engineer",
+              "published_at": "2018-07-11T00:00:00Z",
+              "retrieved_at": "2026-10-12T10:51:00Z",
+              "raw_text": "[Music] if you're in the middle of a job and you get alarmed 2:54 spin the motor overheat here are a couple things you can do the spindle motor has a temperature sensor built into it usually in the junction box there are temperature limits for the spindle motor that's preset from the factory if the spindle motor temperature begins to reach those limits this sensor triggers alarm to 54 to begin with check that the spindle loads are not way over a hundred percent for long extended periods because you're running a long super-aggressive program this alarm can be triggered if there are problems with the spindle fan the fan should turn on as soon as the spindle starts turning if the fan is working make sure it's running in the right direction on a vertical mill it should pull air up through the spindle head and push it out through the top on a horizontal mill it pushes air out through the back of the spindle head if the machine has a next-gen Control open the control cabinet and look at the cable connected to p39 on the i/o PC board it should have a ferrite filter on it remove the spindle head cover and examine the temperature sensor itself make sure that it's not damaged and the cable is firmly connected if the alarm persists it's time to contact your local hospital outlet for assistance thanks for watching [Music]",
+              "content_sha256": "dbe5b403695923879eb17a19f73842375c2a62f71845cd82a9cd857b6b6d0b97",
+              "related_source_ids": [],
+              "access_note": "Public video on the official 'Haas Automation, Inc.' YouTube channel (https://www.youtube.com/watch?v=M-VcwEodqP0), mirrored at the canonical URL above, which is built from the same video id and was not fetched (haascnc.com returns a Cloudflare challenge to automated requests). Publisher, presenter and role are taken from the channel's own video description. Manual (non-auto) English captions downloaded via yt-dlp (official_caption). No video file is committed; a 1080p video-only stream is kept locally (gitignored) for keyframe extraction. Redistribution not established -- do not redistribute retained caption text outside this pilot."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      }
+    ],
+    "conflicts": [],
+    "blocked_claims": [],
+    "questions": [
+      {
+        "question_id": "REAL_WF_0006_Q_001",
+        "step_id": "REAL_WF_0006_ST_001",
+        "target_field": "outcome",
+        "reason": "missing",
+        "question": "What does the machine do when the alarm triggers (stop the spindle, stop the program)? The video does not say.",
+        "status": "open",
+        "answer_source_ids": [],
+        "resolution_note": null
+      },
+      {
+        "question_id": "REAL_WF_0006_Q_002",
+        "step_id": "REAL_WF_0006_ST_002",
+        "target_field": "acceptance_criteria",
+        "reason": "missing",
+        "question": "What load level and duration are acceptable? The video only says 'not way over a hundred percent for extended periods'.",
+        "status": "open",
+        "answer_source_ids": [],
+        "resolution_note": null
+      },
+      {
+        "question_id": "REAL_WF_0006_Q_003",
+        "step_id": "REAL_WF_0006_ST_003",
+        "target_field": "action",
+        "reason": "missing",
+        "question": "How is the fan's direction checked in practice (by hand over the outlet, by eye)?",
+        "status": "open",
+        "answer_source_ids": [],
+        "resolution_note": null
+      },
+      {
+        "question_id": "REAL_WF_0006_Q_004",
+        "step_id": "REAL_WF_0006_ST_004",
+        "target_field": "rationale",
+        "reason": "missing",
+        "question": "What does the ferrite filter do for this alarm?",
+        "status": "open",
+        "answer_source_ids": [],
+        "resolution_note": null
+      }
+    ],
+    "relations": [
+      {
+        "relation_id": "REAL_WF_0006_RL_001",
+        "from_step_id": "REAL_WF_0006_ST_003",
+        "to_step_id": "REAL_WF_0006_ST_004",
+        "relation_type": "branch_if",
+        "claim_ids": [
+          "REAL_WF_0006_CL_022"
+        ],
+        "condition_claim_ids": [
+          "REAL_WF_0006_CL_015"
+        ]
+      },
+      {
+        "relation_id": "REAL_WF_0006_RL_002",
+        "from_step_id": "REAL_WF_0006_ST_005",
+        "to_step_id": "REAL_WF_0006_ST_006",
+        "relation_type": "branch_if",
+        "claim_ids": [
+          "REAL_WF_0006_CL_023"
+        ],
+        "condition_claim_ids": [
+          "REAL_WF_0006_CL_021"
+        ]
+      }
+    ],
+    "related_steps": [],
+    "related_claims": [],
+    "evidence_openability_checked": false,
+    "trace": {
+      "config": {
+        "strategy": "hybrid",
+        "top_k": 5,
+        "candidate_k": 20,
+        "rrf_k": 60,
+        "min_cosine": 0.25,
+        "intent": "auto",
+        "min_term_coverage": 0.2,
+        "relevance_policy": "claim_coherence",
+        "query_translation": "auto",
+        "neighbor_depth": 1,
+        "max_related_steps": 5,
+        "workflow_routing": "best_step"
+      },
+      "intent": "detail",
+      "detected_context": {},
+      "filters": [
+        {
+          "workflow_id": "B0_SRC_HAAS_0005",
+          "revision": 2,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0001",
+          "revision": 1,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0002",
+          "revision": 2,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0003",
+          "revision": 2,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0004",
+          "revision": 1,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0005",
+          "revision": 1,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0006",
+          "revision": 1,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0007",
+          "revision": 1,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0008",
+          "revision": 1,
+          "mismatches": [],
+          "unknown_context": []
+        }
+      ],
+      "workflow_ranking": [
+        {
+          "document_id": "[\"workflow\",\"REAL_WF_0006\",1,\"\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.03278688524590164,
+          "lexical_score": 16.250923874697346,
+          "vector_score": 0.7104225795627712
+        },
+        {
+          "document_id": "[\"workflow\",\"REAL_WF_0005\",1,\"\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.030776515151515152,
+          "lexical_score": 10.895850067536044,
+          "vector_score": 0.6447201216575604
+        },
+        {
+          "document_id": "[\"workflow\",\"REAL_WF_0008\",1,\"\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.029206349206349208,
+          "lexical_score": 11.353631719636697,
+          "vector_score": 0.6166981907730559
+        },
+        {
+          "document_id": "[\"workflow\",\"REAL_WF_0004\",1,\"\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.025158227848101268,
+          "lexical_score": 4.943186282499421,
+          "vector_score": 0.6099786225745326
+        },
+        {
+          "document_id": "[\"workflow\",\"REAL_WF_0003\",2,\"\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.012987012987012988,
+          "lexical_score": 5.4267827011733285,
+          "vector_score": 0.6034125824416657
+        },
+        {
+          "document_id": "[\"workflow\",\"B0_SRC_HAAS_0005\",2,\"\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.01282051282051282,
+          "lexical_score": 5.23728222091413,
+          "vector_score": 0.5947361729899922
+        }
+      ],
+      "step_ranking": [
+        {
+          "document_id": "[\"step\",\"REAL_WF_0006\",1,\"REAL_WF_0006_ST_003\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.03278688524590164,
+          "lexical_score": 3.7692522597970193,
+          "vector_score": 0.7104225795627712
+        },
+        {
+          "document_id": "[\"step\",\"REAL_WF_0006\",1,\"REAL_WF_0006_ST_002\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.03200204813108039,
+          "lexical_score": 2.1736524335940763,
+          "vector_score": 0.6432401138477739
+        },
+        {
+          "document_id": "[\"step\",\"REAL_WF_0006\",1,\"REAL_WF_0006_ST_001\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.0315136476426799,
+          "lexical_score": 0.490666020064843,
+          "vector_score": 0.65571316663353
+        },
+        {
+          "document_id": "[\"step\",\"REAL_WF_0006\",1,\"REAL_WF_0006_ST_004\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.03125763125763126,
+          "lexical_score": 1.4336569662766254,
+          "vector_score": 0.6271726253567635
+        },
+        {
+          "document_id": "[\"step\",\"REAL_WF_0006\",1,\"REAL_WF_0006_ST_005\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.030776515151515152,
+          "lexical_score": 0.4616077984896986,
+          "vector_score": 0.6351177292619842
+        },
+        {
+          "document_id": "[\"step\",\"REAL_WF_0006\",1,\"REAL_WF_0006_ST_006\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.030776515151515152,
+          "lexical_score": 0.5038840428162281,
+          "vector_score": 0.6120271949226059
+        }
+      ],
+      "embedding_calls": 1,
+      "cache": "disabled",
+      "eligible_documents": 76,
+      "query_translation": null,
+      "relevance": {
+        "policy": "claim-coherence-2",
+        "unit": "claim",
+        "background_ratio": 0.75,
+        "ignored_terms": [],
+        "context_terms": [],
+        "protected_component_terms": [],
+        "query_terms": [
+          "air",
+          "fan",
+          "mill",
+          "move",
+          "spindl",
+          "vertic"
+        ],
+        "matched_terms": [
+          "air",
+          "fan",
+          "mill",
+          "spindl",
+          "vertic"
+        ],
+        "unseen_terms": [
+          "move"
+        ],
+        "min_matches": 2,
+        "term_coverage": 0.8333,
+        "min_term_coverage": 0.2,
+        "support_refs": [
+          {
+            "workflow_id": "REAL_WF_0006",
+            "revision": 1,
+            "step_id": "REAL_WF_0006_ST_003",
+            "claim_id": "REAL_WF_0006_CL_011",
+            "purpose": "answer"
+          }
+        ],
+        "gate": "passed",
+        "exact_alarm_lookup": false,
+        "corpus_term_coverage": 1.0
+      },
+      "routing_steps": {
+        "REAL_WF_0006": "REAL_WF_0006_ST_003",
+        "REAL_WF_0005": "REAL_WF_0005_ST_002",
+        "REAL_WF_0008": "REAL_WF_0008_ST_002",
+        "REAL_WF_0004": "REAL_WF_0004_ST_003",
+        "REAL_WF_0003": "REAL_WF_0003_ST_009",
+        "B0_SRC_HAAS_0005": "B0_SRC_HAAS_0005_ST_004"
+      },
+      "workflow_margin": 0.002010370094386489,
+      "neighbors": {
+        "depth": 1,
+        "relations": [
+          "branch_if",
+          "corrects",
+          "requires"
+        ],
+        "unavailable_step_ids": [],
+        "truncated_step_ids": []
+      },
+      "conflict_ranking": [],
+      "latency_ms": 1116.55
+    }
+  },
+  "result_sha256": "06e3cfb063dd44c82575352c18e63ac262d9b1369d7f41e596ce2afc210cef7a",
+  "error_class": null,
+  "latency_ms": 1126.5622999926563,
+  "provider_call_ids": [
+    "call-000552"
+  ],
+  "backoff_seconds": 0.0,
+  "owner_arm": "A_knowflow",
+  "pre_graph_sha256": "8c798005f7da16456507907acb366084cfbae18a0c7462ac64b582c309bfd05d",
+  "translation_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+}

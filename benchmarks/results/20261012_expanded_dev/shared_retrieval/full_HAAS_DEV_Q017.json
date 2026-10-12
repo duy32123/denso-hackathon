@@ -1,0 +1,2066 @@
+{
+  "key": "cb2b5865b503ef529679210847c253d12b95090ac5b0cf12bdb9ee7c6ca9aab0",
+  "result": {
+    "status": "retrieved",
+    "index_build_id": "IDX_SEARCH_151f7d6dfcc821966e669bd1842c59f5d1d2c8eb7210fb4e998ef46e36857389",
+    "record_build_id": "IDX_WP1_f2e98bbf552b45e119f633b6de9f6469a9592f2494a4dc74b44f59b655527dd4",
+    "source_type": "real",
+    "dataset_split": "dev",
+    "context": {
+      "manufacturer": null,
+      "machine_family": null,
+      "machine_model": null,
+      "subsystem": null,
+      "task_type": null,
+      "symptoms": [],
+      "alarm_codes": [],
+      "components": []
+    },
+    "missing_context": [],
+    "selected_workflow": {
+      "workflow_id": "B0_SRC_HAAS_0005",
+      "revision": 2,
+      "title": "Replace a Tool Pocket on Your Haas Side Mount Tool Changer (SMTC)",
+      "score": 0.03252247488101534
+    },
+    "workflow_candidates": [
+      {
+        "workflow_id": "B0_SRC_HAAS_0005",
+        "revision": 2,
+        "title": "Replace a Tool Pocket on Your Haas Side Mount Tool Changer (SMTC)",
+        "score": 0.03252247488101534
+      },
+      {
+        "workflow_id": "REAL_WF_0001",
+        "revision": 1,
+        "title": "Replace a damaged pocket on a Haas side-mount tool changer (SMTC)",
+        "score": 0.03252247488101534
+      },
+      {
+        "workflow_id": "REAL_WF_0003",
+        "revision": 2,
+        "title": "Recover a Haas SMTC after a tool changer alarm",
+        "score": 0.030330882352941176
+      },
+      {
+        "workflow_id": "REAL_WF_0005",
+        "revision": 1,
+        "title": "Troubleshoot a Haas mill spindle before replacing it",
+        "score": 0.015384615384615385
+      },
+      {
+        "workflow_id": "REAL_WF_0002",
+        "revision": 2,
+        "title": "Diagnose wear on a Haas SMTC double arm",
+        "score": 0.013513513513513514
+      },
+      {
+        "workflow_id": "REAL_WF_0007",
+        "revision": 1,
+        "title": "Troubleshoot alarm 9973 incoming power fault on a Haas machine",
+        "score": 0.013513513513513514
+      },
+      {
+        "workflow_id": "REAL_WF_0004",
+        "revision": 1,
+        "title": "Troubleshoot alarm 626 tool pocket slide error on a Haas tool changer",
+        "score": 0.013157894736842105
+      },
+      {
+        "workflow_id": "REAL_WF_0008",
+        "revision": 1,
+        "title": "Replace the X-axis way covers and wipers on a Haas vertical mill",
+        "score": 0.012987012987012988
+      }
+    ],
+    "steps": [
+      {
+        "workflow_id": "B0_SRC_HAAS_0005",
+        "revision": 2,
+        "step_id": "B0_SRC_HAAS_0005_ST_003",
+        "display_order": 3,
+        "title": "Remove Tools, Mark Carousel Disk Alignment, and Remove Number Ring",
+        "fields": {
+          "context": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "observation": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "action": {
+            "state": "present",
+            "claim_ids": [
+              "B0_SRC_HAAS_0005_CL_008",
+              "B0_SRC_HAAS_0005_CL_009",
+              "B0_SRC_HAAS_0005_CL_010"
+            ]
+          },
+          "rationale": {
+            "state": "present",
+            "claim_ids": [
+              "B0_SRC_HAAS_0005_CL_011"
+            ]
+          },
+          "condition": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "outcome": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "acceptance_criteria": {
+            "state": "missing",
+            "claim_ids": []
+          }
+        },
+        "claim_ids": [
+          "B0_SRC_HAAS_0005_CL_008",
+          "B0_SRC_HAAS_0005_CL_009",
+          "B0_SRC_HAAS_0005_CL_010",
+          "B0_SRC_HAAS_0005_CL_011"
+        ],
+        "score": 0.03278688524590164,
+        "lexical_score": 7.487917181448923,
+        "vector_score": 0.6710974110523334
+      },
+      {
+        "workflow_id": "B0_SRC_HAAS_0005",
+        "revision": 2,
+        "step_id": "B0_SRC_HAAS_0005_ST_001",
+        "display_order": 1,
+        "title": "Position Damaged Pocket and Press Emergency Stop",
+        "fields": {
+          "context": {
+            "state": "present",
+            "claim_ids": [
+              "B0_SRC_HAAS_0005_CL_001"
+            ]
+          },
+          "observation": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "action": {
+            "state": "present",
+            "claim_ids": [
+              "B0_SRC_HAAS_0005_CL_002",
+              "B0_SRC_HAAS_0005_CL_003",
+              "B0_SRC_HAAS_0005_CL_004"
+            ]
+          },
+          "rationale": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "condition": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "outcome": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "acceptance_criteria": {
+            "state": "missing",
+            "claim_ids": []
+          }
+        },
+        "claim_ids": [
+          "B0_SRC_HAAS_0005_CL_001",
+          "B0_SRC_HAAS_0005_CL_002",
+          "B0_SRC_HAAS_0005_CL_003",
+          "B0_SRC_HAAS_0005_CL_004"
+        ],
+        "score": 0.03200204813108039,
+        "lexical_score": 2.4047346155439486,
+        "vector_score": 0.654255977997144
+      },
+      {
+        "workflow_id": "B0_SRC_HAAS_0005",
+        "revision": 2,
+        "step_id": "B0_SRC_HAAS_0005_ST_005",
+        "display_order": 5,
+        "title": "Remove Pocket Stop, Shoulder Bolt, Retaining Bolt, and Damaged Pocket",
+        "fields": {
+          "context": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "observation": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "action": {
+            "state": "present",
+            "claim_ids": [
+              "B0_SRC_HAAS_0005_CL_015",
+              "B0_SRC_HAAS_0005_CL_016",
+              "B0_SRC_HAAS_0005_CL_017"
+            ]
+          },
+          "rationale": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "condition": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "outcome": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "acceptance_criteria": {
+            "state": "missing",
+            "claim_ids": []
+          }
+        },
+        "claim_ids": [
+          "B0_SRC_HAAS_0005_CL_015",
+          "B0_SRC_HAAS_0005_CL_016",
+          "B0_SRC_HAAS_0005_CL_017"
+        ],
+        "score": 0.03200204813108039,
+        "lexical_score": 2.4212680915647256,
+        "vector_score": 0.6256480354358535
+      },
+      {
+        "workflow_id": "B0_SRC_HAAS_0005",
+        "revision": 2,
+        "step_id": "B0_SRC_HAAS_0005_ST_002",
+        "display_order": 2,
+        "title": "Remove Cam Box Sheet Metal Cover Panels",
+        "fields": {
+          "context": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "observation": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "action": {
+            "state": "present",
+            "claim_ids": [
+              "B0_SRC_HAAS_0005_CL_005",
+              "B0_SRC_HAAS_0005_CL_006"
+            ]
+          },
+          "rationale": {
+            "state": "present",
+            "claim_ids": [
+              "B0_SRC_HAAS_0005_CL_007"
+            ]
+          },
+          "condition": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "outcome": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "acceptance_criteria": {
+            "state": "missing",
+            "claim_ids": []
+          }
+        },
+        "claim_ids": [
+          "B0_SRC_HAAS_0005_CL_005",
+          "B0_SRC_HAAS_0005_CL_006",
+          "B0_SRC_HAAS_0005_CL_007"
+        ],
+        "score": 0.030330882352941176,
+        "lexical_score": 1.516534699254551,
+        "vector_score": 0.5919567566714304
+      },
+      {
+        "workflow_id": "B0_SRC_HAAS_0005",
+        "revision": 2,
+        "step_id": "B0_SRC_HAAS_0005_ST_004",
+        "display_order": 4,
+        "title": "Disconnect Pneumatic Air Supply and Remove Pilot Check Valve",
+        "fields": {
+          "context": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "observation": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "action": {
+            "state": "present",
+            "claim_ids": [
+              "B0_SRC_HAAS_0005_CL_012",
+              "B0_SRC_HAAS_0005_CL_013"
+            ]
+          },
+          "rationale": {
+            "state": "present",
+            "claim_ids": [
+              "B0_SRC_HAAS_0005_CL_014"
+            ]
+          },
+          "condition": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "outcome": {
+            "state": "missing",
+            "claim_ids": []
+          },
+          "acceptance_criteria": {
+            "state": "missing",
+            "claim_ids": []
+          }
+        },
+        "claim_ids": [
+          "B0_SRC_HAAS_0005_CL_012",
+          "B0_SRC_HAAS_0005_CL_013",
+          "B0_SRC_HAAS_0005_CL_014"
+        ],
+        "score": 0.030309988518943745,
+        "lexical_score": 1.4314336120978102,
+        "vector_score": 0.5929668872837187
+      }
+    ],
+    "claims": [
+      {
+        "claim_ref": {
+          "workflow_id": "B0_SRC_HAAS_0005",
+          "revision": 2,
+          "entity_type": "claim",
+          "entity_id": "B0_SRC_HAAS_0005_CL_008"
+        },
+        "claim": {
+          "claim_id": "B0_SRC_HAAS_0005_CL_008",
+          "text": "Remove all tools from the carousel and mark their original positions.",
+          "role": "action",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Procedure described in B0_SRC_HAAS_0005"
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_007",
+              "support_status": "supported",
+              "explanation": "Presenter states to remove all tools and mark their locations."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "B0_SRC_HAAS_0005_ST_003"
+        ],
+        "score": 0.03278688524590164,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_007",
+              "source_id": "SRC_HAAS_0005",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 60310,
+                "end_ms": 67240,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "a few minutes so we'll remove all the tools from the carousel and mark their location we",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_007",
+              "support_status": "supported",
+              "explanation": "Presenter states to remove all tools and mark their locations."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0005",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Replace a Tool Pocket on Your Haas Side Mount Tool Changer (SMTC)",
+              "url": "https://www.haascnc.com/video/service/cs-BvWsKXyU.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 261000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville",
+              "presenter_role": null,
+              "published_at": "2016-05-31T00:00:00Z",
+              "retrieved_at": "2026-09-11T08:15:26Z",
+              "raw_text": "hi I'm Orville and today we're going to replace a damaged pocket on the side mount tool changer set your Rapids down to 25% and then rotate to the damaged pocket press e stop once the pocket is in position okay we need to remove three pieces of sheet metal from the bottom of the cam box this larger piece to my left and also two smaller piece right below the double arm in order to gain access to the damaged pocket and the switches behind it but before we can move this larger panel there are four of those fasteners on top of the machine we'll start with those four first we'll be working in this area for a few minutes so we'll remove all the tools from the carousel and mark their location we want to make sure we installed it carousel disk correctly so we'll put a mark on the disk and on the pocket for reinstallation now we're going to remove the number ring and now we're going to disconnect the main air to the machine and now we're going to remove the pilot check valve now with this check valve remove now I can move the pocket up and down freely to get to that screw now we're going to remove the four bolts from the pocket stop so we can continue with it removal of the pocket now with this pocket stop remove we'll remove the shoulder bolt on the backside of the carousel right next to the lower proximity switch with the shoulder bolts remove will then remove the retaining bolt and remove the pocket before we install the new pocket there's a few things we need to check rotate that cam follower make sure that it's spinning freely we also want to check the plunger inside the pocket to make sure they're not worn out now with the pocket slider we'll apply some grease in there now we're ready to reinstall the pocket install the pocket to the slider and install both of them back in position now we're going to reinstall it retainer bolt and tighten it so now we will install the shoulder boat lower the pocket and attach the shoulder bolt and screw it in now the pocket is moving freely and I'm also reading the switches which is the pocket up and pocket down switches so now let's install the pocket stop with the pocket stop and the new pocket installed now let's install the check valve now reinstall the number disc by lining up the dot on the number disc with the dot on the pocket now we'll install the remaining three panels now with the panels all in place we'll install the tools and then test the system with the new pocket installed the panels are secured the main air is turned on let's release the e-stop and run the tool changer run the tool changer through several two changes to ensure everything is working correctly thanks for watching",
+              "content_sha256": "5d8ecf73a6b6b4ee6a80cdd271cbdb767b5e075d642c8c1917557eeff8d2f292",
+              "related_source_ids": [],
+              "access_note": "Public YouTube video on the official 'Haas Automation, Inc.' channel. The haascnc.com video page (which may state a role for 'Orville') could not be fetched this session (Cloudflare 403); presenter_role left null rather than inferred from third-party search snippets. Manual English captions downloaded via yt-dlp (official_caption); no video file retained."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "B0_SRC_HAAS_0005",
+          "revision": 2,
+          "entity_type": "claim",
+          "entity_id": "B0_SRC_HAAS_0005_CL_009"
+        },
+        "claim": {
+          "claim_id": "B0_SRC_HAAS_0005_CL_009",
+          "text": "Mark both the carousel disk and the pocket to ensure correct alignment upon reinstallation.",
+          "role": "action",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Procedure described in B0_SRC_HAAS_0005"
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_008",
+              "support_status": "supported",
+              "explanation": "Presenter marks disk and pocket to ensure proper disk installation later."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "B0_SRC_HAAS_0005_ST_003"
+        ],
+        "score": 0.03278688524590164,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_008",
+              "source_id": "SRC_HAAS_0005",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 67240,
+                "end_ms": 79060,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "want to make sure we installed it carousel disk correctly so we'll put a mark on the disk and on the pocket for reinstallation now we're going to remove the number ring",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_008",
+              "support_status": "supported",
+              "explanation": "Presenter marks disk and pocket to ensure proper disk installation later."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0005",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Replace a Tool Pocket on Your Haas Side Mount Tool Changer (SMTC)",
+              "url": "https://www.haascnc.com/video/service/cs-BvWsKXyU.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 261000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville",
+              "presenter_role": null,
+              "published_at": "2016-05-31T00:00:00Z",
+              "retrieved_at": "2026-09-11T08:15:26Z",
+              "raw_text": "hi I'm Orville and today we're going to replace a damaged pocket on the side mount tool changer set your Rapids down to 25% and then rotate to the damaged pocket press e stop once the pocket is in position okay we need to remove three pieces of sheet metal from the bottom of the cam box this larger piece to my left and also two smaller piece right below the double arm in order to gain access to the damaged pocket and the switches behind it but before we can move this larger panel there are four of those fasteners on top of the machine we'll start with those four first we'll be working in this area for a few minutes so we'll remove all the tools from the carousel and mark their location we want to make sure we installed it carousel disk correctly so we'll put a mark on the disk and on the pocket for reinstallation now we're going to remove the number ring and now we're going to disconnect the main air to the machine and now we're going to remove the pilot check valve now with this check valve remove now I can move the pocket up and down freely to get to that screw now we're going to remove the four bolts from the pocket stop so we can continue with it removal of the pocket now with this pocket stop remove we'll remove the shoulder bolt on the backside of the carousel right next to the lower proximity switch with the shoulder bolts remove will then remove the retaining bolt and remove the pocket before we install the new pocket there's a few things we need to check rotate that cam follower make sure that it's spinning freely we also want to check the plunger inside the pocket to make sure they're not worn out now with the pocket slider we'll apply some grease in there now we're ready to reinstall the pocket install the pocket to the slider and install both of them back in position now we're going to reinstall it retainer bolt and tighten it so now we will install the shoulder boat lower the pocket and attach the shoulder bolt and screw it in now the pocket is moving freely and I'm also reading the switches which is the pocket up and pocket down switches so now let's install the pocket stop with the pocket stop and the new pocket installed now let's install the check valve now reinstall the number disc by lining up the dot on the number disc with the dot on the pocket now we'll install the remaining three panels now with the panels all in place we'll install the tools and then test the system with the new pocket installed the panels are secured the main air is turned on let's release the e-stop and run the tool changer run the tool changer through several two changes to ensure everything is working correctly thanks for watching",
+              "content_sha256": "5d8ecf73a6b6b4ee6a80cdd271cbdb767b5e075d642c8c1917557eeff8d2f292",
+              "related_source_ids": [],
+              "access_note": "Public YouTube video on the official 'Haas Automation, Inc.' channel. The haascnc.com video page (which may state a role for 'Orville') could not be fetched this session (Cloudflare 403); presenter_role left null rather than inferred from third-party search snippets. Manual English captions downloaded via yt-dlp (official_caption); no video file retained."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "B0_SRC_HAAS_0005",
+          "revision": 2,
+          "entity_type": "claim",
+          "entity_id": "B0_SRC_HAAS_0005_CL_010"
+        },
+        "claim": {
+          "claim_id": "B0_SRC_HAAS_0005_CL_010",
+          "text": "Remove the number ring from the carousel.",
+          "role": "action",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Procedure described in B0_SRC_HAAS_0005"
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_009",
+              "support_status": "supported",
+              "explanation": "Presenter removes the number ring."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "B0_SRC_HAAS_0005_ST_003"
+        ],
+        "score": 0.03278688524590164,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_009",
+              "source_id": "SRC_HAAS_0005",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 72700,
+                "end_ms": 79060,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "disk and on the pocket for reinstallation now we're going to remove the number ring",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_009",
+              "support_status": "supported",
+              "explanation": "Presenter removes the number ring."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0005",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Replace a Tool Pocket on Your Haas Side Mount Tool Changer (SMTC)",
+              "url": "https://www.haascnc.com/video/service/cs-BvWsKXyU.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 261000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville",
+              "presenter_role": null,
+              "published_at": "2016-05-31T00:00:00Z",
+              "retrieved_at": "2026-09-11T08:15:26Z",
+              "raw_text": "hi I'm Orville and today we're going to replace a damaged pocket on the side mount tool changer set your Rapids down to 25% and then rotate to the damaged pocket press e stop once the pocket is in position okay we need to remove three pieces of sheet metal from the bottom of the cam box this larger piece to my left and also two smaller piece right below the double arm in order to gain access to the damaged pocket and the switches behind it but before we can move this larger panel there are four of those fasteners on top of the machine we'll start with those four first we'll be working in this area for a few minutes so we'll remove all the tools from the carousel and mark their location we want to make sure we installed it carousel disk correctly so we'll put a mark on the disk and on the pocket for reinstallation now we're going to remove the number ring and now we're going to disconnect the main air to the machine and now we're going to remove the pilot check valve now with this check valve remove now I can move the pocket up and down freely to get to that screw now we're going to remove the four bolts from the pocket stop so we can continue with it removal of the pocket now with this pocket stop remove we'll remove the shoulder bolt on the backside of the carousel right next to the lower proximity switch with the shoulder bolts remove will then remove the retaining bolt and remove the pocket before we install the new pocket there's a few things we need to check rotate that cam follower make sure that it's spinning freely we also want to check the plunger inside the pocket to make sure they're not worn out now with the pocket slider we'll apply some grease in there now we're ready to reinstall the pocket install the pocket to the slider and install both of them back in position now we're going to reinstall it retainer bolt and tighten it so now we will install the shoulder boat lower the pocket and attach the shoulder bolt and screw it in now the pocket is moving freely and I'm also reading the switches which is the pocket up and pocket down switches so now let's install the pocket stop with the pocket stop and the new pocket installed now let's install the check valve now reinstall the number disc by lining up the dot on the number disc with the dot on the pocket now we'll install the remaining three panels now with the panels all in place we'll install the tools and then test the system with the new pocket installed the panels are secured the main air is turned on let's release the e-stop and run the tool changer run the tool changer through several two changes to ensure everything is working correctly thanks for watching",
+              "content_sha256": "5d8ecf73a6b6b4ee6a80cdd271cbdb767b5e075d642c8c1917557eeff8d2f292",
+              "related_source_ids": [],
+              "access_note": "Public YouTube video on the official 'Haas Automation, Inc.' channel. The haascnc.com video page (which may state a role for 'Orville') could not be fetched this session (Cloudflare 403); presenter_role left null rather than inferred from third-party search snippets. Manual English captions downloaded via yt-dlp (official_caption); no video file retained."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "B0_SRC_HAAS_0005",
+          "revision": 2,
+          "entity_type": "claim",
+          "entity_id": "B0_SRC_HAAS_0005_CL_011"
+        },
+        "claim": {
+          "claim_id": "B0_SRC_HAAS_0005_CL_011",
+          "text": "Marking positions ensures the carousel disk and tools are reinstalled correctly.",
+          "role": "rationale",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Procedure described in B0_SRC_HAAS_0005"
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_010",
+              "support_status": "supported",
+              "explanation": "Presenter explains marking ensures correct reinstallation of the carousel disk."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "B0_SRC_HAAS_0005_ST_003"
+        ],
+        "score": 0.03278688524590164,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_010",
+              "source_id": "SRC_HAAS_0005",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 67240,
+                "end_ms": 72700,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "want to make sure we installed it carousel disk correctly so we'll put a mark on the",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_010",
+              "support_status": "supported",
+              "explanation": "Presenter explains marking ensures correct reinstallation of the carousel disk."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0005",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Replace a Tool Pocket on Your Haas Side Mount Tool Changer (SMTC)",
+              "url": "https://www.haascnc.com/video/service/cs-BvWsKXyU.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 261000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville",
+              "presenter_role": null,
+              "published_at": "2016-05-31T00:00:00Z",
+              "retrieved_at": "2026-09-11T08:15:26Z",
+              "raw_text": "hi I'm Orville and today we're going to replace a damaged pocket on the side mount tool changer set your Rapids down to 25% and then rotate to the damaged pocket press e stop once the pocket is in position okay we need to remove three pieces of sheet metal from the bottom of the cam box this larger piece to my left and also two smaller piece right below the double arm in order to gain access to the damaged pocket and the switches behind it but before we can move this larger panel there are four of those fasteners on top of the machine we'll start with those four first we'll be working in this area for a few minutes so we'll remove all the tools from the carousel and mark their location we want to make sure we installed it carousel disk correctly so we'll put a mark on the disk and on the pocket for reinstallation now we're going to remove the number ring and now we're going to disconnect the main air to the machine and now we're going to remove the pilot check valve now with this check valve remove now I can move the pocket up and down freely to get to that screw now we're going to remove the four bolts from the pocket stop so we can continue with it removal of the pocket now with this pocket stop remove we'll remove the shoulder bolt on the backside of the carousel right next to the lower proximity switch with the shoulder bolts remove will then remove the retaining bolt and remove the pocket before we install the new pocket there's a few things we need to check rotate that cam follower make sure that it's spinning freely we also want to check the plunger inside the pocket to make sure they're not worn out now with the pocket slider we'll apply some grease in there now we're ready to reinstall the pocket install the pocket to the slider and install both of them back in position now we're going to reinstall it retainer bolt and tighten it so now we will install the shoulder boat lower the pocket and attach the shoulder bolt and screw it in now the pocket is moving freely and I'm also reading the switches which is the pocket up and pocket down switches so now let's install the pocket stop with the pocket stop and the new pocket installed now let's install the check valve now reinstall the number disc by lining up the dot on the number disc with the dot on the pocket now we'll install the remaining three panels now with the panels all in place we'll install the tools and then test the system with the new pocket installed the panels are secured the main air is turned on let's release the e-stop and run the tool changer run the tool changer through several two changes to ensure everything is working correctly thanks for watching",
+              "content_sha256": "5d8ecf73a6b6b4ee6a80cdd271cbdb767b5e075d642c8c1917557eeff8d2f292",
+              "related_source_ids": [],
+              "access_note": "Public YouTube video on the official 'Haas Automation, Inc.' channel. The haascnc.com video page (which may state a role for 'Orville') could not be fetched this session (Cloudflare 403); presenter_role left null rather than inferred from third-party search snippets. Manual English captions downloaded via yt-dlp (official_caption); no video file retained."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "B0_SRC_HAAS_0005",
+          "revision": 2,
+          "entity_type": "claim",
+          "entity_id": "B0_SRC_HAAS_0005_CL_001"
+        },
+        "claim": {
+          "claim_id": "B0_SRC_HAAS_0005_CL_001",
+          "text": "The procedure is performed on a Haas Side Mount Tool Changer (SMTC).",
+          "role": "context",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Procedure described in B0_SRC_HAAS_0005"
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_001",
+              "support_status": "supported",
+              "explanation": "Presenter states working on the side mount tool changer."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "B0_SRC_HAAS_0005_ST_001"
+        ],
+        "score": 0.03200204813108039,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_001",
+              "source_id": "SRC_HAAS_0005",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 0,
+                "end_ms": 19140,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "hi I'm Orville and today we're going to replace a damaged pocket on the side mount tool changer set your Rapids down to 25% and then rotate to the damaged pocket",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_001",
+              "support_status": "supported",
+              "explanation": "Presenter states working on the side mount tool changer."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0005",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Replace a Tool Pocket on Your Haas Side Mount Tool Changer (SMTC)",
+              "url": "https://www.haascnc.com/video/service/cs-BvWsKXyU.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 261000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville",
+              "presenter_role": null,
+              "published_at": "2016-05-31T00:00:00Z",
+              "retrieved_at": "2026-09-11T08:15:26Z",
+              "raw_text": "hi I'm Orville and today we're going to replace a damaged pocket on the side mount tool changer set your Rapids down to 25% and then rotate to the damaged pocket press e stop once the pocket is in position okay we need to remove three pieces of sheet metal from the bottom of the cam box this larger piece to my left and also two smaller piece right below the double arm in order to gain access to the damaged pocket and the switches behind it but before we can move this larger panel there are four of those fasteners on top of the machine we'll start with those four first we'll be working in this area for a few minutes so we'll remove all the tools from the carousel and mark their location we want to make sure we installed it carousel disk correctly so we'll put a mark on the disk and on the pocket for reinstallation now we're going to remove the number ring and now we're going to disconnect the main air to the machine and now we're going to remove the pilot check valve now with this check valve remove now I can move the pocket up and down freely to get to that screw now we're going to remove the four bolts from the pocket stop so we can continue with it removal of the pocket now with this pocket stop remove we'll remove the shoulder bolt on the backside of the carousel right next to the lower proximity switch with the shoulder bolts remove will then remove the retaining bolt and remove the pocket before we install the new pocket there's a few things we need to check rotate that cam follower make sure that it's spinning freely we also want to check the plunger inside the pocket to make sure they're not worn out now with the pocket slider we'll apply some grease in there now we're ready to reinstall the pocket install the pocket to the slider and install both of them back in position now we're going to reinstall it retainer bolt and tighten it so now we will install the shoulder boat lower the pocket and attach the shoulder bolt and screw it in now the pocket is moving freely and I'm also reading the switches which is the pocket up and pocket down switches so now let's install the pocket stop with the pocket stop and the new pocket installed now let's install the check valve now reinstall the number disc by lining up the dot on the number disc with the dot on the pocket now we'll install the remaining three panels now with the panels all in place we'll install the tools and then test the system with the new pocket installed the panels are secured the main air is turned on let's release the e-stop and run the tool changer run the tool changer through several two changes to ensure everything is working correctly thanks for watching",
+              "content_sha256": "5d8ecf73a6b6b4ee6a80cdd271cbdb767b5e075d642c8c1917557eeff8d2f292",
+              "related_source_ids": [],
+              "access_note": "Public YouTube video on the official 'Haas Automation, Inc.' channel. The haascnc.com video page (which may state a role for 'Orville') could not be fetched this session (Cloudflare 403); presenter_role left null rather than inferred from third-party search snippets. Manual English captions downloaded via yt-dlp (official_caption); no video file retained."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "B0_SRC_HAAS_0005",
+          "revision": 2,
+          "entity_type": "claim",
+          "entity_id": "B0_SRC_HAAS_0005_CL_002"
+        },
+        "claim": {
+          "claim_id": "B0_SRC_HAAS_0005_CL_002",
+          "text": "Set machine rapids down to 25%.",
+          "role": "action",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Procedure described in B0_SRC_HAAS_0005"
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_002",
+              "support_status": "supported",
+              "explanation": "Presenter explicitly instructs setting rapid overrides to 25%."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "B0_SRC_HAAS_0005_ST_001"
+        ],
+        "score": 0.03200204813108039,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_002",
+              "source_id": "SRC_HAAS_0005",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 11820,
+                "end_ms": 19140,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "side mount tool changer set your Rapids down to 25% and then rotate to the damaged pocket",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_002",
+              "support_status": "supported",
+              "explanation": "Presenter explicitly instructs setting rapid overrides to 25%."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0005",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Replace a Tool Pocket on Your Haas Side Mount Tool Changer (SMTC)",
+              "url": "https://www.haascnc.com/video/service/cs-BvWsKXyU.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 261000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville",
+              "presenter_role": null,
+              "published_at": "2016-05-31T00:00:00Z",
+              "retrieved_at": "2026-09-11T08:15:26Z",
+              "raw_text": "hi I'm Orville and today we're going to replace a damaged pocket on the side mount tool changer set your Rapids down to 25% and then rotate to the damaged pocket press e stop once the pocket is in position okay we need to remove three pieces of sheet metal from the bottom of the cam box this larger piece to my left and also two smaller piece right below the double arm in order to gain access to the damaged pocket and the switches behind it but before we can move this larger panel there are four of those fasteners on top of the machine we'll start with those four first we'll be working in this area for a few minutes so we'll remove all the tools from the carousel and mark their location we want to make sure we installed it carousel disk correctly so we'll put a mark on the disk and on the pocket for reinstallation now we're going to remove the number ring and now we're going to disconnect the main air to the machine and now we're going to remove the pilot check valve now with this check valve remove now I can move the pocket up and down freely to get to that screw now we're going to remove the four bolts from the pocket stop so we can continue with it removal of the pocket now with this pocket stop remove we'll remove the shoulder bolt on the backside of the carousel right next to the lower proximity switch with the shoulder bolts remove will then remove the retaining bolt and remove the pocket before we install the new pocket there's a few things we need to check rotate that cam follower make sure that it's spinning freely we also want to check the plunger inside the pocket to make sure they're not worn out now with the pocket slider we'll apply some grease in there now we're ready to reinstall the pocket install the pocket to the slider and install both of them back in position now we're going to reinstall it retainer bolt and tighten it so now we will install the shoulder boat lower the pocket and attach the shoulder bolt and screw it in now the pocket is moving freely and I'm also reading the switches which is the pocket up and pocket down switches so now let's install the pocket stop with the pocket stop and the new pocket installed now let's install the check valve now reinstall the number disc by lining up the dot on the number disc with the dot on the pocket now we'll install the remaining three panels now with the panels all in place we'll install the tools and then test the system with the new pocket installed the panels are secured the main air is turned on let's release the e-stop and run the tool changer run the tool changer through several two changes to ensure everything is working correctly thanks for watching",
+              "content_sha256": "5d8ecf73a6b6b4ee6a80cdd271cbdb767b5e075d642c8c1917557eeff8d2f292",
+              "related_source_ids": [],
+              "access_note": "Public YouTube video on the official 'Haas Automation, Inc.' channel. The haascnc.com video page (which may state a role for 'Orville') could not be fetched this session (Cloudflare 403); presenter_role left null rather than inferred from third-party search snippets. Manual English captions downloaded via yt-dlp (official_caption); no video file retained."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "B0_SRC_HAAS_0005",
+          "revision": 2,
+          "entity_type": "claim",
+          "entity_id": "B0_SRC_HAAS_0005_CL_003"
+        },
+        "claim": {
+          "claim_id": "B0_SRC_HAAS_0005_CL_003",
+          "text": "Rotate the carousel to the damaged pocket.",
+          "role": "action",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Procedure described in B0_SRC_HAAS_0005"
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_002",
+              "support_status": "supported",
+              "explanation": "Presenter instructs rotating the tool changer to the pocket needing replacement."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "B0_SRC_HAAS_0005_ST_001"
+        ],
+        "score": 0.03200204813108039,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_002",
+              "source_id": "SRC_HAAS_0005",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 11820,
+                "end_ms": 19140,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "side mount tool changer set your Rapids down to 25% and then rotate to the damaged pocket",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_002",
+              "support_status": "supported",
+              "explanation": "Presenter instructs rotating the tool changer to the pocket needing replacement."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0005",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Replace a Tool Pocket on Your Haas Side Mount Tool Changer (SMTC)",
+              "url": "https://www.haascnc.com/video/service/cs-BvWsKXyU.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 261000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville",
+              "presenter_role": null,
+              "published_at": "2016-05-31T00:00:00Z",
+              "retrieved_at": "2026-09-11T08:15:26Z",
+              "raw_text": "hi I'm Orville and today we're going to replace a damaged pocket on the side mount tool changer set your Rapids down to 25% and then rotate to the damaged pocket press e stop once the pocket is in position okay we need to remove three pieces of sheet metal from the bottom of the cam box this larger piece to my left and also two smaller piece right below the double arm in order to gain access to the damaged pocket and the switches behind it but before we can move this larger panel there are four of those fasteners on top of the machine we'll start with those four first we'll be working in this area for a few minutes so we'll remove all the tools from the carousel and mark their location we want to make sure we installed it carousel disk correctly so we'll put a mark on the disk and on the pocket for reinstallation now we're going to remove the number ring and now we're going to disconnect the main air to the machine and now we're going to remove the pilot check valve now with this check valve remove now I can move the pocket up and down freely to get to that screw now we're going to remove the four bolts from the pocket stop so we can continue with it removal of the pocket now with this pocket stop remove we'll remove the shoulder bolt on the backside of the carousel right next to the lower proximity switch with the shoulder bolts remove will then remove the retaining bolt and remove the pocket before we install the new pocket there's a few things we need to check rotate that cam follower make sure that it's spinning freely we also want to check the plunger inside the pocket to make sure they're not worn out now with the pocket slider we'll apply some grease in there now we're ready to reinstall the pocket install the pocket to the slider and install both of them back in position now we're going to reinstall it retainer bolt and tighten it so now we will install the shoulder boat lower the pocket and attach the shoulder bolt and screw it in now the pocket is moving freely and I'm also reading the switches which is the pocket up and pocket down switches so now let's install the pocket stop with the pocket stop and the new pocket installed now let's install the check valve now reinstall the number disc by lining up the dot on the number disc with the dot on the pocket now we'll install the remaining three panels now with the panels all in place we'll install the tools and then test the system with the new pocket installed the panels are secured the main air is turned on let's release the e-stop and run the tool changer run the tool changer through several two changes to ensure everything is working correctly thanks for watching",
+              "content_sha256": "5d8ecf73a6b6b4ee6a80cdd271cbdb767b5e075d642c8c1917557eeff8d2f292",
+              "related_source_ids": [],
+              "access_note": "Public YouTube video on the official 'Haas Automation, Inc.' channel. The haascnc.com video page (which may state a role for 'Orville') could not be fetched this session (Cloudflare 403); presenter_role left null rather than inferred from third-party search snippets. Manual English captions downloaded via yt-dlp (official_caption); no video file retained."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "B0_SRC_HAAS_0005",
+          "revision": 2,
+          "entity_type": "claim",
+          "entity_id": "B0_SRC_HAAS_0005_CL_004"
+        },
+        "claim": {
+          "claim_id": "B0_SRC_HAAS_0005_CL_004",
+          "text": "Press Emergency Stop (E-stop) once the damaged pocket is in position.",
+          "role": "action",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Procedure described in B0_SRC_HAAS_0005"
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_003",
+              "support_status": "supported",
+              "explanation": "Presenter states to hit e-stop after positioning the pocket."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "B0_SRC_HAAS_0005_ST_001"
+        ],
+        "score": 0.03200204813108039,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_003",
+              "source_id": "SRC_HAAS_0005",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 23770,
+                "end_ms": 33430,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "press e stop once the pocket is in position okay we need to remove three pieces of sheet",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_003",
+              "support_status": "supported",
+              "explanation": "Presenter states to hit e-stop after positioning the pocket."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0005",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Replace a Tool Pocket on Your Haas Side Mount Tool Changer (SMTC)",
+              "url": "https://www.haascnc.com/video/service/cs-BvWsKXyU.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 261000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville",
+              "presenter_role": null,
+              "published_at": "2016-05-31T00:00:00Z",
+              "retrieved_at": "2026-09-11T08:15:26Z",
+              "raw_text": "hi I'm Orville and today we're going to replace a damaged pocket on the side mount tool changer set your Rapids down to 25% and then rotate to the damaged pocket press e stop once the pocket is in position okay we need to remove three pieces of sheet metal from the bottom of the cam box this larger piece to my left and also two smaller piece right below the double arm in order to gain access to the damaged pocket and the switches behind it but before we can move this larger panel there are four of those fasteners on top of the machine we'll start with those four first we'll be working in this area for a few minutes so we'll remove all the tools from the carousel and mark their location we want to make sure we installed it carousel disk correctly so we'll put a mark on the disk and on the pocket for reinstallation now we're going to remove the number ring and now we're going to disconnect the main air to the machine and now we're going to remove the pilot check valve now with this check valve remove now I can move the pocket up and down freely to get to that screw now we're going to remove the four bolts from the pocket stop so we can continue with it removal of the pocket now with this pocket stop remove we'll remove the shoulder bolt on the backside of the carousel right next to the lower proximity switch with the shoulder bolts remove will then remove the retaining bolt and remove the pocket before we install the new pocket there's a few things we need to check rotate that cam follower make sure that it's spinning freely we also want to check the plunger inside the pocket to make sure they're not worn out now with the pocket slider we'll apply some grease in there now we're ready to reinstall the pocket install the pocket to the slider and install both of them back in position now we're going to reinstall it retainer bolt and tighten it so now we will install the shoulder boat lower the pocket and attach the shoulder bolt and screw it in now the pocket is moving freely and I'm also reading the switches which is the pocket up and pocket down switches so now let's install the pocket stop with the pocket stop and the new pocket installed now let's install the check valve now reinstall the number disc by lining up the dot on the number disc with the dot on the pocket now we'll install the remaining three panels now with the panels all in place we'll install the tools and then test the system with the new pocket installed the panels are secured the main air is turned on let's release the e-stop and run the tool changer run the tool changer through several two changes to ensure everything is working correctly thanks for watching",
+              "content_sha256": "5d8ecf73a6b6b4ee6a80cdd271cbdb767b5e075d642c8c1917557eeff8d2f292",
+              "related_source_ids": [],
+              "access_note": "Public YouTube video on the official 'Haas Automation, Inc.' channel. The haascnc.com video page (which may state a role for 'Orville') could not be fetched this session (Cloudflare 403); presenter_role left null rather than inferred from third-party search snippets. Manual English captions downloaded via yt-dlp (official_caption); no video file retained."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "B0_SRC_HAAS_0005",
+          "revision": 2,
+          "entity_type": "claim",
+          "entity_id": "B0_SRC_HAAS_0005_CL_015"
+        },
+        "claim": {
+          "claim_id": "B0_SRC_HAAS_0005_CL_015",
+          "text": "Remove four bolts from the pocket stop and remove the pocket stop.",
+          "role": "action",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Procedure described in B0_SRC_HAAS_0005"
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_014",
+              "support_status": "supported",
+              "explanation": "Presenter unbolts and removes pocket stop."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "B0_SRC_HAAS_0005_ST_005"
+        ],
+        "score": 0.03200204813108039,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_014",
+              "source_id": "SRC_HAAS_0005",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 106200,
+                "end_ms": 120630,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "to that screw now we're going to remove the four bolts from the pocket stop so we can continue with it removal of the pocket now with this pocket stop remove we'll remove the",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_014",
+              "support_status": "supported",
+              "explanation": "Presenter unbolts and removes pocket stop."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0005",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Replace a Tool Pocket on Your Haas Side Mount Tool Changer (SMTC)",
+              "url": "https://www.haascnc.com/video/service/cs-BvWsKXyU.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 261000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville",
+              "presenter_role": null,
+              "published_at": "2016-05-31T00:00:00Z",
+              "retrieved_at": "2026-09-11T08:15:26Z",
+              "raw_text": "hi I'm Orville and today we're going to replace a damaged pocket on the side mount tool changer set your Rapids down to 25% and then rotate to the damaged pocket press e stop once the pocket is in position okay we need to remove three pieces of sheet metal from the bottom of the cam box this larger piece to my left and also two smaller piece right below the double arm in order to gain access to the damaged pocket and the switches behind it but before we can move this larger panel there are four of those fasteners on top of the machine we'll start with those four first we'll be working in this area for a few minutes so we'll remove all the tools from the carousel and mark their location we want to make sure we installed it carousel disk correctly so we'll put a mark on the disk and on the pocket for reinstallation now we're going to remove the number ring and now we're going to disconnect the main air to the machine and now we're going to remove the pilot check valve now with this check valve remove now I can move the pocket up and down freely to get to that screw now we're going to remove the four bolts from the pocket stop so we can continue with it removal of the pocket now with this pocket stop remove we'll remove the shoulder bolt on the backside of the carousel right next to the lower proximity switch with the shoulder bolts remove will then remove the retaining bolt and remove the pocket before we install the new pocket there's a few things we need to check rotate that cam follower make sure that it's spinning freely we also want to check the plunger inside the pocket to make sure they're not worn out now with the pocket slider we'll apply some grease in there now we're ready to reinstall the pocket install the pocket to the slider and install both of them back in position now we're going to reinstall it retainer bolt and tighten it so now we will install the shoulder boat lower the pocket and attach the shoulder bolt and screw it in now the pocket is moving freely and I'm also reading the switches which is the pocket up and pocket down switches so now let's install the pocket stop with the pocket stop and the new pocket installed now let's install the check valve now reinstall the number disc by lining up the dot on the number disc with the dot on the pocket now we'll install the remaining three panels now with the panels all in place we'll install the tools and then test the system with the new pocket installed the panels are secured the main air is turned on let's release the e-stop and run the tool changer run the tool changer through several two changes to ensure everything is working correctly thanks for watching",
+              "content_sha256": "5d8ecf73a6b6b4ee6a80cdd271cbdb767b5e075d642c8c1917557eeff8d2f292",
+              "related_source_ids": [],
+              "access_note": "Public YouTube video on the official 'Haas Automation, Inc.' channel. The haascnc.com video page (which may state a role for 'Orville') could not be fetched this session (Cloudflare 403); presenter_role left null rather than inferred from third-party search snippets. Manual English captions downloaded via yt-dlp (official_caption); no video file retained."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "B0_SRC_HAAS_0005",
+          "revision": 2,
+          "entity_type": "claim",
+          "entity_id": "B0_SRC_HAAS_0005_CL_016"
+        },
+        "claim": {
+          "claim_id": "B0_SRC_HAAS_0005_CL_016",
+          "text": "Remove the shoulder bolt located on the backside of the carousel right next to the lower proximity switch.",
+          "role": "action",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Procedure described in B0_SRC_HAAS_0005"
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_015",
+              "support_status": "supported",
+              "explanation": "Presenter removes shoulder bolt from back side of carousel near proximity switch."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "B0_SRC_HAAS_0005_ST_005"
+        ],
+        "score": 0.03200204813108039,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_015",
+              "source_id": "SRC_HAAS_0005",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 113580,
+                "end_ms": 127770,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "can continue with it removal of the pocket now with this pocket stop remove we'll remove the shoulder bolt on the backside of the carousel right next to the lower proximity switch with",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_015",
+              "support_status": "supported",
+              "explanation": "Presenter removes shoulder bolt from back side of carousel near proximity switch."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0005",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Replace a Tool Pocket on Your Haas Side Mount Tool Changer (SMTC)",
+              "url": "https://www.haascnc.com/video/service/cs-BvWsKXyU.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 261000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville",
+              "presenter_role": null,
+              "published_at": "2016-05-31T00:00:00Z",
+              "retrieved_at": "2026-09-11T08:15:26Z",
+              "raw_text": "hi I'm Orville and today we're going to replace a damaged pocket on the side mount tool changer set your Rapids down to 25% and then rotate to the damaged pocket press e stop once the pocket is in position okay we need to remove three pieces of sheet metal from the bottom of the cam box this larger piece to my left and also two smaller piece right below the double arm in order to gain access to the damaged pocket and the switches behind it but before we can move this larger panel there are four of those fasteners on top of the machine we'll start with those four first we'll be working in this area for a few minutes so we'll remove all the tools from the carousel and mark their location we want to make sure we installed it carousel disk correctly so we'll put a mark on the disk and on the pocket for reinstallation now we're going to remove the number ring and now we're going to disconnect the main air to the machine and now we're going to remove the pilot check valve now with this check valve remove now I can move the pocket up and down freely to get to that screw now we're going to remove the four bolts from the pocket stop so we can continue with it removal of the pocket now with this pocket stop remove we'll remove the shoulder bolt on the backside of the carousel right next to the lower proximity switch with the shoulder bolts remove will then remove the retaining bolt and remove the pocket before we install the new pocket there's a few things we need to check rotate that cam follower make sure that it's spinning freely we also want to check the plunger inside the pocket to make sure they're not worn out now with the pocket slider we'll apply some grease in there now we're ready to reinstall the pocket install the pocket to the slider and install both of them back in position now we're going to reinstall it retainer bolt and tighten it so now we will install the shoulder boat lower the pocket and attach the shoulder bolt and screw it in now the pocket is moving freely and I'm also reading the switches which is the pocket up and pocket down switches so now let's install the pocket stop with the pocket stop and the new pocket installed now let's install the check valve now reinstall the number disc by lining up the dot on the number disc with the dot on the pocket now we'll install the remaining three panels now with the panels all in place we'll install the tools and then test the system with the new pocket installed the panels are secured the main air is turned on let's release the e-stop and run the tool changer run the tool changer through several two changes to ensure everything is working correctly thanks for watching",
+              "content_sha256": "5d8ecf73a6b6b4ee6a80cdd271cbdb767b5e075d642c8c1917557eeff8d2f292",
+              "related_source_ids": [],
+              "access_note": "Public YouTube video on the official 'Haas Automation, Inc.' channel. The haascnc.com video page (which may state a role for 'Orville') could not be fetched this session (Cloudflare 403); presenter_role left null rather than inferred from third-party search snippets. Manual English captions downloaded via yt-dlp (official_caption); no video file retained."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "B0_SRC_HAAS_0005",
+          "revision": 2,
+          "entity_type": "claim",
+          "entity_id": "B0_SRC_HAAS_0005_CL_017"
+        },
+        "claim": {
+          "claim_id": "B0_SRC_HAAS_0005_CL_017",
+          "text": "Remove the retaining bolt and extract the damaged pocket from the assembly.",
+          "role": "action",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Procedure described in B0_SRC_HAAS_0005"
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_016",
+              "support_status": "supported",
+              "explanation": "Presenter removes retaining bolt and lifts out the pocket."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "B0_SRC_HAAS_0005_ST_005"
+        ],
+        "score": 0.03200204813108039,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_016",
+              "source_id": "SRC_HAAS_0005",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 127770,
+                "end_ms": 134010,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "the shoulder bolts remove will then remove the retaining bolt and remove the pocket",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_016",
+              "support_status": "supported",
+              "explanation": "Presenter removes retaining bolt and lifts out the pocket."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0005",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Replace a Tool Pocket on Your Haas Side Mount Tool Changer (SMTC)",
+              "url": "https://www.haascnc.com/video/service/cs-BvWsKXyU.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 261000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville",
+              "presenter_role": null,
+              "published_at": "2016-05-31T00:00:00Z",
+              "retrieved_at": "2026-09-11T08:15:26Z",
+              "raw_text": "hi I'm Orville and today we're going to replace a damaged pocket on the side mount tool changer set your Rapids down to 25% and then rotate to the damaged pocket press e stop once the pocket is in position okay we need to remove three pieces of sheet metal from the bottom of the cam box this larger piece to my left and also two smaller piece right below the double arm in order to gain access to the damaged pocket and the switches behind it but before we can move this larger panel there are four of those fasteners on top of the machine we'll start with those four first we'll be working in this area for a few minutes so we'll remove all the tools from the carousel and mark their location we want to make sure we installed it carousel disk correctly so we'll put a mark on the disk and on the pocket for reinstallation now we're going to remove the number ring and now we're going to disconnect the main air to the machine and now we're going to remove the pilot check valve now with this check valve remove now I can move the pocket up and down freely to get to that screw now we're going to remove the four bolts from the pocket stop so we can continue with it removal of the pocket now with this pocket stop remove we'll remove the shoulder bolt on the backside of the carousel right next to the lower proximity switch with the shoulder bolts remove will then remove the retaining bolt and remove the pocket before we install the new pocket there's a few things we need to check rotate that cam follower make sure that it's spinning freely we also want to check the plunger inside the pocket to make sure they're not worn out now with the pocket slider we'll apply some grease in there now we're ready to reinstall the pocket install the pocket to the slider and install both of them back in position now we're going to reinstall it retainer bolt and tighten it so now we will install the shoulder boat lower the pocket and attach the shoulder bolt and screw it in now the pocket is moving freely and I'm also reading the switches which is the pocket up and pocket down switches so now let's install the pocket stop with the pocket stop and the new pocket installed now let's install the check valve now reinstall the number disc by lining up the dot on the number disc with the dot on the pocket now we'll install the remaining three panels now with the panels all in place we'll install the tools and then test the system with the new pocket installed the panels are secured the main air is turned on let's release the e-stop and run the tool changer run the tool changer through several two changes to ensure everything is working correctly thanks for watching",
+              "content_sha256": "5d8ecf73a6b6b4ee6a80cdd271cbdb767b5e075d642c8c1917557eeff8d2f292",
+              "related_source_ids": [],
+              "access_note": "Public YouTube video on the official 'Haas Automation, Inc.' channel. The haascnc.com video page (which may state a role for 'Orville') could not be fetched this session (Cloudflare 403); presenter_role left null rather than inferred from third-party search snippets. Manual English captions downloaded via yt-dlp (official_caption); no video file retained."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "B0_SRC_HAAS_0005",
+          "revision": 2,
+          "entity_type": "claim",
+          "entity_id": "B0_SRC_HAAS_0005_CL_005"
+        },
+        "claim": {
+          "claim_id": "B0_SRC_HAAS_0005_CL_005",
+          "text": "Remove four top fasteners located on top of the machine panel first.",
+          "role": "action",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Procedure described in B0_SRC_HAAS_0005"
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_004",
+              "support_status": "supported",
+              "explanation": "Presenter specifies removing the four fasteners on top before panel removal."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "B0_SRC_HAAS_0005_ST_002"
+        ],
+        "score": 0.030330882352941176,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_004",
+              "source_id": "SRC_HAAS_0005",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 44620,
+                "end_ms": 60310,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "switches behind it but before we can move this larger panel there are four of those fasteners on top of the machine we'll start with those four first we'll be working in this area for",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_004",
+              "support_status": "supported",
+              "explanation": "Presenter specifies removing the four fasteners on top before panel removal."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0005",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Replace a Tool Pocket on Your Haas Side Mount Tool Changer (SMTC)",
+              "url": "https://www.haascnc.com/video/service/cs-BvWsKXyU.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 261000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville",
+              "presenter_role": null,
+              "published_at": "2016-05-31T00:00:00Z",
+              "retrieved_at": "2026-09-11T08:15:26Z",
+              "raw_text": "hi I'm Orville and today we're going to replace a damaged pocket on the side mount tool changer set your Rapids down to 25% and then rotate to the damaged pocket press e stop once the pocket is in position okay we need to remove three pieces of sheet metal from the bottom of the cam box this larger piece to my left and also two smaller piece right below the double arm in order to gain access to the damaged pocket and the switches behind it but before we can move this larger panel there are four of those fasteners on top of the machine we'll start with those four first we'll be working in this area for a few minutes so we'll remove all the tools from the carousel and mark their location we want to make sure we installed it carousel disk correctly so we'll put a mark on the disk and on the pocket for reinstallation now we're going to remove the number ring and now we're going to disconnect the main air to the machine and now we're going to remove the pilot check valve now with this check valve remove now I can move the pocket up and down freely to get to that screw now we're going to remove the four bolts from the pocket stop so we can continue with it removal of the pocket now with this pocket stop remove we'll remove the shoulder bolt on the backside of the carousel right next to the lower proximity switch with the shoulder bolts remove will then remove the retaining bolt and remove the pocket before we install the new pocket there's a few things we need to check rotate that cam follower make sure that it's spinning freely we also want to check the plunger inside the pocket to make sure they're not worn out now with the pocket slider we'll apply some grease in there now we're ready to reinstall the pocket install the pocket to the slider and install both of them back in position now we're going to reinstall it retainer bolt and tighten it so now we will install the shoulder boat lower the pocket and attach the shoulder bolt and screw it in now the pocket is moving freely and I'm also reading the switches which is the pocket up and pocket down switches so now let's install the pocket stop with the pocket stop and the new pocket installed now let's install the check valve now reinstall the number disc by lining up the dot on the number disc with the dot on the pocket now we'll install the remaining three panels now with the panels all in place we'll install the tools and then test the system with the new pocket installed the panels are secured the main air is turned on let's release the e-stop and run the tool changer run the tool changer through several two changes to ensure everything is working correctly thanks for watching",
+              "content_sha256": "5d8ecf73a6b6b4ee6a80cdd271cbdb767b5e075d642c8c1917557eeff8d2f292",
+              "related_source_ids": [],
+              "access_note": "Public YouTube video on the official 'Haas Automation, Inc.' channel. The haascnc.com video page (which may state a role for 'Orville') could not be fetched this session (Cloudflare 403); presenter_role left null rather than inferred from third-party search snippets. Manual English captions downloaded via yt-dlp (official_caption); no video file retained."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "B0_SRC_HAAS_0005",
+          "revision": 2,
+          "entity_type": "claim",
+          "entity_id": "B0_SRC_HAAS_0005_CL_006"
+        },
+        "claim": {
+          "claim_id": "B0_SRC_HAAS_0005_CL_006",
+          "text": "Remove the large panel on the left side and two smaller panel pieces below the double arm from the bottom of the cam box.",
+          "role": "action",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Procedure described in B0_SRC_HAAS_0005"
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_005",
+              "support_status": "supported",
+              "explanation": "Presenter details removing three sheet metal pieces at the bottom of the cam box."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "B0_SRC_HAAS_0005_ST_002"
+        ],
+        "score": 0.030330882352941176,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_005",
+              "source_id": "SRC_HAAS_0005",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 23770,
+                "end_ms": 44620,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "press e stop once the pocket is in position okay we need to remove three pieces of sheet metal from the bottom of the cam box this larger piece to my left and also two smaller piece right below the double arm in order to gain access to the damaged pocket and the",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_005",
+              "support_status": "supported",
+              "explanation": "Presenter details removing three sheet metal pieces at the bottom of the cam box."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0005",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Replace a Tool Pocket on Your Haas Side Mount Tool Changer (SMTC)",
+              "url": "https://www.haascnc.com/video/service/cs-BvWsKXyU.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 261000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville",
+              "presenter_role": null,
+              "published_at": "2016-05-31T00:00:00Z",
+              "retrieved_at": "2026-09-11T08:15:26Z",
+              "raw_text": "hi I'm Orville and today we're going to replace a damaged pocket on the side mount tool changer set your Rapids down to 25% and then rotate to the damaged pocket press e stop once the pocket is in position okay we need to remove three pieces of sheet metal from the bottom of the cam box this larger piece to my left and also two smaller piece right below the double arm in order to gain access to the damaged pocket and the switches behind it but before we can move this larger panel there are four of those fasteners on top of the machine we'll start with those four first we'll be working in this area for a few minutes so we'll remove all the tools from the carousel and mark their location we want to make sure we installed it carousel disk correctly so we'll put a mark on the disk and on the pocket for reinstallation now we're going to remove the number ring and now we're going to disconnect the main air to the machine and now we're going to remove the pilot check valve now with this check valve remove now I can move the pocket up and down freely to get to that screw now we're going to remove the four bolts from the pocket stop so we can continue with it removal of the pocket now with this pocket stop remove we'll remove the shoulder bolt on the backside of the carousel right next to the lower proximity switch with the shoulder bolts remove will then remove the retaining bolt and remove the pocket before we install the new pocket there's a few things we need to check rotate that cam follower make sure that it's spinning freely we also want to check the plunger inside the pocket to make sure they're not worn out now with the pocket slider we'll apply some grease in there now we're ready to reinstall the pocket install the pocket to the slider and install both of them back in position now we're going to reinstall it retainer bolt and tighten it so now we will install the shoulder boat lower the pocket and attach the shoulder bolt and screw it in now the pocket is moving freely and I'm also reading the switches which is the pocket up and pocket down switches so now let's install the pocket stop with the pocket stop and the new pocket installed now let's install the check valve now reinstall the number disc by lining up the dot on the number disc with the dot on the pocket now we'll install the remaining three panels now with the panels all in place we'll install the tools and then test the system with the new pocket installed the panels are secured the main air is turned on let's release the e-stop and run the tool changer run the tool changer through several two changes to ensure everything is working correctly thanks for watching",
+              "content_sha256": "5d8ecf73a6b6b4ee6a80cdd271cbdb767b5e075d642c8c1917557eeff8d2f292",
+              "related_source_ids": [],
+              "access_note": "Public YouTube video on the official 'Haas Automation, Inc.' channel. The haascnc.com video page (which may state a role for 'Orville') could not be fetched this session (Cloudflare 403); presenter_role left null rather than inferred from third-party search snippets. Manual English captions downloaded via yt-dlp (official_caption); no video file retained."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "B0_SRC_HAAS_0005",
+          "revision": 2,
+          "entity_type": "claim",
+          "entity_id": "B0_SRC_HAAS_0005_CL_007"
+        },
+        "claim": {
+          "claim_id": "B0_SRC_HAAS_0005_CL_007",
+          "text": "Removing sheet metal panels provides physical access to the damaged pocket and its corresponding switches behind it.",
+          "role": "rationale",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Procedure described in B0_SRC_HAAS_0005"
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_006",
+              "support_status": "supported",
+              "explanation": "Presenter explicitly explains this removal is required to gain access to the damaged pocket and switches."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "B0_SRC_HAAS_0005_ST_002"
+        ],
+        "score": 0.030330882352941176,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_006",
+              "source_id": "SRC_HAAS_0005",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 39910,
+                "end_ms": 44620,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "piece right below the double arm in order to gain access to the damaged pocket and the",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_006",
+              "support_status": "supported",
+              "explanation": "Presenter explicitly explains this removal is required to gain access to the damaged pocket and switches."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0005",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Replace a Tool Pocket on Your Haas Side Mount Tool Changer (SMTC)",
+              "url": "https://www.haascnc.com/video/service/cs-BvWsKXyU.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 261000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville",
+              "presenter_role": null,
+              "published_at": "2016-05-31T00:00:00Z",
+              "retrieved_at": "2026-09-11T08:15:26Z",
+              "raw_text": "hi I'm Orville and today we're going to replace a damaged pocket on the side mount tool changer set your Rapids down to 25% and then rotate to the damaged pocket press e stop once the pocket is in position okay we need to remove three pieces of sheet metal from the bottom of the cam box this larger piece to my left and also two smaller piece right below the double arm in order to gain access to the damaged pocket and the switches behind it but before we can move this larger panel there are four of those fasteners on top of the machine we'll start with those four first we'll be working in this area for a few minutes so we'll remove all the tools from the carousel and mark their location we want to make sure we installed it carousel disk correctly so we'll put a mark on the disk and on the pocket for reinstallation now we're going to remove the number ring and now we're going to disconnect the main air to the machine and now we're going to remove the pilot check valve now with this check valve remove now I can move the pocket up and down freely to get to that screw now we're going to remove the four bolts from the pocket stop so we can continue with it removal of the pocket now with this pocket stop remove we'll remove the shoulder bolt on the backside of the carousel right next to the lower proximity switch with the shoulder bolts remove will then remove the retaining bolt and remove the pocket before we install the new pocket there's a few things we need to check rotate that cam follower make sure that it's spinning freely we also want to check the plunger inside the pocket to make sure they're not worn out now with the pocket slider we'll apply some grease in there now we're ready to reinstall the pocket install the pocket to the slider and install both of them back in position now we're going to reinstall it retainer bolt and tighten it so now we will install the shoulder boat lower the pocket and attach the shoulder bolt and screw it in now the pocket is moving freely and I'm also reading the switches which is the pocket up and pocket down switches so now let's install the pocket stop with the pocket stop and the new pocket installed now let's install the check valve now reinstall the number disc by lining up the dot on the number disc with the dot on the pocket now we'll install the remaining three panels now with the panels all in place we'll install the tools and then test the system with the new pocket installed the panels are secured the main air is turned on let's release the e-stop and run the tool changer run the tool changer through several two changes to ensure everything is working correctly thanks for watching",
+              "content_sha256": "5d8ecf73a6b6b4ee6a80cdd271cbdb767b5e075d642c8c1917557eeff8d2f292",
+              "related_source_ids": [],
+              "access_note": "Public YouTube video on the official 'Haas Automation, Inc.' channel. The haascnc.com video page (which may state a role for 'Orville') could not be fetched this session (Cloudflare 403); presenter_role left null rather than inferred from third-party search snippets. Manual English captions downloaded via yt-dlp (official_caption); no video file retained."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "B0_SRC_HAAS_0005",
+          "revision": 2,
+          "entity_type": "claim",
+          "entity_id": "B0_SRC_HAAS_0005_CL_012"
+        },
+        "claim": {
+          "claim_id": "B0_SRC_HAAS_0005_CL_012",
+          "text": "Disconnect main pneumatic air supply to the machine.",
+          "role": "action",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Procedure described in B0_SRC_HAAS_0005"
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_011",
+              "support_status": "supported",
+              "explanation": "Presenter states to disconnect main air."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "B0_SRC_HAAS_0005_ST_004"
+        ],
+        "score": 0.030309988518943745,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_011",
+              "source_id": "SRC_HAAS_0005",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 85170,
+                "end_ms": 87780,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "and now we're going to disconnect the main air to",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_011",
+              "support_status": "supported",
+              "explanation": "Presenter states to disconnect main air."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0005",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Replace a Tool Pocket on Your Haas Side Mount Tool Changer (SMTC)",
+              "url": "https://www.haascnc.com/video/service/cs-BvWsKXyU.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 261000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville",
+              "presenter_role": null,
+              "published_at": "2016-05-31T00:00:00Z",
+              "retrieved_at": "2026-09-11T08:15:26Z",
+              "raw_text": "hi I'm Orville and today we're going to replace a damaged pocket on the side mount tool changer set your Rapids down to 25% and then rotate to the damaged pocket press e stop once the pocket is in position okay we need to remove three pieces of sheet metal from the bottom of the cam box this larger piece to my left and also two smaller piece right below the double arm in order to gain access to the damaged pocket and the switches behind it but before we can move this larger panel there are four of those fasteners on top of the machine we'll start with those four first we'll be working in this area for a few minutes so we'll remove all the tools from the carousel and mark their location we want to make sure we installed it carousel disk correctly so we'll put a mark on the disk and on the pocket for reinstallation now we're going to remove the number ring and now we're going to disconnect the main air to the machine and now we're going to remove the pilot check valve now with this check valve remove now I can move the pocket up and down freely to get to that screw now we're going to remove the four bolts from the pocket stop so we can continue with it removal of the pocket now with this pocket stop remove we'll remove the shoulder bolt on the backside of the carousel right next to the lower proximity switch with the shoulder bolts remove will then remove the retaining bolt and remove the pocket before we install the new pocket there's a few things we need to check rotate that cam follower make sure that it's spinning freely we also want to check the plunger inside the pocket to make sure they're not worn out now with the pocket slider we'll apply some grease in there now we're ready to reinstall the pocket install the pocket to the slider and install both of them back in position now we're going to reinstall it retainer bolt and tighten it so now we will install the shoulder boat lower the pocket and attach the shoulder bolt and screw it in now the pocket is moving freely and I'm also reading the switches which is the pocket up and pocket down switches so now let's install the pocket stop with the pocket stop and the new pocket installed now let's install the check valve now reinstall the number disc by lining up the dot on the number disc with the dot on the pocket now we'll install the remaining three panels now with the panels all in place we'll install the tools and then test the system with the new pocket installed the panels are secured the main air is turned on let's release the e-stop and run the tool changer run the tool changer through several two changes to ensure everything is working correctly thanks for watching",
+              "content_sha256": "5d8ecf73a6b6b4ee6a80cdd271cbdb767b5e075d642c8c1917557eeff8d2f292",
+              "related_source_ids": [],
+              "access_note": "Public YouTube video on the official 'Haas Automation, Inc.' channel. The haascnc.com video page (which may state a role for 'Orville') could not be fetched this session (Cloudflare 403); presenter_role left null rather than inferred from third-party search snippets. Manual English captions downloaded via yt-dlp (official_caption); no video file retained."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "B0_SRC_HAAS_0005",
+          "revision": 2,
+          "entity_type": "claim",
+          "entity_id": "B0_SRC_HAAS_0005_CL_013"
+        },
+        "claim": {
+          "claim_id": "B0_SRC_HAAS_0005_CL_013",
+          "text": "Remove the pilot check valve.",
+          "role": "action",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Procedure described in B0_SRC_HAAS_0005"
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_012",
+              "support_status": "supported",
+              "explanation": "Presenter removes the pilot check valve."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "B0_SRC_HAAS_0005_ST_004"
+        ],
+        "score": 0.030309988518943745,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_012",
+              "source_id": "SRC_HAAS_0005",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 87780,
+                "end_ms": 93540,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "the machine and now we're going to remove the pilot check valve",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_012",
+              "support_status": "supported",
+              "explanation": "Presenter removes the pilot check valve."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0005",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Replace a Tool Pocket on Your Haas Side Mount Tool Changer (SMTC)",
+              "url": "https://www.haascnc.com/video/service/cs-BvWsKXyU.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 261000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville",
+              "presenter_role": null,
+              "published_at": "2016-05-31T00:00:00Z",
+              "retrieved_at": "2026-09-11T08:15:26Z",
+              "raw_text": "hi I'm Orville and today we're going to replace a damaged pocket on the side mount tool changer set your Rapids down to 25% and then rotate to the damaged pocket press e stop once the pocket is in position okay we need to remove three pieces of sheet metal from the bottom of the cam box this larger piece to my left and also two smaller piece right below the double arm in order to gain access to the damaged pocket and the switches behind it but before we can move this larger panel there are four of those fasteners on top of the machine we'll start with those four first we'll be working in this area for a few minutes so we'll remove all the tools from the carousel and mark their location we want to make sure we installed it carousel disk correctly so we'll put a mark on the disk and on the pocket for reinstallation now we're going to remove the number ring and now we're going to disconnect the main air to the machine and now we're going to remove the pilot check valve now with this check valve remove now I can move the pocket up and down freely to get to that screw now we're going to remove the four bolts from the pocket stop so we can continue with it removal of the pocket now with this pocket stop remove we'll remove the shoulder bolt on the backside of the carousel right next to the lower proximity switch with the shoulder bolts remove will then remove the retaining bolt and remove the pocket before we install the new pocket there's a few things we need to check rotate that cam follower make sure that it's spinning freely we also want to check the plunger inside the pocket to make sure they're not worn out now with the pocket slider we'll apply some grease in there now we're ready to reinstall the pocket install the pocket to the slider and install both of them back in position now we're going to reinstall it retainer bolt and tighten it so now we will install the shoulder boat lower the pocket and attach the shoulder bolt and screw it in now the pocket is moving freely and I'm also reading the switches which is the pocket up and pocket down switches so now let's install the pocket stop with the pocket stop and the new pocket installed now let's install the check valve now reinstall the number disc by lining up the dot on the number disc with the dot on the pocket now we'll install the remaining three panels now with the panels all in place we'll install the tools and then test the system with the new pocket installed the panels are secured the main air is turned on let's release the e-stop and run the tool changer run the tool changer through several two changes to ensure everything is working correctly thanks for watching",
+              "content_sha256": "5d8ecf73a6b6b4ee6a80cdd271cbdb767b5e075d642c8c1917557eeff8d2f292",
+              "related_source_ids": [],
+              "access_note": "Public YouTube video on the official 'Haas Automation, Inc.' channel. The haascnc.com video page (which may state a role for 'Orville') could not be fetched this session (Cloudflare 403); presenter_role left null rather than inferred from third-party search snippets. Manual English captions downloaded via yt-dlp (official_caption); no video file retained."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      },
+      {
+        "claim_ref": {
+          "workflow_id": "B0_SRC_HAAS_0005",
+          "revision": 2,
+          "entity_type": "claim",
+          "entity_id": "B0_SRC_HAAS_0005_CL_014"
+        },
+        "claim": {
+          "claim_id": "B0_SRC_HAAS_0005_CL_014",
+          "text": "Removing the pilot check valve allows the pocket to move up and down freely to gain access to mounting screws.",
+          "role": "rationale",
+          "evidence_type": "stated",
+          "attribution": {
+            "actor_id": null,
+            "label": "Orville",
+            "kind": "speaker"
+          },
+          "scope": {
+            "level": "case",
+            "description": "Procedure described in B0_SRC_HAAS_0005"
+          },
+          "evidence_links": [
+            {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_013",
+              "support_status": "supported",
+              "explanation": "Presenter notes removing check valve allows free vertical movement of pocket to reach screw."
+            }
+          ],
+          "support_status": "supported",
+          "source_review": "source_checked",
+          "technical_review": "not_requested",
+          "conflicts_with": [],
+          "supersedes_claim_ids": []
+        },
+        "matched_step_ids": [
+          "B0_SRC_HAAS_0005_ST_004"
+        ],
+        "score": 0.030309988518943745,
+        "purpose": "answer_candidate",
+        "evidence": [
+          {
+            "evidence": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_013",
+              "source_id": "SRC_HAAS_0005",
+              "modality": "speech",
+              "locator": {
+                "start_ms": 93540,
+                "end_ms": 106200,
+                "page": null,
+                "text_span": null
+              },
+              "quote": "now with this check valve remove now I can move the pocket up and down freely to get",
+              "observation_note": null,
+              "asset_uri": null,
+              "transcript_origin": "official_caption",
+              "parent_evidence_ids": []
+            },
+            "link": {
+              "evidence_id": "B0_SRC_HAAS_0005_EV_013",
+              "support_status": "supported",
+              "explanation": "Presenter notes removing check valve allows free vertical movement of pocket to reach screw."
+            },
+            "source": {
+              "source_id": "SRC_HAAS_0005",
+              "source_type": "real",
+              "source_kind": "official_service_video",
+              "title": "Replace a Tool Pocket on Your Haas Side Mount Tool Changer (SMTC)",
+              "url": "https://www.haascnc.com/video/service/cs-BvWsKXyU.html",
+              "asset_uri": null,
+              "language": "en",
+              "duration_ms": 261000,
+              "publisher": "Haas Automation, Inc.",
+              "presenter": "Orville",
+              "presenter_role": null,
+              "published_at": "2016-05-31T00:00:00Z",
+              "retrieved_at": "2026-09-11T08:15:26Z",
+              "raw_text": "hi I'm Orville and today we're going to replace a damaged pocket on the side mount tool changer set your Rapids down to 25% and then rotate to the damaged pocket press e stop once the pocket is in position okay we need to remove three pieces of sheet metal from the bottom of the cam box this larger piece to my left and also two smaller piece right below the double arm in order to gain access to the damaged pocket and the switches behind it but before we can move this larger panel there are four of those fasteners on top of the machine we'll start with those four first we'll be working in this area for a few minutes so we'll remove all the tools from the carousel and mark their location we want to make sure we installed it carousel disk correctly so we'll put a mark on the disk and on the pocket for reinstallation now we're going to remove the number ring and now we're going to disconnect the main air to the machine and now we're going to remove the pilot check valve now with this check valve remove now I can move the pocket up and down freely to get to that screw now we're going to remove the four bolts from the pocket stop so we can continue with it removal of the pocket now with this pocket stop remove we'll remove the shoulder bolt on the backside of the carousel right next to the lower proximity switch with the shoulder bolts remove will then remove the retaining bolt and remove the pocket before we install the new pocket there's a few things we need to check rotate that cam follower make sure that it's spinning freely we also want to check the plunger inside the pocket to make sure they're not worn out now with the pocket slider we'll apply some grease in there now we're ready to reinstall the pocket install the pocket to the slider and install both of them back in position now we're going to reinstall it retainer bolt and tighten it so now we will install the shoulder boat lower the pocket and attach the shoulder bolt and screw it in now the pocket is moving freely and I'm also reading the switches which is the pocket up and pocket down switches so now let's install the pocket stop with the pocket stop and the new pocket installed now let's install the check valve now reinstall the number disc by lining up the dot on the number disc with the dot on the pocket now we'll install the remaining three panels now with the panels all in place we'll install the tools and then test the system with the new pocket installed the panels are secured the main air is turned on let's release the e-stop and run the tool changer run the tool changer through several two changes to ensure everything is working correctly thanks for watching",
+              "content_sha256": "5d8ecf73a6b6b4ee6a80cdd271cbdb767b5e075d642c8c1917557eeff8d2f292",
+              "related_source_ids": [],
+              "access_note": "Public YouTube video on the official 'Haas Automation, Inc.' channel. The haascnc.com video page (which may state a role for 'Orville') could not be fetched this session (Cloudflare 403); presenter_role left null rather than inferred from third-party search snippets. Manual English captions downloaded via yt-dlp (official_caption); no video file retained."
+            },
+            "access_status": "not_checked"
+          }
+        ]
+      }
+    ],
+    "conflicts": [],
+    "blocked_claims": [],
+    "questions": [],
+    "relations": [],
+    "related_steps": [],
+    "related_claims": [],
+    "evidence_openability_checked": false,
+    "trace": {
+      "config": {
+        "strategy": "hybrid",
+        "top_k": 5,
+        "candidate_k": 20,
+        "rrf_k": 60,
+        "min_cosine": 0.25,
+        "intent": "auto",
+        "min_term_coverage": 0.2,
+        "relevance_policy": "claim_coherence",
+        "query_translation": "auto",
+        "neighbor_depth": 1,
+        "max_related_steps": 5,
+        "workflow_routing": "best_step"
+      },
+      "intent": "detail",
+      "detected_context": {},
+      "filters": [
+        {
+          "workflow_id": "B0_SRC_HAAS_0005",
+          "revision": 2,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0001",
+          "revision": 1,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0002",
+          "revision": 2,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0003",
+          "revision": 2,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0004",
+          "revision": 1,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0005",
+          "revision": 1,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0006",
+          "revision": 1,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0007",
+          "revision": 1,
+          "mismatches": [],
+          "unknown_context": []
+        },
+        {
+          "workflow_id": "REAL_WF_0008",
+          "revision": 1,
+          "mismatches": [],
+          "unknown_context": []
+        }
+      ],
+      "workflow_ranking": [
+        {
+          "document_id": "[\"workflow\",\"B0_SRC_HAAS_0005\",2,\"\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.03252247488101534,
+          "lexical_score": 11.226285293513337,
+          "vector_score": 0.6710974110523334
+        },
+        {
+          "document_id": "[\"workflow\",\"REAL_WF_0001\",1,\"\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.03252247488101534,
+          "lexical_score": 9.029383951073063,
+          "vector_score": 0.6768373480153179
+        },
+        {
+          "document_id": "[\"workflow\",\"REAL_WF_0003\",2,\"\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.030330882352941176,
+          "lexical_score": 4.323564292315354,
+          "vector_score": 0.6474175547298319
+        },
+        {
+          "document_id": "[\"workflow\",\"REAL_WF_0005\",1,\"\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.015384615384615385,
+          "lexical_score": 4.572464170855034,
+          "vector_score": 0.6044800696958486
+        },
+        {
+          "document_id": "[\"workflow\",\"REAL_WF_0002\",2,\"\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.013513513513513514,
+          "lexical_score": 2.004500744584551,
+          "vector_score": 0.6189110234736651
+        },
+        {
+          "document_id": "[\"workflow\",\"REAL_WF_0007\",1,\"\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.013513513513513514,
+          "lexical_score": 3.6079329649390415,
+          "vector_score": 0.5934481651061279
+        },
+        {
+          "document_id": "[\"workflow\",\"REAL_WF_0004\",1,\"\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.013157894736842105,
+          "lexical_score": 3.4259504118065154,
+          "vector_score": 0.6076013701700924
+        },
+        {
+          "document_id": "[\"workflow\",\"REAL_WF_0008\",1,\"\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.012987012987012988,
+          "lexical_score": 1.6914719705727173,
+          "vector_score": 0.6176752604012692
+        }
+      ],
+      "step_ranking": [
+        {
+          "document_id": "[\"step\",\"B0_SRC_HAAS_0005\",2,\"B0_SRC_HAAS_0005_ST_003\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.03278688524590164,
+          "lexical_score": 7.487917181448923,
+          "vector_score": 0.6710974110523334
+        },
+        {
+          "document_id": "[\"step\",\"B0_SRC_HAAS_0005\",2,\"B0_SRC_HAAS_0005_ST_001\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.03200204813108039,
+          "lexical_score": 2.4047346155439486,
+          "vector_score": 0.654255977997144
+        },
+        {
+          "document_id": "[\"step\",\"B0_SRC_HAAS_0005\",2,\"B0_SRC_HAAS_0005_ST_005\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.03200204813108039,
+          "lexical_score": 2.4212680915647256,
+          "vector_score": 0.6256480354358535
+        },
+        {
+          "document_id": "[\"step\",\"B0_SRC_HAAS_0005\",2,\"B0_SRC_HAAS_0005_ST_002\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.030330882352941176,
+          "lexical_score": 1.516534699254551,
+          "vector_score": 0.5919567566714304
+        },
+        {
+          "document_id": "[\"step\",\"B0_SRC_HAAS_0005\",2,\"B0_SRC_HAAS_0005_ST_004\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.030309988518943745,
+          "lexical_score": 1.4314336120978102,
+          "vector_score": 0.5929668872837187
+        },
+        {
+          "document_id": "[\"step\",\"B0_SRC_HAAS_0005\",2,\"B0_SRC_HAAS_0005_ST_006\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.030117753623188408,
+          "lexical_score": 0.13990854335075895,
+          "vector_score": 0.6036824748412156
+        },
+        {
+          "document_id": "[\"step\",\"B0_SRC_HAAS_0005\",2,\"B0_SRC_HAAS_0005_ST_008\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.030090497737556562,
+          "lexical_score": 0.1665192826195656,
+          "vector_score": 0.6033537060244297
+        },
+        {
+          "document_id": "[\"step\",\"B0_SRC_HAAS_0005\",2,\"B0_SRC_HAAS_0005_ST_009\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.03007688828584351,
+          "lexical_score": 0.9322785828571429,
+          "vector_score": 0.6023165839006996
+        },
+        {
+          "document_id": "[\"step\",\"B0_SRC_HAAS_0005\",2,\"B0_SRC_HAAS_0005_ST_007\",\"answer\"]",
+          "purpose": "answer",
+          "score": 0.02964426877470356,
+          "lexical_score": 1.0195390546713679,
+          "vector_score": 0.5877252940991182
+        }
+      ],
+      "embedding_calls": 1,
+      "cache": "disabled",
+      "eligible_documents": 76,
+      "query_translation": {
+        "text": "mark tool position on carousel before removal",
+        "provider": "gemini",
+        "model": "gemini-3.5-flash-lite",
+        "prompt_version": "q2en-3",
+        "temperature": 0,
+        "sdk_version": "2.29.0"
+      },
+      "relevance": {
+        "policy": "claim-coherence-2",
+        "unit": "claim",
+        "background_ratio": 0.75,
+        "ignored_terms": [],
+        "context_terms": [],
+        "protected_component_terms": [],
+        "query_terms": [
+          "carousel",
+          "mark",
+          "posit",
+          "remov",
+          "tool"
+        ],
+        "matched_terms": [
+          "carousel",
+          "mark",
+          "posit",
+          "remov",
+          "tool"
+        ],
+        "unseen_terms": [],
+        "min_matches": 2,
+        "term_coverage": 1.0,
+        "min_term_coverage": 0.2,
+        "support_refs": [
+          {
+            "workflow_id": "B0_SRC_HAAS_0005",
+            "revision": 2,
+            "step_id": "B0_SRC_HAAS_0005_ST_003",
+            "claim_id": "B0_SRC_HAAS_0005_CL_008",
+            "purpose": "answer"
+          }
+        ],
+        "gate": "passed",
+        "exact_alarm_lookup": false,
+        "corpus_term_coverage": 1.0
+      },
+      "routing_steps": {
+        "B0_SRC_HAAS_0005": "B0_SRC_HAAS_0005_ST_003",
+        "REAL_WF_0001": "REAL_WF_0001_ST_003",
+        "REAL_WF_0003": "REAL_WF_0003_ST_005",
+        "REAL_WF_0005": "REAL_WF_0005_ST_003",
+        "REAL_WF_0002": "REAL_WF_0002_ST_005",
+        "REAL_WF_0007": "REAL_WF_0007_ST_003",
+        "REAL_WF_0004": "REAL_WF_0004_ST_002",
+        "REAL_WF_0008": "REAL_WF_0008_ST_007"
+      },
+      "workflow_margin": 0.0,
+      "neighbors": {
+        "depth": 1,
+        "relations": [
+          "branch_if",
+          "corrects",
+          "requires"
+        ],
+        "unavailable_step_ids": [],
+        "truncated_step_ids": []
+      },
+      "conflict_ranking": [],
+      "latency_ms": 1906.01
+    }
+  },
+  "result_sha256": "eaab6a48001139aa84f8445edfa27a2208804d5eb2c73f54e86bbc0196005a3e",
+  "error_class": null,
+  "latency_ms": 1917.1758000011323,
+  "provider_call_ids": [
+    "call-000283",
+    "call-000284"
+  ],
+  "backoff_seconds": 0.0,
+  "owner_arm": "C_no_graph",
+  "pre_graph_sha256": "752df73fa81f252620859dbefd461eaa5563843dfe19865bce3ddc4e64b72711",
+  "translation_sha256": "02d677b9ab1b7812fb5f26567fd9face567f02a08836071e4c3ba41d185727d9"
+}

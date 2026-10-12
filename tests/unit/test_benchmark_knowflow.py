@@ -162,9 +162,11 @@ def test_expanded_report_cohorts_and_shared_cost_are_not_double_counted(tmp_path
     import scripts.benchmark_knowflow.expanded_report as expanded
     monkeypatch.setattr(expanded, "ROOT", tmp_path)
     cfg = config() | {"questions": "q.jsonl", "answer_model": "gemini-3.5-flash-lite", "execution": {},
+                      "embedding_model": "gemini-embedding-001", "embedding_dimensions": 768,
                       "pricing": config()["pricing"] | {"checked_date": "2026-10-12"}}
     cfg["pricing"]["gemini-3.5-flash-lite"]["url"] = "https://ai.google.dev/gemini-api/docs/pricing"
-    questions = [{"question_id": "HAAS_DEV_Q001", "language": "vi"}, {"question_id": "HAAS_DEV_Q069", "language": "en"}]
+    questions = [{"question_id": "HAAS_DEV_Q001", "language": "vi", "expected_status": "insufficient_evidence"},
+                 {"question_id": "HAAS_DEV_Q069", "language": "en", "expected_status": "insufficient_evidence"}]
     (tmp_path / "q.jsonl").write_text("".join(json.dumps(q)+"\n" for q in questions))
     (tmp_path / "audit.json").write_text(json.dumps({"questions_sha256": "q-sha", "corpus_files_sha256": "c-sha", "active_workflows": []}))
     pair_meta = {"key": "same", "result_sha256": "same", "pre_graph_sha256": "same", "translation_sha256": "same", "error_class": None}
@@ -191,6 +193,10 @@ def test_expanded_report_cohorts_and_shared_cost_are_not_double_counted(tmp_path
     assert summary["all_experiment_api_cost_including_index_smoke_interruption"]["provider_calls"] == 1
     assert summary["summaries"]["A_knowflow"]["cost"]["provider_calls"] == 0
     assert summary["summaries"]["C_no_graph"]["standalone_reference_cost_including_one_shared_retrieval"]["provider_calls"] == 1
+    assert summary["summaries"]["A_knowflow"]["known_list_price_usd_per_planned_task"] == 0
+    assert summary["summaries"]["A_knowflow"]["standalone_reference_known_list_price_usd_per_planned_task"] == pytest.approx(call_cost(shared, cfg) / 2)
+    assert summary["full_api_cost_measured_once"]["provider_calls"] == 1
+    assert summary["full_provider_transport_measured_once"]["logical_provider_calls"] == 1
     assert summary["summaries"]["A_knowflow"]["human_semantics"]["source_supported"] is None
 
 

@@ -1,0 +1,3 @@
+# Chấm nghĩa độc lập
+
+Giữ arm/question_id/answer_sha256. Điền reviewer_kind=human chỉ khi người thật đối chiếu toàn nguồn, câu hỏi và điều kiện. AI hỗ trợ ghi ai. Verifier trong pipeline không phải evaluator. Các cột answers_question/conditions_correct/source_supported là true/false; citations_supported_json có một true/false cho mỗi citation. sources_json chứa nguồn đã trích; candidate_sources_json là nguồn truy xuất để xem xét từ chối oan, không tự chứng minh đáp án đúng. Mở URL/timestamp/keyframe hoặc transcript gốc; không chấm chỉ bằng claim chuẩn hóa. Xem rows.jsonl theo arm/question_id và source_inventory trong data/eval/reviews/20261012_expanded. Lỗi API không tự chuyển thành đáp án sai nghĩa. Không thay gold hay sinh lại đáp án.

@@ -2,7 +2,8 @@
 
 Tiến độ trên corpus mở rộng sau PR #53: [bản sửa alarm và danh tính bộ phận](../docs/expanded_dev_retrieval_progress.md).
 Benchmark 81 câu dùng [cấu hình v2 và hướng dẫn](../benchmarks/knowflow_expanded_dev/README.md),
-chờ người kiểm xác nhận 20 nhãn phủ định trên corpus mới. Câu hỏi Vietnamese/hard draft
+đã chạy API thật A/B/C: [báo cáo 20261012](../benchmarks/results/20261012_expanded_dev/REPORT.md).
+Lượt đo giữ nguyên nhãn hiện có, chờ quyết định review 20 nhãn phủ định trên corpus mới. Câu hỏi Vietnamese/hard draft
 được tách file; không cộng vào kết quả chính thức.
 
 **Tiếp nối WP3/API:** đã có generator + citation guard, `/v1/ask` và trang đọc

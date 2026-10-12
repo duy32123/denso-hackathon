@@ -108,6 +108,8 @@ Lượt kiểm thử tập trung: **136 passed**. Toàn bộ suite: **785 passed
 không dùng metadata/pending claim làm bằng chứng, biên workflow/conflict, mã alarm,
 truy vấn ngắn, alias slider/slide và từ chối trước khi gọi embedding ở cả ba strategy.
 
+Lượt kiểm lại sau khi thêm năm workflow (2026-10-12): [đo lại sau khi mở rộng](retrieval_dev_expansion_check.md).
+
 Đây vẫn là heuristic phụ thuộc corpus. Cần kiểm lại khi thêm nguồn và đánh giá
 riêng trên tập độc lập sau khi khóa pipeline. Việc D2-A review 14 nhãn
 draft (Q055–Q068) đã xong ngày 2026-09-24 (`quyhienln`, 14 `ok`); số đo trong trang này vẫn

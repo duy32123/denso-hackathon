@@ -4,7 +4,10 @@
 > **thật** — số đo trên nó mới là kết quả. `synthetic_dev.qa.v0.jsonl` là dữ liệu
 > **mô phỏng** để thử phần mềm (xem cuối trang). Không bao giờ cộng hai mẫu số.
 
-`haas_real_dev.retrieval.v0.jsonl`: **66 câu real/dev, cả 66 `reviewed`**.
+`haas_real_dev.retrieval.v0.jsonl`: **81 câu real/dev: 66 `reviewed` và 15 `draft`**.
+Q069–Q083 (2026-10-12, `claude-draft`, tiếng Anh) phủ năm workflow mới `REAL_WF_0004`–`0008`,
+**chưa được người kiểm** nên không tính vào số báo cáo. Corpus real/dev cũng đã đổi:
+xem [đo lại sau khi mở rộng](../../docs/retrieval_dev_expansion_check.md) trước khi dùng các số bên dưới.
 52 câu cũ được người kiểm (`duy32123`, 2026-09-22). Q055–Q068 (phủ `REAL_WF_0002/0003`,
 người soạn `codex-draft`) được người kiểm (`quyhienln`, 2026-09-24): 14 `ok`, không `fix`,
 không `drop`. Số đo tầng câu trả lời có human verdict (2026-09-24) và giới hạn của nó:

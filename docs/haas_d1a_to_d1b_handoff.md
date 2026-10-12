@@ -343,7 +343,8 @@ one symptom triage and one replacement procedure, on subsystems the pilot did no
   description, an on-screen overlay, or the transcript's own usage. SRC_HAAS_0009's "Bijur pump"
   and "Mobil SHC 625" are fixed from on-screen text, which is the stronger source.
 - 31 keyframes at 1080p, chosen by reading the frame against the claim it supports, not by
-  cue timing. Many of these videos carry on-screen captions and part labels, which make them
+  cue timing. All 31 are in the `data/keyframes/` ledgers; six are marked `accepted_weak`
+  because the frame alone cannot identify the part the narration names. Many of these videos carry on-screen captions and part labels, which make them
   strong visual evidence. As in section 18, those judgments are AI vision review with
   **no human sign-off yet**.
 - `Source.content_sha256` for these five is the SHA-256 of `raw_text`, so it can be checked from
@@ -353,33 +354,45 @@ one symptom triage and one replacement procedure, on subsystems the pilot did no
   number, code or proper noun not found in the cited cues). It is not `expert_validated`
   and still needs a human reviewer to sign off.
 
+### Reviewer links
+
+`data/catalogs/haas_playable_links.json` now holds the YouTube id of every dev video as YouTube
+spells it, and `review.py` builds watch links from it. This closes the trap described in
+section 1: regenerating a worklist no longer produces the lower-case SRC_HAAS_0003 link.
+`Source.url` for SRC_HAAS_0003 is unchanged.
+
 ### Open items
 
 1. **Wye-Delta contactor guide.** The description of SRC_HAAS_0011 links a Haas DIY page. It is
    recorded as deferred candidate CAND-018 with no source_id. Its text has to be copied by
    ordinary browsing, as for TG0128, before it can become a companion source.
-2. **Retrieval gate is weaker on the larger corpus.** The term-coverage gate is corpus-dependent
-   (its own tests say so). With the new content, "How do I replace the hydraulic pump on a
-   press brake?" now passes it (coverage 0.40), and the old probe questions about a coolant
-   refractometer and a chip conveyor are partly in scope. `tests/unit/test_query.py` now uses
-   probes that are still out of domain. The threshold itself is a Team 2 decision.
+2. **Refusal got worse on the larger corpus; recall did not.** Measured on the 66 reviewed
+   questions, lexical, old bundle against new: Recall@5 0.9459 on both, status accuracy
+   0.9848 to 0.8636, out-of-scope questions answered 1 to 9. The gate drops words found in
+   more than 75% of steps, and words like "tool" and "carousel" fell under that line once the
+   corpus stopped being all SMTC. One alternative rule was tried and was worse, so the gate is
+   unchanged. Numbers, cause, labels to re-check and what is still owed (hybrid was not
+   measured: Gemini quota) are in `docs/retrieval_dev_expansion_check.md`.
+   `tests/unit/test_query.py` uses probes that are still out of domain.
 3. **Evaluation records name the old bundle id** (`BUNDLE_HAAS_SMTC_DEV_20382d7957b6` in
    `data/eval/README.md`, `docs/retrieval_eval_real_dev.md`,
    `docs/gold_review_worklist_real_dev.md`, `benchmarks/results/20261011_real_dev/`). They describe
    runs on that bundle and remain true for it; the bundle is now
-   `BUNDLE_HAAS_SMTC_DEV_f1ffda495fd6`. The gold questions were written for the earlier workflows.
+   `BUNDLE_HAAS_SMTC_DEV_566195ef6c9f`. Fifteen draft questions for the new workflows (Q069-Q083)
+   were added to the question file; they are `draft` and not human-checked.
 4. **Each workflow lists open questions** (40 across the bundle) for fields the video does not
    cover, such as acceptance thresholds. They are in the snapshots, not here.
 
 ### Checksums (sha256)
 
 ```
-9bb110009f680da6996d16947751cbf1e2644a758032d57d346c96c9242eca96  data/sources/haas_pilot_sources.jsonl
+1e50f901750ea2630037496bc58282a973d10c25a0417e690ddea60f9a2b3500  data/sources/haas_pilot_sources.jsonl
 7e1afb016ced366080ec86102010390e3df70cf4db058d3a40be31b8eaffcdfa  data/splits/haas_d1a_split_manifest.json
 ea85bea89b2889e9d22f2931a4735af9f1f748cb37c2d4df09684ce13de0c3bc  data/catalogs/haas_d1a_source_id_registry.json
+2453d19fbf8b16fefe1e0683daea7872c5f2d89d722463bc836bf60e6dc63798  data/catalogs/haas_playable_links.json
 a35c48c36d067cba9c2ab36299395e15aef410cc7c6e68694c55f7535696823e  acquisition/video_catalog/haas_d1a_source_candidates.csv
-6859f68c0bfe7195a0f68422a2a67ab240aece000ca11e8cbbe07f783518df9f  acquisition/export/haas_pilot_dev_bundle/manifest.json
-9bb110009f680da6996d16947751cbf1e2644a758032d57d346c96c9242eca96  acquisition/export/haas_pilot_dev_bundle/sources.jsonl
+5ecb1fd9e77c08ca91d043d110597e150f13b87c49e73fc8014faefb31c573a3  acquisition/export/haas_pilot_dev_bundle/manifest.json
+1e50f901750ea2630037496bc58282a973d10c25a0417e690ddea60f9a2b3500  acquisition/export/haas_pilot_dev_bundle/sources.jsonl
 a796674a29e97d01a8b1f9fcf62cd91c8f52ed134cf66f5eb672d4d4dee57658  acquisition/export/haas_pilot_dev_bundle/workflows.jsonl
 8d1e67506668d6b89d21c129b2c0ad22df1f6e3723a307db7686a2bd5363d2a8  acquisition/preprocessing/haas_d1a_media_inventory.jsonl
 fd56d421bb3cabfa0c8f39e9aa57421b4c16ed6ccfb0259db66d27d8dec9e09e  docs/data_rights_register.md

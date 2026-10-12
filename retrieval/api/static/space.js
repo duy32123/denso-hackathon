@@ -22,7 +22,10 @@ let clusterDecorations = [];
 let baseGraph = null, lens = 'overview', situation = null, comparison = null, phase = 'changes';
 let viewToken = 0, viewController = null, history = null;
 let routeUI = null, routeDisplay = null, routeParticles = null, routeStarted = 0;
-const changeColors = {added: '#8df0ba', changed: '#f6c378', removed: '#ef879f', unchanged: '#415675'};
+const changeColors = {added: '#15803d', changed: '#c26a06', removed: '#c2362b', unchanged: '#c9d3dd'};
+// San khau sang (theme.css --stage): lam mo = pha ve mau nen, khong nhan ve mau den.
+const STAGE_BG = new THREE.Color('#eef3f7');
+const fade = amount => color.lerp(STAGE_BG, 1 - amount);
 const changeLabels = {added: 'Thêm mới', changed: 'Thay đổi', removed: 'Đã bỏ', unchanged: 'Giữ nguyên'};
 const nodeAt = id => graph?.byId.get(graph.aliases?.get(id) || id);
 
@@ -207,15 +210,15 @@ function drawGraph() {
   });
   // Instances span several clusters; picking/culling uses the whole graph bound.
   mesh.computeBoundingSphere(); scene.add(mesh);
-  edgeLines = new THREE.LineSegments(new THREE.BufferGeometry(), new THREE.LineBasicMaterial({vertexColors: true, transparent: true, opacity: .19}));
-  highlightLines = new THREE.LineSegments(new THREE.BufferGeometry(), new THREE.LineBasicMaterial({color: '#c4f6ef', transparent: true, opacity: .8}));
+  edgeLines = new THREE.LineSegments(new THREE.BufferGeometry(), new THREE.LineBasicMaterial({vertexColors: true, transparent: true, opacity: .5}));
+  highlightLines = new THREE.LineSegments(new THREE.BufferGeometry(), new THREE.LineBasicMaterial({color: '#0f766e', transparent: true, opacity: .9}));
   scene.add(edgeLines, highlightLines);
   for (const info of graph.workflows.values()) {
     if (!graph.byId.has(info.prefix)) continue;
     const points = Array.from({length: 81}, (_, i) => {
       const a = i / 80 * Math.PI * 2; return new THREE.Vector3(info.center[0] + Math.cos(a) * 29, info.center[1] + Math.sin(a) * 21, info.center[2] - 4);
     });
-    const ring = new THREE.Line(new THREE.BufferGeometry().setFromPoints(points), new THREE.LineBasicMaterial({color: '#30587b', transparent: true, opacity: .22})); ring.userData.workflow = info.prefix; scene.add(ring); clusterDecorations.push(ring);
+    const ring = new THREE.Line(new THREE.BufferGeometry().setFromPoints(points), new THREE.LineBasicMaterial({color: '#9fb2c5', transparent: true, opacity: .55})); ring.userData.workflow = info.prefix; scene.add(ring); clusterDecorations.push(ring);
   }
   updateVisibility(); updateLabels(); resize(); wake();
 }
@@ -234,12 +237,12 @@ function updateVisibility() {
     color.set(lens === 'history' && phase === 'changes' ? changeColors[n.change] : TYPES[n.kind].color);
     if (lens === 'route' && routeDisplay) {
       const state = routeDisplay.states.get(n.id);
-      if (state === 'blocked') color.set('#ec8b9f');
-      else if (state === 'context') color.set('#f6c378');
-      else if (state === 'cited') color.set('#a5ffd9');
-      if (!routeDisplay.visited.has(n.id)) color.multiplyScalar(.12);
-      else if (!routeDisplay.active.has(n.id)) color.multiplyScalar(.45);
-    } else if (selected && !neighborhood.has(n.id) && lens !== 'history') color.multiplyScalar(.18);
+      if (state === 'blocked') color.set('#c2362b');
+      else if (state === 'context') color.set('#c26a06');
+      else if (state === 'cited') color.set('#059669');
+      if (!routeDisplay.visited.has(n.id)) fade(.12);
+      else if (!routeDisplay.active.has(n.id)) fade(.45);
+    } else if (selected && !neighborhood.has(n.id) && lens !== 'history') fade(.18);
     mesh.setColorAt(i, color);
   });
   mesh.instanceMatrix.needsUpdate = true; mesh.instanceColor.needsUpdate = true;
@@ -249,9 +252,9 @@ function updateVisibility() {
     const from = graph.byId.get(e.from).position, to = graph.byId.get(e.to).position;
     const active = lens === 'route' ? routeDisplay?.edges.has(edgeKey(e)) : lens === 'situation' ? true : selected && neighborhood.has(e.from) && neighborhood.has(e.to);
     coords.push(...from, ...to);
-    color.set(lens === 'history' && phase === 'changes' ? changeColors[e.change] : e.kind.startsWith('missing:') || ['branch_if', 'branch_condition'].includes(e.kind) ? '#eac58e' : '#769ecf');
-    if (lens === 'route' && !active) color.multiplyScalar(routeDisplay?.trailEdges.has(edgeKey(e)) ? .7 : .08);
-    else if (selected && !active && lens !== 'history') color.multiplyScalar(.15);
+    color.set(lens === 'history' && phase === 'changes' ? changeColors[e.change] : e.kind.startsWith('missing:') || ['branch_if', 'branch_condition'].includes(e.kind) ? '#c98a2c' : '#8193a6');
+    if (lens === 'route' && !active) fade(routeDisplay?.trailEdges.has(edgeKey(e)) ? .7 : .08);
+    else if (selected && !active && lens !== 'history') fade(.15);
     colors.push(color.r, color.g, color.b, color.r, color.g, color.b);
     if (active && lens !== 'history') {
       highlighted.push(...from, ...to);
@@ -337,7 +340,7 @@ function initRenderer() {
     const link = text('a', 'Mở bản đồ quy trình'); link.href = '/'; box.append(link); $('space-canvas').append(box); $('space-canvas').dataset.renderer = 'unavailable';
     $('space-rotate').disabled = true; return;
   }
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.8)); renderer.setClearColor(0x060c1c, 0);
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.8)); renderer.setClearColor(0xeef3f7, 0);
   scene = new THREE.Scene(); camera = new THREE.PerspectiveCamera(48, 1, .1, 1200);
   $('space-canvas').append(renderer.domElement); $('space-canvas').dataset.renderer = 'webgl';
   renderer.domElement.tabIndex = 0; renderer.domElement.setAttribute('role', 'img'); renderer.domElement.setAttribute('aria-label', 'Đồ thị tri thức 3D. Phím mũi tên xoay, cộng trừ zoom, Home về toàn cảnh. Tìm và chọn nút bằng ô tìm kiếm.');
@@ -346,10 +349,10 @@ function initRenderer() {
   let seed = 32123;
   const random = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
   for (let i = 0; i < 430; i++) starPositions.push((random() - .5) * 440, (random() - .5) * 300, -100 - random() * 250);
-  const stars = new THREE.Points(new THREE.BufferGeometry(), new THREE.PointsMaterial({size: .5, color: '#7691be', transparent: true, opacity: .55}));
+  const stars = new THREE.Points(new THREE.BufferGeometry(), new THREE.PointsMaterial({size: .5, color: '#c3cfdb', transparent: true, opacity: .7}));
   stars.geometry.setAttribute('position', new THREE.Float32BufferAttribute(starPositions, 3)); scene.add(stars);
-  selectionRing = new THREE.Mesh(new THREE.TorusGeometry(1, .08, 6, 48), new THREE.MeshBasicMaterial({color: '#e8fff8'})); selectionRing.visible = false; scene.add(selectionRing);
-  routeParticles = new THREE.InstancedMesh(new THREE.SphereGeometry(.8, 10, 8), new THREE.MeshBasicMaterial({color: '#bdffe6'}), 3); routeParticles.visible = false; routeParticles.frustumCulled = false; scene.add(routeParticles);
+  selectionRing = new THREE.Mesh(new THREE.TorusGeometry(1, .08, 6, 48), new THREE.MeshBasicMaterial({color: '#0b5f58'})); selectionRing.visible = false; scene.add(selectionRing);
+  routeParticles = new THREE.InstancedMesh(new THREE.SphereGeometry(.8, 10, 8), new THREE.MeshBasicMaterial({color: '#0f766e'}), 3); routeParticles.visible = false; routeParticles.frustumCulled = false; scene.add(routeParticles);
   const pointers = new Map(); let down = null, traveled = 0, pinch = 0;
   const canvas = renderer.domElement;
   canvas.addEventListener('pointerdown', event => {

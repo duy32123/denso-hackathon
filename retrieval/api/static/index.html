@@ -3,6 +3,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>KnowFlow AI — bộ nhớ kinh nghiệm có bằng chứng</title>
+<link rel="stylesheet" href="/static/theme.css">
 <link rel="stylesheet" href="/static/style.css">
 <main>
   <header class="intro">
@@ -24,26 +25,36 @@
     <div id="knowledge-map">Chọn một quy trình để khám phá các bước, quan hệ và phần kiến thức còn thiếu.</div>
     <div id="knowledge-detail" aria-live="polite"></div>
   </section>
-  <form id="ask">
-    <h2>Hỏi theo tình huống</h2>
+  <form id="ask" class="qa" aria-labelledby="ask-heading">
+    <h2 id="ask-heading">Hỏi theo tình huống</h2>
     <p class="muted">Câu trả lời giữ phạm vi thiết bị và dẫn nguồn cho từng phát biểu. Đối chiếu hướng dẫn an toàn và người có chuyên môn trước khi áp dụng.</p>
-    <label>Corpus <select id="mode"><option value="real">Nguồn thực · dev</option><option value="synthetic">Dữ liệu mô phỏng · dev</option></select></label>
-    <p id="banner" role="status"></p>
-    <div class="context">
-      <label>Nhà sản xuất <input id="manufacturer" value="Haas"></label>
-      <label>Phân hệ <input id="subsystem" value="SMTC"></label>
-      <label>Model máy (nếu biết) <input id="machine_model" placeholder="Không tự suy đoán"></label>
+    <div class="qa-grid">
+      <div class="qa-question">
+        <label>Câu mẫu demo (tiếng Anh)
+          <select id="demo-question"><option value="grease">How is the pocket slider lubricated?</option><option value="grade">Which grease grade / NLGI?</option><option value="model">Can this procedure be used on a VF-2?</option></select>
+        </label>
+        <label>Câu hỏi <textarea id="question" required maxlength="4000" rows="4">How is the pocket slider lubricated?</textarea></label>
+        <div class="qa-actions"><button id="submit">Hỏi</button><span class="muted">Chỉ trả lời từ nguồn đã đối chiếu; thiếu căn cứ thì nói rõ là chưa biết.</span></div>
+      </div>
+      <fieldset class="qa-scope">
+        <legend>Phạm vi áp dụng</legend>
+        <label>Corpus <select id="mode"><option value="real">Nguồn thực · dev</option><option value="synthetic">Dữ liệu mô phỏng · dev</option></select></label>
+        <p id="banner" role="status"></p>
+        <label>Nhà sản xuất <input id="manufacturer" value="Haas"></label>
+        <label>Phân hệ <input id="subsystem" value="SMTC"></label>
+        <label>Model máy (nếu biết) <input id="machine_model" placeholder="Không tự suy đoán"></label>
+        <p class="scope-note">Để trống model nếu chưa biết; hệ thống không tự suy ra máy áp dụng.</p>
+      </fieldset>
     </div>
-    <label>Câu mẫu demo (tiếng Anh)
-      <select id="demo-question"><option value="grease">How is the pocket slider lubricated?</option><option value="grade">Which grease grade / NLGI?</option><option value="model">Can this procedure be used on a VF-2?</option></select>
-    </label>
-    <label>Câu hỏi <textarea id="question" required maxlength="4000" rows="3">How is the pocket slider lubricated?</textarea></label>
-    <button id="submit">Hỏi</button>
   </form>
-  <p id="status" role="status" aria-live="polite"></p>
   <div class="results">
     <div class="main-column">
-    <section aria-label="Câu trả lời"><h2>Câu trả lời</h2><p id="answer"></p><p id="missing"></p><p id="unresolved"></p><small id="build"></small><div id="citations"></div></section>
+  <section class="answer-card" aria-labelledby="answer-heading">
+    <div class="answer-head"><h2 id="answer-heading">Câu trả lời</h2><p id="status" role="status" aria-live="polite"></p></div>
+    <p id="answer"></p><p id="missing"></p><p id="unresolved"></p>
+    <div class="citations-block"><h3>Nguồn trích dẫn — bấm để mở bằng chứng</h3><div id="citations"></div></div>
+    <small id="build"></small>
+  </section>
   <section class="browser" aria-labelledby="workflow-heading">
     <h2 id="workflow-heading">Chi tiết tri thức và nguồn</h2>
     <p class="muted">Chế độ đọc. Review nguồn không đồng nghĩa xác nhận kỹ thuật. Không tự ghép thao tác giữa các workflow.</p>

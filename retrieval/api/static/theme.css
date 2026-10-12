@@ -1,0 +1,37 @@
+/* Shared light palette for the reader (/) and the 3D space (/space).
+   Solid colours only: no gradients. Both pages read these tokens so they stay in step. */
+:root {
+  color-scheme: light;
+  --bg: #f6f8fb;
+  --surface: #ffffff;
+  --surface-2: #f2f5f9;
+  --surface-3: #e8eef4;
+  --border: #d8e0e8;
+  --border-strong: #b8c5d2;
+  --text: #1e293b;
+  --text-2: #334155;
+  --muted: #5d6d7e;
+  --accent: #0f766e;
+  --accent-hover: #0b5f58;
+  --accent-soft: #e6f4f1;
+  --accent-border: #a6d6ce;
+  --on-accent: #ffffff;
+  --warn: #a75a06;
+  --warn-soft: #fff6e6;
+  --warn-border: #f0cd93;
+  --danger: #b42318;
+  --danger-soft: #fdeeee;
+  --danger-border: #f0b7b2;
+  --ok: #15803d;
+  --ok-soft: #eaf7ee;
+  --ok-border: #a8dbb7;
+  --violet: #6d4fd8;
+  --cyan: #0e7490;
+  --radius: 10px;
+  --shadow: 0 1px 2px rgba(15, 23, 42, .06), 0 2px 8px rgba(15, 23, 42, .04);
+  font-family: system-ui, "Segoe UI", sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+body { margin: 0; background: var(--bg); }
+a { color: var(--accent); }

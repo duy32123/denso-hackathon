@@ -74,7 +74,8 @@ class ModelsProxy:
 
     def _call(self, operation, kwargs):
         rec = self.recorder
-        call_id = f"call-{sum(e['kind'] == 'provider_call' for e in rec.events) + 1:06d}"
+        identifiers = [int(e["call_id"].split("-")[-1]) for e in rec.events if e.get("call_id")]
+        call_id = f"call-{max(identifiers, default=0) + 1:06d}"
         rec.call_id = call_id
         start, timestamp = time.perf_counter(), now()
         contents = kwargs.get("contents")
@@ -83,6 +84,10 @@ class ModelsProxy:
                "input_sha256": digest(contents), "input_utf8_bytes": len(json.dumps(contents, ensure_ascii=False).encode("utf-8")),
                "input_tokens": None, "output_tokens": None, "billed_output_tokens": None,
                "total_tokens": None, "usage_origin": None, "response_text": None}
+        # Survives process interruption before response/finally; unknown usage is
+        # still a possible billed call and must not disappear from accounting.
+        rec.write({**row, "kind": "provider_call_started", "ok": None,
+                   "error_class": None, "elapsed_ms": None})
         try:
             response = getattr(self.inner, operation)(**kwargs)
             meta = getattr(response, "usage_metadata", None)

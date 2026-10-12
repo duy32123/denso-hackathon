@@ -16,8 +16,12 @@ Xem [bản sửa alias SMTC và phép đo đối chứng](../../docs/retrieval_s
 Kết quả cổng liên quan mới nhất: [claim-coherence, đối chứng cùng mẫu số](../../docs/retrieval_relevance_gate.md).
 Phần số đo/lượt kiểm bên dưới ghi lại **mốc 52 câu**. Soạn ban đầu 54 câu trên bundle
 `BUNDLE_HAAS_SMTC_DEV_e98521a7942a`; `Q036` và `Q038` bị drop khi kiểm.
-Corpus phục vụ hiện tại là `BUNDLE_HAAS_SMTC_DEV_20382d7957b6`: **B0 r2, REAL_WF_0001 r1,
-REAL_WF_0002 r2, REAL_WF_0003 r2**. B0 r1 và r1 của 0002/0003 vẫn giữ để tra cứu lịch sử,
+Corpus sau PR #53 là `BUNDLE_HAAS_SMTC_DEV_95b81c529dbe`: **9 workflow / 67 Step**,
+gồm B0 r2, REAL_WF_0001 r1, REAL_WF_0002/0003 r2 và REAL_WF_0004–0008 r1.
+Mốc bốn workflow trước mở rộng dùng `BUNDLE_HAAS_SMTC_DEV_20382d7957b6`.
+Phiếu kiểm lại 20 câu phủ định và câu Vietnamese/hard nháp:
+[tiến độ sau PR #53](../../docs/expanded_dev_retrieval_progress.md).
+B0 r1 và r1 của 0002/0003 vẫn giữ để tra cứu lịch sử,
 không phải revision active.
 Q001–Q035, Q037 là bộ gốc; Q039–Q054 là câu phủ định bổ sung (cùng lĩnh vực CNC nhưng KB
 không có), dùng để chỉnh ngưỡng từ chối.

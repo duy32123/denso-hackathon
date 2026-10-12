@@ -1,0 +1,287 @@
+{
+  "development_diagnostic_only": true,
+  "negative_label_review_pending": true,
+  "api_calls": 0,
+  "embedding_used": false,
+  "translation_origin": "actual retained 20261011 A provider outputs",
+  "not_measurement_of_current_translation_prompt": true,
+  "questions_sha256": "59af8902bad10c266e5d6718963cd5bd5d70d7c62d1ffeef6b8b703382b945a4",
+  "base_commit": "4a18533",
+  "stats": {
+    "PR53": {
+      "planned": 81,
+      "completed": 81,
+      "cache_misses_or_errors": [],
+      "recall_denominator": 52,
+      "recall_at_5": 0.9230769230769231,
+      "mrr_at_5": 0.8189102564102565
+    },
+    "component_alarm_fix": {
+      "planned": 81,
+      "completed": 81,
+      "cache_misses_or_errors": [],
+      "recall_denominator": 52,
+      "recall_at_5": 0.9807692307692307,
+      "mrr_at_5": 0.8637820512820512
+    }
+  },
+  "changed": [
+    {
+      "question_id": "HAAS_DEV_Q001",
+      "before": [
+        "insufficient_evidence",
+        null,
+        []
+      ],
+      "after": [
+        "retrieved",
+        "REAL_WF_0001",
+        [
+          "REAL_WF_0001_ST_007"
+        ]
+      ],
+      "before_scores": {
+        "recall": 0.0,
+        "reciprocal_rank": 0.0,
+        "first_relevant_rank": null
+      },
+      "after_scores": {
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "first_relevant_rank": 1
+      }
+    },
+    {
+      "question_id": "HAAS_DEV_Q014",
+      "before": [
+        "retrieved",
+        "B0_SRC_HAAS_0005",
+        [
+          "B0_SRC_HAAS_0005_ST_007",
+          "B0_SRC_HAAS_0005_ST_005",
+          "B0_SRC_HAAS_0005_ST_009",
+          "B0_SRC_HAAS_0005_ST_001",
+          "B0_SRC_HAAS_0005_ST_006"
+        ]
+      ],
+      "after": [
+        "retrieved",
+        "B0_SRC_HAAS_0005",
+        [
+          "B0_SRC_HAAS_0005_ST_007",
+          "B0_SRC_HAAS_0005_ST_006"
+        ]
+      ],
+      "before_scores": {
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "first_relevant_rank": 1
+      },
+      "after_scores": {
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "first_relevant_rank": 1
+      }
+    },
+    {
+      "question_id": "HAAS_DEV_Q015",
+      "before": [
+        "retrieved",
+        "REAL_WF_0008",
+        [
+          "REAL_WF_0008_ST_003",
+          "REAL_WF_0008_ST_007",
+          "REAL_WF_0008_ST_004",
+          "REAL_WF_0008_ST_002",
+          "REAL_WF_0008_ST_005"
+        ]
+      ],
+      "after": [
+        "retrieved",
+        "B0_SRC_HAAS_0005",
+        [
+          "B0_SRC_HAAS_0005_ST_006"
+        ]
+      ],
+      "before_scores": {
+        "recall": 0.0,
+        "reciprocal_rank": 0.0,
+        "first_relevant_rank": null
+      },
+      "after_scores": {
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "first_relevant_rank": 1
+      }
+    },
+    {
+      "question_id": "HAAS_DEV_Q019",
+      "before": [
+        "retrieved",
+        "B0_SRC_HAAS_0005",
+        [
+          "B0_SRC_HAAS_0005_ST_006",
+          "B0_SRC_HAAS_0005_ST_007",
+          "B0_SRC_HAAS_0005_ST_005",
+          "B0_SRC_HAAS_0005_ST_001",
+          "B0_SRC_HAAS_0005_ST_008"
+        ]
+      ],
+      "after": [
+        "retrieved",
+        "B0_SRC_HAAS_0005",
+        [
+          "B0_SRC_HAAS_0005_ST_006"
+        ]
+      ],
+      "before_scores": {
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "first_relevant_rank": 1
+      },
+      "after_scores": {
+        "recall": 1.0,
+        "reciprocal_rank": 1.0,
+        "first_relevant_rank": 1
+      }
+    },
+    {
+      "question_id": "HAAS_DEV_Q031",
+      "before": [
+        "retrieved",
+        "REAL_WF_0002",
+        [
+          "REAL_WF_0002_ST_004",
+          "REAL_WF_0002_ST_007",
+          "REAL_WF_0002_ST_008",
+          "REAL_WF_0002_ST_006",
+          "REAL_WF_0002_ST_009"
+        ]
+      ],
+      "after": [
+        "retrieved",
+        "B0_SRC_HAAS_0005",
+        [
+          "B0_SRC_HAAS_0005_ST_006"
+        ]
+      ],
+      "before_scores": null,
+      "after_scores": null
+    },
+    {
+      "question_id": "HAAS_DEV_Q069",
+      "before": [
+        "insufficient_evidence",
+        null,
+        []
+      ],
+      "after": [
+        "retrieved",
+        "REAL_WF_0004",
+        [
+          "REAL_WF_0004_ST_005",
+          "REAL_WF_0004_ST_004",
+          "REAL_WF_0004_ST_001",
+          "REAL_WF_0004_ST_002",
+          "REAL_WF_0004_ST_003"
+        ]
+      ],
+      "before_scores": {
+        "recall": 0.0,
+        "reciprocal_rank": 0.0,
+        "first_relevant_rank": null
+      },
+      "after_scores": {
+        "recall": 1.0,
+        "reciprocal_rank": 0.3333333333333333,
+        "first_relevant_rank": 3
+      }
+    }
+  ],
+  "code_sha256_at_start": {
+    "retrieval/__init__.py": "081f414c74245f3b01b15cbac150a50be319028a90deea52c7b927cb0ff16445",
+    "retrieval/api/__init__.py": "bf58b2a27316f51d1c720c1317ce1b46d89f9eae8b5960b50cfe51bcc646ef2c",
+    "retrieval/api/__main__.py": "8646aec3df17a17fe739bd2f5ac933c5dee78c0b737d58141d4c269bde22f4d4",
+    "retrieval/api/app.py": "3ec8a0b6c97df20be996140dc41b70d6c10306137d8e1002bcd6662fab901e44",
+    "retrieval/evaluation/__init__.py": "b02466d280b70d5800711eecd65ad05290956bd2776062c7807883743025930c",
+    "retrieval/evaluation/__main__.py": "0c65c9350ae506750695c4ee88e6656de7c2adf8fa5ae7b8e23db117110f559a",
+    "retrieval/evaluation/answers.py": "cb9e92d99143320b9f684414dbf461b997b10e1e377a3461ee25e3f631d5715c",
+    "retrieval/evaluation/harness.py": "69fffd62e3e5c742c176b8cf40925cd3654f2f769057818fc5c7b6ac58db0d7b",
+    "retrieval/evaluation/review.py": "166d67ead2ba878434f170947562988e23dab8c358b7572f895104d88e949d66",
+    "retrieval/generation/__init__.py": "eaa4bceb77e781db3c5af3a57e593f198bfe6d49f5b139c81a7568a8574a40e6",
+    "retrieval/generation/browse.py": "2c4e04295edf21127a11536f90628b9cc8691924bb10808eb1f9087a50cedcd0",
+    "retrieval/generation/engine.py": "318e14e07ce1e53dd90e19de8234c3e61cebdf6d6c5191e1758da7de87595744",
+    "retrieval/generation/evidence.py": "1479585ee6f01aa4733857b0a5d31c71af5adde7632db8cd37809a303ab6ae04",
+    "retrieval/generation/feedback.py": "e0de8ad2024dced84b41826c30dcb72caf7f9eb51c9b56c420382d6ec312d122",
+    "retrieval/generation/gemini.py": "a38890e7d89b0c2a852a498399e6c4da7394557de549cab313b370fcb8b11ef7",
+    "retrieval/generation/models.py": "759f24b6dd9bda485d4ccf07d4efb91fb02d2bbc3737ec80877605a7aa1fee23",
+    "retrieval/generation/service.py": "1f16fa3aa7bd67df4fbf03b2f314021c2b5680485e697be47acd4fbddc3bad1a",
+    "retrieval/generation/tracing.py": "ba759bc9069197c04a8120cd2052a12ffbcae13854053feabbf40663c342a2f5",
+    "retrieval/importer/__init__.py": "ab2a629f5b7e9eabaa08d2eba7661d584046478edb338ff1981f611b38aa2877",
+    "retrieval/importer/__main__.py": "061c0e42950ff09690e70689b956eb9e5d92b7d24d3a234e6f742806368ca517",
+    "retrieval/importer/store.py": "e4f2108e97ca18dfca7203b1aa1746c0739c87673df28004ea8673d73667ddf3",
+    "retrieval/indexing/__init__.py": "4544cf9461253bf55ba19f1d18765934654285c7a47c575502e4a4ac4446565e",
+    "retrieval/indexing/embeddings.py": "41cd90ed5c7cbd78e5da51dd313031893f806e2d79c336edc78014141f02b09f",
+    "retrieval/indexing/records.py": "43cb34b27a21b50a63bfac1a919b99f120f26c426ca9815b0a5916b7959d9202",
+    "retrieval/indexing/search_index.py": "c70dc555cb3e783393ae686c3b80684db3e6e02789a354d590667ae4eba89bdd",
+    "retrieval/retrieval/__init__.py": "e8324b350a605e7c746c65d6adb16729bd2b57a86646a68e2f0f3f91c17f39d3",
+    "retrieval/retrieval/__main__.py": "f860ace89e9f39ee9f2002b4640271b47221e4896b4c2240e5a81cf3007b2c50",
+    "retrieval/retrieval/components.py": "b19c490584fe3eaeb15adfe6d041da3ab3cc0ab4ca2079da0af46ccfce6a9f28",
+    "retrieval/retrieval/context.py": "6b04d7301ac3fea84b2d5969d9a2be1c4f17bf261e717a464bb6cd529c0e47e7",
+    "retrieval/retrieval/engine.py": "40eee9d8ca06a6b77a32dcd2941c679c447f9e54594e510a254c624d26d7b441",
+    "retrieval/retrieval/query.py": "9a06f0a2711a70047dc9e45d55490140127008a27bac29a877a95686ebc5927a",
+    "retrieval/retrieval/ranking.py": "20899b3f8efeb9066ce7a883a5385dc6cee13bf9c97c66cbe2518cbdfcca8d1f",
+    "retrieval/retrieval/relevance.py": "6d51c921cd1807b5eeb7640d483d0cacaf306e44b192287c64e720eea4131902",
+    "contracts/schema/knowflow_contracts/__init__.py": "7afed7fc07c08bad12f15373bb6a15f820d76554170d94455b1eefbe4f71ba9c",
+    "contracts/schema/knowflow_contracts/cli.py": "4ce1c0e9a093f72f6a8f51c4898203e47138de7870873db1126449d01d230e23",
+    "contracts/schema/knowflow_contracts/derive.py": "d25cc951f34fdd67e35d74e5e51aaaca17fd7d7e8cb9d4d5769d890817d800f3",
+    "contracts/schema/knowflow_contracts/eligibility.py": "f6803fded8ec35b6fd70de8cbf08ad2ab03e72b31fae8959273eb71161e7ccaf",
+    "contracts/schema/knowflow_contracts/enums.py": "63add8b023705c087c2c0ee87bb0627d9d29fc3ae39ea62e397ed54baac591b9",
+    "contracts/schema/knowflow_contracts/issues.py": "4de7949987b0cb5c53203cabd4c2b155c8c3c827f51b873bce8b2d2b80e1a706",
+    "contracts/schema/knowflow_contracts/loader.py": "2b2a48572b187497c04a94ae73bfa24cfc80298ccf8814fd90df12c799d218c7",
+    "contracts/schema/knowflow_contracts/models.py": "b4c7d8fe189b71f3ac4b66a702eb94234985a313fc8b6fb40a290eae61116e3d",
+    "contracts/schema/knowflow_contracts/retrieval_policy.py": "bda6440217b0ded6c827ddbfa1dea72594e82ad14aec78986cae2d02af170bc7",
+    "contracts/schema/knowflow_contracts/rules.py": "3f16e94748c9acc2ce2a5f83fbb45b57c41cf95fd4f266ebbcdb30c43a47cc9b",
+    "contracts/schema/knowflow_contracts/search.py": "db8c0bc396114436aca2e75cff4dcff76f70843f7bc782012d5840e5f2323503",
+    "contracts/schema/knowflow_contracts/snapshot.py": "a55053436e11b12f478aacc0237f449b6ec25fbda4582e824481cfe893235619",
+    "contracts/schema/knowflow_contracts/validator.py": "d0f7b2d627ae1c82c39dd1b1c7254a9d713a56dd596818e5e961fec9f715668a",
+    "scripts/benchmark_knowflow/__main__.py": "24044716915d1afc349dded817a8b155ed1b329b5f8fbd4b25fc2b7ab359aaca",
+    "scripts/benchmark_knowflow/audit.py": "1bb7ad74c92ce91d31a17bcc7bab65eed73eed504224d7c326b492acb7cb3bdc",
+    "scripts/benchmark_knowflow/baseline.py": "4e133f4a4ee36c773473cf55aedbc9d7d5bb24e17c9c12008062d330902b423d",
+    "scripts/benchmark_knowflow/providers.py": "32b136a051b578ddc5baae973002568aff71bdcd475d44761ddcbba308f5bbe7",
+    "scripts/benchmark_knowflow/pairing.py": "32e7431a3cb7f24a432c186e6e27caf991ccbf0f11583faa85a519e130e9e2fc",
+    "pyproject.toml": "3750e10d23629c1c66de1f6dfc413cf01020745fbd1be060f35a6d3d5599735e"
+  },
+  "index_manifest_at_start": {
+    "config_hash": "5df9bc8c3f28e69c820767973cc4628f345e283b60065318005bf75118723ec4",
+    "conflict_records": 0,
+    "dataset_split": "dev",
+    "documents_sha256": "0b4046a3afa052a92bf7e18ca0fb3c92a0abdfb2144a94ad72f6233b1a3178e7",
+    "embedding": {
+      "adapter_version": "2",
+      "aggregation": "length-weighted-unit-mean",
+      "chunk_utf8_bytes": 1800,
+      "dimensions": 768,
+      "document_task": "RETRIEVAL_DOCUMENT",
+      "model": "gemini-embedding-001",
+      "provider": "gemini",
+      "query_task": "RETRIEVAL_QUERY",
+      "sdk_version": "2.29.0",
+      "version": "gemini-embedding-001"
+    },
+    "embedding_calls": 6,
+    "index_build_id": "IDX_SEARCH_151f7d6dfcc821966e669bd1842c59f5d1d2c8eb7210fb4e998ef46e36857389",
+    "index_version": "wp2-1",
+    "lexical": "BM25",
+    "policy_version": "contract-1.0.0-eligibility-1",
+    "record_build_id": "IDX_WP1_f2e98bbf552b45e119f633b6de9f6469a9592f2494a4dc74b44f59b655527dd4",
+    "record_count": 76,
+    "source_type": "real",
+    "step_records": 67,
+    "tokenizer_version": "unicode-fold-2+snowball-en",
+    "workflow_records": 9
+  },
+  "translation_source_sha256": "c0c84f508da42cb13d5d5b6bd7dd1332e358665de9d0b330034bfbb37ab6e146",
+  "no_answer_accuracy_measured": true,
+  "holdout_opened": false
+}

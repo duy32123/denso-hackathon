@@ -1,0 +1,105 @@
+{
+  "development_smoke_only": true,
+  "total": {
+    "provider_calls": 9,
+    "successful_calls": 9,
+    "failed_calls": 0,
+    "input_tokens": null,
+    "output_tokens": null,
+    "billed_output_tokens": null,
+    "total_tokens": null,
+    "known_input_tokens_subtotal": 25880,
+    "known_output_tokens_subtotal": 238,
+    "usage_known_calls": 6,
+    "standard_list_price_usd": null,
+    "known_list_price_subtotal_usd": 0.008359,
+    "unknown_cost_calls": 3,
+    "actual_invoice_usd": null
+  },
+  "by_stage": {
+    "answer_generation": {
+      "provider_calls": 3,
+      "successful_calls": 3,
+      "failed_calls": 0,
+      "input_tokens": 21924,
+      "output_tokens": 190,
+      "billed_output_tokens": 190,
+      "total_tokens": 22114,
+      "known_input_tokens_subtotal": 21924,
+      "known_output_tokens_subtotal": 190,
+      "usage_known_calls": 3,
+      "standard_list_price_usd": 0.0070522,
+      "known_list_price_subtotal_usd": 0.0070522,
+      "unknown_cost_calls": 0,
+      "actual_invoice_usd": null
+    },
+    "answer_verification": {
+      "provider_calls": 1,
+      "successful_calls": 1,
+      "failed_calls": 0,
+      "input_tokens": 3648,
+      "output_tokens": 24,
+      "billed_output_tokens": 24,
+      "total_tokens": 3672,
+      "known_input_tokens_subtotal": 3648,
+      "known_output_tokens_subtotal": 24,
+      "usage_known_calls": 1,
+      "standard_list_price_usd": 0.0011543999999999999,
+      "known_list_price_subtotal_usd": 0.0011543999999999999,
+      "unknown_cost_calls": 0,
+      "actual_invoice_usd": null
+    },
+    "embedding_query": {
+      "provider_calls": 3,
+      "successful_calls": 3,
+      "failed_calls": 0,
+      "input_tokens": null,
+      "output_tokens": null,
+      "billed_output_tokens": null,
+      "total_tokens": null,
+      "known_input_tokens_subtotal": 0,
+      "known_output_tokens_subtotal": 0,
+      "usage_known_calls": 0,
+      "standard_list_price_usd": null,
+      "known_list_price_subtotal_usd": 0,
+      "unknown_cost_calls": 3,
+      "actual_invoice_usd": null
+    },
+    "translation": {
+      "provider_calls": 2,
+      "successful_calls": 2,
+      "failed_calls": 0,
+      "input_tokens": 308,
+      "output_tokens": 24,
+      "billed_output_tokens": 24,
+      "total_tokens": 332,
+      "known_input_tokens_subtotal": 308,
+      "known_output_tokens_subtotal": 24,
+      "usage_known_calls": 2,
+      "standard_list_price_usd": 0.00015240000000000002,
+      "known_list_price_subtotal_usd": 0.00015240000000000002,
+      "unknown_cost_calls": 0,
+      "actual_invoice_usd": null
+    }
+  },
+  "pricing": {
+    "checked_date": "2026-10-12",
+    "currency": "USD",
+    "service_tier": "standard",
+    "gemini-3.5-flash-lite": {
+      "input_per_million": 0.3,
+      "output_per_million": 2.5,
+      "cached_input_per_million": 0.03,
+      "url": "https://ai.google.dev/gemini-api/docs/pricing#gemini-3.5-flash-lite"
+    },
+    "gemini-embedding-001": {
+      "input_per_million": null,
+      "output_per_million": null,
+      "url": "https://ai.google.dev/gemini-api/docs/pricing",
+      "note": "Exact legacy model omitted from current official pricing page checked 2026-10-12. Do not substitute Embedding 2 price. Unknown usage/rates/cost stay null."
+    },
+    "actual_invoice_usd": null,
+    "interpretation": "Standard list-price equivalent from observed usage; account billing tier/credits/invoice unknown. No server or expert labour included."
+  },
+  "human_semantics": null
+}

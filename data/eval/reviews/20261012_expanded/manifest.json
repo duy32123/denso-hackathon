@@ -1,0 +1,40 @@
+{
+  "question_file_sha256": "59af8902bad10c266e5d6718963cd5bd5d70d7c62d1ffeef6b8b703382b945a4",
+  "source_inventory_sha256": "2e84a799c0b29da58aaca88a9d7f7f9597093090f0ec580d5a5b7178f71344ba",
+  "reviewed_negatives_on_expanded_corpus": 0,
+  "pending_questions": [
+    "HAAS_DEV_Q032",
+    "HAAS_DEV_Q033",
+    "HAAS_DEV_Q034",
+    "HAAS_DEV_Q035",
+    "HAAS_DEV_Q039",
+    "HAAS_DEV_Q040",
+    "HAAS_DEV_Q041",
+    "HAAS_DEV_Q042",
+    "HAAS_DEV_Q043",
+    "HAAS_DEV_Q044",
+    "HAAS_DEV_Q045",
+    "HAAS_DEV_Q046",
+    "HAAS_DEV_Q047",
+    "HAAS_DEV_Q048",
+    "HAAS_DEV_Q049",
+    "HAAS_DEV_Q050",
+    "HAAS_DEV_Q051",
+    "HAAS_DEV_Q052",
+    "HAAS_DEV_Q053",
+    "HAAS_DEV_Q054"
+  ],
+  "active_revisions": {
+    "B0_SRC_HAAS_0005": 2,
+    "REAL_WF_0001": 1,
+    "REAL_WF_0002": 2,
+    "REAL_WF_0003": 2,
+    "REAL_WF_0004": 1,
+    "REAL_WF_0005": 1,
+    "REAL_WF_0006": 1,
+    "REAL_WF_0007": 1,
+    "REAL_WF_0008": 1
+  },
+  "official_gold_changed": false,
+  "holdout_opened": false
+}

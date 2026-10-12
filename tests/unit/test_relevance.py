@@ -101,3 +101,24 @@ def test_slider_alias_keeps_codes_and_snapshot_text_intact():
     assert assess("Lubricate slide", data)["gate"] == "passed"
     assert assess("20.66", data)["gate"] == "rejected"
     assert data[1]["W1"].claims[0].text == "Lubricate the slider at alarm 2066"
+
+
+def test_alarm_cause_lookup_needs_exact_code_in_eligible_claim():
+    data = corpus(("W1", "Recovery", ["Alarm 626 occurs when the pocket fails to reach position."]))
+    question = "According to the service video, when does alarm 626 occur?"
+    result = assess(question, data, context=QueryContext(alarm_codes=["626"]))
+    assert result["gate"] == "passed" and result["exact_alarm_lookup"]
+    assert result["support_refs"][0]["claim_id"] == "C0_0"
+    unrelated = corpus(("W1", "Alarm 626", ["Remove the cover."]))
+    assert assess(question, unrelated, context=QueryContext(alarm_codes=["626"]))["gate"] == "rejected"
+    assert assess(question, corpus(("W1", "Recovery", ["Alarm 627 occurs."])),
+                  context=QueryContext(alarm_codes=["626"]))["gate"] == "rejected"
+    assert assess("How to replace a conveyor for alarm 626?", data,
+                  context=QueryContext(alarm_codes=["626"]))["gate"] == "rejected"
+
+
+def test_alarm_exception_does_not_read_excluded_claims():
+    data = corpus(("W1", "Recovery", ["Remove cover", "Alarm 626 occurs when the pocket fails."]))
+    data[0][0]["record"]["claim_ids"] = ["C0_0"]
+    result = assess("When does alarm 626 occur?", data, context=QueryContext(alarm_codes=["626"]))
+    assert not result["exact_alarm_lookup"] and result["gate"] == "rejected"

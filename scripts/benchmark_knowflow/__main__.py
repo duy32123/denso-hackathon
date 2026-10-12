@@ -25,9 +25,10 @@ from retrieval.indexing.embeddings import RATE_LIMIT_WAITED
 from retrieval.indexing.search_index import build_index, digest, read_corpus, require_index
 from retrieval.retrieval.engine import RetrievalConfig, retrieve
 
-from .audit import ROOT, audit, sha_file
+from .audit import ROOT, audit, sha_file, verify_label_approval
 from .baseline import TranscriptRAG, build_raw_index, public_chunk, RAW_DRAFT_POLICY, RAW_VERIFY_POLICY
 from .providers import MeasuredAnswerModel, MeasuredEmbedder, MeasuredTranslator, Recorder, now
+from .pairing import PairedRetrieval, without_graph
 
 ARMS = ("A_knowflow", "B_transcript_rag", "C_no_graph")
 
@@ -45,7 +46,7 @@ def measurement_files():
     return [*sorted((ROOT / "retrieval").rglob("*.py")),
             *sorted((ROOT / "contracts/schema/knowflow_contracts").rglob("*.py")),
             *[ROOT / f"scripts/benchmark_knowflow/{f}.py" for f in
-              ("__main__", "audit", "baseline", "providers")], ROOT / "pyproject.toml"]
+              ("__main__", "audit", "baseline", "providers", "pairing")], ROOT / "pyproject.toml"]
 
 
 def freeze(config, run_dir, audit_result):
@@ -70,6 +71,7 @@ def verify_freeze(run_dir):
 
 
 def prepare(config, run_dir):
+    verify_label_approval(config)  # before creating a run or making any provider call
     run_dir.mkdir(parents=True, exist_ok=False)
     work = ROOT / "out/benchmark_knowflow" / run_dir.name
     work.mkdir(parents=True, exist_ok=False)
@@ -109,7 +111,9 @@ def prepare(config, run_dir):
              "structured_index_latency_ms": structured_ms, "raw_index_latency_ms": raw_ms,
              "raw_chunks": len(chunks), "raw_index_sha256": sha_file(work / "raw_index.json"),
              "raw_chunk_projection_sha256": sha_file(run_dir / "raw_source_chunks.jsonl"),
-             "ablation": "C shares A's exact immutable index; neighbor_depth=0 and relations removed after retrieval",
+             "ablation": ("A/C replay one persisted real retrieval with identical translations and candidates before C drops graph fields"
+                          if config["execution"].get("paired_ac_retrieval") else
+                          "C shares A's exact immutable index; neighbor_depth=0 and relations removed after retrieval"),
              "lexical_manifest": lexical_manifest, "raw_preprocessing": config["baseline"]})
         save(run_dir / "preparation_status.json", {"ok": True, "finished_at": now()})
         print(json.dumps({"prepared": True, "structured_documents": manifest.get("record_count"),
@@ -139,16 +143,21 @@ class ObservedService(QAService):
 
 
 class Retriever:
-    def __init__(self, embedder, translator, no_graph=False):
+    def __init__(self, embedder, translator, no_graph=False, paired=None):
         self.embedder, self.translator, self.no_graph = embedder, translator, no_graph
         self.last = None
+        self.paired, self.pair_metadata = paired, None
 
     def __call__(self, db, request, *, config=None):
-        if self.no_graph:
+        if self.no_graph and self.paired is None:
             config = replace(config, neighbor_depth=0)
-        result = retrieve(db, request, config=config, embedder=self.embedder, translator=self.translator)
+        try:
+            result = (self.paired.get(db, request, config) if self.paired else
+                      retrieve(db, request, config=config, embedder=self.embedder, translator=self.translator))
+        finally:
+            self.pair_metadata = self.paired.last_metadata if self.paired else None
         if self.no_graph:
-            result["relations"], result["related_steps"], result["related_claims"] = [], [], []
+            result = without_graph(result)
         self.last = result
         return result
 
@@ -232,9 +241,12 @@ def run_questions(run_dir, phase):
     translator = MeasuredTranslator(recorder, config["translation_model"])
     payloads = []
     factory = lambda: MeasuredAnswerModel(recorder, config, payloads)
+    paired = (PairedRetrieval(run_dir / "shared_retrieval", recorder,
+              lambda db, request, config: retrieve(db, request, config=config, embedder=embedder, translator=translator),
+              index["structured"]["documents_sha256"]) if config["execution"].get("paired_ac_retrieval") else None)
     retrievers, services, clients, done, errors = {}, {}, {}, {}, {}
     for arm in (ARMS[0], ARMS[2]):
-        retrievers[arm] = Retriever(embedder, translator, no_graph=arm == ARMS[2])
+        retrievers[arm] = Retriever(embedder, translator, no_graph=arm == ARMS[2], paired=paired)
         services[arm] = ObservedService({("real", "dev"): db}, repo_root=ROOT,
                  config=RetrievalConfig(**config["retrieval"]), model_factory=factory, retriever=retrievers[arm])
         done[arm] = services[arm].finished
@@ -253,10 +265,23 @@ def run_questions(run_dir, phase):
                 if (qid, arm) in completed:
                     continue
                 recorder.arm, recorder.question_id = arm, qid
+                effective_timeout = config["execution"]["api_timeout_seconds"]
+                if paired and arm in retrievers:
+                    # A replay cannot add generation time beyond the same total
+                    # deadline. Charge the original retrieval time to this arm.
+                    replay_path = run_dir / "shared_retrieval" / f"{phase}_{qid}.json"
+                    if replay_path.exists():
+                        saved_pair = json.loads(replay_path.read_text(encoding="utf-8"))
+                        effective_timeout = max(.001, effective_timeout - saved_pair["latency_ms"] / 1000)
+                    clients[arm].__exit__(None, None, None)
+                    clients[arm] = TestClient(create_app(services[arm], timeout_seconds=effective_timeout),
+                                             raise_server_exceptions=False)
+                    clients[arm].__enter__()
                 payloads.clear()
                 done[arm].clear()
                 if arm in retrievers:
                     retrievers[arm].last = None
+                    retrievers[arm].pair_metadata = None
                     services[arm].last_error = None
                 else:
                     services[arm].last_retrieval, services[arm].last_guard = None, None
@@ -274,7 +299,9 @@ def run_questions(run_dir, phase):
                         raise RuntimeError("Provider work did not drain; journal contains unfinished question")
                 drain_ms = (time.perf_counter() - drain_start) * 1000
                 events = recorder.events[start_events:]
-                calls = [e for e in events if e["kind"] == "provider_call"]
+                calls = [e for e in events if e["kind"] == "provider_call" and e["arm"] == arm]
+                call_ids = {e["call_id"] for e in calls}
+                pair_meta = retrievers[arm].pair_metadata if arm in retrievers else None
                 body = response.json()
                 result = retrievers[arm].last if arm in retrievers else services[arm].last_retrieval
                 row = {"phase": phase, "arm": arm, "question_id": qid, "question": question.question,
@@ -284,8 +311,13 @@ def run_questions(run_dir, phase):
                        "started_at": started_at, "finished_at": now(), "http_status": response.status_code,
                        "status": body.get("status", "error"), "response": body,
                        "latency_ms": round(latency, 3), "post_timeout_drain_ms": round(drain_ms, 3),
+                       "effective_api_timeout_seconds": effective_timeout,
                        "backoff_seconds": RATE_LIMIT_WAITED["seconds"] - start_backoff,
-                       "provider_calls": calls, "http_attempts": [e for e in events if e["kind"] == "http_attempt"],
+                       "provider_calls": calls, "http_attempts": [e for e in events if e["kind"] == "http_attempt" and e["call_id"] in call_ids],
+                       "shared_retrieval": pair_meta,
+                       "latency_ms_standalone_component_sum": round(latency + (pair_meta["latency_ms"]
+                            if pair_meta and pair_meta["replayed"] else 0), 3),
+                       "latency_interpretation": "observed_HTTP; second_AC_arm_replays_retrieval; component_sum_is_reconstructed_not_observed" if pair_meta else "observed_HTTP",
                        "payloads": list(payloads), "retrieval": compact_retrieval(result),
                        "model": config["answer_model"], "index_build_id": index["structured"]["index_build_id"] if arm != ARMS[1] else None,
                        "raw_index_sha256": index["raw_index_sha256"] if arm == ARMS[1] else None,

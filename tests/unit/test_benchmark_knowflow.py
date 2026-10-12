@@ -7,6 +7,12 @@ from scripts.benchmark_knowflow.baseline import TranscriptRAG, raw_chunks
 from scripts.benchmark_knowflow.report import call_cost, costs, measured_sum, summarize
 from scripts.benchmark_knowflow.review import import_reviews
 from retrieval.indexing.search_index import digest
+from scripts.benchmark_knowflow.pairing import PairedRetrieval, without_graph, pre_graph_signature
+from scripts.benchmark_knowflow.providers import Recorder
+from knowflow_contracts.models import QueryRequest, QueryContext
+from retrieval.retrieval.engine import RetrievalConfig
+from retrieval.indexing.embeddings import EmbeddingError
+from scripts.benchmark_knowflow.audit import verify_label_approval
 
 
 def config():
@@ -96,3 +102,104 @@ def test_stale_and_tampered_review_hashes_are_rejected():
     row["response"]["answer"] = "Changed answer"
     with pytest.raises(ValueError, match="hash"):
         import_reviews([row], [verdict])
+
+
+def test_ac_replays_exact_candidates_and_translation_before_dropping_graph(tmp_path):
+    recorder = Recorder(tmp_path / "provider.jsonl")
+    recorder.phase, recorder.question_id, recorder.arm = "full", "Q1", "A_knowflow"
+    calls = []
+    def live(db, query, config):
+        calls.append(query.question)
+        return {"status": "retrieved", "claims": [{"text": "original"}], "steps": ["S1"],
+                "relations": ["R1"], "related_steps": ["S2"], "related_claims": ["C2"],
+                "trace": {"query_translation": {"text": "A real-provider translation"}}}
+    pair = PairedRetrieval(tmp_path / "pair", recorder, live, "corpus-sha")
+    query = QueryRequest(question="A question", context=QueryContext(), mode="real", dataset_split="dev")
+    a = pair.get("unused", query, RetrievalConfig())
+    a["claims"][0]["text"] = "consumer mutation"
+    recorder.arm = "C_no_graph"
+    c_raw = pair.get("unused", query, RetrievalConfig())
+    c = without_graph(c_raw)
+    assert calls == ["A question"] and pair.last_metadata["replayed"]
+    assert c["claims"][0]["text"] == "original"
+    assert c["relations"] == c["related_steps"] == c["related_claims"] == []
+    assert pre_graph_signature(c_raw) == pre_graph_signature(c)
+    assert c["trace"]["query_translation"]["text"] == "A real-provider translation"
+    with pytest.raises(ValueError, match="changed"):
+        pair.get("unused", query.model_copy(update={"question": "Changed"}), RetrievalConfig())
+
+
+def test_shared_retrieval_error_is_retained_for_both_arms_without_retry(tmp_path):
+    recorder = Recorder(tmp_path / "provider.jsonl")
+    recorder.phase, recorder.question_id, recorder.arm = "full", "Q1", "A_knowflow"
+    calls = []
+    def failed(db, query, config):
+        calls.append(query.question)
+        raise EmbeddingError("Provider failed")
+    pair = PairedRetrieval(tmp_path / "pair", recorder, failed, "corpus-sha")
+    query = QueryRequest(question="A question", context=QueryContext(), mode="real", dataset_split="dev")
+    for arm in ("A_knowflow", "C_no_graph"):
+        recorder.arm = arm
+        with pytest.raises(EmbeddingError, match="Shared real"):
+            pair.get("unused", query, RetrievalConfig())
+    assert len(calls) == 1 and pair.last_metadata["error_class"] == "EmbeddingError"
+
+
+def test_official_expanded_run_requires_actual_human_label_approval(tmp_path, monkeypatch):
+    import json
+    import scripts.benchmark_knowflow.audit as audit_module
+    monkeypatch.setattr(audit_module, "ROOT", tmp_path)
+    config = {"expanded_label_review": "approval.json", "questions": "q.jsonl", "bundle": "bundle"}
+    with pytest.raises(ValueError, match="completed human review"):
+        verify_label_approval(config)
+    (tmp_path / "approval.json").write_text(json.dumps({"reviewer_kind": "ai", "reviewer_id": "codex"}))
+    with pytest.raises(ValueError, match="require human review"):
+        verify_label_approval(config)
+
+
+def test_expanded_report_cohorts_and_shared_cost_are_not_double_counted(tmp_path, monkeypatch):
+    import json
+    import scripts.benchmark_knowflow.expanded_report as expanded
+    monkeypatch.setattr(expanded, "ROOT", tmp_path)
+    cfg = config() | {"questions": "q.jsonl", "answer_model": "gemini-3.5-flash-lite", "execution": {},
+                      "pricing": config()["pricing"] | {"checked_date": "2026-10-12"}}
+    cfg["pricing"]["gemini-3.5-flash-lite"]["url"] = "https://ai.google.dev/gemini-api/docs/pricing"
+    questions = [{"question_id": "HAAS_DEV_Q001", "language": "vi"}, {"question_id": "HAAS_DEV_Q069", "language": "en"}]
+    (tmp_path / "q.jsonl").write_text("".join(json.dumps(q)+"\n" for q in questions))
+    (tmp_path / "audit.json").write_text(json.dumps({"questions_sha256": "q-sha", "corpus_files_sha256": "c-sha", "active_workflows": []}))
+    pair_meta = {"key": "same", "result_sha256": "same", "pre_graph_sha256": "same", "translation_sha256": "same", "error_class": None}
+    rows = []
+    for arm in expanded.ARMS:
+        for q in questions:
+            body = {"status": "insufficient_evidence", "answer": "Source incomplete", "citations": []}
+            rows.append({"arm": arm, "question_id": q["question_id"], "question": "Fixture, not a quality result", "language": q["language"],
+                "expected_status": "insufficient_evidence", "expected_retrieval_status": "retrieved", "http_status": 200,
+                "status": body["status"], "response": body, "answer_sha256": digest([body["status"], body["answer"], body["citations"]]),
+                "status_ok": True, "false_answer": False, "false_abstention": False, "retrieval_scored": False,
+                "citation_checks": [], "provider_calls": [], "http_attempts": [], "latency_ms": 50,
+                "latency_ms_standalone_component_sum": 60, "backoff_seconds": 0, "post_timeout_drain_ms": 0,
+                "error_class": None, "leakage": [], "retrieval": None, "shared_retrieval": pair_meta if arm != expanded.ARMS[1] else None})
+    (tmp_path / "rows.jsonl").write_text("".join(json.dumps(r)+"\n" for r in rows))
+    shared = {"kind": "provider_call", "phase": "full", "arm": "AC_shared_retrieval", "question_id": "HAAS_DEV_Q001",
+              "call_id": "one", "stage": "translation", "ok": True, "operation": "generate_content", "model": "gemini-3.5-flash-lite",
+              "input_tokens": 1000, "output_tokens": 100, "billed_output_tokens": 100, "total_tokens": 1100}
+    (tmp_path / "provider_calls.jsonl").write_text(json.dumps(shared)+"\n")
+    summary = expanded.write(tmp_path, {"config": cfg, "product_commit": "fixture", "config_sha256": "cfg"})
+    assert summary["by_cohort"]["old_66"]["A_knowflow"]["planned_questions"] == 1
+    assert summary["by_cohort"]["new_15"]["A_knowflow"]["planned_questions"] == 1
+    assert summary["AC_shared_retrieval_cost"]["provider_calls"] == 1
+    assert summary["all_experiment_api_cost_including_index_smoke_interruption"]["provider_calls"] == 1
+    assert summary["summaries"]["A_knowflow"]["cost"]["provider_calls"] == 0
+    assert summary["summaries"]["C_no_graph"]["standalone_reference_cost_including_one_shared_retrieval"]["provider_calls"] == 1
+    assert summary["summaries"]["A_knowflow"]["human_semantics"]["source_supported"] is None
+
+
+def test_interrupted_call_start_retains_unknown_expense():
+    from scripts.benchmark_knowflow.expanded_report import accounting_calls
+    started = {"kind": "provider_call_started", "call_id": "one", "model": "gemini-3.5-flash-lite", "operation": "generate_content"}
+    all_calls, unfinished = accounting_calls([started])
+    assert len(all_calls) == len(unfinished) == 1
+    assert costs(all_calls, config())["standard_list_price_usd"] is None
+    assert unfinished[0]["elapsed_ms"] is None
+    completed = {**started, "kind": "provider_call", "ok": False}
+    assert accounting_calls([started, completed]) == ([completed], [])

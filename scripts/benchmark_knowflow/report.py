@@ -212,6 +212,9 @@ def review_sources(row):
 def write_report(run_dir):
     frozen = json.loads((run_dir / "frozen_config.json").read_text(encoding="utf-8"))
     config = frozen["config"]
+    if config.get("benchmark_version") == "2.0.0":
+        from .expanded_report import write
+        return write(run_dir, frozen)
     audit = json.loads((run_dir / "audit.json").read_text(encoding="utf-8"))
     rows = read_jsonl(run_dir / "rows.jsonl")
     events = read_jsonl(run_dir / "provider_calls.jsonl")

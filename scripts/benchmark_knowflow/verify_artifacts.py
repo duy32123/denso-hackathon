@@ -47,11 +47,30 @@ def verify(run_dir, require_complete=True):
         for call in row["provider_calls"]:
             if call != call_lookup.get(call["call_id"]):
                 raise ValueError("Row call differs from append-only provider journal")
+        if config["execution"].get("paired_ac_retrieval") and row["arm"] != ARMS[1]:
+            pair = row.get("shared_retrieval")
+            if not pair:
+                raise ValueError("Missing pre-ablation pairing record")
+            shared_path = run_dir / "shared_retrieval" / f"full_{row['question_id']}.json"
+            shared = json.loads(shared_path.read_text(encoding="utf-8"))
+            if digest(shared["result"]) != pair["result_sha256"] or shared["key"] != pair["key"]:
+                raise ValueError("Paired retrieval source hash mismatch")
+            for call_id in pair["provider_call_ids"]:
+                if call_lookup.get(call_id, {}).get("arm") != "AC_shared_retrieval":
+                    raise ValueError("Missing shared provider expense")
+            if row["arm"] == ARMS[2] and row.get("retrieval") and any(
+                    row["retrieval"][k] for k in ("relations", "related_steps", "related_claims")):
+                raise ValueError("C still contains structured graph fields")
     summary = json.loads((run_dir / "summary.json").read_text(encoding="utf-8"))
+    accounting_lookup = call_lookup
+    if config.get("benchmark_version") == "2.0.0":
+        from .expanded_report import accounting_calls
+        accounting, _ = accounting_calls(calls)
+        accounting_lookup = {c["call_id"]: c for c in accounting}
     with (run_dir / "per_question.csv").open(encoding="utf-8-sig", newline="") as stream:
         per_question = list(csv.DictReader(stream))
     for arm in ARMS:
-        full_calls = [c for c in call_lookup.values() if c["phase"] == "full" and c["arm"] == arm]
+        full_calls = [c for c in accounting_lookup.values() if c["phase"] == "full" and c["arm"] == arm]
         ledger_known = sum(v for c in full_calls if (v := call_cost(c, config)) is not None)
         if summary["summaries"][arm]["cost"]["provider_calls"] != len(full_calls):
             raise ValueError("Summary dropped unfinished provider calls")
@@ -82,7 +101,7 @@ def verify(run_dir, require_complete=True):
     # Credentials are read only to test for accidental inclusion, never returned or printed.
     secrets = [v.encode() for k, v in dotenv_values(ROOT / ".env").items()
                if v and len(v) >= 12 and ("KEY" in k.upper() or "TOKEN" in k.upper() or "SECRET" in k.upper())]
-    secret_hits = [str(p.relative_to(ROOT)) for p in run_dir.iterdir() if p.is_file()
+    secret_hits = [str(p.relative_to(ROOT)) for p in run_dir.rglob("*") if p.is_file()
                    and any(secret in p.read_bytes() for secret in secrets)]
     if secret_hits:
         raise ValueError(f"Credential detected in generated files: {secret_hits}")

@@ -16,6 +16,7 @@ from .context import context_gate, resolve_context
 from .query import GeminiTranslator, Translator, content_terms, looks_vietnamese, term_coverage
 from .ranking import fold, rank
 from .relevance import claim_relevance
+from .components import VERSION as COMPONENT_VERSION, COMPONENT_TERMS, requested_components, matching_steps
 
 # WP2 step 5. Which relation makes a neighbouring Step part of a correct answer, and
 # which end of that relation the matched Step sits on:
@@ -160,10 +161,36 @@ def retrieve(db: str | Path, request: QueryRequest, *, config: RetrievalConfig |
                     translator.close()
             translation = {"text": lexical_text, **translator.config}
     result["trace"]["query_translation"] = translation
+    # Compound component names survive translation drift and corpus expansion.
+    # Apply before both the gate and ranking, using eligible claims only.
+    components = requested_components(request.question, lexical_text) if english_corpus else []
+    if components:
+        # A grease/lubrication request needs that action on the named component,
+        # not an alarm about the same component. This is a local action facet;
+        # no change to the global coverage threshold or corpus/gold.
+        lubrication_terms = {"greas", "lubric"}
+        action_terms = lubrication_terms if set(content_terms(lexical_text, stem=True)) & lubrication_terms else set()
+        component_steps = matching_steps([d for d in docs if d["record"]["record_type"] == "step"],
+                                        corpus["workflows"], components, action_terms=action_terms)
+        component_ids = {d["id"] for d in component_steps}
+        component_workflows = {d["record"]["workflow_id"] for d in component_steps}
+        removed = [d["id"] for d in docs if d["record"]["record_type"] == "step" and d["id"] not in component_ids]
+        docs = [d for d in docs if
+                (intent == "procedure" and d["record"]["workflow_id"] in component_workflows) or
+                d["id"] in component_ids or
+                (d["record"]["record_type"] == "workflow" and d["record"]["workflow_id"] in component_workflows)]
+        result["trace"]["component_identity"] = {"policy": COMPONENT_VERSION, "requested": components,
+                    "eligible_step_ids": sorted(component_ids), "excluded_document_ids": removed,
+                    "action_terms": sorted(action_terms),
+                    "basis": "eligible_heading_and_claim_text", "semantic_support": None}
+        if not component_steps:
+            return finish()
     # Coverage counts conflict diagnostics too: a question about a contested fact must reach
     # the conflict lookup instead of being rejected as out of scope.
     step_docs = [d for d in docs if d["record"]["record_type"] == "step"]
     terms = content_terms(lexical_text, stem=english_corpus)
+    component_terms = content_terms(" ".join(COMPONENT_TERMS[name] for name in components), stem=english_corpus)
+    terms = list(dict.fromkeys([*terms, *component_terms]))
     coverage, unseen = term_coverage(terms, step_docs)
     gate = ("skipped" if vietnamese and translation is None
             else "rejected" if coverage < config.min_term_coverage else "passed")
@@ -171,7 +198,8 @@ def retrieve(db: str | Path, request: QueryRequest, *, config: RetrievalConfig |
                                     "min_term_coverage": config.min_term_coverage, "gate": gate}
     if config.relevance_policy == "claim_coherence":
         relevance = claim_relevance(terms, step_docs, corpus["workflows"], stem=english_corpus,
-                                    intent=intent, threshold=config.min_term_coverage, context=context)
+                                    intent=intent, threshold=config.min_term_coverage, context=context,
+                                    protected_terms=component_terms)
         relevance["corpus_term_coverage"] = round(coverage, 4)
         if vietnamese and translation is None:
             relevance["gate"] = "skipped"

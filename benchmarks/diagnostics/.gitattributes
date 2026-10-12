@@ -1,0 +1,4 @@
+# Diagnostic hashes refer to original artifact bytes.
+* -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+# Raw pytest failure excerpts contain intentional blank lines with indentation.
+*.xml whitespace=-blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

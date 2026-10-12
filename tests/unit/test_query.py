@@ -100,6 +100,43 @@ def test_translated_vietnamese_question_searches_english_corpus(real_db):
     assert all(c["claim"]["text"] != "How do I lubricate the pocket slider?" for c in result["claims"])
 
 
+def test_alarm_626_source_lookup_on_expanded_corpus(real_db):
+    result = ask(real_db, "According to the service video, when does alarm 626 occur?")
+    assert result["status"] == "retrieved"
+    assert result["selected_workflow"]["workflow_id"] == "REAL_WF_0004"
+    assert "REAL_WF_0004_ST_001" in {s["step_id"] for s in result["steps"]}
+    assert result["trace"]["relevance"]["exact_alarm_lookup"]
+
+
+@pytest.mark.parametrize("question,translation", [
+    ("boi tron con truot hoc dao bang gi", "What lubricant is used to lubricate the tool pocket slide guide?"),
+    ("Nên dùng loại mỡ bôi trơn nào cho con trượt hốc dao?", "What grease should be used for the tool magazine slide guideway?"),
+    ("How do I grease the pocket slider?", None),
+])
+def test_pocket_slider_cannot_route_to_double_arm_or_way_cover(real_db, question, translation):
+    translator = StubTranslator({question: translation}) if translation else None
+    result = ask(real_db, question, translator=translator)
+    assert result["status"] == "retrieved"
+    assert result["selected_workflow"]["workflow_id"] in {"B0_SRC_HAAS_0005", "REAL_WF_0001"}
+    assert GREASE_STEPS & {s["step_id"] for s in result["steps"]}
+    assert all(c["claim_ref"]["workflow_id"] in {"B0_SRC_HAAS_0005", "REAL_WF_0001"} for c in result["claims"])
+    assert result["trace"]["component_identity"]["requested"] == ["pocket_slider"]
+
+
+def test_way_cover_grease_still_searches_way_cover(real_db):
+    result = ask(real_db, "What grease should I apply to the way cover guide rails?")
+    assert result["status"] == "retrieved"
+    assert result["selected_workflow"]["workflow_id"] == "REAL_WF_0008"
+
+
+def test_component_identity_keeps_the_full_procedure_not_only_matching_steps(real_db):
+    result = ask(real_db, "Give all steps to grease the pocket slider while replacing the pocket", intent="auto")
+    assert result["status"] == "retrieved"
+    assert result["trace"]["intent"] == "procedure"
+    assert result["selected_workflow"]["workflow_id"] in {"B0_SRC_HAAS_0005", "REAL_WF_0001"}
+    assert len(result["steps"]) > 5
+
+
 def test_untranslated_vietnamese_question_skips_the_gate(real_db):
     result = ask(real_db, VI_GREASE)
     assert result["trace"]["query_translation"] is None

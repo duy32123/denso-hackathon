@@ -1,0 +1,88 @@
+{
+  "benchmark_version": "2.0.0",
+  "client_date": "2026-10-12",
+  "source_type": "real",
+  "dataset_split": "dev",
+  "bundle": "acquisition/export/haas_pilot_dev_bundle",
+  "questions": "data/eval/haas_real_dev.retrieval.v0.jsonl",
+  "answer_model": "gemini-3.5-flash-lite",
+  "translation_model": "gemini-3.5-flash-lite",
+  "embedding_model": "gemini-embedding-001",
+  "embedding_dimensions": 768,
+  "retrieval": {
+    "strategy": "hybrid",
+    "top_k": 5,
+    "candidate_k": 20,
+    "rrf_k": 60,
+    "min_cosine": 0.25,
+    "intent": "auto",
+    "min_term_coverage": 0.2,
+    "relevance_policy": "claim_coherence",
+    "query_translation": "auto",
+    "neighbor_depth": 1,
+    "max_related_steps": 5,
+    "workflow_routing": "best_step"
+  },
+  "baseline": {
+    "chunk_words": 180,
+    "overlap_words": 30,
+    "video_text": "existing_corrected_transcript",
+    "document_text": "source_raw_text",
+    "retrieval": "same_hybrid_ranker_on_raw_chunks",
+    "procedure_scope": "one_source_selected_by_highest_raw_chunk_score",
+    "detail_scope": "top_5_raw_chunks_across_sources",
+    "gold_step_metrics": "not_applicable_without_human_chunk_gold"
+  },
+  "generation": {
+    "temperature": 0,
+    "max_output_tokens": 12000,
+    "max_payload_utf8_bytes": 1000000,
+    "context_policy": "same_model_context_capacity_and_payload_guard; no_truncation",
+    "answer_language": "production_looks_vietnamese",
+    "citation_policy": "exact_indexed_ids_and_openable_source; cited_numbers; source_only; semantic_verifier_is_not_evaluation"
+  },
+  "execution": {
+    "seed": 20261012,
+    "order": "seeded_question_shuffle_and_rotating_arm_order",
+    "concurrency": 1,
+    "provider_timeout_ms": 30000,
+    "api_timeout_seconds": 90,
+    "retry_policy": "unchanged_product_429_retry_up_to_3; SDK_default_retry_logged_via_HTTP_hooks",
+    "query_cache": false,
+    "translation_cache": false,
+    "whole_task_retry": false,
+    "smoke_question_ids": [
+      "HAAS_DEV_Q015",
+      "HAAS_DEV_Q031",
+      "HAAS_DEV_Q069",
+      "HAAS_DEV_Q079"
+    ],
+    "smoke_rows_in_full_metrics": false,
+    "parameter_sweep": false,
+    "holdout_opened": false,
+    "paired_ac_retrieval": true,
+    "paired_ac_policy": "one persisted real retrieval per question, identical translation and candidates; C removes only graph fields; shared API expense recorded once",
+    "paired_timeout_policy": "same 90s total deadline; replay API timeout subtracts original retrieval elapsed; minimum .001s; per-row effective timeout retained"
+  },
+  "pricing": {
+    "checked_date": "2026-10-12",
+    "currency": "USD",
+    "service_tier": "standard",
+    "gemini-3.5-flash-lite": {
+      "input_per_million": 0.3,
+      "output_per_million": 2.5,
+      "cached_input_per_million": 0.03,
+      "url": "https://ai.google.dev/gemini-api/docs/pricing#gemini-3.5-flash-lite"
+    },
+    "gemini-embedding-001": {
+      "input_per_million": null,
+      "output_per_million": null,
+      "url": "https://ai.google.dev/gemini-api/docs/pricing",
+      "note": "Exact legacy model omitted from current official pricing page checked 2026-10-12. Do not substitute Embedding 2 price. Unknown usage/rates/cost stay null."
+    },
+    "actual_invoice_usd": null,
+    "interpretation": "Standard list-price equivalent from observed usage; account billing tier/credits/invoice unknown. No server or expert labour included."
+  },
+  "expected_questions": 81,
+  "expanded_label_review": "data/eval/reviews/20261012_expanded/human_approval.json"
+}

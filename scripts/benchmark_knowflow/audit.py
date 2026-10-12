@@ -22,19 +22,41 @@ def git(*args):
     return subprocess.check_output(["git", *args], cwd=ROOT, text=True).strip()
 
 
+def verify_label_approval(config):
+    if not config.get("expanded_label_review"):
+        return
+    path = ROOT / config["expanded_label_review"]
+    if not path.is_file():
+        raise ValueError("Expanded-corpus negative labels need a completed human review before preparing the official run")
+    approval = json.loads(path.read_text(encoding="utf-8"))
+    if (approval.get("reviewer_kind") != "human" or not approval.get("reviewer_id") or
+            approval.get("questions_sha256_after") != sha_file(ROOT / config["questions"]) or
+            approval.get("bundle_manifest_sha256") != sha_file(ROOT / config["bundle"] / "manifest.json") or
+            approval.get("pending_questions") != []):
+        raise ValueError("Expanded-corpus negative labels still require human review")
+
+
 def audit(config, db):
     if (config["source_type"], config["dataset_split"]) != ("real", "dev"):
         raise ValueError("This benchmark cannot open synthetic or holdout")
+    verify_label_approval(config)
     bundle = ROOT / config["bundle"]
     imported = import_bundle(bundle, db, source_type="real", split="dev")
     corpus = read_corpus(db, "real", "dev")
     questions, qhash = load_questions(ROOT / config["questions"])
-    if len(questions) != 66 or any((q.source_type, q.dataset_split, q.label.status) !=
+    count = config.get("expected_questions", 66)
+    if len(questions) != count or any((q.source_type, q.dataset_split, q.label.status) !=
                                   ("real", "dev", "reviewed") for q in questions):
-        raise ValueError("Require exactly 66 reviewed real/dev questions")
+        raise ValueError(f"Require exactly {count} reviewed real/dev questions")
+    if any(q.label.reviewed_by == q.label.labeled_by for q in questions):
+        raise ValueError("Question reviewer must be independent of the label author")
     check_gold(questions, corpus["workflows"])
     files = [ROOT / config["questions"], *bundle.glob("*.*"),
              ROOT / "data/sources/haas_pilot_sources.jsonl", *sorted((ROOT / "data/workflows/dev").glob("*.json"))]
+    if config.get("expanded_label_review"):
+        files.append(ROOT / config["expanded_label_review"])
+        files.extend((ROOT / config["expanded_label_review"]).parent / name for name in
+                     ("label_changes.jsonl", "negative_label_review.csv", "manifest.json"))
     sources = []
     for source in corpus["sources"].values():
         transcript = ROOT / f"acquisition/preprocessing/transcripts/{source.source_id}/corrected.json"

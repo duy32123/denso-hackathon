@@ -32,7 +32,9 @@ VI_MARKERS = set("cach nhu nao khi cua cho khong bang tren trong duoc phai lam t
 PROMPT = ("Translate the question into English for keyword search in an English maintenance manual "
           "for CNC machine tools. It may be Vietnamese typed without diacritics. Use standard CNC "
           "terms: 'dao' is a cutting tool (not a knife), 'hốc dao' is a tool pocket, 'trục chính' is "
-          "the spindle. Keep numbers, model names and codes unchanged. Do not answer and do not add "
+          "the spindle. 'con trượt hốc dao' or 'con truot hoc dao' is the pocket slider, "
+          "not a linear guide, way-cover rail, magazine guideway, or double-arm slider. "
+          "Keep the requested component identity distinct. Keep numbers, model names and codes unchanged. Do not answer and do not add "
           "information. Output only the translation.\n\nQuestion: ")
 
 
@@ -79,7 +81,7 @@ class GeminiTranslator:
             sdk = version("google-genai")
         except PackageNotFoundError:
             sdk = "not-installed"
-        return {"provider": "gemini", "model": self.model, "prompt_version": "q2en-2",
+        return {"provider": "gemini", "model": self.model, "prompt_version": "q2en-3",
                 "temperature": 0, "sdk_version": sdk}
 
     def to_english(self, text: str) -> str:

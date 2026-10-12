@@ -1,5 +1,10 @@
 # D2-A — WP1/WP2: importer, lexical, vector và hybrid retrieval
 
+Tiến độ trên corpus mở rộng sau PR #53: [bản sửa alarm và danh tính bộ phận](../docs/expanded_dev_retrieval_progress.md).
+Benchmark 81 câu dùng [cấu hình v2 và hướng dẫn](../benchmarks/knowflow_expanded_dev/README.md),
+chờ người kiểm xác nhận 20 nhãn phủ định trên corpus mới. Câu hỏi Vietnamese/hard draft
+được tách file; không cộng vào kết quả chính thức.
+
 **Tiếp nối WP3/API:** đã có generator + citation guard, `/v1/ask` và trang đọc
 evidence tối thiểu. Cách chạy và giới hạn: [grounded QA pilot](../docs/team2_grounded_qa.md).
 

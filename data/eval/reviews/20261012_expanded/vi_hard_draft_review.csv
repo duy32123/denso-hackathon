@@ -1,0 +1,263 @@
+﻿question_id,category,question,context,gold,label,label_note,expected_status,expected_retrieval_status,gold_step_ids,decision,note,fingerprint
+HAAS_DRAFT_VI_069,translated_expanded_workflow / vi / detail,"Theo video dịch vụ, alarm 626 xuất hiện khi nào?",,"[1] REAL_WF_0004_ST_001 (#1) Recover from alarm 626
+    context: The presenter says alarm 626 occurs when the tool pocket failed to reach the proper up and down location.
+    observation: The control shows a list of active alarms and a red banner reading '626 TOOL-POCKET SLIDE ERROR'.
+    action: The presenter says to press the recovery button and follow the instruction to recover the tool change.
+    action: An 'Automatic Recovery' dialog on the control reads 'Waiting for the pocket to push up'.
+    acceptance_criteria: The presenter says to command several tool changes to make sure the tool change is working correctly.",draft,"AI translation of HAAS_DEV_Q069; English human review does not approve this translation. Independently check component identity, answer status and source.",answered,retrieved,REAL_WF_0004_ST_001,,,9ccd0b0a2e2298ea
+HAAS_DRAFT_VI_070,translated_expanded_workflow / vi / detail,"Khi xử lý alarm 626, kiểm tra công tắc tiệm cận báo hốc dao lên hoặc xuống bằng cách nào?",,"[1] REAL_WF_0004_ST_003 (#3) Check the pocket up and down proximity switches
+    action: The presenter says to examine the pocket up and down proximity switches and look for contamination or damage.
+    action: The presenter says to touch the face of each switch with a small flat blade screwdriver.
+    acceptance_criteria: The presenter says the switch should change state when its face is touched.",draft,"AI translation of HAAS_DEV_Q070; English human review does not approve this translation. Independently check component identity, answer status and source.",answered,retrieved,REAL_WF_0004_ST_003,,,767e7f2a7e594798
+HAAS_DRAFT_VI_071,translated_expanded_workflow / vi / detail,Nếu vẫn còn alarm 626 sau các bước kiểm tra thì tôi nên làm gì?,,"[1] REAL_WF_0004_ST_005 (#5) Contact the service outlet if the alarm persists
+    action: The presenter says to contact your HFO.
+    condition: The presenter says this applies if the machine is still getting alarm 626 after these checks.",draft,"AI translation of HAAS_DEV_Q071; English human review does not approve this translation. Independently check component identity, answer status and source.",answered,retrieved,REAL_WF_0004_ST_005,,,89ef6fd2e93c8021
+HAAS_DRAFT_VI_072,translated_expanded_workflow / vi / detail,Nguồn nêu các loại dầu hiện hành nào để thay dầu trong bơm bôi trơn trục chính đời cũ?,,"[1] REAL_WF_0005_ST_002 (#2) Seized spindle: check lubrication and the pump
+    observation: The presenter says that if air bubbles can be seen, the pump is not properly lubricating the spindle.
+    observation: The presenter says that if oil is leaking at the sight glass, the spindle is not being properly lubricated.
+    action: The presenter says to pay particular attention to the pump if the machine has a Bijur pump.
+    action: The overlay 'LUBRICATION - CHECK THE BIJUR PUMP' appears over the presenter, who sits beside a white cabinet.
+    action: The presenter says these pumps should always be rebuilt when a spindle problem is suspected, and that a rebuild is necessary anyway if the pump is over five years old.
+    action: The presenter says to switch older pump oils out for the current spec oils, either Mobil SHC 625 or a high quality synthetic 5W-20 automotive-type oil, both of which are direct replacements.
+    action: A Haas parts page for 'OIL, REFILL MOBIL SHC 625', part number 93-2220A, is shown with the overlay 'ALWAYS USE'.
+    action: The presenter says that for a metering-valve-style pump the user should check for air leaks and bubbles inside the tank at the bottom of the valve body, and in the tube that carries oil into the sight glass.
+    action: The overlay 'LUBRICATION - CHECK THE VALVE BODY' appears over a close-up of a reservoir with MIN and MAX marks.
+    action: The presenter says to check for oil leaks at the sight glass.
+    rationale: The presenter says most often the root cause is lubrication, meaning the spindle is not getting enough oil.
+    rationale: The presenter says pumps can work intermittently as they age, so even a successful lube test is no guarantee that the pump is good.
+    rationale: The presenter says that if any of these problems are not corrected, the new spindle will seize just like the old one.
+    condition: The presenter starts from a spindle that has seized and quit running.",draft,"AI translation of HAAS_DEV_Q072; English human review does not approve this translation. Independently check component identity, answer status and source.",answered,retrieved,REAL_WF_0005_ST_002,,,fa1474204004140e
+HAAS_DRAFT_VI_073,translated_expanded_workflow / vi / detail,Nguyên nhân phổ biến nhất khiến trục chính chạy nóng là gì?,,"[1] REAL_WF_0005_ST_003 (#3) Spindle running hot: check the amount of oil
+    action: The presenter says to check the lubrication system and make sure the proper amount of oil is being delivered.
+    action: The presenter says the procedure varies by machine model and pump type, and to refer to the pump documentation and follow its procedure.
+    action: The overlay 'OVERHEATING - TOO MUCH OIL - PROPER AMOUNT OF OIL' appears over a lubrication reservoir with MIN and MAX marks, behind an open door.
+    rationale: The presenter says the most common reason for a hot spindle is too much oil reaching the spindle.
+    condition: The presenter turns to a spindle that is running hot.
+    outcome: The presenter says fixing this will most likely correct the problem and save replacing the spindle.",draft,"AI translation of HAAS_DEV_Q073; English human review does not approve this translation. Independently check component identity, answer status and source.",answered,retrieved,REAL_WF_0005_ST_003,,,006855fa65ed51bd
+HAAS_DRAFT_VI_074,translated_expanded_workflow / vi / detail,"Dao bị kẹt trong trục chính: trục chính có thường là nguyên nhân không, và cần xem xét gì?",,"[1] REAL_WF_0005_ST_005 (#5) Stuck tool: check tooling, application and spindle temperature
+    observation: The presenter says that with a stuck tool the spindle is rarely the problem, and it is much more likely to be about the tools used and the application.
+    action: The presenter says to take a careful look at any applications using long or heavy tools to make sure they are not contributing to the problem.
+    action: The presenter says to go back and look at the spindle temperature again, and to deal with the lubrication problem described earlier.
+    action: The overlay 'STUCK TOOL - CHECK TOOLING / APPLICATION - CHECK LONG TOOLS - CHECK SPINDLE TEMPERATURE' appears over the presenter.
+    rationale: The presenter says really long or heavy tools can lead to the tool fretting in the taper.
+    rationale: The presenter says tools are more likely to stick in a hot spindle.
+    condition: The presenter turns to a spindle where the tool is sticking.
+    outcome: The presenter says dealing with the lubrication problem will probably solve the tool sticking problem as well.",draft,"AI translation of HAAS_DEV_Q074; English human review does not approve this translation. Independently check component identity, answer status and source.",answered,retrieved,REAL_WF_0005_ST_005,,,6a619b23ab4ad87d
+HAAS_DRAFT_VI_075,translated_expanded_workflow / vi / detail,Điều gì kích hoạt alarm 254 spindle motor overheat?,,"[1] REAL_WF_0006_ST_001 (#1) Understand what triggers alarm 254
+    context: The presenter says the alarm can come up in the middle of a job, and names it as alarm 254 spindle motor overheat.
+    context: The control shows an orange banner reading '254 SPINDLE MOTOR OVERHEAT'.
+    rationale: The presenter says the spindle motor has a temperature sensor built into it, usually in the junction box, with factory-preset temperature limits, and that the sensor triggers alarm 254 when the motor temperature begins to reach those limits.",draft,"AI translation of HAAS_DEV_Q075; English human review does not approve this translation. Independently check component identity, answer status and source.",answered,retrieved,REAL_WF_0006_ST_001,,,595e8185c8ef0088
+HAAS_DRAFT_VI_076,translated_expanded_workflow / vi / detail,"Trên máy phay đứng, quạt trục chính phải đưa không khí theo hướng nào?",,"[1] REAL_WF_0006_ST_003 (#3) Check the spindle fan
+    action: The presenter says that if the fan is working, to make sure it is running in the right direction.
+    action: A close-up shows a fan inside a sheet-metal housing.
+    rationale: The presenter says this alarm can be triggered if there are problems with the spindle fan.
+    acceptance_criteria: The presenter says the fan should turn on as soon as the spindle starts turning.
+    acceptance_criteria: The presenter says that on a vertical mill the fan should pull air up through the spindle head and push it out through the top, and on a horizontal mill it pushes air out through the back of the spindle head.",draft,"AI translation of HAAS_DEV_Q076; English human review does not approve this translation. Independently check component identity, answer status and source.",answered,retrieved,REAL_WF_0006_ST_003,,,f7efe92cccbba949
+HAAS_DRAFT_VI_077,translated_expanded_workflow / vi / detail,"Trên máy có bộ điều khiển next-gen, cáp nối P39 cần có gì?",,"[1] REAL_WF_0006_ST_004 (#4) Next-gen control: check the P39 cable
+    action: The presenter says to open the control cabinet and look at the cable connected to P39 on the I/O PC board.
+    action: A technician crouches at an open control cabinet, with drives, boards and a 40 horsepower vector drive visible.
+    action: A 3D model of a circuit board shows a connector labelled 'P39'.
+    condition: The presenter says this check applies if the machine has a next-gen control.
+    acceptance_criteria: The presenter says the cable should have a ferrite filter on it.",draft,"AI translation of HAAS_DEV_Q077; English human review does not approve this translation. Independently check component identity, answer status and source.",answered,retrieved,REAL_WF_0006_ST_004,,,da21830b11165e85
+HAAS_DRAFT_VI_078,translated_expanded_workflow / vi / detail,Alarm 9973 cho biết bo I/O đã thấy trạng thái tiếp điểm nào?,,"[1] REAL_WF_0007_ST_001 (#1) Understand alarm 9973 and how the machine monitors incoming power
+    context: The presenter says the 9973 alarm tells you there is a problem with the incoming power supplied to the machine.
+    context: A title card reads 'ALARM 9973 - INVALID POWER CONTROL STATE DETECTED'.
+    observation: The presenter says a 9973 alarm means the I/O board saw one of these contacts open when it should have been closed, and that the alarm shows on screen and the machine stops.
+    observation: A close-up of a contactor block carries the overlay label 'AUXILIARY CONTACTS'.
+    observation: The control shows a red banner for alarm 9973 whose visible text includes 'INVALID POWE' (the end is cut off).
+    rationale: The presenter says the Wye-Delta contactor has one set of contacts closed and the other open at all times, and that power from the I/O board keeps the relevant contactor closed and conducting current.
+    rationale: The presenter says that in a brownout the power keeping the contactor closed might sag momentarily and let the contactor open, and that if this happens under full load the contactor will arc and can cause serious damage.
+    rationale: The presenter says that all Wye-Delta contactor assemblies built after August 2017 use a pair of auxiliary contacts to monitor the open and closed state of the main contacts, and that a cable connects these auxiliary contacts to the I/O PCB so the machine can check the contactor status continuously.",draft,"AI translation of HAAS_DEV_Q078; English human review does not approve this translation. Independently check component identity, answer status and source.",answered,retrieved,REAL_WF_0007_ST_001,,,871466e831cd18b9
+HAAS_DRAFT_VI_079,translated_expanded_workflow / vi / detail,"Sau khi tắt máy để kiểm tra alarm 9973, phải chờ dấu hiệu nào trước khi tiếp tục?",,"[1] REAL_WF_0007_ST_002 (#2) Power down safely before opening anything
+    action: The presenter says to power down the machine and wait for the vector drive caution light to go dark.
+    action: The POWER ON and POWER OFF buttons are shown under the caption 'ALARM 9973 - POWER DOWN THE MACHINE. WAIT UNTIL VECTOR DRIVE LIGHT TURNS OFF.'
+    rationale: The presenter says that once the light is dark there is no residual energy left in the system.
+    rationale: A vector drive label reads 'DANGER! High voltage! No user serviceable parts inside. Light must be out before replacing drive.'",draft,"AI translation of HAAS_DEV_Q079; English human review does not approve this translation. Independently check component identity, answer status and source.",answered,retrieved,REAL_WF_0007_ST_002,,,312720f2ce8310a5
+HAAS_DRAFT_VI_080,translated_expanded_workflow / vi / detail,"Khi alarm 9973 xuất hiện dai dẳng, máy cần bổ sung gì ở đường nguồn điện vào?",,"[1] REAL_WF_0007_ST_004 (#4) Conclude brownout and stabilize the incoming power
+    action: The presenter says a persistent 9973 alarm means the machine needs a third-party power conditioner or voltage stabilizer installed on the incoming power line.
+    action: The presenter says not to change the Wye-Delta assembly or the I/O PCB.
+    rationale: The presenter says recurring 9973 alarms very likely mean problems with the incoming power supply, and that stabilizing the power reaching the machine will make these alarms go away.
+    condition: The presenter says this applies if the 9973 alarm is persistent.
+    outcome: The presenter says that in this case the I/O board did its job and protected the contactors from a dangerous arc.",draft,"AI translation of HAAS_DEV_Q080; English human review does not approve this translation. Independently check component identity, answer status and source.",answered,retrieved,REAL_WF_0007_ST_004,,,e16f35b6f5ef7cb2
+HAAS_DRAFT_VI_081,translated_expanded_workflow / vi / detail,Ngay khi tấm che ray way cover bắt đầu kêu lách tách thì nên làm gì?,,"[1] REAL_WF_0008_ST_002 (#2) Stop popping noises: tighten the rail fasteners and grease the guide rails
+    action: The presenter says that as soon as the way covers start making that popping noise, to pull the way covers back, inspect the rails for loose fasteners and tighten them.
+    action: The presenter says to apply a thin coat of red-eye grease to the guide rails to prevent that issue in the future.
+    rationale: The presenter says the popping will eventually damage the plastic tabs that slide on the rails, which will cause a section of the way covers to separate and leak.
+    condition: The presenter says this applies if the bolts that hold the way cover rails to the castings are loose, so the way covers make a popping noise when they move.",draft,"AI translation of HAAS_DEV_Q081; English human review does not approve this translation. Independently check component identity, answer status and source.",answered,retrieved,REAL_WF_0008_ST_002,,,9088a11bc52558e7
+HAAS_DRAFT_VI_082,translated_expanded_workflow / vi / detail,"Nếu gia công không dùng tưới nguội tràn, cần bôi trơn các way cover thế nào?",,"[1] REAL_WF_0008_ST_003 (#3) Keep the way covers lubricated
+    context: The presenter says that in normal machine operation the way covers are lubricated by the coolant.
+    action: The presenter says to use a refractometer to check the coolant concentration, which it is critical to keep correct.
+    action: The presenter says that if parts have to be cut without flood cooling, to lubricate all the way covers with a lightweight oil: fully extend them and spray an even coat on the way covers.
+    rationale: The presenter says that if the machine keeps running without lubricant, the rubber seals will break down prematurely.",draft,"AI translation of HAAS_DEV_Q082; English human review does not approve this translation. Independently check component identity, answer status and source.",answered,retrieved,REAL_WF_0008_ST_003,,,b5826448aa94ffe2
+HAAS_DRAFT_VI_083,translated_expanded_workflow / vi / detail,Lắp way cover trục X kiểu mới lên máy đời cũ cần mũi khoan và tarô nào?,,"[1] REAL_WF_0008_ST_007 (#7) Retrofit the new-style way cover to an older VF machine
+    context: The presenter says that in August 2013 the VF-1 through VF-5 machines changed to a new revision of X-axis way covers, which attach directly to the guide bars for stronger support.
+    context: The presenter says some slight modification may be needed for machines built when this was first introduced.
+    action: The presenter lists the tools required as a way cover kit, a number 21 drill bit, a 1032 tap, a tube of black RTV silicone, a red-eye grease cartridge and a scraper.
+    action: A caption lists 'PARTS/TOOLS REQUIRED': waycover kit (new style), #21 drill bit, 10/32 tap, RTV silicone, RED-i grease and scraper.
+    action: The presenter says to jog the X axis all the way to the opposite end of travel, put the machine in e-stop, and remove the old X-axis way cover and L bracket.
+    action: The presenter says to locate the two holes on the way cover mounting bar, and if the holes are not drilled all the way through, to break through with the number 21 drill bit and then tap the holes all the way with the 1032 tap.
+    action: A graphic shows a #21 drill bit and a 10/32 tap over a way cover mounting bar.
+    action: The presenter says to remove the guide bars from the machine and install them in the way cover, then install the way cover and guide bars on the machine as an assembly.
+    action: The presenter says to check the transition between the way cover guide bar and the casting for smoothness.
+    action: The presenter says to reinstall the way covers and jog the axis around a couple of times to make sure it is not binding.
+    rationale: The presenter says that if the surface is not smooth, the tabs on the bottom of the way covers will get caught and damaged.",draft,"AI translation of HAAS_DEV_Q083; English human review does not approve this translation. Independently check component identity, answer status and source.",answered,retrieved,REAL_WF_0008_ST_007,,,cdd4707fc2bc2b30
+HAAS_DRAFT_HARD_001,condition / vi / detail,"Theo nguồn alarm 626, khi nào mới thực hiện nhánh kiểm tra sau recovery và các lần thay dao thử?",,"[1] REAL_WF_0004_ST_002 (#2) Inspect the pocket, carousel and air supply
+    action: The presenter says to give the pocket and carousel a good look for loose or damaged components.
+    action: The presenter says to make sure the machine has sufficient air pressure and volume during the tool change.
+    action: A pressure gauge is mounted on a panel of solenoid valves and air lines, beside an 'AIR - LUBRICATION' diagram label.
+    action: The presenter says to look at the air line to the pocket air cylinder, and to look for kinks or broken lines.
+    action: A pneumatic cylinder with a thin air line is mounted in a cast housing.
+    rationale: The presenter says low air can prevent the tool pocket from reaching the proper position.
+    condition: The presenter says to follow these troubleshooting steps if the machine is still getting alarm 626.",draft,Source-authored before running this question. All labels are AI proposals. Missing numeric/procedure and cross-component requests require independent source review; do not count in official metrics.,answered,retrieved,REAL_WF_0004_ST_002,,,4be3d420143e70a0
+HAAS_DRAFT_HARD_002,missing_numeric / vi / detail,"Trong video alarm 626, áp suất khí tối thiểu chính xác là bao nhiêu bar?",,"[1] REAL_WF_0004_ST_002 (#2) Inspect the pocket, carousel and air supply
+    action: The presenter says to give the pocket and carousel a good look for loose or damaged components.
+    action: The presenter says to make sure the machine has sufficient air pressure and volume during the tool change.
+    action: A pressure gauge is mounted on a panel of solenoid valves and air lines, beside an 'AIR - LUBRICATION' diagram label.
+    action: The presenter says to look at the air line to the pocket air cylinder, and to look for kinks or broken lines.
+    action: A pneumatic cylinder with a thin air line is mounted in a cast housing.
+    rationale: The presenter says low air can prevent the tool pocket from reaching the proper position.
+    condition: The presenter says to follow these troubleshooting steps if the machine is still getting alarm 626.",draft,Source-authored before running this question. All labels are AI proposals. Missing numeric/procedure and cross-component requests require independent source review; do not count in official metrics.,insufficient_evidence,retrieved,REAL_WF_0004_ST_002,,,81427c01413a4da6
+HAAS_DRAFT_HARD_003,component_contrast / vi / detail,Video alarm 626 yêu cầu chạm tua vít vào mặt công tắc báo hốc dao; có phải công tắc phải đổi trạng thái không?,,"[1] REAL_WF_0004_ST_003 (#3) Check the pocket up and down proximity switches
+    action: The presenter says to examine the pocket up and down proximity switches and look for contamination or damage.
+    action: The presenter says to touch the face of each switch with a small flat blade screwdriver.
+    acceptance_criteria: The presenter says the switch should change state when its face is touched.",draft,Source-authored before running this question. All labels are AI proposals. Missing numeric/procedure and cross-component requests require independent source review; do not count in official metrics.,answered,retrieved,REAL_WF_0004_ST_003,,,41012ddd181aa7d2
+HAAS_DRAFT_HARD_004,sequence / vi / detail,"Theo video alarm 626, bấm recovery trước hay ra lệnh thay dao nhiều lần trước?",,"[1] REAL_WF_0004_ST_001 (#1) Recover from alarm 626
+    context: The presenter says alarm 626 occurs when the tool pocket failed to reach the proper up and down location.
+    observation: The control shows a list of active alarms and a red banner reading '626 TOOL-POCKET SLIDE ERROR'.
+    action: The presenter says to press the recovery button and follow the instruction to recover the tool change.
+    action: An 'Automatic Recovery' dialog on the control reads 'Waiting for the pocket to push up'.
+    acceptance_criteria: The presenter says to command several tool changes to make sure the tool change is working correctly.",draft,Source-authored before running this question. All labels are AI proposals. Missing numeric/procedure and cross-component requests require independent source review; do not count in official metrics.,answered,retrieved,REAL_WF_0004_ST_001,,,2f82f9c0d302c610
+HAAS_DRAFT_HARD_005,missing_numeric / en / detail,"For alarm 626, does this source specify the exact minimum air flow in litres per minute?",,"[1] REAL_WF_0004_ST_002 (#2) Inspect the pocket, carousel and air supply
+    action: The presenter says to give the pocket and carousel a good look for loose or damaged components.
+    action: The presenter says to make sure the machine has sufficient air pressure and volume during the tool change.
+    action: A pressure gauge is mounted on a panel of solenoid valves and air lines, beside an 'AIR - LUBRICATION' diagram label.
+    action: The presenter says to look at the air line to the pocket air cylinder, and to look for kinks or broken lines.
+    action: A pneumatic cylinder with a thin air line is mounted in a cast housing.
+    rationale: The presenter says low air can prevent the tool pocket from reaching the proper position.
+    condition: The presenter says to follow these troubleshooting steps if the machine is still getting alarm 626.",draft,Source-authored before running this question. All labels are AI proposals. Missing numeric/procedure and cross-component requests require independent source review; do not count in official metrics.,insufficient_evidence,retrieved,REAL_WF_0004_ST_002,,,7325978ef1c3b7cb
+HAAS_DRAFT_HARD_006,condition / vi / detail,"Khi trục chính có tiếng ồn hoặc rung, việc kiểm độ căng đai áp dụng cho loại truyền động nào?",,"[1] REAL_WF_0005_ST_004 (#4) Noise or vibration: rule out tooling, balance, alignment and belts
+    context: The presenter says a video covers the balancing procedure for an inline spindle, and that the alignment check is also covered in the spindle balancing video.
+    action: The presenter says to check that the tooling is not the problem and that the spindle is balanced properly before replacing the spindle.
+    action: The presenter says to make sure the spindle and motor are properly aligned.
+    action: The presenter says that if the spindle is belt driven, to make sure the belt tension is correct and the belts and sprockets are clean and in good condition.
+    action: The overlay 'NOISE/VIBRATION - CHECK YOUR TOOLING - SPINDLE IS BALANCED - CHECK ALIGNMENT / TENSION' appears beside the presenter holding a tool.
+    condition: The presenter turns to a spindle with a noise or vibration problem.",draft,Source-authored before running this question. All labels are AI proposals. Missing numeric/procedure and cross-component requests require independent source review; do not count in official metrics.,answered,retrieved,REAL_WF_0005_ST_004,,,acaa0487a83c380c
+HAAS_DRAFT_HARD_007,missing_numeric / vi / detail,Video chẩn đoán trục chính nêu độ võng dây đai chính xác bao nhiêu mm?,,"[1] REAL_WF_0005_ST_004 (#4) Noise or vibration: rule out tooling, balance, alignment and belts
+    context: The presenter says a video covers the balancing procedure for an inline spindle, and that the alignment check is also covered in the spindle balancing video.
+    action: The presenter says to check that the tooling is not the problem and that the spindle is balanced properly before replacing the spindle.
+    action: The presenter says to make sure the spindle and motor are properly aligned.
+    action: The presenter says that if the spindle is belt driven, to make sure the belt tension is correct and the belts and sprockets are clean and in good condition.
+    action: The overlay 'NOISE/VIBRATION - CHECK YOUR TOOLING - SPINDLE IS BALANCED - CHECK ALIGNMENT / TENSION' appears beside the presenter holding a tool.
+    condition: The presenter turns to a spindle with a noise or vibration problem.",draft,Source-authored before running this question. All labels are AI proposals. Missing numeric/procedure and cross-component requests require independent source review; do not count in official metrics.,insufficient_evidence,retrieved,REAL_WF_0005_ST_004,,,147289ea38c5e9fe
+HAAS_DRAFT_HARD_008,component_contrast / vi / detail,"Theo video chẩn đoán trục chính chạy nóng, vấn đề thường là quá nhiều hay quá ít dầu tới trục chính?",,"[1] REAL_WF_0005_ST_003 (#3) Spindle running hot: check the amount of oil
+    action: The presenter says to check the lubrication system and make sure the proper amount of oil is being delivered.
+    action: The presenter says the procedure varies by machine model and pump type, and to refer to the pump documentation and follow its procedure.
+    action: The overlay 'OVERHEATING - TOO MUCH OIL - PROPER AMOUNT OF OIL' appears over a lubrication reservoir with MIN and MAX marks, behind an open door.
+    rationale: The presenter says the most common reason for a hot spindle is too much oil reaching the spindle.
+    condition: The presenter turns to a spindle that is running hot.
+    outcome: The presenter says fixing this will most likely correct the problem and save replacing the spindle.",draft,Source-authored before running this question. All labels are AI proposals. Missing numeric/procedure and cross-component requests require independent source review; do not count in official metrics.,answered,retrieved,REAL_WF_0005_ST_003,,,53ba88578687eefd
+HAAS_DRAFT_HARD_009,sequence / vi / detail,"Nếu hỏng vấu truyền động do lỗi orientation, phải sửa orientation trước hay thay trục chính trước?",,"[1] REAL_WF_0005_ST_006 (#6) Correct orientation damage before replacing the spindle
+    action: The presenter says the orientation problem must be corrected before the spindle is replaced.
+    condition: The presenter says this applies if the drive dogs or the spindle taper have been damaged by an orientation problem.",draft,Source-authored before running this question. All labels are AI proposals. Missing numeric/procedure and cross-component requests require independent source review; do not count in official metrics.,answered,retrieved,REAL_WF_0005_ST_006,,,bf0d69b2bf2a72e4
+HAAS_DRAFT_HARD_010,missing_procedure / en / detail,"Does this spindle troubleshooting video give the steps for replacing the drive belt, rather than inspecting its tension?",,"[1] REAL_WF_0005_ST_004 (#4) Noise or vibration: rule out tooling, balance, alignment and belts
+    context: The presenter says a video covers the balancing procedure for an inline spindle, and that the alignment check is also covered in the spindle balancing video.
+    action: The presenter says to check that the tooling is not the problem and that the spindle is balanced properly before replacing the spindle.
+    action: The presenter says to make sure the spindle and motor are properly aligned.
+    action: The presenter says that if the spindle is belt driven, to make sure the belt tension is correct and the belts and sprockets are clean and in good condition.
+    action: The overlay 'NOISE/VIBRATION - CHECK YOUR TOOLING - SPINDLE IS BALANCED - CHECK ALIGNMENT / TENSION' appears beside the presenter holding a tool.
+    condition: The presenter turns to a spindle with a noise or vibration problem.",draft,Source-authored before running this question. All labels are AI proposals. Missing numeric/procedure and cross-component requests require independent source review; do not count in official metrics.,insufficient_evidence,retrieved,REAL_WF_0005_ST_004,,,a5fb7d66e6f30369
+HAAS_DRAFT_HARD_011,condition / vi / detail,"Với alarm 254, kiểm cáp P39 và ferrite filter áp dụng cho loại bộ điều khiển nào?",,"[1] REAL_WF_0006_ST_004 (#4) Next-gen control: check the P39 cable
+    action: The presenter says to open the control cabinet and look at the cable connected to P39 on the I/O PC board.
+    action: A technician crouches at an open control cabinet, with drives, boards and a 40 horsepower vector drive visible.
+    action: A 3D model of a circuit board shows a connector labelled 'P39'.
+    condition: The presenter says this check applies if the machine has a next-gen control.
+    acceptance_criteria: The presenter says the cable should have a ferrite filter on it.",draft,Source-authored before running this question. All labels are AI proposals. Missing numeric/procedure and cross-component requests require independent source review; do not count in official metrics.,answered,retrieved,REAL_WF_0006_ST_004,,,4480cef7065e7e75
+HAAS_DRAFT_HARD_012,missing_numeric / vi / detail,Video alarm 254 nêu ngưỡng nhiệt độ kích hoạt cảm biến chính xác bao nhiêu độ C?,,"[1] REAL_WF_0006_ST_001 (#1) Understand what triggers alarm 254
+    context: The presenter says the alarm can come up in the middle of a job, and names it as alarm 254 spindle motor overheat.
+    context: The control shows an orange banner reading '254 SPINDLE MOTOR OVERHEAT'.
+    rationale: The presenter says the spindle motor has a temperature sensor built into it, usually in the junction box, with factory-preset temperature limits, and that the sensor triggers alarm 254 when the motor temperature begins to reach those limits.",draft,Source-authored before running this question. All labels are AI proposals. Missing numeric/procedure and cross-component requests require independent source review; do not count in official metrics.,insufficient_evidence,retrieved,REAL_WF_0006_ST_001,,,283c141ac03feba0
+HAAS_DRAFT_HARD_013,component_contrast / vi / detail,"Với alarm 254 trên máy phay ngang, quạt thổi khí ra phía sau đầu trục chính hay phía trên như máy phay đứng?",,"[1] REAL_WF_0006_ST_003 (#3) Check the spindle fan
+    action: The presenter says that if the fan is working, to make sure it is running in the right direction.
+    action: A close-up shows a fan inside a sheet-metal housing.
+    rationale: The presenter says this alarm can be triggered if there are problems with the spindle fan.
+    acceptance_criteria: The presenter says the fan should turn on as soon as the spindle starts turning.
+    acceptance_criteria: The presenter says that on a vertical mill the fan should pull air up through the spindle head and push it out through the top, and on a horizontal mill it pushes air out through the back of the spindle head.",draft,Source-authored before running this question. All labels are AI proposals. Missing numeric/procedure and cross-component requests require independent source review; do not count in official metrics.,answered,retrieved,REAL_WF_0006_ST_003,,,6d0dc7ba7cc324ca
+HAAS_DRAFT_HARD_014,sequence / vi / detail,"Trong video alarm 254, quạt cần bật trước hay ngay khi trục chính bắt đầu quay?",,"[1] REAL_WF_0006_ST_003 (#3) Check the spindle fan
+    action: The presenter says that if the fan is working, to make sure it is running in the right direction.
+    action: A close-up shows a fan inside a sheet-metal housing.
+    rationale: The presenter says this alarm can be triggered if there are problems with the spindle fan.
+    acceptance_criteria: The presenter says the fan should turn on as soon as the spindle starts turning.
+    acceptance_criteria: The presenter says that on a vertical mill the fan should pull air up through the spindle head and push it out through the top, and on a horizontal mill it pushes air out through the back of the spindle head.",draft,Source-authored before running this question. All labels are AI proposals. Missing numeric/procedure and cross-component requests require independent source review; do not count in official metrics.,answered,retrieved,REAL_WF_0006_ST_003,,,5118eaf1ad9329cb
+HAAS_DRAFT_HARD_015,component_contrast / en / detail,Does alarm 254 in this source concern the spindle motor temperature sensor or the tool-pocket position switches?,,"[1] REAL_WF_0006_ST_001 (#1) Understand what triggers alarm 254
+    context: The presenter says the alarm can come up in the middle of a job, and names it as alarm 254 spindle motor overheat.
+    context: The control shows an orange banner reading '254 SPINDLE MOTOR OVERHEAT'.
+    rationale: The presenter says the spindle motor has a temperature sensor built into it, usually in the junction box, with factory-preset temperature limits, and that the sensor triggers alarm 254 when the motor temperature begins to reach those limits.",draft,Source-authored before running this question. All labels are AI proposals. Missing numeric/procedure and cross-component requests require independent source review; do not count in official metrics.,answered,retrieved,REAL_WF_0006_ST_001,,,ba3b57f653f78ba3
+HAAS_DRAFT_HARD_016,condition / vi / detail,"Với alarm 9973 chỉ lưu trong history, không hiện màn hình và không dừng máy, nguồn hướng dẫn gì?",,"[1] REAL_WF_0007_ST_005 (#5) Special cases: logged-only alarms and machines without the monitoring hardware
+    context: The presenter says that for more in-depth Wye-Delta contactor troubleshooting, to click the links in the description, which lead to a DIY site.
+    action: The presenter says to ignore such an alarm.
+    action: The presenter says the power monitoring feature should not be enabled on a machine without the auxiliary contacts and extra cable, and to make sure the correct configuration file is loaded in the machine.
+    condition: The presenter says this applies if an alarm is logged into history but did not appear on screen or stop the machine.
+    condition: The presenter says this applies if the machine does not have the Wye-Delta auxiliary contacts and the extra cable.",draft,Source-authored before running this question. All labels are AI proposals. Missing numeric/procedure and cross-component requests require independent source review; do not count in official metrics.,answered,retrieved,REAL_WF_0007_ST_005,,,205c4834612b1885
+HAAS_DRAFT_HARD_017,missing_numeric / vi / detail,Video alarm 9973 yêu cầu chờ chính xác bao nhiêu giây sau tắt nguồn trước khi tháo nắp?,,"[1] REAL_WF_0007_ST_002 (#2) Power down safely before opening anything
+    action: The presenter says to power down the machine and wait for the vector drive caution light to go dark.
+    action: The POWER ON and POWER OFF buttons are shown under the caption 'ALARM 9973 - POWER DOWN THE MACHINE. WAIT UNTIL VECTOR DRIVE LIGHT TURNS OFF.'
+    rationale: The presenter says that once the light is dark there is no residual energy left in the system.
+    rationale: A vector drive label reads 'DANGER! High voltage! No user serviceable parts inside. Light must be out before replacing drive.'",draft,Source-authored before running this question. All labels are AI proposals. Missing numeric/procedure and cross-component requests require independent source review; do not count in official metrics.,insufficient_evidence,retrieved,REAL_WF_0007_ST_002,,,d6af116c5acfdbeb
+HAAS_DRAFT_HARD_018,component_contrast / vi / detail,"Với alarm 9973 dai dẳng, nguồn có yêu cầu thay bo I/O hoặc cụm Wye-Delta không?",,"[1] REAL_WF_0007_ST_004 (#4) Conclude brownout and stabilize the incoming power
+    action: The presenter says a persistent 9973 alarm means the machine needs a third-party power conditioner or voltage stabilizer installed on the incoming power line.
+    action: The presenter says not to change the Wye-Delta assembly or the I/O PCB.
+    rationale: The presenter says recurring 9973 alarms very likely mean problems with the incoming power supply, and that stabilizing the power reaching the machine will make these alarms go away.
+    condition: The presenter says this applies if the 9973 alarm is persistent.
+    outcome: The presenter says that in this case the I/O board did its job and protected the contactors from a dangerous arc.",draft,Source-authored before running this question. All labels are AI proposals. Missing numeric/procedure and cross-component requests require independent source review; do not count in official metrics.,answered,retrieved,REAL_WF_0007_ST_004,,,8af5bf60750bf0cf
+HAAS_DRAFT_HARD_019,sequence / vi / detail,"Theo video alarm 9973, tháo nắp trước hay chờ đèn cảnh báo vector drive tắt trước?",,"[1] REAL_WF_0007_ST_002 (#2) Power down safely before opening anything
+    action: The presenter says to power down the machine and wait for the vector drive caution light to go dark.
+    action: The POWER ON and POWER OFF buttons are shown under the caption 'ALARM 9973 - POWER DOWN THE MACHINE. WAIT UNTIL VECTOR DRIVE LIGHT TURNS OFF.'
+    rationale: The presenter says that once the light is dark there is no residual energy left in the system.
+    rationale: A vector drive label reads 'DANGER! High voltage! No user serviceable parts inside. Light must be out before replacing drive.'",draft,Source-authored before running this question. All labels are AI proposals. Missing numeric/procedure and cross-component requests require independent source review; do not count in official metrics.,answered,retrieved,REAL_WF_0007_ST_002,,,178cd67cbf2cc5a4
+HAAS_DRAFT_HARD_020,condition / en / detail,Should power monitoring be enabled on a machine without Wye-Delta auxiliary contacts and the extra cable?,,"[1] REAL_WF_0007_ST_005 (#5) Special cases: logged-only alarms and machines without the monitoring hardware
+    context: The presenter says that for more in-depth Wye-Delta contactor troubleshooting, to click the links in the description, which lead to a DIY site.
+    action: The presenter says to ignore such an alarm.
+    action: The presenter says the power monitoring feature should not be enabled on a machine without the auxiliary contacts and extra cable, and to make sure the correct configuration file is loaded in the machine.
+    condition: The presenter says this applies if an alarm is logged into history but did not appear on screen or stop the machine.
+    condition: The presenter says this applies if the machine does not have the Wye-Delta auxiliary contacts and the extra cable.",draft,Source-authored before running this question. All labels are AI proposals. Missing numeric/procedure and cross-component requests require independent source review; do not count in official metrics.,answered,retrieved,REAL_WF_0007_ST_005,,,22d6de57672c8a26
+HAAS_DRAFT_HARD_021,condition / vi / detail,"Trong vận hành bình thường có coolant, way cover được bôi trơn bởi gì; khi cắt không flood cooling thì cần làm gì?",,"[1] REAL_WF_0008_ST_003 (#3) Keep the way covers lubricated
+    context: The presenter says that in normal machine operation the way covers are lubricated by the coolant.
+    action: The presenter says to use a refractometer to check the coolant concentration, which it is critical to keep correct.
+    action: The presenter says that if parts have to be cut without flood cooling, to lubricate all the way covers with a lightweight oil: fully extend them and spray an even coat on the way covers.
+    rationale: The presenter says that if the machine keeps running without lubricant, the rubber seals will break down prematurely.",draft,Source-authored before running this question. All labels are AI proposals. Missing numeric/procedure and cross-component requests require independent source review; do not count in official metrics.,answered,retrieved,REAL_WF_0008_ST_003,,,f172057c0453b5d6
+HAAS_DRAFT_HARD_022,missing_numeric / vi / detail,Video way cover quy định nồng độ coolant chính xác bao nhiêu phần trăm?,,"[1] REAL_WF_0008_ST_003 (#3) Keep the way covers lubricated
+    context: The presenter says that in normal machine operation the way covers are lubricated by the coolant.
+    action: The presenter says to use a refractometer to check the coolant concentration, which it is critical to keep correct.
+    action: The presenter says that if parts have to be cut without flood cooling, to lubricate all the way covers with a lightweight oil: fully extend them and spray an even coat on the way covers.
+    rationale: The presenter says that if the machine keeps running without lubricant, the rubber seals will break down prematurely.",draft,Source-authored before running this question. All labels are AI proposals. Missing numeric/procedure and cross-component requests require independent source review; do not count in official metrics.,insufficient_evidence,retrieved,REAL_WF_0008_ST_003,,,fa469f27aa57a484
+HAAS_DRAFT_HARD_023,component_contrast / vi / detail,Mỡ red-eye trên thanh dẫn way cover trong video có phải là chỉ dẫn chọn mỡ cho con trượt hốc dao không?,,"[1] REAL_WF_0008_ST_006 (#6) Reinstall the X-axis way cover on the machine
+    context: The presenter says that at this point the steps are the same whether you are reinstalling the existing X-axis way covers or installing new ones.
+    action: The presenter says to remove any chips and debris from the linear guides, remove the used gasket and sealant from the table mounting surface and clean it.
+    action: The presenter says to apply a thin coat of red-eye grease to the way cover guide bar and install the way cover over the guide bars.
+    action: A red grease cartridge is held over the open machine bed; the linear guides carry red grease.
+    action: The presenter says to attach the way cover and panel to the way cover bracket with the fasteners, then fully extend the way cover one leaf at a time to make sure the sections do not separate.
+    action: A way cover section is fitted over the ball screw and the linear guides.
+    action: The presenter says to put a bead of RTV silicone followed by the new gasket on the face of the way cover, with the largest leaf of the way cover away from the table.
+    action: The presenter says to attach the way cover to the table, install the fasteners and wipe away any excess silicone from the table.
+    action: The presenter says to release the e-stop and press reset a couple of times to clear the alarms.
+    action: The presenter says to apply a light coat of oil to all sections of the way cover and jog the X axis slowly to make sure the way cover does not bind.
+    action: The presenter says to follow the same process for the other side.
+    acceptance_criteria: The presenter says the way cover should not bind when the X axis is jogged slowly.",draft,Source-authored before running this question. All labels are AI proposals. Missing numeric/procedure and cross-component requests require independent source review; do not count in official metrics.,insufficient_evidence,retrieved,REAL_WF_0008_ST_006,,,f14cf7ff276bb1ef
+HAAS_DRAFT_HARD_024,sequence / vi / detail,"Với wiper kiểu mới, nguồn hướng dẫn tháo vít Phillips trước hay gỡ retaining strip khỏi standoffs trước?",,"[1] REAL_WF_0008_ST_004 (#4) Replace a damaged wiper on the new-style way cover
+    context: The presenter says that if only the way cover wipers are damaged they can be changed out on their own, and that both the old style and the new style of X-axis way covers are reviewed, starting with the new style.
+    action: The presenter says to jog the X axis all the way to the end of travel, e-stop the machine, remove the X-axis way cover, turn it over and remove each section.
+    action: The presenter, in work gloves, separates way cover sections laid out on a bench.
+    action: The presenter says to wipe away any excess grease, and to locate and remove the small Phillips screw.
+    action: The presenter says to move the retaining strip toward the opposite end and remove it from the standoffs, and mentions a flathead screwdriver in the same run-on sentence.
+    action: The presenter says to remove the damaged wiper, cut the new wiper to the exact length, and verify the holes are aligned with the new wiper.
+    action: A black wiper strip with a row of holes is held against the edge of a sheet-metal part.
+    action: The presenter says to clean up the way cover, apply a light coat of red-eye grease to the wiper and install the wiper correctly back on the way cover.
+    action: The presenter says to install the retainer and make sure it captures all the standoffs, then with one hand apply a little pressure to the retainer and use a flathead screwdriver to slide it into the locking position on the standoff.
+    action: The presenter says that once all the wipers are installed, to put the sections back together.",draft,Source-authored before running this question. All labels are AI proposals. Missing numeric/procedure and cross-component requests require independent source review; do not count in official metrics.,answered,retrieved,REAL_WF_0008_ST_004,,,70135d2a28844b08
+HAAS_DRAFT_HARD_025,component_contrast / en / detail,"For old-style way covers, does the source use a mallet to seat the wiper or the new-style standoff retaining strip?",,"[1] REAL_WF_0008_ST_005 (#5) Replace a damaged wiper on the old-style way cover
+    context: The presenter says the wiper replacement process is slightly different for the old-style way covers.
+    action: The presenter says to use a flathead screwdriver to remove the way cover wiper and clean the channel out.
+    action: The presenter says that with the sections apart is a good time to take care of any dents in the way covers.
+    action: The presenter says to cut the replacement wiper to the same length as the original one, apply a light coat of red-eye grease to each replacement wiper, and install them using a mallet to tap the wiper firmly into the slot.
+    action: A hand presses a black wiper strip along the top edge of a sheet-metal section.
+    action: The presenter says to install each section back together.",draft,Source-authored before running this question. All labels are AI proposals. Missing numeric/procedure and cross-component requests require independent source review; do not count in official metrics.,answered,retrieved,REAL_WF_0008_ST_005,,,2a468420a1af3a5b

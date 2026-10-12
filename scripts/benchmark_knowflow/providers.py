@@ -6,9 +6,6 @@ import os
 import time
 from datetime import datetime, timezone
 
-from google import genai
-from google.genai import types
-
 from retrieval.generation.gemini import GeminiAnswerModel
 from retrieval.indexing.embeddings import GeminiEmbedder
 from retrieval.indexing.search_index import digest
@@ -52,6 +49,11 @@ class Recorder:
                     "at": now()})
 
     def client(self, timeout=30000):
+        # Journaling, paired retrieval and offline reports do not require the
+        # optional Gemini SDK. Import it only when creating a real API client.
+        from google import genai
+        from google.genai import types
+
         key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
         if not key:
             raise RuntimeError("API key is not configured")

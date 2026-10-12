@@ -1,4 +1,6 @@
 """Benchmark integrity tests. Fixtures here are not quality measurements."""
+import subprocess
+import sys
 from types import SimpleNamespace
 
 import pytest
@@ -13,6 +15,43 @@ from knowflow_contracts.models import QueryRequest, QueryContext
 from retrieval.retrieval.engine import RetrievalConfig
 from retrieval.indexing.embeddings import EmbeddingError
 from scripts.benchmark_knowflow.audit import verify_label_approval
+
+
+def test_offline_benchmark_imports_without_optional_gemini_sdk(tmp_path):
+    # A separate interpreter prevents an installed/cached SDK from hiding the
+    # CI failure. No network requests or actual API credentials are needed.
+    program = """
+import builtins
+import json
+import pathlib
+import sys
+
+original_import = builtins.__import__
+def without_google(name, *args, **kwargs):
+    if name == 'google' or name.startswith('google.'):
+        raise ModuleNotFoundError('Optional Google SDK is unavailable')
+    return original_import(name, *args, **kwargs)
+builtins.__import__ = without_google
+
+from scripts.benchmark_knowflow.providers import Recorder
+from scripts.benchmark_knowflow.pairing import PairedRetrieval
+from scripts.benchmark_knowflow.expanded_report import accounting_calls
+
+path = pathlib.Path(sys.argv[1])
+recorder = Recorder(path)
+recorder.write({'kind': 'offline_test', 'ok': True})
+assert json.loads(path.read_text())['kind'] == 'offline_test'
+assert accounting_calls([]) == ([], [])
+try:
+    recorder.client()
+except ModuleNotFoundError:
+    pass
+else:
+    raise AssertionError('Creating a real client must require the SDK')
+"""
+    result = subprocess.run([sys.executable, "-c", program, str(tmp_path / "journal.jsonl")],
+                            capture_output=True, text=True)
+    assert result.returncode == 0, result.stderr
 
 
 def config():

@@ -1,22 +1,142 @@
-# KnowFlow AI — MVP A2
+# KnowFlow AI — A2: Accumulate Master Know-How for AI to Learn
 
 Biến video dịch vụ thành tri thức **kiểm tra được**: mỗi bước có claim, mỗi claim có
 bằng chứng mở được, phần chưa biết được giữ lại và chuyển thành câu hỏi.
 
-Tài liệu gốc nằm ở [docs/](docs): schema chung, kế hoạch đội 1 (video → kho tri thức),
-kế hoạch đội 2 (synthetic KB → RAG → UI).
+## Dành cho Ban giám khảo
 
-Hướng trình bày A2: [ý tưởng và kế hoạch sáu tuần](docs/a2_idea_submission.md),
-[demo bản đồ tri thức](docs/a2_knowledge_map_demo.md). Giao diện có bản đồ Step–Relation,
-bốn nhóm “làm gì / khi nào / vì sao / kiểm chứng” và chuyển câu hỏi thiếu sang form bổ sung.
+| Nội dung | Tài liệu |
+|---|---|
+| Vấn đề, giải pháp, điểm khác biệt và kế hoạch triển khai | [Ý tưởng A2](docs/a2_idea_submission.md) |
+| Quy trình sử dụng hai giao diện | [Kịch bản demo giao diện mới](docs/demo_recording_new_ui.md) |
+| Đồ thị, nhánh có điều kiện, revision và đường truy xuất | [Không gian tri thức 3D](docs/a2_knowledge_space_3d.md) |
+| Bằng chứng kỹ thuật, tốc độ, chi phí và giới hạn | [Benchmark A/B/C trên 81 câu](benchmarks/results/20261012_expanded_dev/REPORT.md) · [Số liệu cho slide](benchmarks/results/20261012_expanded_dev/SLIDE.md) |
+| Tự chạy demo | [Hướng dẫn chạy hai web](#chay-web) |
 
-**Không gian tri thức 3D:** mở `/space` trên server local để xoay, zoom, chọn nút,
-mở bằng chứng và trình chiếu câu chuyện. Xem [hướng dẫn và phạm vi](docs/a2_knowledge_space_3d.md).
-Chọn **Theo tình huống** để theo nhánh có điều kiện, hoặc **Tri thức thay đổi**
-để đối chiếu các phiên bản và mở bằng chứng trước/sau. Chuẩn bị index lịch sử bằng
-`python -m scripts.prepare_knowledge_space` theo hướng dẫn trên.
-**Đường truy xuất** phát trace thực của backend trên đồ thị, có xem từng chặng,
-phát lại và tùy chọn tạo câu trả lời AI. Xem [kịch bản demo](docs/a2_retrieval_route_demo.md).
+Pilot dùng nguồn Haas real/dev công khai: **9 workflow active, 67 bước, 303 claim**.
+Các claim đã được đối chiếu nguồn; chưa có xác nhận kỹ thuật từ chuyên gia.
+Benchmark hiện giữ nguyên 81 nhãn; 20 nhãn phủ định chờ quyết định review trên corpus
+mở rộng. Recall@5 là kết quả truy xuất, chất lượng nghĩa của đáp án ở lượt này chưa
+có người chấm. Phép đo A/C chưa chứng minh lợi ích của cạnh đồ thị.
+
+## Luồng hệ thống
+
+```mermaid
+flowchart LR
+    S[Video và tài liệu nguồn] --> E[Transcript, keyframe và timestamp]
+    E --> K[Bước, claim, quan hệ và bằng chứng]
+    K --> R[Người kiểm đối chiếu nguồn]
+    R --> V[Snapshot có revision]
+    V --> I[Chỉ mục lexical và embedding]
+    I --> Q[QAService: truy xuất, sinh đáp án, kiểm citation]
+    Q --> W[Web đọc và graph 3D]
+    K --> M[Phần thiếu và câu hỏi bổ sung]
+    M --> F[Phản hồi của người có chuyên môn]
+    F --> R
+```
+
+Trang `/` có bản đồ bước–quan hệ, hỏi đáp, bằng chứng, bổ sung và lịch sử.
+Trang `/space` có toàn cảnh 3D, nhánh theo tình huống, so sánh revision và trace
+backend. Chuyển động của trace trình bày các chặng pipeline quan sát được.
+
+<a id="chay-web"></a>
+
+## Chạy web local — Windows / PowerShell
+
+Chạy các lệnh từ **thư mục gốc repository**. Một server phục vụ cả hai giao diện:
+
+| Địa chỉ | Chức năng |
+|---|---|
+| <http://127.0.0.1:8000/> | Đọc quy trình, hỏi đáp, bằng chứng, bổ sung và lịch sử revision |
+| <http://127.0.0.1:8000/space> | Graph 3D, nhánh có điều kiện, so sánh revision và đường truy xuất |
+| <http://127.0.0.1:8000/docs> | Tài liệu API |
+
+### 1. Cài môi trường lần đầu
+
+Nếu đã có `.venv`, bỏ qua lệnh tạo môi trường và cài các dependency cần cho web:
+
+```powershell
+uv venv --python 3.12
+uv pip install --python .venv/Scripts/python.exe -e ".[dev,api,retrieval]"
+```
+
+Không có `uv`, dùng Python 3.12:
+
+```powershell
+py -3.12 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -e ".[dev,api,retrieval]"
+```
+
+### 2. Mở trang đọc và graph, có lịch sử revision
+
+Chuẩn bị database real/dev riêng, gồm index của các revision đủ điều kiện.
+Bước này không gọi Gemini và không sửa corpus đã commit.
+
+```powershell
+.\.venv\Scripts\python.exe -m scripts.prepare_knowledge_space --db out/retrieval/web_demo.sqlite
+$env:KNOWFLOW_REAL_DEV_DB = 'out/retrieval/web_demo.sqlite'
+$env:KNOWFLOW_RETRIEVAL_STRATEGY = 'lexical'
+.\.venv\Scripts\python.exe -m retrieval.api
+```
+
+Giữ terminal đang chạy và mở hai địa chỉ ở bảng trên. Chọn **Nguồn thực · dev**
+ở trang đọc hoặc **Nguồn Haas · pilot** ở trang 3D. Dừng server bằng `Ctrl+C`.
+
+Chế độ này dùng được bản đồ, nguồn, lịch sử và trace chỉ truy xuất mà không cần
+key. Hỏi đáp và tùy chọn **Tạo câu trả lời AI sau truy xuất** vẫn cần Gemini key.
+Lexical không tự dịch câu hỏi tiếng Việt; dùng câu hỏi tiếng Anh để thử truy xuất
+trên nguồn tiếng Anh, hoặc bật hybrid theo bước 3.
+
+### 3. Bật embedding, dịch câu hỏi và trả lời Gemini
+
+Nếu chưa có `.env`, tạo từ mẫu; lệnh dưới giữ nguyên `.env` đã có:
+
+```powershell
+if (-not (Test-Path -LiteralPath .env)) { Copy-Item -LiteralPath .env.example -Destination .env }
+```
+
+Điền `GEMINI_API_KEY` trong `.env`. Dừng server đang chạy, rồi dựng embedding
+cho index hiện tại và khởi động lại:
+
+```powershell
+.\.venv\Scripts\python.exe -m retrieval.retrieval build --db out/retrieval/web_demo.sqlite --mode real --split dev --embedding gemini
+$env:KNOWFLOW_REAL_DEV_DB = 'out/retrieval/web_demo.sqlite'
+$env:KNOWFLOW_RETRIEVAL_STRATEGY = 'hybrid'
+$env:KNOWFLOW_ANSWER_MODEL = 'gemini-3.5-flash-lite'
+.\.venv\Scripts\python.exe -m retrieval.api
+```
+
+Build gửi nội dung search records sang Gemini để tạo embedding. Hỏi đáp hybrid
+gọi embedding câu hỏi, dịch khi cần và sinh/kiểm câu trả lời thật; có phí API theo
+tài khoản. Các index lịch sử đã chuẩn bị ở bước 2 được giữ lại.
+
+Thử câu **“Bôi trơn con trượt của hốc dao trước khi lắp như thế nào?”**, phạm vi
+**Haas / SMTC**, để trống model máy; bấm citation để mở đoạn nguồn. Ở `/space`,
+chọn **Đường truy xuất** và bật tạo câu trả lời AI nếu muốn xem cả lượt hỏi đáp.
+
+### 4. Những lần mở tiếp theo
+
+Khi database đã có index hybrid phù hợp, chỉ cần chạy trong terminal mới:
+
+```powershell
+$env:KNOWFLOW_REAL_DEV_DB = 'out/retrieval/web_demo.sqlite'
+$env:KNOWFLOW_RETRIEVAL_STRATEGY = 'hybrid'
+.\.venv\Scripts\python.exe -m retrieval.api
+```
+
+Biến `$env:...` áp dụng cho terminal hiện tại; đặt lại nếu mở terminal khác.
+Sau khi cập nhật giao diện, dùng `Ctrl+F5` trên browser.
+
+| Tình huống | Cách xử lý |
+|---|---|
+| Database thiếu lịch sử hoặc corpus mới có thêm revision | Chuẩn bị file mới, ví dụ `--db out/retrieval/web_demo_v2.sqlite`; dùng cùng đường dẫn mới khi build và đặt `KNOWFLOW_REAL_DEV_DB`. |
+| Index không có vector nhưng đang chọn hybrid | Build `--embedding gemini`, hoặc đặt strategy `lexical` để đọc/truy xuất không vector. |
+| API báo `429` / `504` | Hạn mức hoặc timeout của lượt gọi; xem thông báo và chờ trước khi gửi lượt mới. |
+| Port 8000 đang được dùng | Chạy `.\.venv\Scripts\python.exe -m retrieval.api --port 8001`, rồi mở hai trang ở port 8001. |
+
+Hướng dẫn sâu hơn: [API và chính sách citation](docs/api_reference.md),
+[graph, lịch sử và đường truy xuất](docs/a2_knowledge_space_3d.md).
+Danh mục tài liệu kỹ thuật và hồ sơ đối chiếu: [docs/README.md](docs/README.md).
 
 ## Bắt đầu
 
@@ -65,7 +185,7 @@ cần review trước khi promote và bàn giao qua `acquisition.export.exporter
 
 D2-A xem [retrieval/README.md](retrieval/README.md): importer bundle, snapshot theo
 revision, search records và truy xuất BM25/vector/hybrid với bộ lọc context.
-Có lệnh build embedding Gemini và query trên bundle thật; chưa có answer generator/UI.
+Có embedding Gemini, sinh đáp án có citation qua `QAService`, API và hai giao diện web.
 
 | Thư mục | Chủ | Nội dung |
 |---|---|---|
@@ -73,7 +193,7 @@ Có lệnh build embedding Gemini và query trên bundle thật; chưa có answe
 | [data/fixtures/](data/fixtures) | hai đội | 10 contract fixture + `expected.json` do người kiểm chốt |
 | [acquisition/](acquisition) | đội 1 | catalog, tiền xử lý media/ASR, extraction, review, exporter |
 | [retrieval/](retrieval) | đội 2 | importer, indexing, retrieval, generation, evaluation |
-| [apps/](apps) | đội 2 | UI hỏi đáp và UI review |
+| [retrieval/api/static/](retrieval/api/static) | đội 2 | Trang đọc/hỏi đáp và không gian tri thức 3D |
 | [tests/](tests) | hai đội | contract / integration / end-to-end |
 
 ## Bất biến của hệ thống

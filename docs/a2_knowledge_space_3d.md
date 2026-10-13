@@ -2,7 +2,7 @@
 
 ## Mở demo
 
-Chạy server theo [chuẩn bị local](a2_knowledge_map_demo.md#chuẩn-bị-local), rồi mở
+Chạy server theo [hướng dẫn chạy web](../README.md#chay-web), rồi mở
 `http://127.0.0.1:8000/space`. Trang chính cũng có nút **Khám phá không gian tri thức 3D**.
 Khám phá và đọc nguồn dùng index hiện có. Chế độ Đường truy xuất có tùy chọn tạo
 câu trả lời AI; khi bật mới gọi model generation. Three.js 0.186.0 được lưu trong repo;
@@ -24,7 +24,8 @@ Chạy lại tái sử dụng database đã đủ index. Nếu file đích đã 
 index lịch sử, script dừng; dùng `--db out/retrieval/space_demo_v2.sqlite` để tạo
 file mới và đặt biến môi trường tới file đó.
 
-Pilot có 7 snapshot, 5 revision có tài liệu đủ điều kiện trong index. r1 của
+Corpus mở rộng sau PR #53 có 12 snapshot, 10 revision có tài liệu đủ điều kiện
+trong index và 9 workflow active. r1 của
 `REAL_WF_0002` và `REAL_WF_0003` còn pending review nguồn, nên không được mở qua
 API đọc snapshot hiện tại. Giao diện ghi rõ bản chưa đủ review/chưa có index.
 
@@ -41,7 +42,7 @@ của liên kết. Bảng bên phải mở điều kiện và các trường c�
 
 Đây là khám phá nhánh trong nguồn. Không gian chưa nhận telemetry để xác định
 điều kiện thực tế đang đúng hoặc đề xuất lệnh điều khiển máy. Các lựa chọn lấy từ
-3 Relation record hiện có; giao diện không tự sinh tình huống hoặc quan hệ.
+Relation record hiện có; giao diện không tự sinh tình huống hoặc quan hệ.
 
 ### Tri thức thay đổi
 
@@ -71,8 +72,7 @@ khóa. Đổi góc khám phá/corpus hủy yêu cầu lịch sử cũ và xóa b
 
 **Đường truy xuất:** nhập câu hỏi để xem trace thực từ lọc ngữ cảnh tới bước,
 quan hệ và bằng chứng, cùng chuyển động trên đồ thị. Có dừng, xem từng chặng,
-phát lại và tùy chọn tạo câu trả lời có trích dẫn. Xem
-[kịch bản và phạm vi telemetry](a2_retrieval_route_demo.md).
+phát lại và tùy chọn tạo câu trả lời có trích dẫn. Xem mục **Đường truy xuất** bên dưới.
 
 - Kéo chuột hoặc một ngón tay để xoay; cuộn hoặc chụm hai ngón tay để zoom.
 - Chọn nút trên không gian: sáng các liên kết liên quan, camera hướng tới nút,
@@ -126,14 +126,60 @@ Các đường nối dựa trên tham chiếu có sẵn:
 - Step nối câu hỏi còn mở về trường thiếu.
 - Conflict và supersedes chỉ nối khi cả hai claim có trong snapshot được hiển thị.
 
-**Kho pilot hiện tạo 331 nút, 480 liên kết bản ghi/nguồn, gồm 3 quan hệ giữa bước.**
-480 đường nối không phải 480 quan hệ kỹ thuật mới phát hiện. Các số này phụ thuộc
-index; giao diện tính lại từ dữ liệu khi tải. Hai workflow cùng bài thay pocket;
+**Latest active của corpus mở rộng có 67 bước, 303 claim và 15 Relation record.**
+Số nút và đường nối 3D phụ thuộc index; giao diện tính lại từ dữ liệu khi tải.
+Đường nối bản ghi/nguồn không đại diện cho số quan hệ kỹ thuật mới phát hiện.
+Hai workflow cùng bài thay pocket;
 số cụm không đại diện cho số tình huống độc lập.
 
 Vị trí cụm, khoảng cách, màu và hạt nền phục vụ trình bày. Chúng không biểu thị độ
 tương đồng, độ đúng kỹ thuật hay quan hệ nhân quả. Phần nối các thực thể kỹ thuật
 xuyên quy trình vẫn là kế hoạch phát triển; trang 3D không thay đổi contract hoặc KB.
+
+## Đường truy xuất
+
+1. Chọn **Đường truy xuất** ở `/space`, nhập câu hỏi và chọn Top 1/3/5.
+2. Bấm **Chạy truy xuất**. Backend thực hiện lượt tìm; timeline và đồ thị trình
+   bày các sự kiện đã quan sát theo nhịp giãn để dễ theo dõi.
+3. Ở **Theo quan hệ của bước**, tạm dừng để xem bước phụ thuộc, điều kiện và căn cứ.
+4. Tiếp tới **Kiểm tra bằng chứng** để đọc claim → evidence → source.
+5. Bật **Tạo câu trả lời AI sau truy xuất** nếu muốn soạn/kiểm trên chính evidence
+   package của lượt đó. Sau guard, các claim được cite giữ sáng.
+6. Thử câu ngoài phạm vi: lượt dừng sớm không được thêm chặng mở rộng hoặc citation.
+
+**Tạm dừng / ← / → / chọn chặng** đọc từng bước. **Phát lại** dùng các sự kiện đã
+nhận; không gọi lại retriever/model. **Dừng lượt** hủy nhận stream và dừng chuyển
+động. Tốc độ 1×/2×/4× chỉ đổi nhịp trình chiếu. Giảm chuyển động tắt các hạt chạy.
+
+Lexical chỉ truy xuất không cần key; corpus tiếng Anh nên thử câu tiếng Anh.
+Hybrid/dịch và sinh đáp án cần Gemini theo [hướng dẫn web](../README.md#chay-web).
+Cấu hình/provider chưa sẵn sàng được báo lỗi, không tự đổi chiến lược.
+
+| Chặng | Sự kiện quan sát được |
+|---|---|
+| Neo kho, kiểm ngữ cảnh/liên quan | Index, filters và relevance gate |
+| Chọn quy trình | Xếp hạng workflow thực |
+| Tìm bước/phát biểu | Top-k và claim thỏa eligibility |
+| Theo quan hệ | Mở rộng qua requires/branch_if/corrects, kèm điều kiện đã lưu |
+| Kết quả và phần thiếu | Retrieval status, câu hỏi mở, mâu thuẫn nếu có |
+| Kiểm tra bằng chứng | Snapshot và khả năng mở evidence |
+| Soạn/kiểm tra AI, trích dẫn | Các lượt draft/verify và citation được guard chấp nhận |
+
+Các sự kiện là telemetry của pipeline. Animation mô phỏng đi qua liên kết để
+trình bày telemetry; không thu thập suy nghĩ nội bộ của LLM và không chứng minh
+model tự tìm kiếm từng nút. Điểm xếp hạng không phải độ tin cậy kỹ thuật.
+
+Kiểm phụ thuộc có thể đi ngược chiều cạnh: bước 4 kéo về điều kiện/bước 3 qua
+`branch_if`. Kiểu và hướng quan hệ trong KB giữ nguyên. Mỗi đoạn chuyển động
+phải có liên kết thật; không nối hai bước vì chúng đứng gần nhau trong 3D.
+Top-k thay đổi ứng viên của lượt trace; cấu hình hỏi đáp `/v1/ask` giữ theo server.
+
+`POST /v1/trace` stream NDJSON với corpus/split/index. Đổi corpus hoặc góc khám
+phá hủy stream, xóa route và nội dung cũ. Backend kiểm index trước khi trả kết quả.
+Trace không ghi KB và chỉ xuất các trường được cho phép. Provider call đã bắt đầu
+có thể tiếp tục đến timeout dù người xem hủy; worker vẫn tính vào giới hạn job.
+Lỗi AI giữ trace đã nhận và báo lỗi. Khi WebGL không hoạt động, timeline và bằng
+chứng vẫn đọc được. Tham chiếu API: [api_reference.md](api_reference.md).
 
 ## Kiểm tra
 
@@ -153,11 +199,7 @@ $env:KNOWFLOW_BROWSER_TEST='1'
 Kiểm tra xác nhận chức năng; chưa đo FPS trên thiết bị trình chiếu thực tế, hiệu quả
 đào tạo hoặc lợi ích truy xuất. Ảnh và báo cáo nằm trong `out/`, không được commit.
 
-Kết quả 2026-10-10: kiểm tra Edge mở rộng passed; 33 test API/browser service passed.
-Ảnh local: [toàn cảnh](../out/a2_knowledge_space_preview.png),
-[nhánh quyết định và bằng chứng](../out/a2_knowledge_space_branch_preview.png).
-Ảnh mới: [theo tình huống](../out/a2_knowledge_space_situation_preview.png),
-[so sánh phiên bản](../out/a2_knowledge_space_revision_preview.png).
-Báo cáo Edge: `out/a2_knowledge_space_explore_browser.xml`;
-33 test API/service: `out/a2_knowledge_space_explore_tests.xml` (lượt đầu còn lỗi
-script chuẩn bị, đã sửa và kiểm tra lại Edge cùng script ở báo cáo riêng).
+Kiểm trace có thêm `tests/integration/test_retrieval_trace.py`; các test giả lập
+model kiểm chức năng, không làm số đo chất lượng. Benchmark thật và kết luận A/C
+nằm ở [báo cáo corpus mở rộng](../benchmarks/results/20261012_expanded_dev/REPORT.md).
+Luồng demo hai web hiện tại nằm ở [kịch bản sau PR #54](demo_recording_new_ui.md).

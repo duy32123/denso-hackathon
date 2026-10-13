@@ -1,4 +1,4 @@
-# D2-A — WP1/WP2: importer, lexical, vector và hybrid retrieval
+# Importer, chỉ mục và truy xuất KnowFlow AI
 
 Tiến độ trên corpus mở rộng sau PR #53: [bản sửa alarm và danh tính bộ phận](../docs/expanded_dev_retrieval_progress.md).
 Benchmark 81 câu dùng [cấu hình v2 và hướng dẫn](../benchmarks/knowflow_expanded_dev/README.md),
@@ -6,11 +6,32 @@ Benchmark 81 câu dùng [cấu hình v2 và hướng dẫn](../benchmarks/knowfl
 Lượt đo giữ nguyên nhãn hiện có, chờ quyết định review 20 nhãn phủ định trên corpus mới. Câu hỏi Vietnamese/hard draft
 được tách file; không cộng vào kết quả chính thức.
 
-**Tiếp nối WP3/API:** đã có generator + citation guard, `/v1/ask` và trang đọc
-evidence tối thiểu. Cách chạy và giới hạn: [grounded QA pilot](../docs/team2_grounded_qa.md).
+## Chạy web
+
+[README chính — hướng dẫn PowerShell](../README.md#chay-web)
+có đủ bước cài dependency, tạo database có lịch sử, bật Gemini/hybrid và chạy server.
+Một server phục vụ trang đọc/hỏi đáp `/` và graph 3D `/space`.
+
+Khi đã chuẩn bị `out/retrieval/web_demo.sqlite` và build embedding theo hướng dẫn:
+
+```powershell
+$env:KNOWFLOW_REAL_DEV_DB = 'out/retrieval/web_demo.sqlite'
+$env:KNOWFLOW_RETRIEVAL_STRATEGY = 'hybrid'
+.\.venv\Scripts\python.exe -m retrieval.api
+```
+
+Mở <http://127.0.0.1:8000/> và <http://127.0.0.1:8000/space>. Nếu index chỉ có
+lexical, đặt strategy `lexical`; xem bản đồ/nguồn/lịch sử không cần key, sinh đáp
+án AI cần `GEMINI_API_KEY` trong `.env`. Dùng `Ctrl+F5` sau khi cập nhật UI.
+
+**WP3/API:** generator + citation guard, `/v1/ask` và giao diện đọc evidence.
+Cấu hình và giới hạn: [API và chính sách citation](../docs/api_reference.md).
 
 **WP4 đọc/lịch sử:** tự mở citation, duyệt Step/field/claim và so sánh revision với đúng
-index lịch sử. Xem [WP4 reader](../docs/team2_wp4_reader.md). Phần ghi feedback chờ service đội 1.
+index lịch sử. Xem [API đọc và lịch sử](../docs/api_reference.md#đọc-workflow-bằng-chứng-và-lịch-sử). Ghi feedback qua service
+đội 1 tạo revision mới; phản hồi chưa review vẫn giữ trạng thái pending.
+
+## Nhập corpus
 
 Nhập bundle đội 1 bằng validator chung, lưu bản sao nguồn/snapshot bất biến và
 dựng search records hai tầng Workflow/Step theo contract D-06. SQLite là lựa chọn
@@ -25,7 +46,8 @@ Chạy từ thư mục gốc repo trên PowerShell (không cần activate):
 
 Có thể thay `.\.venv\Scripts\python.exe` bằng `uv run python`. Lần đầu trả
 `status=imported`; chạy lại cùng nội dung trả `status=noop`, giữ `index_build_id`.
-Bundle pilot hiện có 5 sources, 2 workflow, 20 step. Kết quả thực tế được in ra JSON.
+Bundle real/dev sau PR #53 có 10 sources, 12 snapshot, 9 workflow active và 67 step
+active. Kết quả nhập thực tế được in ra JSON.
 Database đặt trong `out/` đã được gitignore.
 
 Thử synthetic bằng database riêng:
@@ -138,17 +160,10 @@ record build trả `noop` và không gọi embedding lại.
   `--min-term-coverage 0` tắt cả điều kiện tỷ lệ lẫn số từ khớp. Xem
   [phép đo và giới hạn trên real/dev](../docs/retrieval_relevance_gate.md).
 - **Chọn workflow theo Step khớp tốt nhất (`--workflow-routing best_step`, mặc định từ 18/09).**
-  Trước đây BM25 xếp hạng thẳng các bản ghi cấp workflow, tức chỉ có một tài liệu cho mỗi
-  workflow. Khi corpus lên 4 workflow (PR #17), bản ghi dài nhất (`REAL_WF_0003`, 3493 token,
-  gấp 2.7 lần `REAL_WF_0001`) thắng nhờ những từ tình cờ như "step" hay "lubricate", nên câu
-  demo và câu "replace a damaged tool pocket" bị route sang quy trình khôi phục sau alarm.
-  Giờ mỗi workflow được chấm bằng Step đủ điều kiện khớp tốt nhất trên toàn corpus đã lọc
-  (hàng chục tài liệu thay vì 4); `trace.routing_steps` ghi Step quyết định. Trên real/dev,
-  lexical, không dịch (nhãn chưa người kiểm): R@5 0.481 → **0.556**, MRR@5 0.392 → 0.466,
-  Hit@1 0.333 → 0.407, wf_acc 0.484 → 0.548 với 4 workflow; với 2 workflow, không chỉ số nào
-  tụt. Status và `false_retrieved` không đổi (đó là việc của cổng liên quan). **Còn sai:**
-  `HAAS_DEV_Q008`, `HAAS_DEV_Q013` vẫn sang `REAL_WF_0003`. **Hybrid chưa đo** (hết quota Gemini).
-  `--workflow-routing record` giữ cách cũ để so sánh.
+  Mỗi workflow được chấm bằng Step đủ điều kiện khớp tốt nhất trên corpus đã lọc;
+  `trace.routing_steps` ghi Step quyết định. `--workflow-routing record` giữ cách xếp
+  hạng bản ghi workflow để đối chứng. Phân tích trên corpus mở rộng, gồm chọn nhầm
+  bộ phận và alarm: [tiến độ sau PR #53](../docs/expanded_dev_retrieval_progress.md).
 - Vector: `gemini-embedding-001`, 768 chiều mặc định, chuẩn hóa L2 và cosine
   chính xác trên tập đã lọc. SQLite lưu vector; chưa cần ANN/pgvector cho pilot.
   Tài liệu dùng `RETRIEVAL_DOCUMENT`, câu hỏi dùng `RETRIEVAL_QUERY` theo
@@ -173,7 +188,9 @@ record build trả `noop` và không gọi embedding lại.
   nó**, không kế thừa của Step đã khớp; claim đã là answer candidate không lặp lại ở đây.
   Step phụ thuộc nằm ngoài corpus đã lọc được ghi ở `trace.neighbors.unavailable_step_ids`,
   bị cắt vì `--max-related-steps` thì ghi ở `truncated_step_ids` — không biến mất im lặng.
-  **WP3 chưa dùng `related_steps`:** dữ liệu đã có, generator chưa nối; cần đo trên dev trước.
+  Generator nhận `relations` của lượt retrieval; trace kiểm thêm `related_claims`
+  để trình bày nguồn ngữ cảnh. `related_steps` không tự trở thành bước thao tác trong
+  đáp án. Tác động A/C được đo ở benchmark, chưa chứng minh cải thiện nhờ cạnh.
 - Corpus/split được kiểm trước khi đọc record/vector/snapshot. Sai namespace báo
   lỗi. Chỉ dùng latest active revision; nhập revision mới làm index cũ stale và query
   bị chặn cho đến khi build lại. Workflow withdrawn không quay về revision cũ.
@@ -222,7 +239,8 @@ truy cập mạng trong retrieval: `evidence_openability_checked=false`, từng 
 có `access_status=not_checked`; không tự gọi citation là đã xác minh.
 
 Các status khác: `needs_clarification`, `insufficient_evidence`, `conflicting_sources`.
-Chưa triển khai reranker hay tự mở rộng Step lân cận. Answer generator và API nằm ở
+Chưa triển khai reranker. Mở rộng Step theo quan hệ có căn cứ được mô tả ở trên.
+Answer generator và API nằm ở
 `retrieval/generation` và `retrieval/api` (xem hướng dẫn ở đầu trang). Các relation
 gốc được trả để phần tích hợp xử lý có căn cứ. Bộ unit tests dùng vector giả chỉ
 để kiểm logic; không được dùng kết quả đó làm số đo chất lượng embedding thật.
@@ -231,20 +249,19 @@ gốc được trả để phần tích hợp xử lý có căn cứ. Bộ unit 
 .\.venv\Scripts\python.exe -m pytest tests/unit/test_importer.py tests/unit/test_retrieval.py
 ```
 
-Đã smoke-test trên bundle real/dev `BUNDLE_HAAS_SMTC_DEV_e98521a7942a`:
-22 record (2 Workflow, 20 Step), build Gemini 768 chiều qua 2 API calls. Câu hỏi
-tiếng Việt trong ví dụ trên tìm được `B0_SRC_HAAS_0005_ST_006` ở top-1 trong cả
-vector và hybrid. Đây là kiểm chứng tích hợp trên một câu hỏi, chưa phải benchmark
-recall/precision; chưa chạy holdout. Gemini là model hosted: version lưu model ID,
-adapter/SDK và output vector hash, không khẳng định pin được hash trọng số server.
+Kết quả API thật hiện tại nằm ở [benchmark corpus mở rộng](../benchmarks/results/20261012_expanded_dev/REPORT.md),
+tách real khỏi synthetic và giữ mẫu số từng nhóm. Chưa chạy holdout. Gemini là model
+hosted: version lưu model ID, adapter/SDK và output vector hash; không khẳng định
+pin được hash trọng số server.
 
 ## Đánh giá retrieval
 
 `retrieval.evaluation` chạy lexical, vector và hybrid trên cùng index và cùng filter
 policy, tính Recall@k, MRR@k, Hit@1, độ chính xác chọn workflow và status (gồm cả
 câu phải từ chối). Bộ câu hỏi, quy tắc tính và cách kiểm nhãn: xem
-[data/eval/README.md](../data/eval/README.md). File real/dev hiện có đủ 66 nhãn `reviewed`
-(Q055–Q068 do `quyhienln` kiểm ngày 2026-09-24).
+[data/eval/README.md](../data/eval/README.md). File real/dev hiện có 81 nhãn `reviewed`
+(66 câu cũ và 15 câu mới). Trạng thái trong file không thay thế quyết định kiểm lại
+20 nhãn phủ định trên corpus mở rộng; lượt benchmark hiện giữ nguyên gold và nêu giới hạn này.
 
 ```powershell
 .\.venv\Scripts\python.exe -m retrieval.evaluation run --db out/retrieval/real_dev.sqlite --questions data/eval/haas_real_dev.retrieval.v0.jsonl --mode real --split dev

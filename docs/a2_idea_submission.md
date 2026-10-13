@@ -78,16 +78,24 @@ baseline RAG trên transcript; KnowFlow với claim, quan hệ và vòng bổ su
 Đo thời gian tìm **đáp án đúng**, độ phủ trả lời, chất lượng citation, xử lý thiếu thông
 tin, thời gian review và chi phí. Tách đầu ra tự động trước review và sau review.
 
-**Bằng chứng hiện có:** bundle dev có 3 video và 2 tài liệu Haas; latest active gồm
-4 workflow, 38 bước, 134 claim, 10 câu hỏi mở. Hai workflow cùng bài thay pocket,
-nên số này không đại diện cho 4 tình huống độc lập. Toàn bộ technical_review hiện là
-not_requested. Báo cáo 66 câu có người chấm thuộc một phiên bản trước các sửa mới nhất:
-49/66 đúng trạng thái, trả lời 24/41 câu có thể trả lời, 35/40 citation đúng. Xem
-[báo cáo gốc và giới hạn](retrieval_eval_real_dev.md#tầng-câu-trả-lời-có-human-verdict--2026-09-24).
+**Bằng chứng hiện có sau PR #53:** bundle real/dev có 10 nguồn Haas (8 video,
+2 tài liệu), 12 snapshot; latest active gồm 9 workflow, 67 bước, 303 claim và
+15 quan hệ giữa bước. Hai workflow cùng bài thay pocket, nên số workflow không
+đại diện cho số tình huống độc lập. Technical review vẫn là `not_requested`.
+
+Lượt API thật A/B/C ngày 12/10 giữ nguyên 81 nhãn: KnowFlow Recall@5 **96,15%**
+trên **52 câu có gold retrieval phù hợp**, khớp trạng thái **67/81** và citation
+hợp lệ bằng code **65/65**. Có 20 nhãn phủ định chờ quyết định review trên corpus
+mở rộng; chấm nghĩa đáp án của lượt này chưa có người thực hiện. A/C giữ cùng bản
+dịch và ứng viên trên 81 cặp, chưa chứng minh cạnh đồ thị cải thiện kết quả.
+Xem [báo cáo, chi phí và giới hạn](../benchmarks/results/20261012_expanded_dev/REPORT.md).
+
+Báo cáo có human verdict ngày 24/09 thuộc phiên bản cũ; không chuyển verdict đó
+sang đáp án mới. Xem [hồ sơ lịch sử](retrieval_eval_real_dev.md#tầng-câu-trả-lời-có-human-verdict--2026-09-24).
 
 Các mức giảm thời gian hoặc công sức là mục tiêu thử nghiệm; chưa có số đo để đưa
 thành kết quả đạt được. Bản đồ mới là phần trình bày tri thức; lợi ích truy xuất của
-đồ thị cần được đánh giá qua baseline và ablation trong pilot.
+đồ thị cần được đánh giá thêm qua baseline, ablation và người chấm nghĩa trong pilot.
 
 ## 5. Giá trị khác biệt của ý tưởng
 
@@ -132,7 +140,7 @@ liên kết thực thể giữa nhiều workflow cần contract, đối chiếu 
 | Nội dung | Trạng thái có thể trình bày |
 |---|---|
 | Claim/evidence, bảy trường tri thức, review, snapshot, hỏi đáp, lịch sử | Có trong MVP |
-| Bản đồ Step–Relation và bốn nhóm làm gì/khi nào/vì sao/kiểm chứng | Đã bổ sung vào giao diện từ snapshot thật, xem [kịch bản](a2_knowledge_map_demo.md) |
+| Bản đồ Step–Relation và bốn nhóm làm gì/khi nào/vì sao/kiểm chứng | Có trong giao diện từ snapshot thật, xem [kịch bản hai web](demo_recording_new_ui.md) |
 | Không gian 3D liên kết quy trình/bước/phát biểu/bằng chứng/câu hỏi | Có trong demo; tìm, chọn nút, mở nguồn và tour trình chiếu, xem [phạm vi](a2_knowledge_space_3d.md) |
 | Khám phá tình huống và đối chiếu phiên bản trong 3D | Có trong demo; đường nhánh từ Relation đã lưu, diff theo ID, bằng chứng đúng revision/index; ví dụ lịch sử sửa căn cứ nguồn, chưa phải kinh nghiệm mới từ chuyên gia |
 | Trình diễn đường truy xuất và trích dẫn trên đồ thị | Có trong demo; telemetry thực từ retriever, chuyển động trình chiếu, top-k và phần mở rộng rõ ràng; AI dùng chính evidence package của lượt đó, không hiển thị suy nghĩ nội bộ LLM |
